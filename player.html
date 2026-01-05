@@ -8,20 +8,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --gold:#FFD700;
-}
+:root{--gold:#FFD700;}
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   background:radial-gradient(circle at top,#111,#000);
   color:#fff;
   font-family:'Orbitron',sans-serif;
-  overflow-x:hidden;
 }
-header{
-  padding:40px 20px;
-  text-align:center;
-}
+header{text-align:center;padding:40px 20px}
 header h1{
   font-family:'Cinzel',serif;
   font-size:clamp(2.5rem,6vw,5rem);
@@ -30,95 +24,85 @@ header h1{
   color:transparent;
   text-shadow:0 0 40px gold;
 }
-header p{
-  margin-top:15px;
-  letter-spacing:6px;
-  color:var(--gold);
-  font-weight:700;
-}
+header p{margin-top:10px;letter-spacing:6px;color:var(--gold)}
 
 .hero{
   min-height:70vh;
   display:flex;
   flex-direction:column;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   gap:40px;
   text-align:center;
-  padding:40px 20px;
 }
-
-.hero .badge{
-  border:2px solid var(--gold);
-  padding:12px 30px;
-  border-radius:50px;
-  box-shadow:0 0 25px gold;
-  font-weight:700;
-  letter-spacing:4px;
-}
-
 .hero a{
   text-decoration:none;
-  padding:20px 50px;
+  padding:18px 45px;
   border-radius:60px;
-  font-size:1.2rem;
   font-weight:800;
   color:#000;
   background:linear-gradient(to bottom,#FFD700,#fff,#FFD700);
   box-shadow:0 0 40px gold;
-  transition:.3s;
 }
-.hero a:hover{
-  transform:scale(1.08);
-}
-
 .sections{
-  max-width:1200px;
+  max-width:1100px;
   margin:auto;
   padding:80px 20px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:40px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
 }
-
 .card{
   background:rgba(255,255,255,.05);
   border:1px solid rgba(255,215,0,.3);
   border-radius:30px;
   padding:30px;
-  box-shadow:0 0 40px rgba(255,215,0,.15);
 }
-.card h3{
-  color:var(--gold);
-  margin-bottom:15px;
-}
-.card p{
-  opacity:.85;
-  line-height:1.6;
-}
+.card h3{color:var(--gold);margin-bottom:10px}
 
 footer{
-  padding:40px 20px;
   text-align:center;
+  padding:30px;
   border-top:1px solid rgba(255,215,0,.3);
   color:var(--gold);
-  letter-spacing:4px;
 }
-.cyborg{
+
+/* CIBORGUE */
+.cyborg-container{
   position:fixed;
   right:20px;
   bottom:20px;
-  width:110px;
-  height:110px;
+  width:120px;
+  height:120px;
+  z-index:9999;
+  animation:float 4s ease-in-out infinite;
+}
+.cyborg-head{
+  width:100%;
+  height:100%;
   border-radius:50%;
-  border:3px solid var(--gold);
-  background:radial-gradient(circle,#222,#000);
-  box-shadow:0 0 40px gold;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
+  background:
+    radial-gradient(circle at 35% 35%, #ffe6b0, #003),
+    radial-gradient(circle at 65% 35%, #aee7ff, #003);
+  border:3px solid gold;
+  box-shadow:0 0 25px gold;
   cursor:pointer;
+}
+.cyborg-talk{
+  position:absolute;
+  bottom:130px;
+  right:0;
+  width:260px;
+  background:rgba(0,0,0,.9);
+  color:gold;
+  border:1px solid gold;
+  border-radius:20px;
+  padding:12px 18px;
+  display:none;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
 }
 </style>
 </head>
@@ -131,30 +115,41 @@ footer{
 </header>
 
 <section class="hero">
-  <div class="badge">🎉 EDIÇÃO OURO COMEMORATIVA</div>
   <a href="player.html">▶ OUVIR AGORA</a>
 </section>
 
 <section class="sections">
-  <div class="card">
-    <h3>🎧 A Rádio</h3>
-    <p>Dois anos conectando pessoas, continentes e emoções através da música.</p>
-  </div>
-  <div class="card">
-    <h3>🤖 IA Intercontinental</h3>
-    <p>Nossa ciborgue será sua assistente oficial. Em breve com interações ao vivo.</p>
-  </div>
-  <div class="card">
-    <h3>🚀 Portal em Expansão</h3>
-    <p>Programação, notícias, games, interação e muito mais.</p>
-  </div>
+  <div class="card"><h3>🎧 A Rádio</h3><p>Conectando continentes há 2 anos.</p></div>
+  <div class="card"><h3>🤖 IA Oficial</h3><p>Ciborgue loira olhos azuis.</p></div>
+  <div class="card"><h3>🚀 Portal</h3><p>Em constante evolução.</p></div>
 </section>
 
 <footer>
   © Intercontinental Web Radio • 2 Anos no Ar
 </footer>
 
-<div class="cyborg">IA</div>
+<div class="cyborg-container">
+  <div class="cyborg-head" id="cyborgHead"></div>
+  <div class="cyborg-talk" id="cyborgTalk">
+    👋 Olá! Sou a IA oficial da Intercontinental.
+  </div>
+</div>
+
+<script>
+const msgs=[
+ "🎧 Bem-vindo à Intercontinental!",
+ "👑 Edição Ouro – 2 anos!",
+ "▶ Clique em OUVIR AGORA",
+ "🤖 IA loira, olhos azuis"
+];
+let i=0;
+document.getElementById("cyborgHead").onclick=()=>{
+  const t=document.getElementById("cyborgTalk");
+  t.style.display="block";
+  t.innerText=msgs[i];
+  i=(i+1)%msgs.length;
+};
+</script>
 
 </body>
 </html>
