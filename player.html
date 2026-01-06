@@ -2,37 +2,98 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Intercontinental Web Radio – Player Oficial</title>
+<title>Intercontinental Web Radio • 2 Anos</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
   margin:0;
-  background:#000;
+  background:radial-gradient(circle at top, #111 0%, #000 60%);
   color:#FFD700;
-  font-family:Arial, Helvetica, sans-serif;
+  font-family: 'Segoe UI', Arial, sans-serif;
   display:flex;
   align-items:center;
   justify-content:center;
   height:100vh;
 }
+
 .player{
-  border:4px solid #FFD700;
+  position:relative;
+  background:linear-gradient(145deg, #0a0a0a, #111);
+  border:2px solid rgba(255,215,0,0.6);
   border-radius:40px;
-  padding:40px;
+  padding:50px 60px;
   text-align:center;
-  box-shadow:0 0 40px gold;
+  box-shadow:
+    0 0 20px rgba(255,215,0,0.4),
+    0 0 60px rgba(255,215,0,0.15);
 }
+
+.player::before{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius:42px;
+  background:linear-gradient(120deg, transparent, rgba(255,215,0,0.6), transparent);
+  opacity:0.4;
+}
+
+h1{
+  margin:0;
+  font-size:2.4rem;
+  letter-spacing:1px;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:10px;
+  padding:6px 18px;
+  border-radius:30px;
+  border:1px solid rgba(255,215,0,0.6);
+  font-size:0.85rem;
+  text-transform:uppercase;
+}
+
 button{
-  background:#000;
-  border:3px solid #FFD700;
-  color:#FFD700;
-  font-size:22px;
-  padding:20px 40px;
-  border-radius:50px;
+  margin-top:35px;
+  background:linear-gradient(145deg, #FFD700, #b89600);
+  border:none;
+  color:#000;
+  font-size:1.3rem;
+  font-weight:bold;
+  padding:18px 46px;
+  border-radius:60px;
   cursor:pointer;
+  box-shadow:
+    0 0 20px rgba(255,215,0,0.7),
+    inset 0 -4px 10px rgba(0,0,0,0.4);
+  transition:transform .2s, box-shadow .2s;
 }
-button:hover{background:#FFD700;color:#000}
+
+button:hover{
+  transform:scale(1.05);
+  box-shadow:
+    0 0 35px rgba(255,215,0,0.9),
+    inset 0 -4px 10px rgba(0,0,0,0.5);
+}
+
+.status{
+  margin-top:25px;
+  font-size:0.9rem;
+  opacity:0.85;
+}
+
+.live{
+  color:#ff4444;
+  font-weight:bold;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  0%{opacity:1}
+  50%{opacity:.5}
+  100%{opacity:1}
+}
 </style>
 </head>
 
@@ -40,11 +101,15 @@ button:hover{background:#FFD700;color:#000}
 
 <div class="player">
   <h1>🎧 Intercontinental Web Radio</h1>
-  <p>Player Oficial – 2 Anos</p>
+  <div class="badge">Edição Ouro • 2 Anos</div>
 
   <audio id="radio" src="https://stream.zeno.fm/wzcgaal0dnltv"></audio>
 
-  <button onclick="playRadio()">▶ TOCAR</button>
+  <button onclick="playRadio()">▶ Ouvir Agora</button>
+
+  <div class="status">
+    Status: <span class="live">AO VIVO</span>
+  </div>
 </div>
 
 <script>
