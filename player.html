@@ -2,153 +2,56 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<title>Intercontinental Web Radio – Player Oficial</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intercontinental Web Radio • 2 Anos</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-:root{--gold:#FFD700;}
-*{margin:0;padding:0;box-sizing:border-box}
 body{
-  background:radial-gradient(circle at top,#111,#000);
-  color:#fff;
-  font-family:'Orbitron',sans-serif;
-}
-header{text-align:center;padding:40px 20px}
-header h1{
-  font-family:'Cinzel',serif;
-  font-size:clamp(2.5rem,6vw,5rem);
-  background:linear-gradient(to bottom,#FFD700,#fff,#FFD700);
-  -webkit-background-clip:text;
-  color:transparent;
-  text-shadow:0 0 40px gold;
-}
-header p{margin-top:10px;letter-spacing:6px;color:var(--gold)}
-
-.hero{
-  min-height:70vh;
+  margin:0;
+  background:#000;
+  color:#FFD700;
+  font-family:Arial, Helvetica, sans-serif;
   display:flex;
-  flex-direction:column;
-  justify-content:center;
   align-items:center;
-  gap:40px;
-  text-align:center;
+  justify-content:center;
+  height:100vh;
 }
-.hero a{
-  text-decoration:none;
-  padding:18px 45px;
-  border-radius:60px;
-  font-weight:800;
-  color:#000;
-  background:linear-gradient(to bottom,#FFD700,#fff,#FFD700);
+.player{
+  border:4px solid #FFD700;
+  border-radius:40px;
+  padding:40px;
+  text-align:center;
   box-shadow:0 0 40px gold;
 }
-.sections{
-  max-width:1100px;
-  margin:auto;
-  padding:80px 20px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:30px;
-}
-.card{
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,215,0,.3);
-  border-radius:30px;
-  padding:30px;
-}
-.card h3{color:var(--gold);margin-bottom:10px}
-
-footer{
-  text-align:center;
-  padding:30px;
-  border-top:1px solid rgba(255,215,0,.3);
-  color:var(--gold);
-}
-
-/* CIBORGUE */
-.cyborg-container{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  width:120px;
-  height:120px;
-  z-index:9999;
-  animation:float 4s ease-in-out infinite;
-}
-.cyborg-head{
-  width:100%;
-  height:100%;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at 35% 35%, #ffe6b0, #003),
-    radial-gradient(circle at 65% 35%, #aee7ff, #003);
-  border:3px solid gold;
-  box-shadow:0 0 25px gold;
+button{
+  background:#000;
+  border:3px solid #FFD700;
+  color:#FFD700;
+  font-size:22px;
+  padding:20px 40px;
+  border-radius:50px;
   cursor:pointer;
 }
-.cyborg-talk{
-  position:absolute;
-  bottom:130px;
-  right:0;
-  width:260px;
-  background:rgba(0,0,0,.9);
-  color:gold;
-  border:1px solid gold;
-  border-radius:20px;
-  padding:12px 18px;
-  display:none;
-}
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-12px)}
-}
+button:hover{background:#FFD700;color:#000}
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>INTERCONTINENTAL</h1>
-  <p>WEB RADIO • 2 ANOS</p>
-</header>
+<div class="player">
+  <h1>🎧 Intercontinental Web Radio</h1>
+  <p>Player Oficial – 2 Anos</p>
 
-<section class="hero">
-  <a href="player.html">▶ OUVIR AGORA</a>
-</section>
+  <audio id="radio" src="https://stream.zeno.fm/wzcgaal0dnltv"></audio>
 
-<section class="sections">
-  <div class="card"><h3>🎧 A Rádio</h3><p>Conectando continentes há 2 anos.</p></div>
-  <div class="card"><h3>🤖 IA Oficial</h3><p>Ciborgue loira olhos azuis.</p></div>
-  <div class="card"><h3>🚀 Portal</h3><p>Em constante evolução.</p></div>
-</section>
-
-<footer>
-  © Intercontinental Web Radio • 2 Anos no Ar
-</footer>
-
-<div class="cyborg-container">
-  <div class="cyborg-head" id="cyborgHead"></div>
-  <div class="cyborg-talk" id="cyborgTalk">
-    👋 Olá! Sou a IA oficial da Intercontinental.
-  </div>
+  <button onclick="playRadio()">▶ TOCAR</button>
 </div>
 
 <script>
-const msgs=[
- "🎧 Bem-vindo à Intercontinental!",
- "👑 Edição Ouro – 2 anos!",
- "▶ Clique em OUVIR AGORA",
- "🤖 IA loira, olhos azuis"
-];
-let i=0;
-document.getElementById("cyborgHead").onclick=()=>{
-  const t=document.getElementById("cyborgTalk");
-  t.style.display="block";
-  t.innerText=msgs[i];
-  i=(i+1)%msgs.length;
-};
+function playRadio(){
+  const radio = document.getElementById('radio');
+  radio.play();
+}
 </script>
 
 </body>
