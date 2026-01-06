@@ -2,72 +2,319 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Intercontinental Web Radio – Portal Oficial</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Intercontinental Web Radio - Portal Ciborgue Viva</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-html,body{
-  width:100%;
-  height:100%;
+:root{
+  --gold:#FFD700;
+  --gold-glow:rgba(255,215,0,0.6);
+  --bg-dark:#0a0a20;
 }
 body{
-  margin:0;
-  background:#000;
-  color:#FFD700;
-  font-family:Arial, Helvetica, sans-serif;
+  margin:0; padding:0;
+  font-family:'Orbitron',sans-serif;
+  background: radial-gradient(circle at center,#0a0a20 0%,#000 100%);
+  color:white;
 }
+
+/* Menu superior fixo */
 header{
-  background:#000;
-  border-bottom:2px solid #FFD700;
-  padding:15px;
+  background:#000000cc;
+  backdrop-filter:blur(8px);
+  padding:15px 0;
   display:flex;
   justify-content:center;
-}
-nav{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-}
-nav a{
-  color:#FFD700;
-  text-decoration:none;
-  font-weight:bold;
-}
-nav a:hover{
-  color:#fff;
-}
-main{
-  padding:30px;
-  text-align:center;
-}
-iframe{
+  gap:30px;
+  position:fixed;
+  top:0;
   width:100%;
-  height:70vh;
-  border:1px solid #FFD700;
+  z-index:100;
 }
+header a{
+  color:var(--gold);
+  font-weight:700;
+  text-transform:uppercase;
+  text-decoration:none;
+  padding:5px 10px;
+  border-radius:8px;
+  transition:0.3s;
+}
+header a:hover{
+  background:var(--gold);
+  color:black;
+}
+
+/* Mascote container */
+#mascote-container{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin-top:120px;
+  perspective:1000px;
+}
+#mascote-wrapper{
+  position:relative;
+  width:250px;
+  height:380px;
+}
+#mascote{
+  width:100%;
+  height:auto;
+  border-radius:20px;
+  box-shadow:0 0 40px var(--gold);
+  transition:transform 0.1s ease-out;
+  transform-origin:center bottom;
+}
+
+/* Olhos */
+.eye{
+  position:absolute;
+  width:22px;
+  height:22px;
+  background:white;
+  border-radius:50%;
+  top:120px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.pupil{
+  width:12px;
+  height:12px;
+  background:#00f;
+  border-radius:50%;
+  transform-origin:center;
+  transition:0.05s;
+}
+
+/* Boca */
+.mouth{
+  position:absolute;
+  width:60px;
+  height:15px;
+  bottom:90px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ff4f4f;
+  border-radius:10px;
+  transition:height 0.05s;
+}
+
+/* Chat */
+#chat-container{
+  width:90%;
+  max-width:500px;
+  background:#000000dd;
+  border:2px solid var(--gold);
+  border-radius:20px;
+  margin-top:30px;
+  padding:15px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+#chat-box{
+  height:300px;
+  overflow-y:auto;
+  background:#111;
+  border-radius:12px;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  font-family: 'Orbitron', monospace;
+}
+.message{
+  padding:6px 12px;
+  border-radius:12px;
+  max-width:80%;
+  word-wrap:break-word;
+  animation:fadeIn 0.3s ease-in;
+}
+.user-msg{
+  background:var(--gold);
+  color:black;
+  align-self:flex-end;
+}
+.bot-msg{
+  background:#222;
+  color:var(--gold);
+  align-self:flex-start;
+}
+@keyframes fadeIn{
+  from {opacity:0; transform:translateY(10px);}
+  to {opacity:1; transform:translateY(0);}
+}
+
+/* Input */
+#chat-input-container{
+  display:flex;
+  gap:10px;
+}
+#chat-input{
+  flex:1;
+  padding:8px;
+  border-radius:12px;
+  border:2px solid var(--gold);
+  background:#111;
+  color:white;
+}
+#chat-send{
+  padding:8px 15px;
+  border:none;
+  background:var(--gold);
+  color:black;
+  font-weight:700;
+  border-radius:12px;
+  cursor:pointer;
+  transition:0.3s;
+}
+#chat-send:hover{
+  background:#fff176;
+}
+
+/* Expressions */
+#mascote.speaking{ transform:scale(1.05) rotate(0deg); }
+#mascote.happy{ transform:scale(1.08) rotate(-3deg); }
+#mascote.surprised{ transform:scale(1.08) rotate(3deg); }
+#mascote.bounce{ animation:bounceAnim 0.4s infinite alternate; }
+@keyframes bounceAnim{0%{transform:translateY(0);}50%{transform:translateY(-5px);}100%{transform:translateY(0);}}
 </style>
 </head>
-
 <body>
 
 <header>
-  <nav>
-    <a href="#">Início</a>
-    <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank">Pandora</a>
-    <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank">Dynac-X</a>
-    <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank">Vox I.A</a>
-    <a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank">YouTube</a>
-  </nav>
+  <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank">Pandora & Euterpe</a>
+  <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank">Dynac X Play</a>
+  <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank">Vox I.A</a>
+  <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank">Blog Trends</a>
+  <a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank">YouTube</a>
+  <a href="player.html" target="_blank" style="background:var(--gold);color:black;">Abrir Player</a>
 </header>
 
-<main>
-  <h1>🎧 Intercontinental Web Radio</h1>
-  <p>Portal Oficial – Edição Ouro 2 Anos</p>
+<div id="mascote-container">
+  <div id="mascote-wrapper">
+    <img id="mascote" src="https://i.ibb.co/3p3fBfV/android-blonde-blue-eyes.png" alt="Mascote Ciborgue">
+    <div class="eye" style="left:65px;"><div class="pupil"></div></div>
+    <div class="eye" style="left:160px;"><div class="pupil"></div></div>
+    <div class="mouth"></div>
+  </div>
+  
+  <div id="chat-container">
+    <div id="chat-box"></div>
+    <div id="chat-input-container">
+      <input type="text" id="chat-input" placeholder="Digite sua pergunta..."/>
+      <button id="chat-send">Enviar</button>
+    </div>
+  </div>
+</div>
 
-  <p style="margin-top:20px">Se o player aparecer abaixo, está tudo certo 👇</p>
+<script>
+// --- Cursor tracking ---
+const eyes = document.querySelectorAll('.eye');
+const pupils = document.querySelectorAll('.pupil');
+document.addEventListener('mousemove', e=>{
+  eyes.forEach((eye,index)=>{
+    const rect = eye.getBoundingClientRect();
+    const eyeX = rect.left + rect.width/2;
+    const eyeY = rect.top + rect.height/2;
+    const dx = e.clientX - eyeX;
+    const dy = e.clientY - eyeY;
+    const angle = Math.atan2(dy,dx);
+    const dist = Math.min(Math.hypot(dx,dy)/20, 6);
+    pupils[index].style.transform = `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`;
+  });
+});
 
-  <iframe src="player.html"></iframe>
-</main>
+// --- Blinking ---
+const mascote = document.getElementById('mascote');
+const mouth = document.querySelector('.mouth');
+function blink(){mascote.style.filter='brightness(0.8)'; setTimeout(()=>mascote.style.filter='brightness(1)',150);}
+setInterval(blink,Math.random()*3000+2000);
+
+// --- Chat logic ---
+const responses = {
+  'qual a musica atual':'A música atual está tocando no player! Abra o player para ouvir.',
+  'qual é a radio':'Você está na Intercontinental Web Radio, 2 anos de sucesso!',
+  'playlist':'Nossa playlist tem Rock, Pop, Eletrônica, Jazz e muito mais!',
+  'quem é a mascote':'Eu sou sua assistente virtual, uma ciborgue futurista da Intercontinental!',
+  'ola':'Olá! Como você está hoje?',
+  'default':'Desculpe, não entendi. Pergunte sobre músicas, rádio ou playlists!'
+};
+const chatBox = document.getElementById('chat-box');
+const chatInput = document.getElementById('chat-input');
+const chatSend = document.getElementById('chat-send');
+
+function appendMessage(text, sender){
+  const div = document.createElement('div');
+  div.classList.add('message', sender==='user'?'user-msg':'bot-msg');
+  div.textContent=text;
+  chatBox.appendChild(div);
+  chatBox.scrollTop=chatBox.scrollHeight;
+}
+
+function setMascoteExpression(expression, duration=1000){
+  mascote.className=''; 
+  mascote.classList.add(expression);
+  setTimeout(()=>mascote.className='',duration);
+}
+
+function botResponse(msg){
+  const key = msg.toLowerCase().trim();
+  const response = responses[key] || responses['default'];
+  if(response.includes('Olá')) setMascoteExpression('happy', response.length*40);
+  else if(response.includes('desculpe')) setMascoteExpression('surprised', response.length*40);
+  else setMascoteExpression('speaking', response.length*40);
+  appendMessage(response,'bot');
+}
+
+chatSend.addEventListener('click',()=>{
+  const msg=chatInput.value;
+  if(msg.trim()==='') return;
+  appendMessage(msg,'user');
+  botResponse(msg);
+  chatInput.value='';
+});
+
+chatInput.addEventListener('keydown', e=>{
+  if(e.key==='Enter') chatSend.click();
+});
+
+// --- Player Audio Reaction ---
+let audioCtx=null, analyser=null, source=null;
+const audio = new Audio('https://stream.zeno.fm/wzcgaal0dnltv');
+audio.crossOrigin='anonymous';
+audio.loop=true;
+audio.volume=0.5;
+
+function setupAudio(){
+  audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+  source = audioCtx.createMediaElementSource(audio);
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 256;
+  source.connect(analyser);
+  analyser.connect(audioCtx.destination);
+  audio.play();
+}
+setupAudio();
+
+const buffer = new Uint8Array(128);
+
+function animateMascote(){
+  requestAnimationFrame(animateMascote);
+  if(analyser){
+    analyser.getByteFrequencyData(buffer);
+    const avg = buffer.reduce((a,b)=>a+b)/buffer.length;
+    // Boca e brilho conforme intensidade
+    const scale = 1 + avg/600;
+    mascote.style.transform = `scale(${scale}) rotate(${Math.sin(Date.now()*0.002)*5}deg)`;
+    mouth.style.height = `${Math.min(25,5 + avg/10)}px`;
+  }
+}
+animateMascote();
+</script>
 
 </body>
 </html>
