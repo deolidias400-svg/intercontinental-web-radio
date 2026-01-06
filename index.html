@@ -2,268 +2,34 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Intercontinental Web Radio • Portal Oficial</title>
+<title>Intercontinental Web Radio - Portal Oficial</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --gold:#FFD700;
-  --gold-glow:rgba(255,215,0,0.6);
-  --dark:#050505;
-}
-
-*{box-sizing:border-box}
-
 body{
   margin:0;
-  font-family:'Orbitron',sans-serif;
+  min-height:100vh;
   background:radial-gradient(circle at top,#111,#000);
+  font-family:'Orbitron',sans-serif;
   color:white;
 }
 
-/* ===== MENU ===== */
+/* ===== TOPO PORTAL ===== */
 header{
-  position:fixed;
-  top:0; left:0;
-  width:100%;
-  background:rgba(0,0,0,0.9);
-  border-bottom:2px solid var(--gold);
-  box-shadow:0 0 20px var(--gold-glow);
-  z-index:1000;
-}
-
-nav{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:14px;
-  padding:14px;
-}
-
-nav a{
-  color:var(--gold);
-  text-decoration:none;
-  font-weight:700;
-  padding:6px 14px;
-  border-radius:20px;
-  border:1px solid transparent;
-  transition:0.3s;
-}
-
-nav a:hover{
-  border-color:var(--gold);
-  box-shadow:0 0 15px var(--gold);
-}
-
-/* ===== HERO ===== */
-main{
-  padding-top:120px;
-  max-width:1200px;
-  margin:auto;
-  padding-left:20px;
-  padding-right:20px;
-}
-
-.hero{
+  padding:30px 20px;
   text-align:center;
-  margin-bottom:60px;
+  border-bottom:2px solid gold;
+  box-shadow:0 0 30px gold;
 }
 
-.hero h1{
-  font-size:3rem;
-  color:var(--gold);
-  text-shadow:0 0 25px var(--gold);
+header h1{
+  font-size:2.5rem;
+  color:gold;
+  text-shadow:0 0 20px gold;
+  margin:0;
 }
 
-.hero p{
-  opacity:0.85;
-}
-
-.open-player{
-  display:inline-block;
-  margin-top:20px;
-  padding:14px 30px;
-  background:var(--gold);
-  color:black;
-  font-weight:900;
-  border-radius:40px;
-  text-decoration:none;
-  box-shadow:0 0 30px var(--gold);
-  transition:0.3s;
-}
-
-.open-player:hover{
-  transform:scale(1.08);
-}
-
-/* ===== MASCOTE ===== */
-.mascote-area{
-  display:flex;
-  flex-wrap:wrap;
-  gap:40px;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:80px;
-}
-
-.mascote{
-  width:260px;
-  height:360px;
-  border-radius:30px;
-  background:linear-gradient(145deg,#111,#000);
-  border:2px solid var(--gold);
-  box-shadow:0 0 40px var(--gold);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  animation:float 6s ease-in-out infinite;
-}
-
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-18px)}
-}
-
-.mascote img{
-  width:90%;
-  border-radius:20px;
-}
-
-/* ===== CHAT ===== */
-.chat-box{
-  width:320px;
-  background:#020202;
-  border:2px solid var(--gold);
-  border-radius:20px;
-  box-shadow:0 0 30px var(--gold-glow);
-  display:flex;
-  flex-direction:column;
-}
-
-.chat-messages{
-  padding:15px;
-  height:260px;
-  overflow-y:auto;
-  font-size:0.85rem;
-}
-
-.msg-bot{
-  color:#7dd3fc;
-  margin-bottom:10px;
-}
-
-.msg-user{
-  color:var(--gold);
-  text-align:right;
-  margin-bottom:10px;
-}
-
-.chat-input{
-  display:flex;
-  border-top:1px solid var(--gold);
-}
-
-.chat-input input{
-  flex:1;
-  padding:10px;
-  background:black;
-  border:none;
-  color:white;
-}
-
-.chat-input button{
-  background:var(--gold);
-  border:none;
-  padding:0 18px;
-  font-weight:900;
-  cursor:pointer;
-}
-
-/* ===== FOOTER ===== */
-footer{
-  text-align:center;
-  padding:30px;
-  opacity:0.6;
-  font-size:0.8rem;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-<nav>
-  <a href="player.html">🎧 Player</a>
-  <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank">Pandora & Euterpe</a>
-  <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank">Dynac X Play</a>
-  <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank">Vox I.A</a>
-  <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank">Blog Musical</a>
-  <a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank">YouTube</a>
-</nav>
-</header>
-
-<main>
-
-<section class="hero">
-  <h1>Intercontinental Web Radio</h1>
-  <p>🌍 2 Anos de sucesso conectando o mundo pela música</p>
-  <a class="open-player" href="player.html">ABRIR PLAYER OURO</a>
-</section>
-
-<section class="mascote-area">
-
-  <div class="mascote">
-    <!-- IMAGEM DA MASCOTE -->
-    <img src="https://i.imgur.com/8JZQZpB.png" alt="Mascote Intercontinental">
-  </div>
-
-  <div class="chat-box">
-    <div class="chat-messages" id="chat">
-      <div class="msg-bot">👋 Olá! Sou a assistente da Intercontinental Web Radio.</div>
-      <div class="msg-bot">Pergunte sobre músicas, player ou programação 🎶</div>
-    </div>
-    <div class="chat-input">
-      <input id="userInput" placeholder="Digite sua pergunta...">
-      <button onclick="sendMsg()">OK</button>
-    </div>
-  </div>
-
-</section>
-
-</main>
-
-<footer>
-© Intercontinental Web Radio • Portal Oficial
-</footer>
-
-<script>
-function sendMsg(){
-  const input=document.getElementById("userInput");
-  const chat=document.getElementById("chat");
-  const text=input.value.trim();
-  if(!text) return;
-
-  chat.innerHTML+=`<div class="msg-user">${text}</div>`;
-  input.value="";
-
-  let response="🎧 A Intercontinental Web Radio toca o melhor da música mundial.";
-  const t=text.toLowerCase();
-
-  if(t.includes("player")) response="👉 Clique em ABRIR PLAYER para ouvir ao vivo com efeitos especiais.";
-  if(t.includes("musica")) response="🎶 Nossa rádio toca sucessos, clássicos e tendências globais.";
-  if(t.includes("volume")) response="🔊 O controle de volume está disponível dentro do player.";
-  if(t.includes("oi")||t.includes("olá")) response="👋 Olá! Seja bem-vindo ao portal Intercontinental.";
-  if(t.includes("tema")) response="🎨 O player possui 26 temas visuais diferentes.";
-
-  setTimeout(()=>{
-    chat.innerHTML+=`<div class="msg-bot">${response}</div>`;
-    chat.scrollTop=chat.scrollHeight;
-  },600);
-}
-</script>
-
-</body>
-</html>
+/* =====
