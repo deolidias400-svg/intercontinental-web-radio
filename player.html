@@ -93,10 +93,33 @@ button{
   0%,100%{opacity:1}
   50%{opacity:.4}
 }
+  .close-btn{
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 9999;
+  color: #FFD700;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 8px 14px;
+  border: 1px solid rgba(255,215,0,0.6);
+  border-radius: 22px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover{
+  background: #FFD700;
+  color: #000;
+  box-shadow: 0 0 18px #FFD700;
+}
+
 </style>
 </head>
 
 <body>
+<a href="index.html" class="close-btn">✖ Fechar</a>
 
 <div class="player" id="player">
   <h1>🎧 Intercontinental Web Radio</h1>
