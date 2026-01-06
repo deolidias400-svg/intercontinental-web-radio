@@ -5,11 +5,8 @@
 <title>Intercontinental Web Radio • 2 Anos</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-
 <style>
-:root{
-  --gold:#FFD700;
-}
+:root{--gold:#FFD700;}
 body{
   margin:0;
   background:radial-gradient(circle at top,#111,#000);
@@ -21,99 +18,31 @@ body{
   margin:auto;
   padding:20px;
 }
-h1{
-  text-align:center;
-  text-shadow:0 0 30px gold;
-}
-.subtitle{
-  text-align:center;
-  letter-spacing:5px;
-  margin-bottom:20px;
-}
-.panel{
-  border:4px solid var(--gold);
-  border-radius:40px;
-  padding:20px;
-  box-shadow:0 0 60px gold;
-  background:linear-gradient(145deg,#111,#000);
-}
-.section{
-  border:2px solid gold;
-  border-radius:25px;
-  padding:15px;
-  margin-bottom:20px;
-}
+h1{text-align:center;text-shadow:0 0 30px gold;}
+.subtitle{text-align:center;letter-spacing:5px;margin-bottom:20px;}
+.panel{border:4px solid var(--gold);border-radius:40px;padding:20px;box-shadow:0 0 60px gold;background:linear-gradient(145deg,#111,#000);}
+.section{border:2px solid gold;border-radius:25px;padding:15px;margin-bottom:20px;}
 .lcd{
-  background:#021a0f;
-  color:#6effb5;
-  padding:15px;
-  border-radius:15px;
-  font-size:0.85rem;
-  box-shadow:inset 0 0 20px #000;
+  background:#021a0f;color:#6effb5;padding:15px;border-radius:15px;font-size:0.85rem;
+  box-shadow:inset 0 0 20px #000;text-align:center;
 }
-.controls{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  flex-wrap:wrap;
-}
-.btn{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  border:none;
-  font-size:1.4rem;
-  cursor:pointer;
-  background:linear-gradient(#FFD700,#b8860b);
-  box-shadow:0 0 25px gold;
-}
-.volPlus{box-shadow:0 0 25px blue;}
-.volMinus{box-shadow:0 0 25px red;}
-.range{width:200px;}
-.meters{
-  display:flex;
-  justify-content:space-around;
-  flex-wrap:wrap;
-}
-.meter{
-  width:160px;
-  height:160px;
-  border:3px solid gold;
-  border-radius:50%;
-  position:relative;
-}
-.meter span{
-  position:absolute;
-  font-size:0.6rem;
-}
-.needle{
-  position:absolute;
-  width:4px;
-  height:70px;
-  background:red;
-  bottom:50%;
-  left:50%;
-  transform-origin:bottom;
-}
+.controls{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;align-items:center;}
+.btn{width:70px;height:70px;border-radius:50%;border:none;font-size:1.4rem;cursor:pointer;background:linear-gradient(#FFD700,#b8860b);box-shadow:0 0 25px gold;color:#000;font-weight:bold;}
+.meter-container{display:flex;justify-content:space-around;flex-wrap:wrap;margin-top:20px;}
+.meter{width:160px;height:160px;border:3px solid gold;border-radius:50%;position:relative;margin-bottom:15px;}
+.meter span{position:absolute;font-size:0.6rem;}
+.needle{position:absolute;width:4px;height:70px;background:red;bottom:50%;left:50%;transform-origin:bottom;transition:0.1s ease;}
 .label{text-align:center;margin-top:8px;font-size:0.75rem;}
-canvas{width:100%;height:120px;}
-.eq-buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  justify-content:center;
-}
-.eq{
-  padding:8px 14px;
-  border:1px solid gold;
-  border-radius:10px;
-  cursor:pointer;
-}
+canvas{width:100%;height:120px;background:#000;}
+.eq-buttons{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:10px;}
+.eq{padding:8px 14px;border:1px solid gold;border-radius:10px;cursor:pointer;}
+.eq.active{background:gold;color:#000;}
 .footer{text-align:center;margin-top:15px;}
 .footer a{color:gold;text-decoration:none;}
+.knob-container{position:relative;width:70px;height:70px;}
+.knob{width:70px;height:70px;border-radius:50%;background:linear-gradient(#222,#444);border:3px solid gold;cursor:pointer;box-shadow:0 0 20px #FFD700;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#fff;user-select:none;}
 </style>
 </head>
-
 <body>
 <div class="wrapper">
 
@@ -127,12 +56,12 @@ canvas{width:100%;height:120px;}
 <div class="section controls">
 <button class="btn" onclick="togglePlay()">▶</button>
 <button class="btn" onclick="toggleBoost()">⚡</button>
-<button class="btn volMinus" onclick="volDown()">−</button>
-<input type="range" class="range" min="0" max="1" step="0.01" value="0.8" onchange="setVolume(this.value)">
-<button class="btn volPlus" onclick="volUp()">+</button>
+<div class="knob-container">
+<div class="knob" id="volumeKnob">VOL</div>
+</div>
 </div>
 
-<div class="section meters">
+<div class="section meter-container">
 <div>
 <div class="meter"><div id="rpm" class="needle"></div></div>
 <div class="label">RPM</div>
@@ -166,64 +95,78 @@ const stream="https://stream.zeno.fm/wzcgaal0dnltv";
 const audio=new Audio(stream);
 audio.crossOrigin="anonymous";
 let ctx,src,analyser;
-let eq="FLAT",theme="GOLD",boost=false;
+let eq="FLAT",theme="Solaris Gold",boost=false,volume=0.5;
+const THEMES=[
+"Solaris Gold","Imperial Purple","Nebula Blue","Emerald Green","Ruby Red","Cyan Glow","Fusion Green","Magma Flow",
+"Midnight Indigo","Acid Lime","Petal Rose","Ocean Teal","Monolith Slate","Black Hole","Amber Glow","Prism Violet",
+"Arctic Frost","Forest Breath","Stellar Wind","Blood Pulse","Matrix Green","Nova Burst","Absolute Dark","Phantom Aura",
+"Horizon Glow","Thermal Reactor"
+];
 
 function init(){
   ctx=new AudioContext();
   src=ctx.createMediaElementSource(audio);
   analyser=ctx.createAnalyser();
+  analyser.fftSize=256;
   src.connect(analyser);
   analyser.connect(ctx.destination);
 }
-function togglePlay(){
-  if(!ctx) init();
-  audio.paused?audio.play():audio.pause();
-}
-function toggleBoost(){boost=!boost;audio.volume=boost?1:audio.volume;}
-function setVolume(v){audio.volume=v;}
-function volUp(){audio.volume=Math.min(1,audio.volume+0.05);}
-function volDown(){audio.volume=Math.max(0,audio.volume-0.05);}
+
+function togglePlay(){if(!ctx)init();audio.paused?audio.play():audio.pause();}
+function toggleBoost(){boost=!boost;audio.volume=boost?1:volume;}
+
+const lcd=document.getElementById("lcd");
+setInterval(()=>{
+  const d=new Date();
+  lcd.innerHTML=`Data: ${d.toLocaleDateString()} | Hora: ${d.toLocaleTimeString()}<br>
+  EQ: ${eq} | Tema: ${theme}<br>
+  Status: ${navigator.onLine?"ONLINE":"OFFLINE"} | ${audio.paused?"PAUSADO":"TOCANDO"}`;
+},500);
+
+const eqsArr=["FLAT","CLASSIC","ROCK","STADIUM","SALOON","JAZZ","BOOST"];
+const eqDiv=document.getElementById("eqs");
+eqsArr.forEach(e=>{
+ let b=document.createElement("div");
+ b.className="eq";
+ b.innerText=e;
+ b.onclick=()=>{
+   eq=e;
+   document.querySelectorAll(".eq").forEach(el=>el.classList.remove("active"));
+   b.classList.add("active");
+ };
+ eqDiv.appendChild(b);
+});
 
 const canvas=document.getElementById("spectrum");
 const c=canvas.getContext("2d");
 canvas.width=900;canvas.height=120;
 
 function animate(){
-requestAnimationFrame(animate);
-if(!analyser) return;
-let data=new Uint8Array(analyser.frequencyBinCount);
-analyser.getByteFrequencyData(data);
-c.clearRect(0,0,canvas.width,canvas.height);
-for(let i=0;i<64;i++){
- let v=data[i]/255;
- c.fillStyle=`rgba(255,215,0,${0.3+v})`;
- c.fillRect(i*14,canvas.height,10,-v*canvas.height);
-}
-document.getElementById("rpm").style.transform=`rotate(${data[10]/255*180}deg)`;
-document.getElementById("bass").style.transform=`rotate(${data[5]/255*180}deg)`;
-document.getElementById("hz").style.transform=`rotate(${data[40]/255*180}deg)`;
+ requestAnimationFrame(animate);
+ if(!analyser) return;
+ let data=new Uint8Array(analyser.frequencyBinCount);
+ analyser.getByteFrequencyData(data);
+ c.clearRect(0,0,canvas.width,canvas.height);
+ for(let i=0;i<64;i++){
+   let v=data[i]/255;
+   c.fillStyle=`rgba(255,215,0,${0.3+v})`;
+   c.fillRect(i*14,canvas.height,10,-v*canvas.height);
+ }
+ document.getElementById("rpm").style.transform=`rotate(${data[10]/255*180}deg)`;
+ document.getElementById("bass").style.transform=`rotate(${data[5]/255*180}deg)`;
+ document.getElementById("hz").style.transform=`rotate(${data[40]/255*180}deg)`;
 }
 animate();
 
-const lcd=document.getElementById("lcd");
-setInterval(()=>{
- const d=new Date();
- lcd.innerHTML=
- `Data: ${d.toLocaleDateString()} | Hora: ${d.toLocaleTimeString()}<br>
- EQ: ${eq} | Tema: ${theme}<br>
- Status: ${navigator.onLine?"ONLINE":"OFFLINE"} | ${audio.paused?"PAUSADO":"TOCANDO"}`;
-},1000);
-
-const eqs=["FLAT","CLASSIC","ROCK","STADIUM","SALOON","JAZZ","BOOST"];
-const eqDiv=document.getElementById("eqs");
-eqs.forEach(e=>{
- let b=document.createElement("div");
- b.className="eq";
- b.innerText=e;
- b.onclick=()=>eq=e;
- eqDiv.appendChild(b);
-});
+// KNOB VOL
+let knob=document.getElementById("volumeKnob");
+let angle=0;
+knob.addEventListener("click",()=>{volume=Math.min(1,volume+0.05);audio.volume=volume;angle+=10;updateKnob();});
+knob.addEventListener("contextmenu",e=>{e.preventDefault();volume=Math.max(0,volume-0.05);audio.volume=volume;angle-=10;updateKnob();});
+function updateKnob(){
+ knob.style.transform=`rotate(${angle}deg)`;
+ knob.style.boxShadow=`0 0 25px ${volume>0.5?'blue':'red'}`;
+}
 </script>
-
 </body>
 </html>
