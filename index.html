@@ -2,13 +2,13 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Intercontinental Web Radio • 2 Anos de Sucesso</title>
+<title>Intercontinental Web Radio • Portal Oficial</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
   margin:0;
-  background:#000;
+  background:radial-gradient(circle at top, #151515 0%, #000 70%);
   color:#FFD700;
   font-family:Arial, Helvetica, sans-serif;
 }
@@ -17,8 +17,9 @@ body{
 nav{
   display:flex;
   justify-content:center;
-  gap:25px;
-  padding:15px;
+  flex-wrap:wrap;
+  gap:18px;
+  padding:16px;
   border-bottom:1px solid #FFD70044;
 }
 nav a{
@@ -26,28 +27,175 @@ nav a{
   text-decoration:none;
   font-weight:bold;
 }
-nav a:hover{ text-shadow:0 0 10px gold; }
+nav a:hover{
+  text-shadow:0 0 15px gold;
+}
 
-/* CONTAINER */
+/* CONTEÚDO */
 .container{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
   align-items:center;
-  padding:40px;
-  gap:40px;
+  gap:50px;
+  padding:50px 20px;
+}
+
+/* TEXTO */
+.info{
+  max-width:420px;
+}
+.info h1{
+  font-size:2.6rem;
+  margin-bottom:10px;
+}
+.info p{
+  opacity:0.9;
+}
+.btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:14px 30px;
+  border-radius:30px;
+  background:linear-gradient(135deg,#FFD700,#fff1a8);
+  color:#000;
+  font-weight:bold;
+  text-decoration:none;
+  box-shadow:0 0 30px #FFD70088;
 }
 
 /* MASCOTE */
 .mascote{
   width:280px;
   text-align:center;
-  animation:float 6s ease-in-out infinite;
+  animation:flutuar 6s ease-in-out infinite;
 }
-@keyframes float{
+@keyframes flutuar{
   0%{transform:translateY(0)}
-  50%{transform:translateY(-15px)}
+  50%{transform:translateY(-18px)}
   100%{transform:translateY(0)}
 }
 
-.mascote img
+.frame{
+  padding:12px;
+  border-radius:24px;
+  background:linear-gradient(135deg,#FFD70055,#000);
+  box-shadow:0 0 40px #FFD70055;
+}
+
+.mascote img{
+  width:100%;
+  border-radius:18px;
+  animation:brilho 4s ease-in-out infinite;
+}
+@keyframes brilho{
+  0%,100%{filter:brightness(1)}
+  50%{filter:brightness(1.15)}
+}
+
+.nome{
+  margin-top:10px;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+
+/* CHAT */
+.chat{
+  margin-top:14px;
+}
+.chat input{
+  width:100%;
+  padding:12px;
+  border-radius:20px;
+  border:none;
+  outline:none;
+}
+.chat p{
+  margin-top:10px;
+  font-size:0.95rem;
+  min-height:24px;
+  transition:all 0.3s ease;
+}
+.chat p.ativo{
+  text-shadow:0 0 10px gold;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank">Pandora & Euterpe</a>
+  <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank">Dynac X-Play</a>
+  <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank">Vox I.A</a>
+  <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank">Blog</a>
+  <a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank">YouTube</a>
+</nav>
+
+<div class="container">
+
+  <div class="info">
+    <h1>🎧 Intercontinental Web Radio</h1>
+    <p>Dois anos conectando o mundo pela música, tecnologia e inovação sonora.</p>
+    <a class="btn" href="player.html">▶ Abrir Player Ao Vivo</a>
+  </div>
+
+  <div class="mascote">
+    <div class="frame">
+      <img src="https://i.imgur.com/7Z6FQ0p.png" alt="Mascote Intercontinental">
+    </div>
+    <div class="nome">ANDROID INTERCONTINENTAL</div>
+
+    <div class="chat">
+      <input id="pergunta" placeholder="Pergunte sobre músicas, rádio ou player..."
+        onkeydown="if(event.key==='Enter')responder()">
+      <p id="resposta"></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const respostas = {
+  musica:[
+    "🎶 Tocamos o melhor da música internacional 24 horas!",
+    "A música conecta o mundo — aqui ela nunca para.",
+    "Temos vários estilos para todos os gostos."
+  ],
+  radio:[
+    "📻 A Intercontinental Web Radio transmite inovação e qualidade.",
+    "Somos uma rádio digital com alcance global."
+  ],
+  player:[
+    "▶ Clique em 'Abrir Player' e curta ao vivo!",
+    "Nosso player foi criado para máxima imersão sonora."
+  ],
+  ola:[
+    "Olá! Seja muito bem-vindo(a) 💛",
+    "Oi! Pronto(a) para curtir boa música?"
+  ]
+};
+
+function responder(){
+  const q = document.getElementById("pergunta").value.toLowerCase();
+  let grupo = "ola";
+
+  if(q.includes("music")) grupo="musica";
+  else if(q.includes("radio")) grupo="radio";
+  else if(q.includes("player")) grupo="player";
+
+  const lista = respostas[grupo];
+  const r = lista[Math.floor(Math.random()*lista.length)];
+
+  const el = document.getElementById("resposta");
+  el.classList.remove("ativo");
+  void el.offsetWidth;
+  el.classList.add("ativo");
+  el.innerText = r;
+
+  document.getElementById("pergunta").value="";
+}
+</script>
+
+</body>
+</html>
