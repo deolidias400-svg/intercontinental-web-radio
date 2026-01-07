@@ -8,7 +8,7 @@
 <style>
 body{
   margin:0;
-  background:radial-gradient(circle at top, #151515 0%, #000 70%);
+  background:#000;
   color:#FFD700;
   font-family:Arial, Helvetica, sans-serif;
 }
@@ -29,7 +29,7 @@ nav a{
 }
 nav a:hover{ text-shadow:0 0 15px gold; }
 
-/* CONTAINER */
+/* LAYOUT */
 .container{
   display:flex;
   flex-wrap:wrap;
@@ -55,37 +55,19 @@ nav a:hover{ text-shadow:0 0 15px gold; }
   color:#000;
   font-weight:bold;
   text-decoration:none;
-  box-shadow:0 0 30px #FFD70088;
 }
 
 /* MASCOTE */
 .mascote{
   width:300px;
   text-align:center;
-  animation:flutuar 6s ease-in-out infinite;
 }
-@keyframes flutuar{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-18px)}
-}
-
-.frame{
-  padding:12px;
-  border-radius:26px;
-  background:linear-gradient(135deg,#FFD70055,#000);
-  box-shadow:0 0 40px #FFD70055;
-}
-
 .mascote img{
-  width:100%;
-  border-radius:20px;
-  animation:brilho 4s infinite;
+  width:260px;
+  border-radius:18px;
+  display:block;
+  margin:auto;
 }
-@keyframes brilho{
-  0%,100%{filter:brightness(1)}
-  50%{filter:brightness(1.15)}
-}
-
 .nome{
   margin-top:10px;
   font-weight:bold;
@@ -98,18 +80,22 @@ nav a:hover{ text-shadow:0 0 15px gold; }
 }
 .chat input{
   width:100%;
-  padding:12px;
-  border-radius:22px;
+  padding:10px;
+  border-radius:18px;
   border:none;
-  outline:none;
+}
+.chat button{
+  margin-top:10px;
+  padding:8px 20px;
+  border-radius:20px;
+  border:none;
+  background:gold;
+  font-weight:bold;
+  cursor:pointer;
 }
 .chat p{
   margin-top:12px;
   min-height:40px;
-  transition:all .3s ease;
-}
-.chat p.ativo{
-  text-shadow:0 0 12px gold;
 }
 </style>
 </head>
@@ -128,19 +114,17 @@ nav a:hover{ text-shadow:0 0 15px gold; }
 
   <div class="info">
     <h1>🎧 Intercontinental Web Radio</h1>
-    <p>Dois anos conectando música, tecnologia e inovação sonora.</p>
+    <p>Portal oficial • 2 anos conectando música e tecnologia.</p>
     <a class="btn" href="player.html">▶ Abrir Player Ao Vivo</a>
   </div>
 
   <div class="mascote">
-    <div class="frame">
-      <img src="https://i.imgur.com/7Z6FQ0p.png" alt="Mascote Intercontinental">
-    </div>
+    <img src="https://i.imgur.com/7Z6FQ0p.png" alt="Android Intercontinental">
     <div class="nome">ANDROID INTERCONTINENTAL</div>
 
     <div class="chat">
-      <input id="input" placeholder="Pergunte algo para a Android..."
-       onkeydown="if(event.key==='Enter')IA()">
+      <input id="input" placeholder="Pergunte algo para a Android...">
+      <button onclick="IA()">Enviar</button>
       <p id="resposta"></p>
     </div>
   </div>
@@ -148,51 +132,19 @@ nav a:hover{ text-shadow:0 0 15px gold; }
 </div>
 
 <script>
-let ultimaIntencao = "";
-
 function IA(){
-  const texto = document.getElementById("input").value.toLowerCase();
+  const t = document.getElementById("input").value.toLowerCase();
   const r = document.getElementById("resposta");
 
-  let resposta = "";
+  let resposta = "Posso falar sobre música, rádio ou o player 🎧";
 
-  if(texto.includes("oi") || texto.includes("ola")){
-    resposta = "Olá! Eu sou a Android da Intercontinental Web Radio 💛 Como posso ajudar?";
-    ultimaIntencao="ola";
-  }
-  else if(texto.includes("musica") || texto.includes("estilo")){
-    resposta = "Tocamos música internacional, eletrônica, pop, clássicos e tendências atuais 🎶";
-    ultimaIntencao="musica";
-  }
-  else if(texto.includes("radio")){
-    resposta = "A Intercontinental é uma rádio digital global, focada em qualidade e inovação 📻";
-    ultimaIntencao="radio";
-  }
-  else if(texto.includes("player")){
-    resposta = "Nosso player foi criado para imersão total. Clique em 'Abrir Player Ao Vivo'.";
-    ultimaIntencao="player";
-  }
-  else if(texto.includes("hora")){
-    resposta = "Agora são " + new Date().toLocaleTimeString("pt-BR") + " ⏰";
-    ultimaIntencao="hora";
-  }
-  else if(texto.includes("quem") && texto.includes("voce")){
-    resposta = "Sou a Android Intercontinental, assistente virtual da rádio 🤖✨";
-    ultimaIntencao="identidade";
-  }
-  else{
-    if(ultimaIntencao==="musica"){
-      resposta = "Quer saber sobre algum estilo musical específico?";
-    } else {
-      resposta = "Posso falar sobre música, rádio, player ou programação 🎧";
-    }
-  }
+  if(t.includes("oi") || t.includes("ola")) resposta = "Olá! Sou a Android da Intercontinental 💛";
+  else if(t.includes("musica")) resposta = "Tocamos música internacional, eletrônica e clássicos 🎶";
+  else if(t.includes("radio")) resposta = "A Intercontinental é uma rádio digital global 📻";
+  else if(t.includes("player")) resposta = "Clique em 'Abrir Player Ao Vivo' para ouvir agora ▶";
+  else if(t.includes("hora")) resposta = "Agora são " + new Date().toLocaleTimeString("pt-BR");
 
-  r.classList.remove("ativo");
-  void r.offsetWidth;
-  r.classList.add("ativo");
   r.innerText = resposta;
-
   document.getElementById("input").value="";
 }
 </script>
