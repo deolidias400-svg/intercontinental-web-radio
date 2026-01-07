@@ -2,179 +2,136 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Intercontinental Web Radio • Portal Oficial</title>
+<title>Intercontinental Web Radio • Player Oficial</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
   margin:0;
-  background:#000;
-  color:#FFD700;
-  font-family:Arial, Helvetica, sans-serif;
-}
-
-/* MENU */
-nav{
+  height:100vh;
+  background:radial-gradient(circle at top,#2b1a00,#000);
   display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:18px;
-  padding:16px;
-  border-bottom:1px solid #FFD70044;
-}
-nav a{
-  color:#FFD700;
-  text-decoration:none;
-  font-weight:bold;
-}
-nav a:hover{ text-shadow:0 0 12px gold; }
-
-/* LAYOUT */
-.container{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
   align-items:center;
-  gap:60px;
-  padding:60px 20px;
+  justify-content:center;
+  font-family:Arial, Helvetica, sans-serif;
+  color:#FFD700;
 }
 
-/* TEXTO */
-.info{
-  max-width:420px;
-}
-.info h1{ font-size:2.5rem; }
-.btn{
-  display:inline-block;
-  margin-top:20px;
-  padding:14px 30px;
-  border-radius:30px;
-  background:linear-gradient(135deg,#FFD700,#fff1a8);
-  color:#000;
-  font-weight:bold;
-  text-decoration:none;
-}
-
-/* ROBÔ CSS */
-.robot{
-  width:220px;
-  margin:auto;
-}
-.head{
-  background:#FFD700;
-  width:160px;
-  height:140px;
+.player{
+  width:360px;
+  background:linear-gradient(145deg,#ffd700,#a97c00,#ffd700);
   border-radius:20px;
-  margin:auto;
-  position:relative;
-}
-.eye{
-  width:18px;
-  height:18px;
-  background:#000;
-  border-radius:50%;
-  position:absolute;
-  top:45px;
-}
-.eye.left{ left:45px; }
-.eye.right{ right:45px; }
-.mouth{
-  width:60px;
-  height:6px;
-  background:#000;
-  position:absolute;
-  bottom:30px;
-  left:50%;
-  transform:translateX(-50%);
-  border-radius:10px;
-}
-.body{
-  width:120px;
-  height:90px;
-  background:#FFD700;
-  margin:10px auto 0;
-  border-radius:14px;
-}
-
-/* CHAT */
-.chat{
-  margin-top:18px;
+  padding:20px;
+  box-shadow:0 0 30px rgba(255,215,0,.7);
   text-align:center;
 }
-.chat input{
-  width:100%;
-  padding:10px;
-  border-radius:18px;
-  border:none;
+
+h1{
+  font-size:1.4rem;
+  margin:0 0 10px;
+  color:#000;
 }
-.chat button{
-  margin-top:10px;
-  padding:8px 20px;
-  border-radius:20px;
-  border:none;
-  background:gold;
+
+.status{
+  font-size:.9rem;
+  margin-bottom:10px;
+  color:#003300;
   font-weight:bold;
-  cursor:pointer;
 }
-.chat p{
-  margin-top:12px;
-  min-height:40px;
+
+.controls{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin:15px 0;
+}
+
+button{
+  background:#000;
+  color:#FFD700;
+  border:none;
+  padding:12px 18px;
+  border-radius:50%;
+  font-size:1.1rem;
+  cursor:pointer;
+  box-shadow:0 0 10px rgba(0,0,0,.6);
+  transition:.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 15px #FFD700;
+}
+
+.volume{
+  width:100%;
+  margin:10px 0;
+}
+
+.volume input{
+  width:100%;
+}
+
+.footer{
+  margin-top:15px;
+}
+
+.footer a{
+  display:inline-block;
+  margin-top:10px;
+  text-decoration:none;
+  background:#000;
+  color:#FFD700;
+  padding:10px 18px;
+  border-radius:25px;
+  font-weight:bold;
+  box-shadow:0 0 10px rgba(0,0,0,.6);
+  transition:.3s;
+}
+
+.footer a:hover{
+  background:#FFD700;
+  color:#000;
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-  <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank">Pandora & Euterpe</a>
-  <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank">Dynac X-Play</a>
-  <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank">Vox I.A</a>
-  <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que_estao.html" target="_blank">Blog</a>
-  <a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank">YouTube</a>
-</nav>
+<div class="player">
+  <h1>🎧 Intercontinental Web Radio</h1>
+  <div class="status">🔴 AO VIVO • 2 Anos de Sucesso</div>
 
-<div class="container">
+  <audio id="radio" src="https://stream.zeno.fm/SEU_STREAM_AQUI" preload="none"></audio>
 
-  <div class="info">
-    <h1>🎧 Intercontinental Web Radio</h1>
-    <p>Portal oficial • 2 anos conectando música e tecnologia.</p>
-    <a class="btn" href="player.html">▶ Abrir Player Ao Vivo</a>
+  <div class="controls">
+    <button onclick="playRadio()">▶</button>
+    <button onclick="pauseRadio()">⏸</button>
   </div>
 
-  <div>
-    <div class="robot">
-      <div class="head">
-        <div class="eye left"></div>
-        <div class="eye right"></div>
-        <div class="mouth"></div>
-      </div>
-      <div class="body"></div>
-    </div>
-
-    <div class="chat">
-      <input id="input" placeholder="Pergunte algo para a Android...">
-      <button onclick="IA()">Enviar</button>
-      <p id="resposta"></p>
-    </div>
+  <div class="volume">
+    Volume
+    <input type="range" min="0" max="1" step="0.01" value="0.8" oninput="setVolume(this.value)">
   </div>
 
+  <div class="footer">
+    <a href="index.html">⬅ Voltar ao Portal</a>
+  </div>
 </div>
 
 <script>
-function IA(){
-  const t=document.getElementById("input").value.toLowerCase();
-  const r=document.getElementById("resposta");
+const radio = document.getElementById("radio");
 
-  let resp="Posso falar sobre música, rádio ou o player 🎧";
+function playRadio(){
+  radio.play();
+}
 
-  if(t.includes("oi")||t.includes("ola")) resp="Olá! Sou a Android da Intercontinental 💛";
-  else if(t.includes("musica")) resp="Tocamos música internacional, eletrônica e clássicos 🎶";
-  else if(t.includes("radio")) resp="A Intercontinental é uma rádio digital global 📻";
-  else if(t.includes("player")) resp="Clique em Abrir Player Ao Vivo ▶";
-  else if(t.includes("hora")) resp="Agora são "+new Date().toLocaleTimeString("pt-BR");
+function pauseRadio(){
+  radio.pause();
+}
 
-  r.innerText=resp;
-  document.getElementById("input").value="";
+function setVolume(v){
+  radio.volume = v;
 }
 </script>
 
