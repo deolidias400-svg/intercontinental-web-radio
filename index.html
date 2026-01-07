@@ -6,168 +6,220 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* ====== BASE ====== */
 body{
   margin:0;
   background:#000;
   color:#FFD700;
   font-family:Arial, Helvetica, sans-serif;
-  overflow-x:hidden;
+  min-height:100vh;
 }
 
-/* MENU */
-nav{
-  position:fixed;
-  top:0;
-  width:100%;
-  background:#000;
-  border-bottom:2px solid #FFD700;
-  padding:10px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  z-index:1000;
+/* ====== TOPO ====== */
+header{
+  padding:20px;
+  text-align:center;
+  border-bottom:2px solid gold;
+  box-shadow:0 0 20px gold;
 }
+
+header h1{
+  margin:0;
+  font-size:2.4rem;
+  text-shadow:0 0 15px gold;
+}
+
+header p{
+  margin:5px 0 0;
+  font-size:1rem;
+}
+
+/* ====== MENU ====== */
+nav{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:15px;
+  padding:15px;
+  background:rgba(0,0,0,0.85);
+  border-bottom:1px solid gold;
+}
+
 nav a{
   color:#FFD700;
   text-decoration:none;
-  margin-right:15px;
-  font-weight:bold;
-}
-nav a:hover{
-  text-shadow:0 0 10px gold;
+  padding:8px 14px;
+  border:1px solid gold;
+  border-radius:20px;
+  transition:0.3s;
 }
 
-/* CONTEÚDO */
-.container{
-  padding-top:90px;
+nav a:hover{
+  background:gold;
+  color:black;
+  box-shadow:0 0 15px gold;
+}
+
+/* ====== CONTEÚDO ====== */
+main{
+  padding:40px 20px;
   text-align:center;
 }
 
-/* MASCOTE */
-.mascote{
-  width:260px;
+main h2{
+  font-size:1.8rem;
+  margin-bottom:10px;
+}
+
+main p{
+  max-width:700px;
   margin:auto;
-  animation:float 6s ease-in-out infinite;
-  filter:drop-shadow(0 0 25px gold);
-}
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-20px)}
+  font-size:1.1rem;
 }
 
-/* OLHOS */
-.eye{
-  animation:blink 5s infinite;
-}
-@keyframes blink{
-  0%,95%,100%{transform:scaleY(1)}
-  97%{transform:scaleY(0.1)}
-}
-
-/* BALÃO */
-.speech{
-  background:#111;
-  border:2px solid #FFD700;
-  border-radius:15px;
-  padding:12px;
-  max-width:300px;
-  margin:20px auto;
-  box-shadow:0 0 20px gold;
-  animation:pulse 3s infinite;
-}
-@keyframes pulse{
-  0%,100%{box-shadow:0 0 15px gold}
-  50%{box-shadow:0 0 30px gold}
+/* ====== MASCOTE ====== */
+#mascote-container{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:260px;
+  z-index:9999;
+  animation: flutuar 4s ease-in-out infinite;
 }
 
-/* CHAT */
-.chat{
-  margin-top:20px;
+@keyframes flutuar{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+  100%{transform:translateY(0)}
 }
-.chat input{
+
+#mascote-img{
+  width:100%;
+  border-radius:22px;
+  box-shadow:0 0 30px gold;
+}
+
+/* ====== CHAT ====== */
+#mascote-chat{
+  margin-top:8px;
+  background:rgba(0,0,0,0.9);
+  border:2px solid gold;
+  border-radius:18px;
   padding:10px;
-  width:220px;
+}
+
+#chat-log{
+  max-height:120px;
+  overflow-y:auto;
+  font-size:14px;
+  text-align:left;
+}
+
+#chat-log p{
+  margin:4px 0;
+}
+
+#chat-input{
+  width:95%;
+  padding:6px;
+  margin-top:6px;
   border-radius:10px;
   border:none;
 }
-.chat button{
-  padding:10px;
-  border-radius:10px;
+
+#send-btn{
+  margin-top:6px;
+  width:100%;
+  background:gold;
   border:none;
-  background:#FFD700;
-  font-weight:bold;
+  padding:8px;
+  border-radius:14px;
   cursor:pointer;
+  font-weight:bold;
 }
-.chat button:hover{
+
+#send-btn:hover{
   box-shadow:0 0 15px gold;
+}
+
+/* ====== RODAPÉ ====== */
+footer{
+  margin-top:60px;
+  padding:15px;
+  text-align:center;
+  border-top:1px solid gold;
+  font-size:0.9rem;
 }
 </style>
 </head>
 
 <body>
 
+<header>
+  <h1>🎧 Intercontinental Web Radio</h1>
+  <p>2 anos de sucesso • Música sem fronteiras</p>
+</header>
+
 <nav>
-  <div><strong>🎧 Intercontinental Web Radio</strong></div>
-  <div>
-    <a href="player.html">▶ Player</a>
-    <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio">Pandora</a>
-    <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio">Dynac-X</a>
-    <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio">Vox I.A</a>
-    <a href="https://www.youtube.com/@RadioWebintercontinental">YouTube</a>
-  </div>
+  <a href="player.html">▶ Player</a>
+  <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank">Pandora & Euterpe</a>
+  <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank">Dynac X Play</a>
+  <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank">Vox I.A</a>
+  <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank">Blog Musical</a>
+  <a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank">YouTube</a>
 </nav>
 
-<div class="container">
+<main>
+  <h2>Bem-vindo ao Portal Oficial</h2>
+  <p>
+    A Intercontinental Web Radio conecta estilos, culturas e tendências musicais
+    com tecnologia, inovação e experiência sonora premium.
+  </p>
+</main>
 
-  <h1>Intercontinental Web Radio</h1>
-  <h3>2 anos de sucesso no ar 🌍</h3>
+<!-- ====== MASCOTE ====== -->
+<div id="mascote-container">
+  <img src="mascote-intercontinental.png?v=3"
+       alt="Mascote Intercontinental"
+       id="mascote-img">
 
-  <!-- MASCOTE SVG -->
-  <svg class="mascote" viewBox="0 0 200 300">
-    <circle cx="100" cy="90" r="70" fill="#f5d7c5"/>
-    <circle cx="70" cy="80" r="10" fill="#00f" class="eye"/>
-    <circle cx="130" cy="80" r="10" fill="#00f" class="eye"/>
-    <rect x="60" y="140" width="80" height="110" rx="20" fill="#222"/>
-    <rect x="55" y="150" width="90" height="90" rx="15" fill="#333"/>
-  </svg>
-
-  <div class="speech" id="fala">
-    Olá 👋 Sou a assistente da Intercontinental Web Radio!
+  <div id="mascote-chat">
+    <div id="chat-log">
+      <p><strong>Mascote:</strong> Olá! Sou a assistente da Intercontinental Web Radio ✨🎶</p>
+    </div>
+    <input type="text" id="chat-input" placeholder="Pergunte sobre músicas, estilos...">
+    <button id="send-btn" onclick="responderMascote()">Enviar</button>
   </div>
-
-  <div class="chat">
-    <input id="msg" placeholder="Pergunte algo...">
-    <button onclick="responder()">Enviar</button>
-  </div>
-
 </div>
 
+<footer>
+  © 2026 Intercontinental Web Radio • Todos os direitos reservados
+</footer>
+
 <script>
-const frases=[
-  "🎶 Aqui toca música de verdade!",
-  "🌍 Rádio sem fronteiras!",
-  "🚀 Tecnologia e música conectadas!",
-  "💛 Intercontinental Web Radio no ar!",
-  "🎧 Quer ouvir agora? Clique no Player!"
-];
+function responderMascote(){
+  const input = document.getElementById("chat-input");
+  const log = document.getElementById("chat-log");
+  if(!input.value) return;
 
-let i=0;
-setInterval(()=>{
-  document.getElementById("fala").innerText=frases[i%frases.length];
-  i++;
-},5000);
+  log.innerHTML += `<p><strong>Você:</strong> ${input.value}</p>`;
 
-function responder(){
-  const msg=document.getElementById("msg").value.toLowerCase();
-  let resp="Interessante! 😄";
+  let respostas = [
+    "🎶 Música é emoção pura!",
+    "🔥 O som conecta o mundo!",
+    "🎧 Curte eletrônica, rock, pop ou lounge?",
+    "✨ Aqui o som é premium!",
+    "🌍 A Intercontinental toca o mundo."
+  ];
 
-  if(msg.includes("rock")) resp="🎸 Rock forte aqui!";
-  if(msg.includes("eletron")) resp="🔊 Eletrônica pulsando!";
-  if(msg.includes("player")) resp="▶ Use o menu para abrir o player!";
-  if(msg.includes("radio")) resp="📻 Intercontinental Web Radio 24h!";
+  let resposta = respostas[Math.floor(Math.random()*respostas.length)];
 
-  document.getElementById("fala").innerText=resp;
-  document.getElementById("msg").value="";
+  setTimeout(()=>{
+    log.innerHTML += `<p><strong>Mascote:</strong> ${resposta}</p>`;
+    log.scrollTop = log.scrollHeight;
+  },400);
+
+  input.value="";
 }
 </script>
 
