@@ -35,4 +35,115 @@ nav a:hover{color:#fff}
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
-  align-items
+  align-items:center;
+  padding:40px 20px;
+  gap:40px;
+}
+
+/* TEXTO */
+.text{
+  max-width:420px;
+}
+.text h1{
+  font-size:2.2rem;
+  margin-bottom:10px;
+}
+.text p{
+  color:#ccc;
+}
+
+/* BOTÃO */
+.btn{
+  display:inline-block;
+  margin-top:15px;
+  padding:12px 24px;
+  background:linear-gradient(135deg,#FFD700,#ffea70);
+  color:#000;
+  font-weight:bold;
+  border-radius:30px;
+  text-decoration:none;
+}
+.btn:hover{opacity:0.85}
+
+/* MASCOTE */
+.mascote-box{
+  background:#000;
+  border:2px solid #FFD700;
+  border-radius:20px;
+  padding:20px;
+  width:300px;
+  text-align:center;
+  box-shadow:0 0 30px rgba(255,215,0,.3);
+}
+.mascote-box img{
+  width:100%;
+  border-radius:16px;
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+/* CHAT */
+.chat{
+  margin-top:15px;
+}
+.chat input{
+  width:100%;
+  padding:10px;
+  border-radius:20px;
+  border:none;
+  outline:none;
+}
+.chat p{
+  margin-top:10px;
+  font-size:0.9rem;
+  color:#0f0;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank">Pandora & Euterpe</a>
+  <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank">Dynac X Play</a>
+  <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank">Vox I.A</a>
+  <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank">Blog</a>
+  <a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank">YouTube</a>
+</nav>
+
+<div class="container">
+
+  <div class="text">
+    <h1>🎧 Intercontinental Web Radio</h1>
+    <p>Portal oficial • 2 anos de sucesso • Som premium ao vivo</p>
+    <a class="btn" href="player.html">▶ Ouvir Agora</a>
+  </div>
+
+  <div class="mascote-box">
+    <img src="mascote-intercontinental.png" alt="Mascote Intercontinental">
+    <div class="chat">
+      <input type="text" id="msg" placeholder="Pergunte sobre músicas..." onkeydown="if(event.key==='Enter')responder()">
+      <p id="resposta"></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function responder(){
+  const m = document.getElementById("msg").value.toLowerCase();
+  let r = "🎶 Estou aqui para ajudar!";
+  if(m.includes("musica")) r="🎧 Tocamos os maiores sucessos nacionais e internacionais!";
+  if(m.includes("ao vivo")) r="🔴 Estamos AO VIVO agora!";
+  if(m.includes("rock")) r="🤘 Rock clássico e moderno fazem parte da nossa programação!";
+  if(m.includes("pop")) r="✨ Pop internacional e brasileiro de qualidade!";
+  document.getElementById("resposta").innerText=r;
+  document.getElementById("msg").value="";
+}
+</script>
+
+</body>
+</html>
