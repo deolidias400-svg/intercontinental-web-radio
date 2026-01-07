@@ -27,7 +27,7 @@ nav a{
   text-decoration:none;
   font-weight:bold;
 }
-nav a:hover{ text-shadow:0 0 15px gold; }
+nav a:hover{ text-shadow:0 0 12px gold; }
 
 /* LAYOUT */
 .container{
@@ -43,13 +43,11 @@ nav a:hover{ text-shadow:0 0 15px gold; }
 .info{
   max-width:420px;
 }
-.info h1{
-  font-size:2.6rem;
-}
+.info h1{ font-size:2.5rem; }
 .btn{
   display:inline-block;
   margin-top:20px;
-  padding:14px 32px;
+  padding:14px 30px;
   border-radius:30px;
   background:linear-gradient(135deg,#FFD700,#fff1a8);
   color:#000;
@@ -57,26 +55,51 @@ nav a:hover{ text-shadow:0 0 15px gold; }
   text-decoration:none;
 }
 
-/* MASCOTE */
-.mascote{
-  width:300px;
-  text-align:center;
-}
-.mascote img{
-  width:260px;
-  border-radius:18px;
-  display:block;
+/* ROBÔ CSS */
+.robot{
+  width:220px;
   margin:auto;
 }
-.nome{
-  margin-top:10px;
-  font-weight:bold;
-  letter-spacing:2px;
+.head{
+  background:#FFD700;
+  width:160px;
+  height:140px;
+  border-radius:20px;
+  margin:auto;
+  position:relative;
+}
+.eye{
+  width:18px;
+  height:18px;
+  background:#000;
+  border-radius:50%;
+  position:absolute;
+  top:45px;
+}
+.eye.left{ left:45px; }
+.eye.right{ right:45px; }
+.mouth{
+  width:60px;
+  height:6px;
+  background:#000;
+  position:absolute;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius:10px;
+}
+.body{
+  width:120px;
+  height:90px;
+  background:#FFD700;
+  margin:10px auto 0;
+  border-radius:14px;
 }
 
 /* CHAT */
 .chat{
   margin-top:18px;
+  text-align:center;
 }
 .chat input{
   width:100%;
@@ -106,7 +129,7 @@ nav a:hover{ text-shadow:0 0 15px gold; }
   <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank">Pandora & Euterpe</a>
   <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank">Dynac X-Play</a>
   <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank">Vox I.A</a>
-  <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank">Blog</a>
+  <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que_estao.html" target="_blank">Blog</a>
   <a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank">YouTube</a>
 </nav>
 
@@ -118,9 +141,15 @@ nav a:hover{ text-shadow:0 0 15px gold; }
     <a class="btn" href="player.html">▶ Abrir Player Ao Vivo</a>
   </div>
 
-  <div class="mascote">
-    <img src="https://i.imgur.com/7Z6FQ0p.png" alt="Android Intercontinental">
-    <div class="nome">ANDROID INTERCONTINENTAL</div>
+  <div>
+    <div class="robot">
+      <div class="head">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="mouth"></div>
+      </div>
+      <div class="body"></div>
+    </div>
 
     <div class="chat">
       <input id="input" placeholder="Pergunte algo para a Android...">
@@ -133,18 +162,18 @@ nav a:hover{ text-shadow:0 0 15px gold; }
 
 <script>
 function IA(){
-  const t = document.getElementById("input").value.toLowerCase();
-  const r = document.getElementById("resposta");
+  const t=document.getElementById("input").value.toLowerCase();
+  const r=document.getElementById("resposta");
 
-  let resposta = "Posso falar sobre música, rádio ou o player 🎧";
+  let resp="Posso falar sobre música, rádio ou o player 🎧";
 
-  if(t.includes("oi") || t.includes("ola")) resposta = "Olá! Sou a Android da Intercontinental 💛";
-  else if(t.includes("musica")) resposta = "Tocamos música internacional, eletrônica e clássicos 🎶";
-  else if(t.includes("radio")) resposta = "A Intercontinental é uma rádio digital global 📻";
-  else if(t.includes("player")) resposta = "Clique em 'Abrir Player Ao Vivo' para ouvir agora ▶";
-  else if(t.includes("hora")) resposta = "Agora são " + new Date().toLocaleTimeString("pt-BR");
+  if(t.includes("oi")||t.includes("ola")) resp="Olá! Sou a Android da Intercontinental 💛";
+  else if(t.includes("musica")) resp="Tocamos música internacional, eletrônica e clássicos 🎶";
+  else if(t.includes("radio")) resp="A Intercontinental é uma rádio digital global 📻";
+  else if(t.includes("player")) resp="Clique em Abrir Player Ao Vivo ▶";
+  else if(t.includes("hora")) resp="Agora são "+new Date().toLocaleTimeString("pt-BR");
 
-  r.innerText = resposta;
+  r.innerText=resp;
   document.getElementById("input").value="";
 }
 </script>
