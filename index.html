@@ -1,122 +1,157 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intercontinental Sonic Command - 2 Anos</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intercontinental Web Radio</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
-    <style>
-        :root { --gold:#FFD700; }
-        body{
-            margin:0;
-            background:radial-gradient(circle at center,#0a0a20 0%,#000 100%);
-            font-family:'Orbitron',sans-serif;
-            color:white;
-            overflow-x:hidden;
-        }
-        .cinzel{font-family:'Cinzel',serif;}
-        .hub{
-            max-width:900px;
-            margin:120px auto 80px;
-            padding:40px;
-            background:rgba(0,0,0,.7);
-            border:2px solid var(--gold);
-            border-radius:60px;
-            box-shadow:0 0 50px rgba(255,215,0,.35);
-        }
-        .hub h2{
-            text-align:center;
-            color:var(--gold);
-            letter-spacing:.5em;
-            font-weight:900;
-            margin-bottom:40px;
-        }
-        .hub-grid{
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-            gap:20px;
-        }
-        .hub a{
-            text-decoration:none;
-            color:var(--gold);
-            background:#050a16;
-            border:1px solid rgba(255,215,0,.4);
-            padding:22px;
-            border-radius:20px;
-            text-align:center;
-            transition:.3s;
-        }
-        .hub a:hover{
-            transform:translateY(-6px) scale(1.04);
-            box-shadow:0 0 30px gold;
-        }
-        .hub span{
-            display:block;
-            font-size:28px;
-            margin-bottom:10px;
-        }
-        .hub small{
-            display:block;
-            font-size:11px;
-            opacity:.7;
-        }
-    </style>
+<style>
+body{
+    margin:0;
+    background:radial-gradient(circle at center,#0a0a20 0%,#000 100%);
+    font-family:'Orbitron',sans-serif;
+    color:#fff;
+    text-align:center;
+}
+.player{
+    max-width:420px;
+    margin:60px auto 40px;
+    background:#050a16;
+    border:3px solid #ffd700;
+    border-radius:40px;
+    padding:30px;
+    box-shadow:0 0 40px rgba(255,215,0,.4);
+}
+.display{
+    background:#000;
+    border:2px solid #0ff;
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:20px;
+    color:#0ff;
+    font-size:14px;
+    letter-spacing:2px;
+}
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+button{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    border:none;
+    background:#111;
+    color:#ffd700;
+    font-size:26px;
+    cursor:pointer;
+    box-shadow:0 0 15px rgba(255,215,0,.5);
+}
+button:hover{
+    transform:scale(1.1);
+}
+.hub{
+    max-width:900px;
+    margin:60px auto;
+    padding:40px;
+    border:2px solid #ffd700;
+    border-radius:50px;
+    background:rgba(0,0,0,.7);
+}
+.hub h2{
+    color:#ffd700;
+    margin-bottom:40px;
+    letter-spacing:6px;
+}
+.links{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+}
+.links a{
+    text-decoration:none;
+    color:#ffd700;
+    background:#050a16;
+    padding:20px;
+    border-radius:20px;
+    border:1px solid rgba(255,215,0,.4);
+    transition:.3s;
+}
+.links a:hover{
+    box-shadow:0 0 25px gold;
+    transform:translateY(-6px);
+}
+small{
+    display:block;
+    font-size:11px;
+    opacity:.7;
+}
+</style>
 </head>
 
 <body>
 
-<div id="root"></div>
+<!-- PLAYER -->
+<div class="player">
+    <div class="display">INTERCONTINENTAL WEB RADIO</div>
 
-<!-- 🔗 CENTRAL DE LINKS -->
+    <div class="controls">
+        <button id="playBtn">▶</button>
+        <button onclick="audio.pause()">⏸</button>
+    </div>
+</div>
+
+<audio id="audio"
+src="https://stream.zeno.fm/wzcgaal0dnltv"
+crossorigin="anonymous"></audio>
+
+<!-- LINKS -->
 <section class="hub">
     <h2>CENTRAL INTERCONTINENTAL</h2>
 
-    <div class="hub-grid">
+    <div class="links">
         <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank">
-            <span>🧠</span>
-            Pandora & Euterpe
+            🧠 Pandora & Euterpe
             <small>IA • Música • Consciência</small>
         </a>
 
         <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank">
-            <span>🎮</span>
-            Dynac X Play
+            🎮 Dynac X Play
             <small>Plataforma Multimídia</small>
         </a>
 
         <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank">
-            <span>🤖</span>
-            VOX I.A
+            🤖 VOX I.A
             <small>Locutora Virtual</small>
         </a>
 
         <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank">
-            <span>📰</span>
-            Blog Musical
-            <small>Tendências & Análises</small>
+            📰 Blog Musical
+            <small>Tendências Musicais</small>
         </a>
 
         <a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank">
-            <span>▶️</span>
-            YouTube Oficial
-            <small>Rádio Web Intercontinental</small>
+            ▶️ YouTube Oficial
+            <small>Rádio Intercontinental</small>
         </a>
     </div>
 </section>
 
-<!-- PLAYER (SEU CÓDIGO ORIGINAL) -->
-<script type="text/babel">
-/* 🔥 TODO O SEU SCRIPT DO PLAYER CONTINUA AQUI
-   👉 não alterei nada funcional
-   👉 mantive React, áudio, temas, visual
-*/
+<script>
+const audio = document.getElementById("audio");
+const playBtn = document.getElementById("playBtn");
+
+playBtn.onclick = async () => {
+    try{
+        audio.load();
+        await audio.play();
+    }catch(e){
+        alert("Clique novamente para iniciar o áudio");
+    }
+};
 </script>
 
 </body>
