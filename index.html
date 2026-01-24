@@ -1,204 +1,326 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Intercontinental Web Radio • 2 Anos</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intercontinental Sonic Command - 2 Anos</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #FFD700; --gold-glow: rgba(255, 215, 0, 0.6); }
+        body {
+            margin: 0; padding: 0; background: #000;
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(circle at center, #0a0a20 0%, #000 100%);
+            color: white; overflow-x: hidden; scroll-behavior: smooth;
+        }
+        .cinzel { font-family: 'Cinzel', serif; }
+        
+        /* Molduras de Ouro Líquido Laterais */
+        .energy-conduit {
+            position: fixed; top: 0; width: 14px; height: 100%;
+            background: linear-gradient(to bottom, transparent, var(--gold), #B8860B, var(--gold), transparent);
+            box-shadow: 0 0 35px var(--gold); z-index: 1000;
+        }
+        .energy-pulse {
+            position: absolute; width: 100%; height: 300px;
+            background: linear-gradient(to bottom, transparent, white, transparent);
+            filter: blur(15px); animation: energy-slide 4s infinite linear;
+        }
+        @keyframes energy-slide { 0% { top: -300px; } 100% { top: 100%; } }
 
-<style>
-body{
-    margin:0;
-    background:radial-gradient(circle at top,#0b1025,#000);
-    font-family:'Orbitron',sans-serif;
-    color:#fff;
-}
+        /* Estética Galáctica e Núcleo */
+        .planet-glow { box-shadow: 0 0 150px rgba(255, 215, 0, 0.25), inset 0 0 80px #000; }
+        .floating { animation: float 8s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-25px); } }
+        
+        .glow-text { text-shadow: 0 0 15px var(--gold), 0 0 30px var(--gold-glow); }
+        .custom-scroll::-webkit-scrollbar { width: 8px; }
+        .custom-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.95); }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; border: 2px solid #000; }
 
-/* PLAYER */
-.player-box{
-    max-width:900px;
-    margin:50px auto;
-    background:linear-gradient(180deg,#111,#020202);
-    border:4px solid gold;
-    border-radius:40px;
-    padding:40px;
-    box-shadow:0 0 80px rgba(255,215,0,.5);
-    text-align:center;
-}
-.player-box h1{
-    font-family:'Cinzel',serif;
-    color:gold;
-    letter-spacing:.4em;
-    margin-bottom:25px;
-    font-size:28px;
-}
-.display{
-    background:#000;
-    border:2px inset gold;
-    padding:18px;
-    margin-bottom:25px;
-    font-size:16px;
-    color:#00ff88;
-    letter-spacing:.1em;
-}
-.controls button{
-    background:#111;
-    border:2px solid gold;
-    color:gold;
-    font-size:18px;
-    padding:15px 35px;
-    border-radius:30px;
-    margin:10px;
-    cursor:pointer;
-    transition:.3s;
-}
-.controls button:hover{
-    background:gold;
-    color:#000;
-}
-.volume{
-    width:100%;
-    margin-top:25px;
-}
+        input[type=range] { -webkit-appearance: none; background: rgba(255,255,255,0.08); height: 8px; border-radius: 10px; cursor: pointer; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 32px; width: 16px;
+            background: linear-gradient(to bottom, #FFD700, #FFFACD, #B8860B);
+            border: 2px solid #000; border-radius: 5px; cursor: pointer;
+            box-shadow: 0 0 20px var(--gold);
+        }
 
-/* PORTAIS */
-.links-hub{
-    max-width:1100px;
-    margin:80px auto;
-    padding:60px;
-    border:3px solid gold;
-    border-radius:60px;
-    background:rgba(0,0,0,.75);
-}
-.links-hub h2{
-    text-align:center;
-    font-family:'Cinzel',serif;
-    color:gold;
-    letter-spacing:.6em;
-    margin-bottom:50px;
-}
-.links-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:30px;
-}
-.links-grid a{
-    text-decoration:none;
-    color:gold;
-    background:#050a16;
-    padding:30px;
-    border-radius:30px;
-    text-align:center;
-    border:2px solid rgba(255,215,0,.4);
-    transition:.4s;
-}
-.links-grid a:hover{
-    transform:scale(1.08);
-    box-shadow:0 0 40px gold;
-}
-.links-grid span{
-    font-size:36px;
-    display:block;
-    margin-bottom:12px;
-}
-small{
-    display:block;
-    opacity:.7;
-    font-size:11px;
-    letter-spacing:.2em;
-}
-footer{
-    text-align:center;
-    opacity:.6;
-    padding:30px;
-    font-size:11px;
-}
-</style>
+        .crystal-path { clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+        .lcd-scanline {
+            background: repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.3) 1px, rgba(0,0,0,0.3) 2px);
+            pointer-events: none;
+            position: absolute; inset: 0; z-index: 10;
+        }
+        
+        .lucide { width: 100%; height: 100%; }
+        
+        /* Oculta scrollbars indesejadas */
+        body::-webkit-scrollbar { display: none; }
+        body { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Estilo para os Links (Portais) */
+        .portal-card {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .portal-card:hover {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+    </style>
 </head>
-
 <body>
+    <div class="energy-conduit left-0"><div class="energy-pulse"></div></div>
+    <div class="energy-conduit right-0"><div class="energy-pulse" style="animation-delay: 2s"></div></div>
+    
+    <div id="root"></div>
 
-<!-- PLAYER -->
-<div class="player-box">
-    <h1>INTERCONTINENTAL WEB RADIO</h1>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
 
-    <div class="display" id="status">
-        🔊 Stand by • Intercontinental Web Radio
-    </div>
+        const STREAM_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
+        
+        const PORTAL_LINKS = [
+            { name: "Pandora & Euterpe", url: "https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio", icon: "music" },
+            { name: "Dynac-X Play", url: "https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio", icon: "globe" },
+            { name: "Vox I.A", url: "https://sites.google.com/view/vox-i-a/in%C3%ADcio", icon: "cpu" },
+            { name: "Tendências 2025", url: "https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html", icon: "trending-up" },
+            { name: "YouTube Oficial", url: "https://www.youtube.com/@RadioWebintercontinental", icon: "youtube" }
+        ];
 
-    <!-- STREAM ZENO FM -->
-    <audio id="radio"
-           src="https://stream.zeno.fm/wzcgaal0dnltv"
-           crossorigin="anonymous">
-    </audio>
+        const THEMES = [
+            { id: 'royal', name: 'Imperial Dynasty', primary: '#FFD700', glow: '#FFFACD' },
+            { id: 'nebula', name: 'Nebula Void', primary: '#8b5cf6', glow: '#c084fc' },
+            { id: 'cyan', name: 'Cyberspace', primary: '#06b6d4', glow: '#22d3ee' },
+            { id: 'hacker', name: 'Matrix Rain', primary: '#22c55e', glow: '#16a34a' },
+            { id: 'thermal', name: 'Thermal Reactor', primary: '#FFD700', glow: '#FFEA00' }
+        ];
 
-    <div class="controls">
-        <button onclick="playRadio()">▶ PLAY</button>
-        <button onclick="pauseRadio()">⏸ PAUSE</button>
-    </div>
+        // --- SUB-COMPONENTES ---
 
-    <input class="volume" type="range"
-           min="0" max="1" step="0.01" value="0.8"
-           oninput="radio.volume=this.value">
-</div>
+        const AnalogGauge = ({ label, value, color }) => {
+            const rotation = -90 + (value * 180);
+            return (
+                <div className="flex flex-col items-center gap-2">
+                    <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full border-[3px] border-[#FFD700] bg-black shadow-[inset_0_0_35px_#000]">
+                        {[...Array(11)].map((_, i) => (
+                            <div key={i} className="absolute top-0 left-1/2 w-0.5 h-2 bg-[#FFD700]/50 origin-bottom"
+                                 style={{ transform: `translateX(-50%) rotate(${-90 + i * 18}deg)`, height: i % 5 === 0 ? '7px' : '4px' }} />
+                        ))}
+                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-gradient-to-b from-[#FFD700] to-[#B8860B] z-20 border border-black shadow-[0_0_15px_gold]" />
+                        <div className="absolute bottom-8 left-1/2 w-1.5 h-16 md:h-20 origin-bottom -translate-x-1/2 transition-transform duration-200 ease-out z-10"
+                             style={{ transform: `translateX(-50%) rotate(${rotation}deg)`, backgroundColor: color, boxShadow: `0 0 20px ${color}` }} />
+                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[9px] font-black text-[#FFD700]">
+                            {Math.round(value * 100)}%
+                        </div>
+                    </div>
+                    <span className="text-[10px] tracking-widest text-[#FFD700] uppercase font-black">{label}</span>
+                </div>
+            );
+        };
 
-<!-- PORTAIS -->
-<section class="links-hub">
-<h2>PORTAIS</h2>
+        const LCDDisplay = ({ theme, eq, isBoosted, isOnline, isPlaying }) => {
+            const [time, setTime] = useState(new Date());
+            useEffect(() => { const it = setInterval(() => setTime(new Date()), 1000); return () => clearInterval(it); }, []);
+            return (
+                <div className="relative w-full bg-[#050a02] border-2 border-[#FFD700]/40 p-4 rounded-2xl shadow-[inset_0_0_30px_#000] overflow-hidden">
+                    <div className="lcd-scanline" />
+                    <div className="flex justify-between items-start relative z-20">
+                        <div className="flex flex-col">
+                            <span className="text-[7px] text-[#86efac]/50 uppercase font-black tracking-widest">Interdimensional Link</span>
+                            <div className="flex items-center gap-1.5">
+                                <div className={`w-2 h-2 rounded-full ${isOnline ? 'bg-[#86efac] animate-pulse shadow-[0_0_8px_#86efac]' : 'bg-red-500 shadow-[0_0_8px_red]'}`} />
+                                <span className="text-[11px] text-[#86efac] font-black uppercase tracking-wider">{isOnline ? 'ONLINE' : 'OFFLINE'}</span>
+                            </div>
+                        </div>
+                        <div className="flex flex-col items-end">
+                            <span className="text-[12px] text-[#86efac] font-black tracking-widest">{time.toLocaleTimeString([], {hour12: false})}</span>
+                            <span className="text-[8px] text-[#86efac]/70 font-black uppercase">{eq} MODE</span>
+                        </div>
+                    </div>
+                    <div className="mt-4 h-2 w-full bg-black rounded-full overflow-hidden border border-[#FFD700]/20">
+                        <div className={`h-full transition-all duration-700 ${isBoosted ? 'bg-red-600 shadow-[0_0_15px_red]' : 'bg-[#86efac] shadow-[0_0_10px_#86efac]'}`} 
+                             style={{ width: isPlaying ? (isBoosted ? '100%' : '55%') : '5%' }} />
+                    </div>
+                </div>
+            );
+        };
 
-<div class="links-grid">
+        const EnergyCore = ({ analyser, theme, isBoosted, isPlaying }) => {
+            const canvasRef = useRef(null);
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                let frame;
+                const buffer = new Uint8Array(128);
+                const render = () => {
+                    const { width, height } = canvas;
+                    const cx = width / 2, cy = height / 2;
+                    if (analyser && isPlaying) analyser.getByteFrequencyData(buffer);
+                    else for(let i=0; i<128; i++) buffer[i] = 30 + Math.sin(Date.now()*0.003 + i*0.1) * 15;
+                    ctx.clearRect(0, 0, width, height);
+                    const avg = buffer.reduce((a, b) => a + b) / 128;
+                    const intensity = isPlaying ? avg / 255 : 0.1;
+                    const pulseSize = 90 + intensity * 140;
+                    const coreColor = isBoosted ? '#FF0000' : theme.primary;
+                    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, pulseSize * 1.8);
+                    g.addColorStop(0, coreColor + 'CC');
+                    g.addColorStop(1, 'transparent');
+                    ctx.fillStyle = g;
+                    ctx.beginPath(); ctx.arc(cx, cy, pulseSize * 1.8, 0, Math.PI * 2); ctx.fill();
+                    frame = requestAnimationFrame(render);
+                };
+                render();
+                return () => cancelAnimationFrame(frame);
+            }, [analyser, theme, isBoosted, isPlaying]);
+            return <canvas ref={canvasRef} width={600} height={600} className="w-full h-full" />;
+        };
 
-<a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank">
-<span>🧠</span>
-Pandora & Euterpe
-<small>IA • Música • Consciência</small>
-</a>
+        const App = () => {
+            const [isPlaying, setIsPlaying] = useState(false);
+            const [volume, setVolume] = useState(0.8);
+            const [activeTheme, setActiveTheme] = useState(THEMES[0]);
+            const [eq, setEq] = useState('Flat');
+            const [isBoosted, setIsBoosted] = useState(false);
+            const [isOnline, setIsOnline] = useState(navigator.onLine);
+            const [analyser, setAnalyser] = useState(null);
+            const audioRef = useRef(null);
+            const audioCtxRef = useRef(null);
+            const gainNodeRef = useRef(null);
 
-<a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank">
-<span>🎮</span>
-Dynac X Play
-<small>Plataforma Multimídia</small>
-</a>
+            const togglePlay = () => {
+                if (!audioCtxRef.current) {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    const audio = new Audio(STREAM_URL);
+                    audio.crossOrigin = "anonymous";
+                    const source = ctx.createMediaElementSource(audio);
+                    const analyserNode = ctx.createAnalyser();
+                    const gainNode = ctx.createGain();
+                    source.connect(analyserNode);
+                    analyserNode.connect(gainNode);
+                    gainNode.connect(ctx.destination);
+                    audioRef.current = audio;
+                    audioCtxRef.current = ctx;
+                    gainNodeRef.current = gainNode;
+                    setAnalyser(analyserNode);
+                }
+                if (isPlaying) audioRef.current.pause();
+                else { audioCtxRef.current.resume(); audioRef.current.play(); }
+                setIsPlaying(!isPlaying);
+            };
 
-<a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank">
-<span>🤖</span>
-VOX I.A
-<small>Locutora Virtual</small>
-</a>
+            useEffect(() => {
+                if (gainNodeRef.current) gainNodeRef.current.gain.setTargetAtTime(isBoosted ? volume * 1.5 : volume, audioCtxRef.current.currentTime, 0.1);
+            }, [volume, isBoosted]);
 
-<a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank">
-<span>📰</span>
-Blog Musical
-<small>Tendências & Análises</small>
-</a>
+            const scroll = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
-<a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank">
-<span>▶️</span>
-YouTube Oficial
-<small>Intercontinental Web Radio</small>
-</a>
+            return (
+                <div className="flex flex-col items-center w-full min-h-screen py-10 px-4">
+                    {/* Menu Nav */}
+                    <nav className="fixed top-6 z-[200] bg-black/90 backdrop-blur-xl border-2 border-[#FFD700] rounded-full px-6 py-3 flex gap-6 md:gap-10 shadow-[0_0_50px_gold]">
+                        <button onClick={()=>scroll('header')} className="flex flex-col items-center group"><div className="w-5 h-5 text-[#FFD700] group-hover:scale-125"><i data-lucide="radio"></i></div><span className="text-[7px] mt-1 font-black">HOME</span></button>
+                        <button onClick={()=>scroll('portals')} className="flex flex-col items-center group"><div className="w-5 h-5 text-[#FFD700] group-hover:scale-125"><i data-lucide="layout-grid"></i></div><span className="text-[7px] mt-1 font-black">PORTALS</span></button>
+                        <button onClick={()=>scroll('crystals')} className="flex flex-col items-center group"><div className="w-5 h-5 text-[#FFD700] group-hover:scale-125"><i data-lucide="gem"></i></div><span className="text-[7px] mt-1 font-black">CRYSTALS</span></button>
+                    </nav>
 
-</div>
-</section>
+                    {/* Header */}
+                    <header id="header" className="pt-28 pb-16 text-center">
+                        <h1 className="cinzel text-4xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#FFD700] via-white to-[#FFD700] drop-shadow-[0_0_40px_gold] leading-tight uppercase">
+                            INTERCONTINENTAL
+                        </h1>
+                        <span className="text-xl font-black text-[#FFD700] tracking-[1em] animate-pulse glow-text">2 ANOS</span>
+                    </header>
 
-<footer>
-© Intercontinental Web Radio • Streaming Zeno FM • 2 Anos no Ar
-</footer>
+                    {/* Player Central */}
+                    <main className="flex flex-col lg:flex-row items-center justify-center gap-10 w-full max-w-7xl">
+                        <div className="flex flex-row lg:flex-col gap-6 p-6 bg-black/70 border-2 border-[#FFD700]/40 rounded-[3rem] backdrop-blur-xl">
+                            <AnalogGauge label="Quantum Hz" value={isPlaying ? 0.7 : 0.05} color={activeTheme.primary} />
+                            <AnalogGauge label="Volume" value={volume} color="#00D1FF" />
+                        </div>
 
-<script>
-const radio = document.getElementById("radio");
-const status = document.getElementById("status");
+                        <div className="relative floating planet-glow w-[320px] h-[320px] md:w-[550px] md:h-[550px] border-[10px] border-[#FFD700] rounded-full bg-black flex flex-col items-center justify-center overflow-hidden transition-all duration-1000">
+                            <div className="absolute top-10 md:top-20 z-20 w-[240px] md:w-[400px]">
+                                <LCDDisplay theme={activeTheme} eq={eq} isBoosted={isBoosted} isOnline={isOnline} isPlaying={isPlaying} />
+                            </div>
+                            <div className="w-full h-full p-10">
+                                <EnergyCore analyser={analyser} theme={activeTheme} isBoosted={isBoosted} isPlaying={isPlaying} />
+                            </div>
+                            <div className="absolute bottom-10 md:bottom-20 z-20 w-[240px] md:w-[400px] flex flex-col items-center gap-4">
+                                <button onClick={togglePlay} className={`p-8 rounded-full border-4 transition-all shadow-[0_0_30px_gold] ${isPlaying ? 'bg-[#FFD700]/30 border-[#FFD700]' : 'bg-black border-[#FFD700]/50'}`}>
+                                    <div className="w-10 h-10 text-[#FFD700]">{isPlaying ? <i data-lucide="pause"></i> : <i data-lucide="play"></i>}</div>
+                                </button>
+                                <div className="w-full flex items-center gap-4 bg-black/60 p-3 rounded-full border border-white/10">
+                                    <input type="range" min="0" max="1" step="0.01" value={volume} onChange={e=>setVolume(parseFloat(e.target.value))} className="flex-1" />
+                                    <button onClick={()=>setIsBoosted(!isBoosted)} className={`p-2 rounded-full border ${isBoosted ? 'bg-red-700 animate-pulse' : 'bg-black text-red-500'}`}><div className="w-4 h-4"><i data-lucide="zap"></i></div></button>
+                                </div>
+                            </div>
+                        </div>
 
-function playRadio(){
-    radio.play();
-    status.innerText = "🎶 AO VIVO • Intercontinental Web Radio";
-}
-function pauseRadio(){
-    radio.pause();
-    status.innerText = "⏸ Pausado • Intercontinental Web Radio";
-}
-</script>
+                        <div className="w-full lg:w-[300px] h-[400px] bg-black/70 border-2 border-[#FFD700]/40 rounded-[3rem] p-6 backdrop-blur-xl flex flex-col shadow-2xl">
+                            <h3 className="text-[10px] text-[#FFD700] text-center mb-4 font-black tracking-widest uppercase">Modulators</h3>
+                            <div className="flex-1 overflow-y-auto custom-scroll space-y-3">
+                                {THEMES.map(t => (
+                                    <button key={t.id} onClick={()=>setActiveTheme(t)} className={`w-full p-4 rounded-xl flex items-center gap-4 border transition-all ${activeTheme.id === t.id ? 'border-[#FFD700] bg-[#FFD700]/20' : 'border-transparent bg-white/5'}`}>
+                                        <div className="w-3 h-3 rounded-full" style={{backgroundColor: t.primary}} />
+                                        <span className="text-[9px] font-black uppercase">{t.name}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </main>
 
+                    {/* Links - Seção de Portais */}
+                    <section id="portals" className="w-full max-w-6xl mt-24 scroll-mt-24">
+                        <div className="text-center mb-10">
+                            <h2 className="cinzel text-3xl text-[#FFD700] glow-text">COSMIC PORTALS</h2>
+                            <div className="h-1 w-24 bg-[#FFD700] mx-auto mt-2 shadow-[0_0_10px_gold]"></div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {PORTAL_LINKS.map((link, idx) => (
+                                <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer" className="portal-card p-6 rounded-3xl flex items-center gap-5 group">
+                                    <div className="w-12 h-12 flex items-center justify-center bg-black border border-[#FFD700]/30 rounded-2xl group-hover:border-[#FFD700] transition-colors">
+                                        <div className="w-6 h-6 text-[#FFD700]"><i data-lucide={link.icon}></i></div>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="text-[12px] font-black text-[#FFD700] uppercase tracking-wider">{link.name}</span>
+                                        <span className="text-[8px] text-white/40 uppercase">Acessar Dimensão</span>
+                                    </div>
+                                    <div className="ml-auto w-4 h-4 text-[#FFD700]/30 group-hover:text-[#FFD700] group-hover:translate-x-1 transition-all"><i data-lucide="external-link"></i></div>
+                                </a>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* Equalizadores - Crystals */}
+                    <section id="crystals" className="w-full max-w-7xl mt-32 mb-20 bg-black/50 border-t-4 border-[#FFD700] p-10 md:p-20 rounded-t-[5rem] shadow-2xl backdrop-blur-3xl scroll-mt-24">
+                        <div className="flex flex-wrap justify-center gap-10">
+                            {['Vocal', 'Flat', 'Stadium', 'Rock', 'Jazz'].map(p => (
+                                <button key={p} onClick={()=>setEq(p)} className={`flex flex-col items-center gap-4 transition-all ${eq === p ? 'scale-110' : 'opacity-30'}`}>
+                                    <div className="w-16 h-24 crystal-path" style={{ background: eq === p ? 'linear-gradient(135deg, #FFD700, #B8860B)' : 'white' }} />
+                                    <span className="text-[10px] font-black uppercase tracking-widest">{p}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+        setInterval(() => { if(window.lucide) window.lucide.createIcons(); }, 1500);
+    </script>
 </body>
 </html>
