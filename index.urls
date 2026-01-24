@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Intercontinental Web Radio – Central</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  background:linear-gradient(180deg,#050a16,#000);
+  font-family:Arial, Helvetica, sans-serif;
+  color:#00f6ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.container{
+  width:100%;
+  max-width:480px;
+  padding:20px;
+}
+
+h1{
+  text-align:center;
+  margin-bottom:25px;
+  letter-spacing:2px;
+}
+
+.link{
+  display:block;
+  text-decoration:none;
+  color:#00f6ff;
+  background:#0b1220;
+  border:1px solid rgba(0,246,255,.3);
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:14px;
+  transition:.25s;
+}
+
+.link:hover{
+  background:#101c38;
+  box-shadow:0 0 18px rgba(0,246,255,.6);
+  transform:translateY(-2px);
+}
+
+.link strong{
+  display:block;
+  font-size:15px;
+}
+
+.link small{
+  font-size:12px;
+  opacity:.7;
+}
+
+.footer{
+  text-align:center;
+  font-size:11px;
+  opacity:.6;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>📻 INTERCONTINENTAL</h1>
+
+  <a class="link" href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank">
+    <strong>🧠 Pandora & Euterpe</strong>
+    <small>IA • Música • Consciência</small>
+  </a>
+
+  <a class="link" href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank">
+    <strong>🎮 Dynac X Play</strong>
+    <small>Plataforma Multimídia</small>
+  </a>
+
+  <a class="link" href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank">
+    <strong>🤖 VOX I.A</strong>
+    <small>Locutora Virtual</small>
+  </a>
+
+  <a class="link" href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank">
+    <strong>📰 Blog Musical</strong>
+    <small>Tendências & Análises</small>
+  </a>
+
+  <a class="link" href="https://www.youtube.com/@RadioWebintercontinental" target="_blank">
+    <strong>▶️ YouTube Oficial</strong>
+    <small>Rádio Web Intercontinental</small>
+  </a>
+
+  <div class="footer">
+    © Intercontinental Web Radio
+  </div>
+
+</div>
+
+</body>
+</html>
