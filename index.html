@@ -2,41 +2,81 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<title>Intercontinental Web Radio • 2 Anos</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intercontinental Sonic Command - 2 Anos</title>
 
-<!-- CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
 
 <style>
-:root { --gold:#FFD700; }
 body{
     margin:0;
-    background:radial-gradient(circle at center,#0a0a20 0%,#000 100%);
+    background:radial-gradient(circle at top,#0b1025,#000);
     font-family:'Orbitron',sans-serif;
-    color:white;
-    overflow-x:hidden;
+    color:#fff;
 }
+
+/* PLAYER */
+.player-box{
+    max-width:900px;
+    margin:50px auto;
+    background:linear-gradient(180deg,#111,#020202);
+    border:4px solid gold;
+    border-radius:40px;
+    padding:40px;
+    box-shadow:0 0 80px rgba(255,215,0,.5);
+    text-align:center;
+}
+.player-box h1{
+    font-family:'Cinzel',serif;
+    color:gold;
+    letter-spacing:.4em;
+    margin-bottom:25px;
+    font-size:28px;
+}
+.display{
+    background:#000;
+    border:2px inset gold;
+    padding:18px;
+    margin-bottom:25px;
+    font-size:16px;
+    color:#00ff88;
+    letter-spacing:.1em;
+}
+.controls button{
+    background:#111;
+    border:2px solid gold;
+    color:gold;
+    font-size:18px;
+    padding:15px 35px;
+    border-radius:30px;
+    margin:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+.controls button:hover{
+    background:gold;
+    color:#000;
+}
+.volume{
+    width:100%;
+    margin-top:25px;
+}
+
+/* PORTAIS */
 .links-hub{
     max-width:1100px;
-    margin:120px auto 80px;
+    margin:80px auto;
     padding:60px;
+    border:3px solid gold;
+    border-radius:60px;
     background:rgba(0,0,0,.75);
-    border:3px solid var(--gold);
-    border-radius:80px;
-    box-shadow:0 0 60px rgba(255,215,0,.45);
 }
 .links-hub h2{
     text-align:center;
-    color:var(--gold);
     font-family:'Cinzel',serif;
-    letter-spacing:1em;
-    margin-bottom:60px;
+    color:gold;
+    letter-spacing:.6em;
+    margin-bottom:50px;
 }
 .links-grid{
     display:grid;
@@ -45,85 +85,119 @@ body{
 }
 .links-grid a{
     text-decoration:none;
-    color:var(--gold);
+    color:gold;
     background:#050a16;
-    padding:30px 20px;
+    padding:30px;
     border-radius:30px;
     text-align:center;
     border:2px solid rgba(255,215,0,.4);
     transition:.4s;
 }
 .links-grid a:hover{
-    transform:translateY(-10px) scale(1.05);
+    transform:scale(1.08);
     box-shadow:0 0 40px gold;
 }
 .links-grid span{
+    font-size:36px;
     display:block;
-    font-size:34px;
-    margin-bottom:14px;
+    margin-bottom:12px;
 }
-.links-grid small{
+small{
     display:block;
-    font-size:11px;
     opacity:.7;
+    font-size:11px;
     letter-spacing:.2em;
+}
+footer{
+    text-align:center;
+    opacity:.6;
+    padding:30px;
+    font-size:11px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- EFEITOS LATERAIS -->
-<div class="energy-conduit left-0"><div class="energy-pulse"></div></div>
-<div class="energy-conduit right-0"><div class="energy-pulse" style="animation-delay:2s"></div></div>
+<!-- PLAYER -->
+<div class="player-box">
+    <h1>INTERCONTINENTAL WEB RADIO</h1>
 
-<!-- PLAYER REACT -->
-<div id="root"></div>
-
-<!-- 🔗 CENTRAL DE PORTAIS -->
-<section class="links-hub">
-    <h2>PORTAIS</h2>
-    <div class="links-grid">
-
-        <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank">
-            <span>🧠</span>
-            Pandora & Euterpe
-            <small>IA • Música • Consciência</small>
-        </a>
-
-        <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank">
-            <span>🎮</span>
-            Dynac X Play
-            <small>Plataforma Multimídia</small>
-        </a>
-
-        <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank">
-            <span>🤖</span>
-            VOX I.A
-            <small>Locutora Virtual</small>
-        </a>
-
-        <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank">
-            <span>📰</span>
-            Blog Musical
-            <small>Tendências & Análises</small>
-        </a>
-
-        <a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank">
-            <span>▶️</span>
-            YouTube Oficial
-            <small>Intercontinental Web Radio</small>
-        </a>
-
+    <div class="display" id="status">
+        🔊 Stand by • Intercontinental Web Radio
     </div>
+
+    <!-- STREAM ZENO FM -->
+    <audio id="radio"
+           src="https://stream.zeno.fm/wzcgaal0dnltv"
+           crossorigin="anonymous">
+    </audio>
+
+    <div class="controls">
+        <button onclick="playRadio()">▶ PLAY</button>
+        <button onclick="pauseRadio()">⏸ PAUSE</button>
+    </div>
+
+    <input class="volume" type="range"
+           min="0" max="1" step="0.01" value="0.8"
+           oninput="radio.volume=this.value">
+</div>
+
+<!-- PORTAIS -->
+<section class="links-hub">
+<h2>PORTAIS</h2>
+
+<div class="links-grid">
+
+<a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank">
+<span>🧠</span>
+Pandora & Euterpe
+<small>IA • Música • Consciência</small>
+</a>
+
+<a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank">
+<span>🎮</span>
+Dynac X Play
+<small>Plataforma Multimídia</small>
+</a>
+
+<a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank">
+<span>🤖</span>
+VOX I.A
+<small>Locutora Virtual</small>
+</a>
+
+<a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank">
+<span>📰</span>
+Blog Musical
+<small>Tendências & Análises</small>
+</a>
+
+<a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank">
+<span>▶️</span>
+YouTube Oficial
+<small>Intercontinental Web Radio</small>
+</a>
+
+</div>
 </section>
 
-<!-- 🔥 SEU SCRIPT DO PLAYER (INTACTO) -->
-<script type="text/babel">
-/* 👉 TODO O SEU CÓDIGO DO PLAYER 2 ANOS
-   👉 NÃO FOI ALTERADO
-   👉 Cole AQUI exatamente como você já tem
-*/
+<footer>
+© Intercontinental Web Radio • Streaming Zeno FM • 2 Anos no Ar
+</footer>
+
+<script>
+const radio = document.getElementById("radio");
+const status = document.getElementById("status");
+
+function playRadio(){
+    radio.play();
+    status.innerText = "🎶 AO VIVO • Intercontinental Web Radio";
+}
+function pauseRadio(){
+    radio.pause();
+    status.innerText = "⏸ Pausado • Intercontinental Web Radio";
+}
 </script>
 
 </body>
