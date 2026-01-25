@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intercontinental Gold Ultimate - 2 Anos</title>
+    <title>Intercontinental Gold - Edição de 2 Anos</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
@@ -14,61 +14,79 @@
 
     <style>
         :root { 
+            --theme-color: #00ff41; 
             --gold: #FFD700;
-            --theme-color: #FFD700;
         }
         
         body {
             background: #000;
             color: white;
             font-family: 'Orbitron', sans-serif;
-            background: radial-gradient(circle at center, #1a1a05 0%, #000 100%);
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* BORDA DE OURO LÍQUIDO */
-        .liquid-gold-border {
-            border: 8px solid;
-            border-image: linear-gradient(45deg, #4b3621, #ffd700, #fff5b7, #b8860b, #ffd700) 1;
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.5), inset 0 0 20px rgba(0,0,0,0.8);
-            background: rgba(0,0,0,0.9);
-        }
-
-        /* LCD ESTILO AVIAÇÃO */
-        .lcd-panel {
+        /* CHASSI DE OURO LÍQUIDO */
+        .gold-frame {
+            border: 10px solid;
+            border-image: linear-gradient(135deg, #4b3621, #ffd700, #fff5b7, #b8860b, #ffd700) 1;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.4);
             background: #050505;
-            border: 2px solid #222;
-            color: #00ff41;
-            font-family: 'Share Tech Mono', monospace;
-            box-shadow: inset 0 0 20px rgba(0,255,65,0.1);
         }
 
-        /* AGULHAS COLORIDAS */
+        .lcd-screen {
+            background: #000;
+            border: 2px solid var(--theme-color);
+            box-shadow: inset 0 0 15px var(--theme-color);
+            color: var(--theme-color);
+            font-family: 'Share Tech Mono', monospace;
+            transition: all 0.4s ease;
+        }
+
+        /* 3 BARRAS VERTICAIS: HERTZ, STEREO, BEAT */
+        .meter-bar-bg {
+            width: 15px; height: 120px;
+            background: #111;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .meter-fill {
+            position: absolute; bottom: 0; width: 100%;
+            background: linear-gradient(to top, #00ff00, #ffff00, #ff0000);
+            transition: height 0.05s ease;
+        }
+
+        /* BOTÃO PLAY DINÂMICO */
+        .play-btn {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: #111;
+            border: 3px solid var(--theme-color);
+            transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+        }
+
+        .play-btn.active {
+            box-shadow: 0 0 30px var(--theme-color);
+            background: var(--theme-color);
+            color: #000;
+        }
+
         .needle {
-            position: absolute;
-            bottom: 5px; left: 50%;
-            width: 2px; height: 60px;
+            position: absolute; bottom: 10px; left: 50%;
+            width: 2px; height: 50px;
             transform-origin: bottom center;
             transition: transform 0.05s ease-out;
-            z-index: 10;
-        }
-
-        .bar-fast {
-            flex: 1;
-            background: linear-gradient(to top, #00ff00, #ffff00, #ff0000);
-            transition: height 0.04s ease; /* Resposta ultrarápida */
-        }
-
-        .btn-eq {
-            font-size: 9px;
-            font-weight: 900;
-            padding: 5px 10px;
-            border: 1px solid var(--theme-color);
-            transition: all 0.3s;
         }
 
         .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: gold; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--theme-color); }
     </style>
 </head>
 <body>
@@ -78,7 +96,6 @@
         const { useState, useEffect, useRef } = React;
 
         const STREAM_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
-
         const PORTALS = [
             { n: "PANDORA", u: "https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio", c: "#FF3D3D" },
             { n: "DYNAC-X", u: "https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio", c: "#3DFF3D" },
@@ -87,145 +104,143 @@
             { n: "YOUTUBE", u: "https://www.youtube.com/@RadioWebintercontinental", c: "#FF0000" }
         ];
 
-        const EQs = ["FLAT", "ROCK", "POP", "JAZZ", "TECHNO", "DANCE", "GOLD"];
-        const THEMES = Array.from({length: 26}, (_, i) => `hsl(${i * 13.8}, 80%, 50%)`);
+        const THEMES = Array.from({length: 26}, (_, i) => `hsl(${i * 13.8}, 100%, 50%)`);
+        const EQS = ["FLAT", "ROCK", "POP", "JAZZ", "TECHNO", "DANCE", "GOLD"];
 
         const App = () => {
             const [isPlaying, setIsPlaying] = useState(false);
+            const [theme, setTheme] = useState('#00ff41');
             const [volume, setVolume] = useState(0.8);
-            const [theme, setTheme] = useState('#FFD700');
             const [eq, setEq] = useState('GOLD');
+            const [freq, setFreq] = useState(new Uint8Array(32));
             const [time, setTime] = useState(new Date());
-            const [freqData, setFreqData] = useState(new Uint8Array(32));
-            
+
             const audioRef = useRef(null);
             const analyserRef = useRef(null);
 
-            // Atualiza Hora
             useEffect(() => {
-                const timer = setInterval(() => setTime(new Date()), 1000);
-                return () => clearInterval(timer);
-            }, []);
+                document.documentElement.style.setProperty('--theme-color', theme);
+                const t = setInterval(() => setTime(new Date()), 1000);
+                return () => clearInterval(t);
+            }, [theme]);
 
-            const togglePlay = () => {
+            const handlePlay = () => {
                 if (!audioRef.current) {
                     const ctx = new (window.AudioContext || window.webkitAudioContext)();
                     const audio = new Audio(STREAM_URL);
                     audio.crossOrigin = "anonymous";
                     const source = ctx.createMediaElementSource(audio);
                     const analyser = ctx.createAnalyser();
-                    analyser.fftSize = 128; // Mais detalhado e rápido
+                    analyser.fftSize = 64;
                     source.connect(analyser);
                     analyser.connect(ctx.destination);
                     audioRef.current = audio;
                     analyserRef.current = analyser;
 
-                    const update = () => {
+                    const loop = () => {
                         const data = new Uint8Array(analyser.frequencyBinCount);
                         analyser.getByteFrequencyData(data);
-                        setFreqData([...data]);
-                        requestAnimationFrame(update);
+                        setFreq([...data]);
+                        requestAnimationFrame(loop);
                     };
-                    update();
+                    loop();
                 }
-                isPlaying ? audioRef.current.pause() : audioRef.current.play();
+
+                if (isPlaying) {
+                    audioRef.current.pause();
+                } else {
+                    audioRef.current.play().catch(e => console.error("Erro ao iniciar áudio"));
+                }
                 setIsPlaying(!isPlaying);
             };
 
             return (
-                <div className="p-4 md:p-10 flex flex-col items-center">
-                    <header className="mb-6 text-center">
-                        <h1 className="cinzel text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-100 via-yellow-400 to-yellow-800">
-                            INTERCONTINENTAL
-                        </h1>
-                        <p className="text-yellow-500 tracking-[1em] font-bold">2 ANOS DE PURO OURO</p>
-                    </header>
+                <div className="gold-frame p-6 md:p-10 w-full max-w-6xl rounded-lg">
+                    <h1 className="text-center text-4xl md:text-6xl font-black mb-8 text-transparent bg-clip-text bg-gradient-to-b from-yellow-200 to-yellow-600">
+                        INTERCONTINENTAL
+                    </h1>
 
-                    <div className="liquid-gold-border w-full max-w-6xl p-6 md:p-10 rounded-xl grid grid-cols-1 lg:grid-cols-12 gap-8">
-                        
-                        {/* COLUNA ESQUERDA: 3 AGULHAS E TEMAS */}
-                        <div className="lg:col-span-3 space-y-4">
-                            <div className="lcd-panel p-4 rounded-lg">
-                                <p className="text-[8px] text-center mb-2">TRI-NEEDLE MONITOR (BASS/MID/TREBLE)</p>
-                                <div className="h-24 relative bg-black/50 rounded overflow-hidden">
-                                    {/* Agulha Vermelha (Grave) */}
-                                    <div className="needle bg-red-500 shadow-[0_0_8px_red]" style={{ transform: `rotate(${(freqData[2]/255 * 100) - 50}deg)` }} />
-                                    {/* Agulha Verde (Médio) */}
-                                    <div className="needle bg-green-500 shadow-[0_0_8px_green] !h-40" style={{ transform: `rotate(${(freqData[8]/255 * 100) - 50}deg)` }} />
-                                    {/* Agulha Azul (Agudo) */}
-                                    <div className="needle bg-blue-500 shadow-[0_0_8px_blue]" style={{ transform: `rotate(${(freqData[15]/255 * 100) - 50}deg)` }} />
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        {/* BARRAS VERTICAIS E VU */}
+                        <div className="lg:col-span-3 flex flex-col gap-4">
+                            <div className="lcd-screen p-4 rounded flex justify-around items-center">
+                                <div className="text-center">
+                                    <div className="meter-bar-bg"><div className="meter-fill" style={{height: `${(freq[2]/255)*100}%`}} /></div>
+                                    <span className="text-[7px] block mt-1">HERTZ</span>
+                                </div>
+                                <div className="text-center">
+                                    <div className="meter-bar-bg"><div className="meter-fill" style={{height: `${(freq[8]/255)*100}%`}} /></div>
+                                    <span className="text-[7px] block mt-1">STEREO</span>
+                                </div>
+                                <div className="text-center">
+                                    <div className="meter-bar-bg"><div className="meter-fill" style={{height: `${(freq[12]/255)*100}%`}} /></div>
+                                    <span className="text-[7px] block mt-1">BEAT</span>
                                 </div>
                             </div>
-
-                            <div className="lcd-panel p-4 h-64">
-                                <p className="text-[8px] mb-2 uppercase">26 Moduladores de Tema</p>
-                                <div className="grid grid-cols-5 gap-1 h-48 overflow-y-auto custom-scroll">
-                                    {THEMES.map((c, i) => (
-                                        <button key={i} onClick={() => setTheme(c)} className="h-8 rounded border border-white/10" style={{background: c}} />
-                                    ))}
-                                </div>
+                            
+                            <div className="lcd-screen p-4 rounded h-32 relative overflow-hidden">
+                                <span className="text-[8px] absolute top-1 left-2">SIGNAL MONITOR</span>
+                                <div className="needle bg-red-500" style={{ transform: `rotate(${(freq[2]/255*100)-50}deg)` }} />
+                                <div className="needle bg-yellow-500 !h-40" style={{ transform: `rotate(${(freq[10]/255*100)-50}deg)` }} />
+                                <div className="needle bg-blue-500" style={{ transform: `rotate(${(freq[20]/255*100)-50}deg)` }} />
                             </div>
                         </div>
 
-                        {/* COLUNA CENTRAL: LCD E ESPECTRO */}
+                        {/* LCD CENTRAL */}
                         <div className="lg:col-span-6 space-y-4">
-                            {/* TELA LCD COMPLETA */}
-                            <div className="lcd-panel p-4 rounded-xl flex flex-col gap-2">
-                                <div className="flex justify-between text-[10px] text-yellow-500 font-bold">
-                                    <span>{time.toLocaleDateString()} - {time.toLocaleTimeString()}</span>
-                                    <span>THEME: <span style={{color: theme}}>{theme.toUpperCase()}</span></span>
+                            <div className="lcd-screen p-6 rounded-xl">
+                                <div className="flex justify-between text-[10px] mb-2">
+                                    <span>{time.toLocaleTimeString()}</span>
+                                    <span>2 ANOS • LIVE</span>
                                 </div>
-                                <div className="text-center py-2 border-y border-white/10">
-                                    <span className="text-2xl font-black tracking-widest uppercase">EQ: {eq} ACTIVE</span>
+                                <div className="text-center border-y border-current py-4 my-2">
+                                    <h2 className="text-3xl font-black animate-pulse">{isPlaying ? "ON AIR" : "STANDBY"}</h2>
+                                    <p className="text-[10px] mt-1">EQ PRESET: {eq} | THEME ACTIVE</p>
                                 </div>
-                                <div className="flex justify-between text-[8px]">
-                                    <span>BITRATE: 320KBPS</span>
-                                    <span>SINAL: 100% GOLD</span>
+                                <div className="flex items-end gap-1 h-20">
+                                    {Array.from(freq).slice(0, 20).map((v, i) => (
+                                        <div key={i} className="flex-1 bg-current" style={{height: `${(v/255)*100}%`, opacity: 0.6}} />
+                                    ))}
                                 </div>
                             </div>
 
-                            {/* ANALISADOR RÁPIDO */}
-                            <div className="lcd-panel p-4 h-48 flex items-end gap-1">
-                                {Array.from(freqData).slice(0, 32).map((v, i) => (
-                                    <div key={i} className="bar-fast" style={{ height: `${(v/255)*100}%` }} />
-                                ))}
-                            </div>
-
-                            <div className="flex justify-center gap-4">
-                                <button onClick={togglePlay} className="w-20 h-20 rounded-full bg-gradient-to-b from-yellow-200 to-yellow-600 border-4 border-black flex items-center justify-center shadow-[0_0_30px_gold]">
-                                    <i data-lucide={isPlaying ? "pause" : "play"} className="text-black fill-current" />
+                            <div className="flex justify-center items-center gap-6">
+                                <button onClick={handlePlay} className={`play-btn ${isPlaying ? 'active' : ''}`}>
+                                    <i data-lucide={isPlaying ? "pause" : "play"} className="w-10 h-10" />
                                 </button>
-                                <div className="flex flex-col justify-center">
-                                    <input type="range" min="0" max="1" step="0.01" value={volume} 
-                                           onChange={(e) => {setVolume(parseFloat(e.target.value)); if(audioRef.current) audioRef.current.volume = e.target.value;}}
-                                           className="w-32 accent-yellow-500" />
-                                    <span className="text-[10px] text-center mt-1">VOLUME</span>
-                                </div>
+                                <input type="range" min="0" max="1" step="0.1" value={volume} 
+                                    onChange={(e) => {setVolume(e.target.value); audioRef.current.volume = e.target.value;}}
+                                    className="w-32 accent-current" />
                             </div>
 
-                            {/* 7 EQUALIZADORES COLORIDOS */}
-                            <div className="flex flex-wrap justify-center gap-2">
-                                {EQs.map(e => (
-                                    <button key={e} onClick={() => setEq(e)} 
-                                            className={`btn-eq ${eq === e ? 'bg-yellow-500 text-black' : 'text-yellow-500'}`}
-                                            style={{ borderColor: theme }}>
+                            <div className="flex flex-wrap gap-2 justify-center">
+                                {EQS.map(e => (
+                                    <button key={e} onClick={() => setEq(e)} className="text-[8px] font-black border border-current px-3 py-1 hover:bg-current hover:text-black transition">
                                         {e}
                                     </button>
                                 ))}
                             </div>
                         </div>
 
-                        {/* COLUNA DIREITA: URLS */}
-                        <div className="lg:col-span-3 space-y-3">
-                            <p className="text-[10px] text-center font-black text-yellow-600 mb-4 uppercase">Portais Oficiais</p>
-                            {PORTALS.map((p, i) => (
-                                <a key={i} href={p.u} target="_blank" 
-                                   className="flex items-center gap-3 p-4 bg-black/80 border-l-4 rounded-r-xl transition-all hover:translate-x-2"
-                                   style={{ borderLeftColor: p.c }}>
-                                    <i data-lucide="external-link" className="w-3 h-3" style={{color: p.c}} />
-                                    <span className="text-[9px] font-black" style={{color: p.c}}>{p.n}</span>
-                                </a>
-                            ))}
+                        {/* TEMAS E PORTAIS */}
+                        <div className="lg:col-span-3 space-y-4">
+                            <div className="lcd-screen p-2 rounded max-h-48 overflow-y-auto custom-scroll">
+                                <span className="text-[8px] block mb-2 text-center">26 CORE MODULATORS</span>
+                                <div className="grid grid-cols-5 gap-1">
+                                    {THEMES.map((c, i) => (
+                                        <button key={i} onClick={() => setTheme(c)} className="h-6 rounded" style={{background: c}} />
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                {PORTALS.map((p, i) => (
+                                    <a key={i} href={p.u} target="_blank" className="flex items-center gap-2 p-2 bg-black border border-white/10 rounded hover:border-current transition">
+                                        <div className="w-1 h-1 rounded-full" style={{background: p.c}} />
+                                        <span className="text-[9px] font-bold" style={{color: p.c}}>{p.n}</span>
+                                    </a>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
