@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intercontinental Sonic System - 2 Anos</title>
+    <title>Intercontinental Gold - 2 Anos</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -13,51 +13,68 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        :root { --gold: #FFD700; --gold-dark: #B8860B; }
-        body {
-            margin: 0; padding: 0; background: #000;
-            font-family: 'Orbitron', sans-serif;
-            background: radial-gradient(circle at center, #0f101a 0%, #000 100%);
-            color: white; overflow-x: hidden;
+        :root { 
+            --gold: #FFD700; 
+            --gold-dark: #B8860B;
+            --liquid: linear-gradient(135deg, #FFF5B7 0%, #FFD700 25%, #B8860B 50%, #FFD700 75%, #FFFACD 100%);
         }
-        .cinzel { font-family: 'Cinzel', serif; }
         
-        /* Molduras de Ouro */
-        .gold-frame { border: 3px solid var(--gold); box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
-        .energy-conduit {
-            position: fixed; top: 0; width: 12px; height: 100%;
-            background: linear-gradient(to bottom, transparent, var(--gold), var(--gold-dark), var(--gold), transparent);
-            box-shadow: 0 0 30px var(--gold); z-index: 1000;
+        body {
+            margin: 0; background: #000;
+            font-family: 'Orbitron', sans-serif;
+            background-image: radial-gradient(circle at center, #1a1a00 0%, #000 100%);
+            color: #fff; overflow-x: hidden;
         }
 
-        /* LCD Estilo System */
-        .lcd-panel {
-            background: #020500;
-            border: 3px solid #222;
-            font-family: 'Share Tech Mono', monospace;
+        /* Efeito de Ouro Líquido Realista */
+        .gold-liquid {
+            background: var(--liquid);
+            background-size: 200% 200%;
+            animation: liquidFlow 5s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+        }
+
+        .gold-card {
+            background: linear-gradient(145deg, #2a2a00, #000);
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 30px rgba(184, 134, 11, 0.4), inset 0 0 15px rgba(255, 215, 0, 0.1);
+        }
+
+        @keyframes liquidFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* LCD DE ALTA VISIBILIDADE */
+        .lcd-high-vis {
+            background: #000 !important;
+            border: 2px solid #333;
+            box-shadow: inset 0 0 20px #00ff0022;
             color: #00ff41;
-            text-shadow: 0 0 10px #00ff41;
-            position: relative; overflow: hidden;
-        }
-        .lcd-panel::after {
-            content: ""; position: absolute; inset: 0;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,0,0.03) 2px, rgba(0,255,0,0.03) 4px);
+            text-shadow: 0 0 5px #00ff41;
+            font-family: 'Share Tech Mono', monospace;
         }
 
-        /* Analisador de Barras */
-        .bar { width: 6px; background: linear-gradient(to top, #00ff41, #ffff00, #ff0000); transition: height 0.1s ease; }
+        /* Volume Knob Estilizado */
+        .volume-knob {
+            width: 80px; height: 80px;
+            background: conic-gradient(from 180deg, #333, var(--gold), #333);
+            border-radius: 50%;
+            border: 4px solid #111;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
 
-        /* Custom Scroll */
-        .theme-scroll::-webkit-scrollbar { width: 5px; }
-        .theme-scroll::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 
-        .boost-pulse { animation: boost-anim 0.4s infinite alternate; }
-        @keyframes boost-anim { from { box-shadow: 0 0 5px red; } to { box-shadow: 0 0 30px red; } }
+        .active-glow { box-shadow: 0 0 20px var(--gold); border-color: #fff !important; }
     </style>
 </head>
 <body>
-    <div class="energy-conduit left-0"></div>
-    <div class="energy-conduit right-0"></div>
     <div id="root"></div>
 
     <script type="text/babel">
@@ -66,49 +83,37 @@
         const STREAM_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
         
         const PORTALS = [
-            { n: "Pandora & Euterpe", u: "https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio", i: "music", c: "#ff4d4d" },
-            { n: "Dynac-X Play", u: "https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio", i: "globe", c: "#4dff88" },
-            { n: "Vox I.A", u: "https://sites.google.com/view/vox-i-a/in%C3%ADcio", i: "cpu", c: "#4d94ff" },
-            { n: "Tendências", u: "https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html", i: "trending-up", c: "#ffff4d" },
-            { n: "YouTube", u: "https://www.youtube.com/@RadioWebintercontinental", i: "youtube", c: "#ff4dff" }
+            { n: "Pandora", u: "https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio", i: "music", c: "#FF4D4D" },
+            { n: "Dynac-X", u: "https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio", i: "globe", c: "#4DFF88" },
+            { n: "Vox I.A", u: "https://sites.google.com/view/vox-i-a/in%C3%ADcio", i: "cpu", c: "#4D94FF" },
+            { n: "Trends", u: "https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html", i: "trending-up", c: "#FFFF4D" },
+            { n: "YouTube", u: "https://www.youtube.com/@RadioWebintercontinental", i: "youtube", c: "#FF4DFF" }
         ];
 
         const THEMES = [
-            { n: 'Imperial Gold', c: '#FFD700' }, { n: 'Cyber Red', c: '#FF0000' }, 
-            { n: 'Neon Blue', c: '#00D1FF' }, { n: 'Toxic Green', c: '#39FF14' },
-            { n: 'Pink Void', c: '#FF00FF' }, { n: 'Solaris', c: '#FF8800' }
+            '#FFD700', '#FF0000', '#00D1FF', '#39FF14', '#FF00FF', '#FF8800', 
+            '#00FFFF', '#FFFFFF', '#A020F0', '#32CD32', '#E0115F', '#FFBF00',
+            '#CCFF00', '#A5F2F3', '#FF4500', '#0047AB', '#98FF98', '#FF66CC',
+            '#FFF700', '#EE82EE', '#C0C0C0', '#722F37', '#00FBFF', '#CD7F32',
+            '#228B22', '#FD5E53'
         ];
-
-        const Gauge = ({ label, value, color }) => (
-            <div className="flex flex-col items-center bg-black/40 p-3 rounded-xl border border-white/10">
-                <div className="relative w-24 h-16 border-2 border-gray-600 rounded-t-full overflow-hidden bg-gray-100">
-                    <div className="absolute bottom-0 left-1/2 w-1 h-12 bg-red-600 origin-bottom"
-                         style={{ transform: `translateX(-50%) rotate(${(value * 160) - 80}deg)`, transition: 'transform 0.1s ease' }} />
-                </div>
-                <span className="text-[9px] mt-1 text-gold font-bold uppercase">{label}</span>
-            </div>
-        );
 
         const App = () => {
             const [isPlaying, setIsPlaying] = useState(false);
+            const [volume, setVolume] = useState(0.7);
+            const [activeTheme, setActiveTheme] = useState('#FFD700');
+            const [eq, setEq] = useState('Standard');
             const [boost, setBoost] = useState(false);
-            const [activeTheme, setActiveTheme] = useState(THEMES[0]);
-            const [eq, setEq] = useState('Dynamic');
-            const [levels, setLevels] = useState(new Array(12).fill(0));
-            const [meters, setMeters] = useState({ hz: 0, db: 0 });
-            const [time, setTime] = useState(new Date());
-
+            const [meters, setMeters] = useState({ v1: 0, v2: 0 });
+            
             const audioRef = useRef(null);
             const analyserRef = useRef(null);
-            const canvasRef = useRef(null);
 
             useEffect(() => {
-                const t = setInterval(() => setTime(new Date()), 1000);
                 if (window.lucide) window.lucide.createIcons();
-                return () => clearInterval(t);
-            }, []);
+            }, [activeTheme]);
 
-            const initAudio = () => {
+            const togglePlay = () => {
                 if (!audioRef.current) {
                     const ctx = new (window.AudioContext || window.webkitAudioContext)();
                     const audio = new Audio(STREAM_URL);
@@ -124,132 +129,131 @@
                     const loop = () => {
                         const data = new Uint8Array(analyser.frequencyBinCount);
                         analyser.getByteFrequencyData(data);
-                        const scaled = Array.from(data).slice(0, 12).map(v => v / 255);
-                        setLevels(scaled);
-                        setMeters({ hz: scaled[4], db: scaled[1] });
-                        drawCircle(scaled);
+                        setMeters({ v1: data[2]/255, v2: data[5]/255 });
                         requestAnimationFrame(loop);
                     };
                     loop();
                 }
-            };
-
-            const drawCircle = (data) => {
-                const canvas = canvasRef.current;
-                if (!canvas) return;
-                const ctx = canvas.getContext('2d');
-                ctx.clearRect(0, 0, 400, 400);
-                const cx = 200, cy = 200;
-                data.forEach((v, i) => {
-                    const angle = (i * Math.PI * 2) / data.length;
-                    const len = 50 + (v * 100);
-                    ctx.beginPath();
-                    ctx.lineWidth = 4;
-                    ctx.strokeStyle = activeTheme.c;
-                    ctx.moveTo(cx + Math.cos(angle) * 80, cy + Math.sin(angle) * 80);
-                    ctx.lineTo(cx + Math.cos(angle) * (80 + len), cy + Math.sin(angle) * (80 + len));
-                    ctx.stroke();
-                });
-            };
-
-            const handlePlay = () => {
-                initAudio();
                 isPlaying ? audioRef.current.pause() : audioRef.current.play();
                 setIsPlaying(!isPlaying);
             };
 
+            useEffect(() => {
+                if(audioRef.current) audioRef.current.volume = boost ? 1 : volume;
+            }, [volume, boost]);
+
             return (
-                <div className="flex flex-col items-center p-4 md:p-10">
-                    {/* Cabeçalho Imperial */}
-                    <header className="text-center mb-8">
-                        <h1 className="cinzel text-4xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#FFD700] to-[#B8860B] drop-shadow-[0_0_15px_gold]">
+                <div className="flex flex-col items-center min-h-screen p-4 md:p-8">
+                    {/* TÍTULO OURO LÍQUIDO */}
+                    <header className="text-center mb-12">
+                        <h1 className="cinzel text-5xl md:text-8xl font-black gold-liquid">
                             INTERCONTINENTAL
                         </h1>
-                        <div className="flex items-center justify-center gap-4">
-                            <div className="h-0.5 w-12 bg-gold" />
-                            <span className="text-xl tracking-[0.4em] font-bold text-white">2 ANOS</span>
-                            <div className="h-0.5 w-12 bg-gold" />
+                        <div className="flex items-center justify-center gap-6 mt-2">
+                            <div className="h-1 w-24 bg-gradient-to-r from-transparent via-gold to-transparent" />
+                            <span className="text-3xl font-black text-white tracking-[0.5em]">2 ANOS</span>
+                            <div className="h-1 w-24 bg-gradient-to-r from-gold via-gold to-transparent" />
                         </div>
                     </header>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full max-w-6xl">
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 w-full max-w-7xl">
                         
-                        {/* Módulo Esquerdo: Sensores */}
-                        <div className="bg-black/60 border-2 border-gold/40 rounded-3xl p-6 flex flex-col justify-around items-center">
-                            <h2 className="text-[10px] text-gold font-black mb-4 tracking-widest uppercase">Analog Sensors</h2>
-                            <Gauge label="Signal Hz" value={isPlaying ? meters.hz : 0.05} color={activeTheme.c} />
-                            <Gauge label="Power DB" value={isPlaying ? meters.db : 0.05} color={activeTheme.c} />
-                            <button onClick={() => setBoost(!boost)} 
-                                className={`mt-4 w-full py-3 rounded-full font-black text-xs border-2 transition-all ${boost ? 'bg-red-600 border-white boost-pulse' : 'bg-black border-red-900 text-red-900'}`}>
-                                SUPER BOOST
-                            </button>
+                        {/* MÓDULO 1: SENSORES & VOLUME */}
+                        <div className="lg:col-span-1 space-y-6">
+                            <div className="gold-card p-6 rounded-3xl flex flex-col items-center">
+                                <span className="text-[10px] text-gold font-black mb-6 uppercase tracking-widest">Master Volume</span>
+                                <div className="volume-knob shadow-[0_0_20px_rgba(255,215,0,0.3)] relative flex items-center justify-center"
+                                     style={{ transform: `rotate(${(volume * 240) - 120}deg)` }}>
+                                    <div className="absolute top-2 w-2 h-2 bg-black rounded-full" />
+                                </div>
+                                <input type="range" min="0" max="1" step="0.01" value={volume} 
+                                       onChange={(e) => setVolume(parseFloat(e.target.value))}
+                                       className="mt-6 w-full accent-gold" />
+                                <span className="text-gold font-bold mt-2">{Math.round(volume * 100)}%</span>
+                            </div>
+
+                            <div className="gold-card p-6 rounded-3xl flex flex-col gap-4">
+                                <span className="text-[10px] text-gold font-black uppercase tracking-widest text-center">Output Meters</span>
+                                <div className="h-4 bg-black border border-white/10 rounded-full overflow-hidden">
+                                    <div className="h-full bg-gold shadow-[0_0_15px_gold] transition-all" style={{width: `${meters.v1 * 100}%`}} />
+                                </div>
+                                <div className="h-4 bg-black border border-white/10 rounded-full overflow-hidden">
+                                    <div className="h-full bg-gold shadow-[0_0_15px_gold] transition-all" style={{width: `${meters.v2 * 100}%`}} />
+                                </div>
+                            </div>
                         </div>
 
-                        {/* Módulo Central: O Player e LCD */}
-                        <div className="relative gold-frame rounded-[4rem] bg-black p-4 flex flex-col items-center min-h-[500px]">
-                            {/* LCD Avançado */}
-                            <div className="lcd-panel w-full rounded-2xl p-4 mb-4">
-                                <div className="flex justify-between text-[10px] mb-2">
-                                    <span>{time.toLocaleDateString()}</span>
-                                    <span className="animate-pulse">{isPlaying ? 'PLAYING' : 'READY'}</span>
-                                    <span>{time.toLocaleTimeString()}</span>
+                        {/* MÓDULO 2: PLAYER CENTRAL */}
+                        <div className="lg:col-span-2 gold-card rounded-[4rem] p-8 flex flex-col items-center relative overflow-hidden">
+                            <div className="lcd-high-vis w-full rounded-2xl p-6 mb-8 text-center relative z-10">
+                                <div className="flex justify-between text-[10px] opacity-70 mb-2">
+                                    <span>SYSTEM STATUS: {isPlaying ? 'ACTIVE' : 'STANDBY'}</span>
+                                    <span>RADIO INTERCONTINENTAL</span>
                                 </div>
-                                <div className="text-xs font-bold mb-4 uppercase">Mode: {activeTheme.n} | EQ: {eq}</div>
-                                
-                                {/* Espectro de Barras Transversais */}
-                                <div className="flex items-end justify-between h-16 gap-1">
-                                    {levels.map((lvl, i) => (
-                                        <div key={i} className="bar" style={{ height: isPlaying ? `${lvl * 100}%` : '10%' }} />
-                                    ))}
+                                <div className="text-2xl md:text-4xl font-bold tracking-tighter mb-4">
+                                    {isPlaying ? ">>> SONIC LINK ESTABLISHED" : "READY TO CONNECT"}
+                                </div>
+                                <div className="grid grid-cols-2 gap-2 text-[10px] text-left">
+                                    <div className="bg-white/5 p-2">EQ PRESET: {eq.toUpperCase()}</div>
+                                    <div className="bg-white/5 p-2">BOOST: {boost ? 'ON' : 'OFF'}</div>
                                 </div>
                             </div>
 
-                            {/* Analisador Circular */}
-                            <canvas ref={canvasRef} width="400" height="400" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-40 pointer-events-none" />
-
-                            <button onClick={handlePlay} className="mt-auto mb-10 w-24 h-24 rounded-full border-4 border-gold bg-gold/10 flex items-center justify-center hover:bg-gold/30 transition-all shadow-[0_0_30px_rgba(255,215,0,0.5)]">
-                                <i data-lucide={isPlaying ? "pause" : "play"} className="w-10 h-10 text-gold fill-current" />
-                            </button>
-                        </div>
-
-                        {/* Módulo Direito: Temas e Portais */}
-                        <div className="space-y-6">
-                            {/* Temas */}
-                            <div className="bg-black/60 border-2 border-gold/40 rounded-3xl p-6">
-                                <h2 className="text-[10px] text-gold font-black mb-4 tracking-widest uppercase">System Themes</h2>
-                                <div className="grid grid-cols-3 gap-2 theme-scroll max-h-40 overflow-y-auto">
-                                    {THEMES.map((t, i) => (
-                                        <button key={i} onClick={() => setActiveTheme(t)} className="flex flex-col items-center p-2 rounded hover:bg-white/5 transition-all">
-                                            <div className="w-6 h-6 rounded-full border border-white/20 mb-1" style={{backgroundColor: t.c}} />
-                                            <span className="text-[7px] font-bold">{t.n}</span>
-                                        </button>
-                                    ))}
-                                </div>
+                            {/* ANALISADOR DE ESPECTRO GRANDE */}
+                            <div className="flex items-end justify-center gap-1 h-32 w-full mb-8">
+                                {[...Array(20)].map((_, i) => (
+                                    <div key={i} className="w-full bg-gold" 
+                                         style={{ 
+                                            height: isPlaying ? `${Math.random() * 100}%` : '10%',
+                                            opacity: (i/20) + 0.2,
+                                            boxShadow: '0 0 10px var(--gold)'
+                                         }} />
+                                ))}
                             </div>
 
-                            {/* Portais Coloridos */}
-                            <div className="bg-black/60 border-2 border-gold/40 rounded-3xl p-6">
-                                <h2 className="text-[10px] text-gold font-black mb-4 tracking-widest uppercase">Portals</h2>
-                                <div className="grid grid-cols-1 gap-3">
+                            <div className="flex gap-8 items-center">
+                                <button onClick={togglePlay} className="w-24 h-24 rounded-full border-4 border-white bg-gold/20 flex items-center justify-center hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,215,0,0.6)]">
+                                    <i data-lucide={isPlaying ? "pause" : "play"} className="w-12 h-12 text-white fill-current" />
+                                </button>
+                                <button onClick={() => setBoost(!boost)} className={`px-8 py-3 rounded-xl font-black text-xs border-2 transition-all ${boost ? 'bg-red-600 border-white shadow-[0_0_20px_red]' : 'border-gold text-gold'}`}>
+                                    SUPER BOOST
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* MÓDULO 3: PORTAIS E TEMAS */}
+                        <div className="lg:col-span-1 space-y-6">
+                            <div className="gold-card p-6 rounded-3xl">
+                                <span className="text-[10px] text-gold font-black mb-4 block uppercase tracking-widest text-center">Multi-Portals</span>
+                                <div className="grid grid-cols-1 gap-2">
                                     {PORTALS.map((p, i) => (
-                                        <a key={i} href={p.u} target="_blank" className="flex items-center gap-3 p-3 bg-white/5 rounded-xl hover:bg-white/10 border border-white/10 group transition-all">
-                                            <div className="p-2 rounded-lg" style={{backgroundColor: p.c + '22'}}>
-                                                <i data-lucide={p.i} style={{color: p.c}} className="w-5 h-5" />
-                                            </div>
-                                            <span className="text-[10px] font-bold uppercase tracking-tighter" style={{color: p.c}}>{p.n}</span>
+                                        <a key={i} href={p.u} target="_blank" className="flex items-center gap-3 p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all border border-white/5 group">
+                                            <i data-lucide={p.i} style={{color: p.c}} className="w-5 h-5" />
+                                            <span className="text-[10px] font-black" style={{color: p.c}}>{p.n}</span>
                                         </a>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="gold-card p-4 rounded-3xl h-[280px]">
+                                <span className="text-[10px] text-gold font-black mb-4 block uppercase tracking-widest text-center">26 Modulators</span>
+                                <div className="grid grid-cols-5 gap-2 overflow-y-auto h-[200px] custom-scroll pr-2">
+                                    {THEMES.map((t, i) => (
+                                        <button key={i} onClick={() => setActiveTheme(t)} 
+                                                className={`w-full aspect-square rounded-lg border-2 border-transparent transition-all ${activeTheme === t ? 'active-glow' : ''}`}
+                                                style={{ backgroundColor: t }} />
                                     ))}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Equalizadores (Presets) */}
-                    <div className="mt-12 flex flex-wrap justify-center gap-6">
-                        {['Stadium', 'Studio', 'Bass Boost', 'Vocal', 'Jazz', 'Electronic'].map(p => (
-                            <button key={p} onClick={() => setEq(p)} 
-                                className={`px-6 py-2 rounded-full border-2 text-[10px] font-black uppercase transition-all ${eq === p ? 'bg-gold text-black border-gold shadow-[0_0_20px_gold]' : 'border-gold/30 text-gold'}`}>
-                                {p}
+                    {/* EQUALIZADORES (MODO OURO) */}
+                    <div className="mt-12 w-full max-w-5xl gold-card p-8 rounded-[3rem] flex flex-wrap justify-center gap-4">
+                        {['Classical', 'Techno', 'Pop', 'Rock', 'Jazz', 'Dance', 'Flat'].map(preset => (
+                            <button key={preset} onClick={() => setEq(preset)}
+                                    className={`px-6 py-2 rounded-full border-2 font-black text-[10px] transition-all ${eq === preset ? 'bg-gold text-black border-white' : 'border-gold/30 text-gold hover:border-gold'}`}>
+                                {preset}
                             </button>
                         ))}
                     </div>
@@ -259,7 +263,6 @@
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
-        setInterval(() => { if(window.lucide) window.lucide.createIcons(); }, 1500);
     </script>
 </body>
 </html>
