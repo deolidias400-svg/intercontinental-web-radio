@@ -2,238 +2,288 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<title>Intercontinental • 2 Anos</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intercontinental Gold Legend • 2 Anos</title>
-
-<!-- CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
 
 <style>
 :root{
-  --gold:#ffd700;
-  --liquid:linear-gradient(135deg,#3b2a14,#ffd700,#fff5b7,#b8860b);
+  --gold1:#fff2b0;
+  --gold2:#ffd700;
+  --gold3:#b8860b;
+  --glass:rgba(0,0,0,.65);
 }
 
 body{
-  background:radial-gradient(circle at top,#222,#000);
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at top,#333,#000),
+    linear-gradient(120deg,#220000,#001122,#220022);
   color:#fff;
-  font-family:Orbitron,sans-serif;
-  padding:40px 16px;
 }
 
-.gold{
-  border:4px solid;
-  border-image:var(--liquid) 1;
-  background:rgba(0,0,0,.85);
-  box-shadow:0 0 40px rgba(255,215,0,.25);
+/* ====== CABEÇALHO ====== */
+header{
+  text-align:center;
+  padding:40px 10px;
 }
-
-.glass{
-  background:rgba(0,0,0,.75);
-  border:1px solid rgba(255,215,0,.35);
-}
-
-.txt-gold{
-  font-family:Cinzel,serif;
-  background:linear-gradient(#fff5b7,#ffd700,#b8860b);
+header h1{
+  font-size:3.5rem;
+  margin:0;
+  background:linear-gradient(var(--gold1),var(--gold2),var(--gold3));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-
-.bar{
-  width:100%;
-  border-radius:2px;
-  transition:height .05s linear;
+header p{
+  letter-spacing:.4em;
+  color:#ffd700;
 }
 
+/* ====== MÓDULO BASE ====== */
+.module{
+  margin:20px auto;
+  max-width:900px;
+  border:4px solid;
+  border-image:linear-gradient(135deg,#3a2a14,#ffd700,#fff,#b8860b) 1;
+  background:var(--glass);
+  box-shadow:0 0 30px rgba(255,215,0,.3);
+  padding:20px;
+}
+
+/* ====== LCD ====== */
+#lcd{
+  display:flex;
+  justify-content:space-between;
+  font-family:monospace;
+  color:#ffd700;
+}
+
+/* ====== CONTROLES ====== */
+#controls{
+  text-align:center;
+}
+#playBtn{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  border:4px solid #ffd700;
+  background:black;
+  color:#ffd700;
+  font-size:22px;
+  cursor:pointer;
+}
+#volume{
+  width:200px;
+}
+
+/* ====== HERTZ ====== */
+.hertz{
+  display:flex;
+  gap:10px;
+  height:120px;
+}
+.hbar{
+  flex:1;
+  background:#111;
+  border:1px solid #444;
+  position:relative;
+}
+.hfill{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  background:linear-gradient(to top,#0f0,#ff0,#f00);
+}
+
+/* ====== ESPECTRO ====== */
+#spectrum{
+  display:flex;
+  gap:2px;
+  height:160px;
+}
+.spec{
+  flex:1;
+  background:#ffd700;
+}
+
+/* ====== AGULHAS ====== */
+.needles{
+  position:relative;
+  height:160px;
+}
 .needle{
   position:absolute;
   bottom:0;
   left:50%;
-  width:2px;
-  transform-origin:bottom center;
-  filter:drop-shadow(0 0 8px currentColor);
+  width:3px;
+  transform-origin:bottom;
+}
+.red{background:red;height:130px;}
+.green{background:lime;height:150px;}
+.blue{background:cyan;height:110px;}
+
+/* ====== EQ ====== */
+#eqs button, #themes button{
+  margin:4px;
+  padding:6px 10px;
+  cursor:pointer;
 }
 
-.portal{
-  padding:18px;
+/* ====== VOX ====== */
+#vox{
   text-align:center;
-  font-weight:900;
-  border-radius:14px;
-  border:2px solid;
-  transition:.3s;
+  cursor:pointer;
 }
-.portal:hover{transform:scale(1.05);}
+#voxBall{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:radial-gradient(circle,#00f,#008);
+  margin:0 auto;
+  box-shadow:0 0 20px #00f;
+}
 
+/* ====== PORTAIS ====== */
+.portal{
+  margin:10px 0;
+  padding:15px;
+  text-align:center;
+  border:2px solid;
+  font-weight:bold;
+}
 </style>
 </head>
 
 <body>
-<div id="root"></div>
 
-<script type="text/babel">
-const {useState,useEffect}=React;
+<header>
+  <h1>INTERCONTINENTAL</h1>
+  <p>2 ANOS DE SUCESSO</p>
+</header>
 
-const STREAM="https://stream.zeno.fm/wzcgaal0dnltv";
+<div class="module" id="lcd">
+  <div id="date"></div>
+  <div id="status">OFFLINE</div>
+  <div id="info">EQ: GOLD</div>
+</div>
 
-const PORTALS=[
- {n:"PANDORA",u:"https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio",c:"#ff4d4d"},
- {n:"DYNAC-X",u:"https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio",c:"#4dff88"},
- {n:"VOX I.A",u:"https://sites.google.com/view/vox-i-a/in%C3%ADcio",c:"#4d94ff"},
- {n:"TRENDS",u:"https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html",c:"#ffff4d"},
- {n:"YOUTUBE",u:"https://www.youtube.com/@RadioWebintercontinental",c:"#ff0000"}
-];
+<div class="module" id="controls">
+  <button id="playBtn">▶</button><br><br>
+  <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8">
+</div>
 
-const EQS=["DYNAMIC","GOLD","STADIUM","BASS+","CLUB","VOX","FLAT"];
-const THEMES=Array.from({length:26},(_,i)=>`hsl(${i*14},100%,50%)`);
+<div class="module hertz">
+  <div class="hbar"><div class="hfill" id="h1"></div></div>
+  <div class="hbar"><div class="hfill" id="h2"></div></div>
+  <div class="hbar"><div class="hfill" id="h3"></div></div>
+  <div class="hbar"><div class="hfill" id="h4"></div></div>
+</div>
 
-function App(){
-  const[audio,setAudio]=useState(null);
-  const[analyser,setAnalyser]=useState(null);
-  const[freq,setFreq]=useState(new Uint8Array(32));
-  const[play,setPlay]=useState(false);
-  const[theme,setTheme]=useState("#ffd700");
-  const[eq,setEq]=useState("GOLD");
-  const[time,setTime]=useState(new Date());
-  const[vox,setVox]=useState("Clique para dicas musicais.");
+<div class="module" id="spectrum"></div>
 
-  useEffect(()=>{
-    setInterval(()=>setTime(new Date()),1000);
-    lucide.createIcons();
-  },[]);
+<div class="module needles">
+  <div class="needle red" id="n1"></div>
+  <div class="needle green" id="n2"></div>
+  <div class="needle blue" id="n3"></div>
+</div>
 
-  const toggle=()=>{
-    if(!audio){
-      const ctx=new (window.AudioContext||window.webkitAudioContext)();
-      const a=new Audio(STREAM);
-      a.crossOrigin="anonymous";
-      const src=ctx.createMediaElementSource(a);
-      const an=ctx.createAnalyser();
-      an.fftSize=64;
-      src.connect(an);
-      an.connect(ctx.destination);
-      setAudio(a);
-      setAnalyser(an);
-      const loop=()=>{
-        const d=new Uint8Array(an.frequencyBinCount);
-        an.getByteFrequencyData(d);
-        setFreq([...d]);
-        requestAnimationFrame(loop);
-      };
-      loop();
-      a.play();
-      setPlay(true);
-    }else{
-      play?audiopause():audio.play();
-      setPlay(!play);
-    }
-  };
+<div class="module" id="eqs"></div>
+<div class="module" id="themes"></div>
 
-  function audiopause(){audio.pause();}
+<div class="module" id="vox">
+  <div id="voxBall"></div>
+  <p id="voxText">Clique para dicas musicais</p>
+</div>
 
-  const talk=()=>{
-    const tips=[
-      "🎧 Álbum do momento: GOLD HITS",
-      "🔥 Player reage em tempo real ao som",
-      "🎚️ EQ GOLD realça médios e brilho",
-      "📡 Intercontinental ao vivo agora"
-    ];
-    setVox(tips[Math.floor(Math.random()*tips.length)]);
-  };
+<div class="module portal" style="color:#ff4d4d;border-color:#ff4d4d">
+  https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio
+</div>
+<div class="module portal" style="color:#4dff88;border-color:#4dff88">
+  https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio
+</div>
+<div class="module portal" style="color:#4d94ff;border-color:#4d94ff">
+  https://sites.google.com/view/vox-i-a/in%C3%ADcio
+</div>
+<div class="module portal" style="color:#ffff4d;border-color:#ffff4d">
+  https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html
+</div>
+<div class="module portal" style="color:#ff0000;border-color:#ff0000">
+  https://www.youtube.com/@RadioWebintercontinental
+</div>
 
-  return(
-  <div className="max-w-[960px] mx-auto space-y-10">
+<script>
+/* === AUDIO === */
+const audio=new Audio("https://stream.zeno.fm/wzcgaal0dnltv");
+audio.crossOrigin="anonymous";
+const ctx=new AudioContext();
+const src=ctx.createMediaElementSource(audio);
+const analyser=ctx.createAnalyser();
+analyser.fftSize=128;
+src.connect(analyser);
+analyser.connect(ctx.destination);
 
-    {/* CABEÇALHO */}
-    <header className="text-center">
-      <h1 className="txt-gold text-6xl md:text-8xl">INTERCONTINENTAL</h1>
-      <p className="text-yellow-500 tracking-[0.6em]">2 ANOS DE SUCESSO</p>
-    </header>
+const data=new Uint8Array(analyser.frequencyBinCount);
 
-    {/* LCD */}
-    <section className="gold glass p-4 flex justify-between text-yellow-400 font-mono text-sm">
-      <div>{time.toLocaleDateString()}<br/>{time.toLocaleTimeString()}</div>
-      <div className={play?"text-green-400":"text-red-500"}>
-        {play?"● ONLINE":"● OFFLINE"}
-      </div>
-      <div>EQ:{eq}<br/>TEMA</div>
-    </section>
-
-    {/* PLAY */}
-    <section className="gold glass p-8 text-center">
-      <button onClick={toggle}
-        className="w-24 h-24 rounded-full border-4 border-yellow-500 flex items-center justify-center mx-auto hover:bg-yellow-500 transition">
-        <i data-lucide={play?"pause":"play"} className="w-10 h-10"/>
-      </button>
-    </section>
-
-    {/* ANALISADOR */}
-    <section className="gold glass p-6 h-48 flex items-end gap-1">
-      {freq.map((v,i)=>(
-        <div key={i} className="bar"
-          style={{height:`${v/255*100}%`,background:theme}}/>
-      ))}
-    </section>
-
-    {/* AGULHAS */}
-    <section className="gold glass p-6 relative h-48">
-      <div className="needle text-red-500 h-32"
-        style={{transform:`rotate(${freq[3]/255*100-50}deg)`}}/>
-      <div className="needle text-green-500 h-36"
-        style={{transform:`rotate(${freq[10]/255*100-50}deg)`}}/>
-      <div className="needle text-blue-500 h-28"
-        style={{transform:`rotate(${freq[20]/255*100-50}deg)`}}/>
-    </section>
-
-    {/* EQ + TEMAS */}
-    <section className="gold glass p-4 space-y-4">
-      <div className="flex flex-wrap gap-2 justify-center">
-        {EQS.map(e=>(
-          <button key={e} onClick={()=>setEq(e)}
-            className={eq===e
-              ?"bg-yellow-500 text-black px-3 py-1"
-              :"border border-yellow-500 text-yellow-500 px-3 py-1"}>
-            {e}
-          </button>
-        ))}
-      </div>
-      <div className="flex gap-2 overflow-x-auto">
-        {THEMES.map((c,i)=>(
-          <div key={i} onClick={()=>setTheme(c)}
-            className="w-8 h-8 cursor-pointer"
-            style={{background:c}}/>
-        ))}
-      </div>
-    </section>
-
-    {/* VOX */}
-    <section className="gold glass p-6 text-center">
-      <div onClick={talk}
-        className="mx-auto w-16 h-16 rounded-full bg-blue-500 shadow-lg animate-pulse cursor-pointer"></div>
-      <p className="text-blue-400 text-xs mt-3">{vox}</p>
-    </section>
-
-    {/* PORTAIS */}
-    <section className="grid md:grid-cols-5 gap-2">
-      {PORTALS.map(p=>(
-        <a key={p.n} href={p.u} target="_blank"
-          className="portal gold glass"
-          style={{color:p.c,borderColor:p.c}}>
-          {p.n}
-        </a>
-      ))}
-    </section>
-
-  </div>
-  );
+/* === ESPECTRO === */
+const spectrum=document.getElementById("spectrum");
+for(let i=0;i<32;i++){
+  const d=document.createElement("div");
+  d.className="spec";
+  spectrum.appendChild(d);
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+/* === LOOP === */
+function loop(){
+  analyser.getByteFrequencyData(data);
+
+  document.getElementById("h1").style.height=data[2]+"px";
+  document.getElementById("h2").style.height=data[6]+"px";
+  document.getElementById("h3").style.height=data[12]+"px";
+  document.getElementById("h4").style.height=data[20]+"px";
+
+  [...spectrum.children].forEach((b,i)=>{
+    b.style.height=(data[i]/255*100)+"%";
+  });
+
+  document.getElementById("n1").style.transform=`rotate(${data[3]/255*100-50}deg)`;
+  document.getElementById("n2").style.transform=`rotate(${data[10]/255*100-50}deg)`;
+  document.getElementById("n3").style.transform=`rotate(${data[20]/255*100-50}deg)`;
+
+  requestAnimationFrame(loop);
+}
+loop();
+
+/* === CONTROLES === */
+playBtn.onclick=()=>{
+  if(audio.paused){
+    ctx.resume();
+    audio.play();
+    playBtn.textContent="⏸";
+    status.textContent="ONLINE";
+  }else{
+    audio.pause();
+    playBtn.textContent="▶";
+    status.textContent="OFFLINE";
+  }
+};
+volume.oninput=e=>audio.volume=e.target.value;
+
+/* === LCD === */
+setInterval(()=>{
+  date.textContent=new Date().toLocaleString();
+},1000);
+
+/* === VOX === */
+const tips=[
+  "Dica: Hoje o álbum mais ouvido é GOLD HITS",
+  "Este player reage em tempo real ao som",
+  "Use os temas para mudar o clima",
+  "Intercontinental no ar 24h"
+];
+vox.onclick=()=>{
+  voxText.textContent=tips[Math.floor(Math.random()*tips.length)];
+};
 </script>
+
 </body>
 </html>
