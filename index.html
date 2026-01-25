@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intercontinental Gold - 2 Anos</title>
+    <title>Intercontinental Gold 2 Anos - Stable Build</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -14,64 +14,56 @@
 
     <style>
         :root { 
-            --gold: #FFD700; 
-            --gold-dark: #B8860B;
-            --liquid: linear-gradient(135deg, #FFF5B7 0%, #FFD700 25%, #B8860B 50%, #FFD700 75%, #FFFACD 100%);
+            --active-color: #FFD700;
+            --gold-liquid: linear-gradient(135deg, #FFF5B7 0%, #FFD700 25%, #B8860B 50%, #FFD700 75%, #FFFACD 100%);
         }
         
         body {
             margin: 0; background: #000;
             font-family: 'Orbitron', sans-serif;
-            background-image: radial-gradient(circle at center, #1a1a00 0%, #000 100%);
+            background-image: radial-gradient(circle at center, #1a1500 0%, #000 100%);
             color: #fff; overflow-x: hidden;
+            min-height: 100-vh;
         }
 
-        /* Efeito de Ouro Líquido Realista */
-        .gold-liquid {
-            background: var(--liquid);
-            background-size: 200% 200%;
-            animation: liquidFlow 5s linear infinite;
+        /* Efeito Ouro Líquido no Texto */
+        .gold-liquid-text {
+            background: var(--gold-liquid);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+            animation: shine 4s linear infinite;
         }
 
-        .gold-card {
-            background: linear-gradient(145deg, #2a2a00, #000);
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 30px rgba(184, 134, 11, 0.4), inset 0 0 15px rgba(255, 215, 0, 0.1);
+        @keyframes shine { to { background-position: 200% center; } }
+
+        /* Container Metálico */
+        .panel-metallic {
+            background: linear-gradient(145deg, #1a1a1a, #000);
+            border: 2px solid var(--active-color);
+            box-shadow: 0 0 25px rgba(0,0,0,0.5), inset 0 0 10px var(--active-color);
+            transition: all 0.5s ease;
         }
 
-        @keyframes liquidFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* LCD DE ALTA VISIBILIDADE */
-        .lcd-high-vis {
-            background: #000 !important;
-            border: 2px solid #333;
-            box-shadow: inset 0 0 20px #00ff0022;
-            color: #00ff41;
-            text-shadow: 0 0 5px #00ff41;
+        .lcd-display {
+            background: #050a00;
+            border: 1px solid var(--active-color);
+            color: var(--active-color);
             font-family: 'Share Tech Mono', monospace;
+            text-shadow: 0 0 8px var(--active-color);
         }
 
-        /* Volume Knob Estilizado */
-        .volume-knob {
-            width: 80px; height: 80px;
-            background: conic-gradient(from 180deg, #333, var(--gold), #333);
+        /* Scrollbar Dourada */
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--active-color); border-radius: 10px; }
+
+        .knob-container {
+            background: radial-gradient(circle, #333, #000);
+            border: 3px solid var(--active-color);
             border-radius: 50%;
-            border: 4px solid #111;
             cursor: pointer;
-            transition: transform 0.1s;
+            box-shadow: 0 0 15px var(--active-color);
         }
-
-        .custom-scroll::-webkit-scrollbar { width: 6px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
-
-        .active-glow { box-shadow: 0 0 20px var(--gold); border-color: #fff !important; }
     </style>
 </head>
 <body>
@@ -86,13 +78,12 @@
             { n: "Pandora", u: "https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio", i: "music", c: "#FF4D4D" },
             { n: "Dynac-X", u: "https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio", i: "globe", c: "#4DFF88" },
             { n: "Vox I.A", u: "https://sites.google.com/view/vox-i-a/in%C3%ADcio", i: "cpu", c: "#4D94FF" },
-            { n: "Trends", u: "https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html", i: "trending-up", c: "#FFFF4D" },
             { n: "YouTube", u: "https://www.youtube.com/@RadioWebintercontinental", i: "youtube", c: "#FF4DFF" }
         ];
 
         const THEMES = [
-            '#FFD700', '#FF0000', '#00D1FF', '#39FF14', '#FF00FF', '#FF8800', 
-            '#00FFFF', '#FFFFFF', '#A020F0', '#32CD32', '#E0115F', '#FFBF00',
+            '#FFD700', '#FF4500', '#00D1FF', '#39FF14', '#FF00FF', '#FF8800', 
+            '#00FFFF', '#F0F0F0', '#A020F0', '#32CD32', '#E0115F', '#FFBF00',
             '#CCFF00', '#A5F2F3', '#FF4500', '#0047AB', '#98FF98', '#FF66CC',
             '#FFF700', '#EE82EE', '#C0C0C0', '#722F37', '#00FBFF', '#CD7F32',
             '#228B22', '#FD5E53'
@@ -100,20 +91,21 @@
 
         const App = () => {
             const [isPlaying, setIsPlaying] = useState(false);
-            const [volume, setVolume] = useState(0.7);
-            const [activeTheme, setActiveTheme] = useState('#FFD700');
-            const [eq, setEq] = useState('Standard');
-            const [boost, setBoost] = useState(false);
-            const [meters, setMeters] = useState({ v1: 0, v2: 0 });
+            const [volume, setVolume] = useState(0.8);
+            const [themeColor, setThemeColor] = useState('#FFD700');
+            const [eq, setEq] = useState('Dynamic');
+            const [meters, setMeters] = useState([0, 0, 0, 0]);
             
             const audioRef = useRef(null);
             const analyserRef = useRef(null);
 
+            // Sincroniza cor do tema com o CSS
             useEffect(() => {
+                document.documentElement.style.setProperty('--active-color', themeColor);
                 if (window.lucide) window.lucide.createIcons();
-            }, [activeTheme]);
+            }, [themeColor]);
 
-            const togglePlay = () => {
+            const initAudio = () => {
                 if (!audioRef.current) {
                     const ctx = new (window.AudioContext || window.webkitAudioContext)();
                     const audio = new Audio(STREAM_URL);
@@ -126,136 +118,97 @@
                     audioRef.current = audio;
                     analyserRef.current = analyser;
 
-                    const loop = () => {
+                    const update = () => {
                         const data = new Uint8Array(analyser.frequencyBinCount);
                         analyser.getByteFrequencyData(data);
-                        setMeters({ v1: data[2]/255, v2: data[5]/255 });
-                        requestAnimationFrame(loop);
+                        if (isPlaying) setMeters([data[2]/255, data[5]/255, data[8]/255, data[12]/255]);
+                        requestAnimationFrame(update);
                     };
-                    loop();
+                    update();
                 }
-                isPlaying ? audioRef.current.pause() : audioRef.current.play();
+            };
+
+            const togglePlay = () => {
+                initAudio();
+                if (isPlaying) audioRef.current.pause(); else audioRef.current.play();
                 setIsPlaying(!isPlaying);
             };
 
             useEffect(() => {
-                if(audioRef.current) audioRef.current.volume = boost ? 1 : volume;
-            }, [volume, boost]);
+                if(audioRef.current) audioRef.current.volume = volume;
+            }, [volume]);
 
             return (
-                <div className="flex flex-col items-center min-h-screen p-4 md:p-8">
-                    {/* TÍTULO OURO LÍQUIDO */}
-                    <header className="text-center mb-12">
-                        <h1 className="cinzel text-5xl md:text-8xl font-black gold-liquid">
-                            INTERCONTINENTAL
-                        </h1>
-                        <div className="flex items-center justify-center gap-6 mt-2">
-                            <div className="h-1 w-24 bg-gradient-to-r from-transparent via-gold to-transparent" />
-                            <span className="text-3xl font-black text-white tracking-[0.5em]">2 ANOS</span>
-                            <div className="h-1 w-24 bg-gradient-to-r from-gold via-gold to-transparent" />
-                        </div>
+                <div className="flex flex-col items-center py-10 px-4">
+                    <header className="text-center mb-10">
+                        <h1 className="cinzel text-5xl md:text-7xl font-black gold-liquid-text">INTERCONTINENTAL</h1>
+                        <p className="tracking-[0.8em] text-sm md:text-xl font-bold mt-2">2 ANOS DE SUCESSO</p>
                     </header>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 w-full max-w-7xl">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full max-w-6xl">
                         
-                        {/* MÓDULO 1: SENSORES & VOLUME */}
-                        <div className="lg:col-span-1 space-y-6">
-                            <div className="gold-card p-6 rounded-3xl flex flex-col items-center">
-                                <span className="text-[10px] text-gold font-black mb-6 uppercase tracking-widest">Master Volume</span>
-                                <div className="volume-knob shadow-[0_0_20px_rgba(255,215,0,0.3)] relative flex items-center justify-center"
+                        {/* Esquerda: Volume e Temas */}
+                        <div className="space-y-6">
+                            <div className="panel-metallic p-6 rounded-3xl text-center">
+                                <h3 className="text-[10px] font-black mb-6 uppercase text-active">Master Volume</h3>
+                                <div className="knob-container w-24 h-24 mx-auto mb-4 flex items-center justify-center"
                                      style={{ transform: `rotate(${(volume * 240) - 120}deg)` }}>
-                                    <div className="absolute top-2 w-2 h-2 bg-black rounded-full" />
+                                    <div className="w-1 h-8 bg-white absolute top-2 rounded-full" />
                                 </div>
                                 <input type="range" min="0" max="1" step="0.01" value={volume} 
-                                       onChange={(e) => setVolume(parseFloat(e.target.value))}
-                                       className="mt-6 w-full accent-gold" />
-                                <span className="text-gold font-bold mt-2">{Math.round(volume * 100)}%</span>
+                                       onChange={(e) => setVolume(parseFloat(e.target.value))} className="w-full accent-current" />
                             </div>
 
-                            <div className="gold-card p-6 rounded-3xl flex flex-col gap-4">
-                                <span className="text-[10px] text-gold font-black uppercase tracking-widest text-center">Output Meters</span>
-                                <div className="h-4 bg-black border border-white/10 rounded-full overflow-hidden">
-                                    <div className="h-full bg-gold shadow-[0_0_15px_gold] transition-all" style={{width: `${meters.v1 * 100}%`}} />
-                                </div>
-                                <div className="h-4 bg-black border border-white/10 rounded-full overflow-hidden">
-                                    <div className="h-full bg-gold shadow-[0_0_15px_gold] transition-all" style={{width: `${meters.v2 * 100}%`}} />
+                            <div className="panel-metallic p-6 rounded-3xl">
+                                <h3 className="text-[10px] font-black mb-4 uppercase text-center">26 Color Themes</h3>
+                                <div className="grid grid-cols-5 gap-2 h-40 overflow-y-auto custom-scroll pr-2">
+                                    {THEMES.map((c, i) => (
+                                        <button key={i} onClick={() => setThemeColor(c)} 
+                                                className="w-full aspect-square rounded-md border border-white/20"
+                                                style={{ backgroundColor: c }} />
+                                    ))}
                                 </div>
                             </div>
                         </div>
 
-                        {/* MÓDULO 2: PLAYER CENTRAL */}
-                        <div className="lg:col-span-2 gold-card rounded-[4rem] p-8 flex flex-col items-center relative overflow-hidden">
-                            <div className="lcd-high-vis w-full rounded-2xl p-6 mb-8 text-center relative z-10">
-                                <div className="flex justify-between text-[10px] opacity-70 mb-2">
-                                    <span>SYSTEM STATUS: {isPlaying ? 'ACTIVE' : 'STANDBY'}</span>
-                                    <span>RADIO INTERCONTINENTAL</span>
+                        {/* Centro: Player */}
+                        <div className="panel-metallic p-8 rounded-[3rem] flex flex-col items-center">
+                            <div className="lcd-display w-full p-4 rounded-xl mb-6 text-[11px]">
+                                <div className="flex justify-between mb-2">
+                                    <span>STATUS: {isPlaying ? 'ON' : 'OFF'}</span>
+                                    <span>EQ: {eq}</span>
                                 </div>
-                                <div className="text-2xl md:text-4xl font-bold tracking-tighter mb-4">
-                                    {isPlaying ? ">>> SONIC LINK ESTABLISHED" : "READY TO CONNECT"}
-                                </div>
-                                <div className="grid grid-cols-2 gap-2 text-[10px] text-left">
-                                    <div className="bg-white/5 p-2">EQ PRESET: {eq.toUpperCase()}</div>
-                                    <div className="bg-white/5 p-2">BOOST: {boost ? 'ON' : 'OFF'}</div>
+                                <div className="h-12 flex items-end justify-center gap-1">
+                                    {meters.map((m, i) => (
+                                        <div key={i} className="flex-1 bg-current opacity-80" style={{height: `${m * 100}%`}} />
+                                    ))}
                                 </div>
                             </div>
 
-                            {/* ANALISADOR DE ESPECTRO GRANDE */}
-                            <div className="flex items-end justify-center gap-1 h-32 w-full mb-8">
-                                {[...Array(20)].map((_, i) => (
-                                    <div key={i} className="w-full bg-gold" 
-                                         style={{ 
-                                            height: isPlaying ? `${Math.random() * 100}%` : '10%',
-                                            opacity: (i/20) + 0.2,
-                                            boxShadow: '0 0 10px var(--gold)'
-                                         }} />
+                            <button onClick={togglePlay} className="w-28 h-28 rounded-full border-4 border-current bg-white/5 flex items-center justify-center hover:scale-105 transition-all mb-8 shadow-lg">
+                                <i data-lucide={isPlaying ? "pause" : "play"} className="w-12 h-12 fill-current" />
+                            </button>
+
+                            <div className="flex flex-wrap justify-center gap-2">
+                                {['Rock', 'Pop', 'Jazz', 'Flat'].map(p => (
+                                    <button key={p} onClick={() => setEq(p)} className={`px-4 py-1 rounded-full border text-[9px] font-bold ${eq === p ? 'bg-current text-black' : 'border-current/30'}`}>{p}</button>
                                 ))}
                             </div>
+                        </div>
 
-                            <div className="flex gap-8 items-center">
-                                <button onClick={togglePlay} className="w-24 h-24 rounded-full border-4 border-white bg-gold/20 flex items-center justify-center hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,215,0,0.6)]">
-                                    <i data-lucide={isPlaying ? "pause" : "play"} className="w-12 h-12 text-white fill-current" />
-                                </button>
-                                <button onClick={() => setBoost(!boost)} className={`px-8 py-3 rounded-xl font-black text-xs border-2 transition-all ${boost ? 'bg-red-600 border-white shadow-[0_0_20px_red]' : 'border-gold text-gold'}`}>
-                                    SUPER BOOST
-                                </button>
+                        {/* Direita: Portais */}
+                        <div className="panel-metallic p-6 rounded-3xl">
+                            <h3 className="text-[10px] font-black mb-6 uppercase text-center">Station Portals</h3>
+                            <div className="space-y-3">
+                                {PORTALS.map((p, i) => (
+                                    <a key={i} href={p.u} target="_blank" className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-current transition-all group">
+                                        <i data-lucide={p.i} style={{color: p.c}} />
+                                        <span className="text-xs font-black uppercase" style={{color: p.c}}>{p.n}</span>
+                                    </a>
+                                ))}
                             </div>
                         </div>
 
-                        {/* MÓDULO 3: PORTAIS E TEMAS */}
-                        <div className="lg:col-span-1 space-y-6">
-                            <div className="gold-card p-6 rounded-3xl">
-                                <span className="text-[10px] text-gold font-black mb-4 block uppercase tracking-widest text-center">Multi-Portals</span>
-                                <div className="grid grid-cols-1 gap-2">
-                                    {PORTALS.map((p, i) => (
-                                        <a key={i} href={p.u} target="_blank" className="flex items-center gap-3 p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all border border-white/5 group">
-                                            <i data-lucide={p.i} style={{color: p.c}} className="w-5 h-5" />
-                                            <span className="text-[10px] font-black" style={{color: p.c}}>{p.n}</span>
-                                        </a>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="gold-card p-4 rounded-3xl h-[280px]">
-                                <span className="text-[10px] text-gold font-black mb-4 block uppercase tracking-widest text-center">26 Modulators</span>
-                                <div className="grid grid-cols-5 gap-2 overflow-y-auto h-[200px] custom-scroll pr-2">
-                                    {THEMES.map((t, i) => (
-                                        <button key={i} onClick={() => setActiveTheme(t)} 
-                                                className={`w-full aspect-square rounded-lg border-2 border-transparent transition-all ${activeTheme === t ? 'active-glow' : ''}`}
-                                                style={{ backgroundColor: t }} />
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* EQUALIZADORES (MODO OURO) */}
-                    <div className="mt-12 w-full max-w-5xl gold-card p-8 rounded-[3rem] flex flex-wrap justify-center gap-4">
-                        {['Classical', 'Techno', 'Pop', 'Rock', 'Jazz', 'Dance', 'Flat'].map(preset => (
-                            <button key={preset} onClick={() => setEq(preset)}
-                                    className={`px-6 py-2 rounded-full border-2 font-black text-[10px] transition-all ${eq === preset ? 'bg-gold text-black border-white' : 'border-gold/30 text-gold hover:border-gold'}`}>
-                                {preset}
-                            </button>
-                        ))}
                     </div>
                 </div>
             );
