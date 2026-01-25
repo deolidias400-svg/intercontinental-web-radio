@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intercontinental Gold Ultimate - 2 Anos</title>
+    <title>Intercontinental Gold Supreme - 2 Anos</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -14,9 +14,8 @@
 
     <style>
         :root { 
-            --gold-main: #FFD700;
-            --gold-dark: #B8860B;
-            --liquid-bg: linear-gradient(145deg, #FFD700, #8B4513, #FFD700);
+            --gold: #FFD700;
+            --theme-color: #FFD700;
         }
         
         body {
@@ -24,69 +23,76 @@
             color: white;
             font-family: 'Orbitron', sans-serif;
             overflow-x: hidden;
-            background-image: radial-gradient(circle at center, #222 0%, #000 100%);
+            background: radial-gradient(circle at center, #1a1a00 0%, #000 100%);
         }
 
-        /* EFEITO OURO LÍQUIDO EXTREMO */
-        .gold-chassis {
-            background: linear-gradient(145deg, #4d3d00 0%, #ffd700 25%, #8b6d00 50%, #ffd700 75%, #4d3d00 100%);
-            border: 4px solid #b8860b;
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(0,0,0,0.5);
+        /* CHASSI OURO LÍQUIDO */
+        .gold-liquid-chassis {
+            background: linear-gradient(135deg, #4b3621 0%, #ffd700 25%, #b8860b 50%, #ffd700 75%, #4b3621 100%);
             background-size: 400% 400%;
-            animation: metalShine 10s infinite alternate;
+            animation: flow 8s ease infinite;
+            border: 5px solid #8b6d00;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.4), inset 0 0 30px rgba(0,0,0,0.7);
         }
 
-        @keyframes metalShine {
+        @keyframes flow {
             0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .vu-meter {
+        /* ANALISADOR DE BARRAS */
+        .spectrum-bar {
+            flex: 1;
+            background: linear-gradient(to top, #00ff00 0%, #ffff00 60%, #ff0000 100%);
+            transition: height 0.1s ease;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        /* VU METER VELOCÍMETRO */
+        .vu-gauge {
+            width: 120px; height: 70px;
             background: #111;
-            border: 3px solid #555;
-            height: 100px;
+            border: 2px solid var(--theme-color);
+            border-radius: 100px 100px 10px 10px;
             position: relative;
             overflow: hidden;
-            border-radius: 5px 5px 40px 40px;
         }
 
         .needle {
             position: absolute;
-            bottom: 10px;
-            left: 50%;
-            width: 2px;
-            height: 80px;
+            bottom: 5px; left: 50%;
+            width: 2px; height: 50px;
             background: #ff0000;
             transform-origin: bottom center;
-            transition: transform 0.1s ease-out;
-            box-shadow: 0 0 5px red;
+            transition: transform 0.1s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            z-index: 10;
         }
 
-        /* BARRAS DE ESPECTRO COLORIDAS */
-        .bar-container {
-            display: flex;
-            align-items: flex-end;
-            gap: 2px;
-            height: 120px;
-            background: rgba(0,0,0,0.5);
-            padding: 5px;
-            border-radius: 8px;
+        .glass-ui {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--theme-color);
+            backdrop-filter: blur(10px);
         }
 
-        .bar {
-            flex: 1;
-            transition: height 0.05s ease;
+        .btn-boost {
+            background: linear-gradient(to bottom, #ff0000, #8b0000);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            border: 2px solid white;
         }
 
-        /* LCD VINTAGE */
-        .glass-panel {
-            background: rgba(0,0,0,0.8);
-            border: 2px solid var(--gold-main);
-            box-shadow: inset 0 0 15px var(--gold-main);
+        .btn-boost.active {
+            animation: pulse-red 0.5s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(1); box-shadow: 0 0 20px red; }
+            50% { transform: scale(1.05); box-shadow: 0 0 40px red; }
+            100% { transform: scale(1); box-shadow: 0 0 20px red; }
         }
 
         .custom-scroll::-webkit-scrollbar { width: 5px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: var(--gold-main); }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--theme-color); }
     </style>
 </head>
 <body>
@@ -98,26 +104,28 @@
         const STREAM_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
 
         const PORTALS = [
-            { n: "PANDORA", u: "https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio", c: "#FF4D4D" },
-            { n: "DYNAC-X", u: "https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio", c: "#4DFF88" },
-            { n: "VOX I.A", u: "https://sites.google.com/view/vox-i-a/in%C3%ADcio", c: "#4D94FF" },
-            { n: "TRENDS", u: "https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html", c: "#FFFF00" },
-            { n: "YOUTUBE", u: "https://www.youtube.com/@RadioWebintercontinental", c: "#FF0000" }
+            { n: "PANDORA", u: "https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio", c: "#FF3D3D" },
+            { n: "DYNAC-X", u: "https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio", c: "#3DFF3D" },
+            { n: "VOX I.A", u: "https://sites.google.com/view/vox-i-a/in%C3%ADcio", c: "#3D3DFF" },
+            { n: "TRENDS", u: "https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html", c: "#FFFF3D" },
+            { n: "YOUTUBE", u: "https://www.youtube.com/@RadioWebintercontinental", c: "#FF3DFF" }
         ];
 
-        const THEMES = Array(26).fill(0).map((_, i) => `hsl(${i * 13.8}, 80%, 50%)`);
+        // 26 Cores de Temas
+        const THEME_LIST = Array.from({length: 26}, (_, i) => `hsl(${i * (360/26)}, 80%, 50%)`);
 
         const App = () => {
             const [isPlaying, setIsPlaying] = useState(false);
             const [volume, setVolume] = useState(0.7);
+            const [boost, setBoost] = useState(false);
             const [theme, setTheme] = useState('#FFD700');
-            const [audioData, setAudioData] = useState(new Uint8Array(32));
+            const [eq, setEq] = useState('Flat');
+            const [freqData, setFreqData] = useState(new Uint8Array(32));
             
             const audioRef = useRef(null);
             const analyserRef = useRef(null);
-            const animationRef = useRef(null);
 
-            const startAudio = () => {
+            const togglePlay = () => {
                 if (!audioRef.current) {
                     const ctx = new (window.AudioContext || window.webkitAudioContext)();
                     const audio = new Audio(STREAM_URL);
@@ -129,142 +137,126 @@
                     analyser.connect(ctx.destination);
                     audioRef.current = audio;
                     analyserRef.current = analyser;
-                }
-                
-                const update = () => {
-                    const data = new Uint8Array(analyserRef.current.frequencyBinCount);
-                    analyserRef.current.getByteFrequencyData(data);
-                    setAudioData([...data]);
-                    animationRef.current = requestAnimationFrame(update);
-                };
-                update();
-            };
 
-            const togglePlay = () => {
-                startAudio();
+                    const renderFrame = () => {
+                        const data = new Uint8Array(analyser.frequencyBinCount);
+                        analyser.getByteFrequencyData(data);
+                        setFreqData([...data]);
+                        requestAnimationFrame(renderFrame);
+                    };
+                    renderFrame();
+                }
+
                 if (isPlaying) audioRef.current.pause(); else audioRef.current.play();
                 setIsPlaying(!isPlaying);
             };
 
             useEffect(() => {
-                if(audioRef.current) audioRef.current.volume = volume;
-            }, [volume]);
-
-            // Cálculo da agulha do velocímetro (VU)
-            const getNeedleAngle = (index) => {
-                const val = audioData[index] || 0;
-                return (val / 255) * 120 - 60; // Gira de -60 a +60 graus
-            };
+                if(audioRef.current) {
+                    audioRef.current.volume = boost ? 1.0 : volume;
+                }
+                document.documentElement.style.setProperty('--theme-color', theme);
+            }, [volume, boost, theme]);
 
             return (
-                <div className="min-h-screen flex flex-col items-center p-4 md:p-10" style={{'--active': theme}}>
+                <div className="min-h-screen p-2 md:p-8 flex flex-col items-center">
                     
-                    {/* HEADER OURO */}
-                    <div className="text-center mb-10">
-                        <h1 className="cinzel text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-200 via-yellow-500 to-yellow-800 drop-shadow-2xl">
+                    <header className="mb-8 text-center">
+                        <h1 className="cinzel text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-100 via-yellow-500 to-yellow-900 drop-shadow-lg">
                             INTERCONTINENTAL
                         </h1>
-                        <p className="text-gold-main tracking-[1em] font-bold text-xl">GOLD EDITION • 2 ANOS</p>
-                    </div>
+                        <div className="text-[12px] tracking-[1.5em] text-yellow-500 font-bold ml-4">GOLD SUPREME 2 ANOS</div>
+                    </header>
 
-                    <div className="gold-chassis w-full max-w-6xl rounded-[3rem] p-6 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 shadow-2xl">
+                    <div className="gold-liquid-chassis w-full max-w-6xl rounded-[4rem] p-6 md:p-12 shadow-2xl relative overflow-hidden">
                         
-                        {/* COLUNA ESQUERDA: VU METERS & VOLUME */}
-                        <div className="lg:col-span-3 space-y-6">
-                            <div className="glass-panel p-4 rounded-2xl">
-                                <p className="text-[10px] text-center mb-4 text-yellow-500 font-bold">LEFT / RIGHT CHANNEL VU</p>
-                                <div className="grid grid-cols-2 gap-2">
-                                    <div className="vu-meter">
-                                        <div className="needle" style={{ transform: `rotate(${getNeedleAngle(2)}deg)` }} />
-                                        <div className="absolute bottom-1 w-full text-center text-[8px] text-white">L</div>
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+                            
+                            {/* ESQUERDA: VU E TEMAS */}
+                            <div className="lg:col-span-3 space-y-6">
+                                <div className="glass-ui p-4 rounded-3xl text-center">
+                                    <span className="text-[9px] font-bold block mb-4 text-white">ANALOG VU METERS</span>
+                                    <div className="flex justify-around gap-2">
+                                        {[2, 5].map(idx => (
+                                            <div key={idx} className="vu-gauge">
+                                                <div className="needle" style={{ transform: `rotate(${(freqData[idx]/255 * 120) - 60}deg)` }} />
+                                                <div className="absolute inset-x-0 bottom-1 flex justify-between px-4 text-[7px]">
+                                                    <span>-20dB</span><span>0dB</span><span>+5dB</span>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                    <div className="vu-meter">
-                                        <div className="needle" style={{ transform: `rotate(${getNeedleAngle(5)}deg)` }} />
-                                        <div className="absolute bottom-1 w-full text-center text-[8px] text-white">R</div>
+                                </div>
+
+                                <div className="glass-ui p-4 rounded-3xl">
+                                    <span className="text-[9px] font-bold block mb-4 text-center">26 PREMIUM THEMES</span>
+                                    <div className="grid grid-cols-5 gap-2 h-44 overflow-y-auto custom-scroll pr-2">
+                                        {THEME_LIST.map((c, i) => (
+                                            <button key={i} onClick={() => setTheme(c)} className="w-full aspect-square rounded border border-white/20 hover:scale-110 transition" style={{background: c}} />
+                                        ))}
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="glass-panel p-6 rounded-2xl text-center">
-                                <p className="text-[10px] text-yellow-500 font-bold mb-4">MASTER GAIN</p>
-                                <div className="relative w-32 h-32 mx-auto">
-                                    <div className="absolute inset-0 rounded-full border-4 border-yellow-900" />
-                                    <div className="w-full h-full rounded-full bg-gradient-to-tr from-yellow-700 to-yellow-300 shadow-lg flex items-center justify-center"
-                                         style={{ transform: `rotate(${(volume * 270) - 135}deg)` }}>
-                                        <div className="w-1 h-10 bg-black rounded-full -mt-10" />
+                            {/* CENTRO: ESPECTRO E PLAYER */}
+                            <div className="lg:col-span-6 space-y-6">
+                                <div className="glass-ui p-6 rounded-[2rem] h-64 relative flex flex-col justify-between overflow-hidden">
+                                    <div className="flex justify-between text-[8px] font-mono text-yellow-400">
+                                        <span>SIGNAL PROCESSOR ACTIVE</span>
+                                        <span>VOL: {Math.round(volume*100)}%</span>
+                                    </div>
+                                    <div className="flex items-end gap-1 h-40">
+                                        {Array.from(freqData).slice(0, 24).map((v, i) => (
+                                            <div key={i} className="spectrum-bar" style={{ height: `${(v/255)*100}%` }} />
+                                        ))}
                                     </div>
                                 </div>
-                                <input type="range" min="0" max="1" step="0.01" value={volume} 
-                                       onChange={(e) => setVolume(parseFloat(e.target.value))}
-                                       className="w-full mt-6 accent-yellow-500" />
-                            </div>
-                        </div>
 
-                        {/* COLUNA CENTRAL: ESPECTRO E PLAYER */}
-                        <div className="lg:col-span-6 space-y-6">
-                            <div className="glass-panel p-6 rounded-3xl h-64 flex flex-col justify-between">
-                                <div className="flex justify-between text-[10px] text-yellow-500 font-mono">
-                                    <span>32Hz - 16kHz ANALYZER</span>
-                                    <span>SYSTEM: {isPlaying ? 'ACTIVE' : 'IDLE'}</span>
-                                </div>
-                                
-                                <div className="bar-container">
-                                    {Array.from(audioData).slice(0, 30).map((val, i) => {
-                                        const h = (val / 255) * 100;
-                                        let color = '#22c55e'; // Verde
-                                        if (h > 60) color = '#eab308'; // Amarelo
-                                        if (h > 85) color = '#ef4444'; // Vermelho
-                                        return (
-                                            <div key={i} className="bar" style={{ 
-                                                height: `${h}%`, 
-                                                backgroundColor: color,
-                                                boxShadow: `0 0 10px ${color}`
-                                            }} />
-                                        );
-                                    })}
-                                </div>
-                            </div>
-
-                            <div className="flex justify-center items-center gap-10">
-                                <button onClick={togglePlay} className="group relative">
-                                    <div className="absolute -inset-4 bg-yellow-500 rounded-full opacity-20 group-hover:opacity-40 blur-xl transition" />
-                                    <div className="relative w-24 h-24 bg-gradient-to-b from-yellow-200 to-yellow-600 rounded-full border-4 border-yellow-900 flex items-center justify-center shadow-2xl active:scale-95 transition">
+                                <div className="flex justify-center items-center gap-6">
+                                    <button onClick={() => setBoost(!boost)} className={`btn-boost px-6 py-2 rounded-full text-[10px] font-black italic transition-all ${boost ? 'active scale-110' : 'opacity-50'}`}>
+                                        SUPER BOOST
+                                    </button>
+                                    
+                                    <button onClick={togglePlay} className="w-24 h-24 rounded-full bg-gradient-to-t from-yellow-700 to-yellow-300 border-4 border-black flex items-center justify-center shadow-2xl active:scale-90 transition">
                                         <i data-lucide={isPlaying ? "pause" : "play"} className="w-12 h-12 text-black fill-current" />
+                                    </button>
+
+                                    <div className="flex flex-col gap-1">
+                                        <button onClick={() => setEq('Pro')} className={`px-4 py-1 rounded text-[8px] border ${eq==='Pro' ? 'bg-white text-black' : 'border-white/30'}`}>PRO EQ</button>
+                                        <button onClick={() => setEq('Jazz')} className={`px-4 py-1 rounded text-[8px] border ${eq==='Jazz' ? 'bg-white text-black' : 'border-white/30'}`}>JAZZ</button>
                                     </div>
-                                </button>
+                                </div>
+
+                                <div className="glass-ui p-4 rounded-2xl flex items-center gap-4">
+                                    <i data-lucide="volume-2" className="text-yellow-500" />
+                                    <input type="range" min="0" max="1" step="0.01" value={volume} onChange={(e) => setVolume(parseFloat(e.target.value))} className="w-full accent-yellow-500" />
+                                </div>
                             </div>
 
-                            <div className="grid grid-cols-5 gap-2 h-20 overflow-y-auto custom-scroll p-2 glass-panel rounded-xl">
-                                {THEMES.map((c, i) => (
-                                    <button key={i} onClick={() => setTheme(c)} className="w-full h-8 rounded border border-white/20" style={{background: c}} />
+                            {/* DIREITA: PORTAIS */}
+                            <div className="lg:col-span-3 space-y-3">
+                                <span className="text-[9px] font-bold block mb-4 text-center text-yellow-900">STATION PORTALS</span>
+                                {PORTALS.map((p, i) => (
+                                    <a key={i} href={p.u} target="_blank" className="flex items-center gap-3 p-4 bg-black/60 border border-yellow-700/50 rounded-2xl hover:border-white transition group">
+                                        <div className="w-2 h-2 rounded-full" style={{backgroundColor: p.c, boxShadow: `0 0 10px ${p.c}`}} />
+                                        <span className="text-[10px] font-bold group-hover:text-white" style={{color: p.c}}>{p.n}</span>
+                                    </a>
                                 ))}
                             </div>
                         </div>
-
-                        {/* COLUNA DIREITA: PORTAIS */}
-                        <div className="lg:col-span-3 space-y-4">
-                            <p className="text-[10px] text-center text-yellow-900 font-black tracking-widest">STATION PORTALS</p>
-                            {PORTALS.map((p, i) => (
-                                <a key={i} href={p.u} target="_blank" className="block p-4 rounded-xl bg-black/40 border-2 border-yellow-700/50 hover:border-white hover:scale-105 transition-all">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-2 h-2 rounded-full animate-pulse" style={{backgroundColor: p.c}} />
-                                        <span className="text-[11px] font-black" style={{color: p.c}}>{p.n}</span>
-                                    </div>
-                                </a>
-                            ))}
-                        </div>
                     </div>
                     
-                    <div className="mt-8 text-yellow-600 font-mono text-[10px] animate-pulse">
-                        DESIGNED BY GEMINI FOR INTERCONTINENTAL RADIO 2025
-                    </div>
+                    <footer className="mt-8 text-[9px] font-mono text-yellow-800 opacity-50">
+                        &copy; 2025 RADIO INTERCONTINENTAL - POWERED BY LIQUID GOLD ENGINE
+                    </footer>
                 </div>
             );
         };
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-        setTimeout(() => window.lucide.createIcons(), 100);
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+            root.render(<App />);
+            // Força o Lucide a renderizar os ícones
+            setTimeout(() => { if(window.lucide) window.lucide.createIcons(); }, 500);
     </script>
 </body>
 </html>
