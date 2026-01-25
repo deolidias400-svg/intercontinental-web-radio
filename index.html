@@ -1,65 +1,32 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Torre de Som Cyberpunk - Web Radio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Intercontinental Audio System Mk. II</title>
     
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
-        /* Estilos CSS (Variáveis de Tema e Base) - O SEU CÓDIGO AQUI */
-        /* ==================================== */
-        /* === Variáveis CSS Globais/Temas === */
-        /* ==================================== */
         :root {
-            /* Tema Padrão: Cosmic Dark (Fallback) */
             --bg-color: #12121e;
             --secondary-bg-color: #1e1e30;
             --text-color: #e0e0e0;
-            --highlight-color: #00ffc8; /* Ciano Neon */
-            --accent-color: #4b0082; /* Roxo Profundo */
-            --button-text-color: #fff;
-            --control-bg: rgba(255, 255, 255, 0.05);
-            --glow-color: var(--highlight-color);
+            --highlight-color: #00ffc8;
+            --accent-color: #4b0082;
+            --screen-bg: #0d0d20;
+            --screen-text: #00ffc8;
             --shadow-dark: #0a0a14;
             --shadow-light: #22223a;
-            --box-shadow-in: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
-            --box-shadow-out: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-            --status-online-color: #00ff00; /* Neon Green */
-            --status-offline-color: #FF4500; /* Red-Orange */
-            --visualizer-bg: radial-gradient(circle, var(--secondary-bg-color) 40%, var(--bg-color) 100%);
-            --screen-bg: #0d0d20;
-            --screen-text: var(--highlight-color);
-            --screen-border: 1px solid var(--highlight-color);
-            --knob-color: var(--highlight-color);
-            --speaker-grill-color: #0a0a0a; /* Cor da grade do alto-falante */
-            --speaker-cone-color: #000;
+            --status-online-color: #00ff00;
+            --status-offline-color: #FF4500;
         }
-
-        /* --------------------- */
-        /* --- 26 TEMAS COMPLETOS --- */
-        /* --------------------- */
-        .industrial-cyber { 
-            --bg-color: #0d0d0d;
-            --secondary-bg-color: #1a1a1a;
-            --text-color: #c0c0c0;
-            --highlight-color: #ff0077; /* Magenta Neon Agressivo */
-            --accent-color: #00ffff; /* Ciano Neon para Contraste */
-            --button-text-color: #0d0d0d; 
-            --control-bg: rgba(255, 255, 255, 0.03); 
-            --glow-color: var(--highlight-color);
-            --shadow-dark: #000;
-            --shadow-light: #333333;
-            --box-shadow-in: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
-            --box-shadow-out: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
-            --status-online-color: #39ff14; /* Verde Matriz */
-            --screen-bg: #000; 
-            --screen-text: var(--highlight-color);
-            --screen-border: 2px solid var(--accent-color);
-            --knob-color: var(--highlight-color); 
-        }
-        /* [ ... COPIE E COLE TODOS OS SEUS TEMAS AQUI ... ] */
+        .industrial-cyber { --bg-color: #0d0d0d; --secondary-bg-color: #1a1a1a; --text-color: #c0c0c0; --highlight-color: #ff0077; --accent-color: #00ffff; --screen-bg: #000; --screen-text: #ff0077; --shadow-dark: #000; --shadow-light: #333333; --status-online-color: #39ff14; }
         .cosmic-dark { --bg-color: #12121e; --secondary-bg-color: #1e1e30; --text-color: #e0e0e0; --highlight-color: #00ffc8; --accent-color: #4b0082; --screen-bg: #0d0d20; --screen-text: #00ffc8; --shadow-dark: #0a0a14; --shadow-light: #22223a; }
         .solar-flare { --bg-color: #2e0800; --secondary-bg-color: #4f1100; --text-color: #fff8e1; --highlight-color: #ffaa00; --accent-color: #ff4500; --screen-bg: #3b0a00; --screen-text: #ffaa00; --shadow-dark: #1f0500; --shadow-light: #6e1500; }
         .deep-ocean { --bg-color: #001f3f; --secondary-bg-color: #003366; --text-color: #e0f7fa; --highlight-color: #7fffd4; --accent-color: #4169e1; --screen-bg: #002b5c; --screen-text: #7fffd4; --shadow-dark: #00142b; --shadow-light: #004d99; }
@@ -87,1223 +54,742 @@
         .lime-shock { --bg-color: #1c3d0e; --secondary-bg-color: #386b1c; --text-color: #e8ffe0; --highlight-color: #ccff00; --accent-color: #7cfc00; --screen-bg: #2a5216; --screen-text: #ccff00; --shadow-dark: #102607; --shadow-light: #4a8f27; }
         .carbon-fiber { --bg-color: #222222; --secondary-bg-color: #333333; --text-color: #999999; --highlight-color: #aaaaaa; --accent-color: #555555; --screen-bg: #111111; --screen-text: #aaaaaa; --shadow-dark: #0a0a0a; --shadow-light: #444444; }
 
-
-        /* ==================================== */
-        /* === ESTILOS BASE DO COMPONENTE === */
-        /* ==================================== */
-
-        body {
-            font-family: 'Orbitron', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            transition: all 0.7s ease;
-            position: relative;
-            overflow-x: hidden;
-            user-select: none;
-        }
-
-        /* O CONTAINER PRINCIPAL É AGORA A PRÓPRIA TORRE DE SOM */
-        .sound-tower {
-            background-color: var(--secondary-bg-color);
-            border: 5px solid var(--shadow-dark);
-            border-radius: 15px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.8), var(--box-shadow-out);
-            max-width: 90%;
-            width: 400px; /* Largura Focada para imitar uma Torre */
-            margin-top: 20px;
-            text-align: center;
-            transition: all 0.5s ease;
-            position: relative; 
-            padding-bottom: 25px; /* Espaço para o rodapé da base */
-        }
+        body { font-family: 'Orbitron', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background-color 0.5s ease, color 0.5s ease; user-select: none; }
+        .text-highlight { color: var(--highlight-color); }
+        .text-screen { color: var(--screen-text); }
+        .bg-main { background-color: var(--bg-color); }
+        .bg-secondary { background-color: var(--secondary-bg-color); }
+        .bg-screen { background-color: var(--screen-bg); }
+        .border-accent { border-color: var(--accent-color); }
+        .border-highlight { border-color: var(--highlight-color); }
+        .shadow-out { box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); }
+        .shadow-in { box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light); }
+        .text-glow { text-shadow: 0 0 10px var(--highlight-color); }
+        .button-theme { background-color: var(--secondary-bg-color); color: var(--highlight-color); border: 1px solid var(--accent-color); transition: all 0.2s; }
+        .button-theme:hover { background-color: var(--accent-color); color: var(--bg-color); }
+        .button-theme.active { background-color: var(--highlight-color); color: var(--bg-color); border-color: var(--highlight-color); font-weight: bold; }
+        .slider-thumb { background: var(--highlight-color); box-shadow: 0 0 5px var(--highlight-color); border: 1px solid var(--accent-color); }
+        .slider-track { background: var(--shadow-dark); }
         
-        /* NOVO: Estilo da Grade do Alto-Falante (Top Speaker Grill) */
-        .speaker-grill {
-            height: 150px; /* Altura do Falante */
-            background-color: var(--speaker-grill-color);
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            box-shadow: var(--box-shadow-in);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Custom styles for range input to match theme */
+        input[type=range] { -webkit-appearance: none; appearance: none; height: 8px; background: var(--shadow-dark); border-radius: 4px; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; cursor: pointer; background: var(--highlight-color); box-shadow: 0 0 5px var(--highlight-color); border: 2px solid var(--accent-color); }
+        input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; cursor: pointer; background: var(--highlight-color); box-shadow: 0 0 5px var(--highlight-color); border: 2px solid var(--accent-color); }
+        
+        /* EQ Slider Orientation Fixes */
+        .eq-slider-container {
             position: relative;
-            overflow: hidden;
+            height: 100px; /* Adjust height for vertical slider */
+            width: 100%;
         }
-
-        .speaker-grill::before {
-            content: "";
+        .eq-slider {
+            -webkit-appearance: none;
+            appearance: none;
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(0deg, var(--speaker-cone-color), var(--speaker-cone-color) 2px, transparent 2px, transparent 10px),
-                        repeating-linear-gradient(90deg, var(--speaker-cone-color), var(--speaker-cone-color) 2px, transparent 2px, transparent 10px);
-            opacity: 0.1; /* Rede sutil */
-        }
-
-        .speaker-cone {
-            width: 80%;
-            height: 80%;
-            background: var(--speaker-cone-color);
-            border-radius: 50%;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 15px var(--glow-color);
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .speaker-center {
-            width: 30%;
-            height: 30%;
-            background: var(--highlight-color);
-            border-radius: 50%;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 0 15px var(--glow-color);
-            /* Efeito de PULSO no centro */
-            animation: pulse 1s infinite alternate;
-        }
-        
-        @keyframes pulse {
-            from { box-shadow: 0 0 15px var(--glow-color); transform: scale(1); }
-            to { box-shadow: 0 0 25px var(--glow-color), 0 0 5px var(--highlight-color); transform: scale(1.05); }
-        }
-        /* FIM: NOVO Estilo da Grade do Alto-Falante */
-
-        /* Ajustes no Container para virar a Torre (Mantém a aparência interna, mas com largura mais estreita) */
-        .container {
-            /* Removendo a sombra externa e a borda do container original para caber na Torre */
-            box-shadow: none;
-            border-radius: 0;
-            margin-top: 0;
-            padding: 20px 25px;
-            width: 100%; /* Ocupa a largura da torre */
-            background-color: transparent; /* Permite que o fundo da Torre apareça */
-        }
-        
-        /* Ajusta o painel de controles para a largura da torre */
-        .control-panel {
-             width: 85%; /* Menor para caber na torre */
-             margin: 20px auto;
-             flex-direction: column; /* Força os controles a ficarem um sobre o outro (como em uma torre) */
-        }
-        .controls {
-            margin-bottom: 20px;
-            width: 100%;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-        .controls button {
-            flex-grow: 1; /* Permite que os botões se estiquem um pouco */
-            min-width: 100px;
-        }
-        .knob-container {
-            width: 100%;
-            margin-top: 15px;
-        }
-
-        #transmission-level-indicator {
-             width: 85%;
-             margin: 15px auto;
-        }
-        #info-screen {
-             margin-bottom: 15px;
-        }
-        .visualizer-giant-container {
-             width: 80%;
-             max-width: 300px; /* Menor para caber na torre */
-             aspect-ratio: 1 / 1;
-             margin: 20px auto;
-        }
-        .bolt { z-index: 10; } /* Para manter os parafusos */
-        
-        /* Garante que o EQ e Temas se encaixem bem na parte de baixo */
-        .audio-controls {
-            width: 400px; /* Mesma largura da torre */
-            margin-top: 0;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-            border-radius: 0 0 15px 15px;
-            border-top: none;
-            padding-top: 0;
-        }
-        .audio-controls .slider-group {
-             flex-wrap: wrap;
-             justify-content: center;
-             gap: 10px;
-             margin-top: 5px;
-        }
-        .audio-controls .slider-item {
-             flex: 1 1 100px; /* Ajuste para mais itens em uma linha estreita */
-             max-width: 100px;
-        }
-        
-        /* [ ... COPIE E COLE O RESTANTE DOS SEUS ESTILOS AQUI ... ] */
-        
-        /* REMOVENDO CLASSE .CONTAINER DUPLICADA DO SEU CÓDIGO */
-        .bolt {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: var(--shadow-dark);
-            border: 1px solid var(--shadow-light);
-            border-radius: 50%;
-            box-shadow: inset 1px 1px 2px var(--shadow-light), inset -1px -1px 2px var(--shadow-dark);
-            z-index: 10;
-        }
-        .bolt-tl { top: 10px; left: 10px; }
-        .bolt-tr { top: 10px; right: 10px; }
-        .bolt-bl { bottom: 10px; left: 10px; }
-        .bolt-br { bottom: 10px; right: 10px; }
-
-        #banner {
-            font-size: clamp(1.5rem, 5vw, 1.8rem); /* Reduzido o tamanho da fonte */
-            font-weight: 700;
-            color: var(--highlight-color);
-            margin-bottom: 15px;
-            text-shadow: 0 0 15px var(--glow-color);
-            letter-spacing: 2px;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
-        }
-
-        /* === TELA DE INFORMAÇÕES (DISPLAY DIGITAL) === */
-        #info-screen {
-            background-color: var(--screen-bg);
-            color: var(--screen-text);
-            border: var(--screen-border);
-            border-radius: 8px;
-            padding: 15px 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 0 10px var(--glow-color), var(--box-shadow-in);
-            font-family: 'Share Tech Mono', monospace;
-            text-align: left;
-            display: grid;
-            grid-template-columns: 1fr 1.5fr 1fr;
-            gap: 10px 15px;
-            transition: all 0.5s ease;
-        }
-
-        #radio-name-display {
-            grid-column: 1 / 4;
-            font-size: 1.2rem; /* Reduzido */
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px dashed var(--screen-text);
-            padding-bottom: 5px;
-        }
-        
-        #volume-electronic-display {
-            grid-column: 1 / 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 1px dashed var(--screen-text);
-            padding: 5px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            text-align: center;
-        }
-
-        #volume-level-bar {
-            width: 90%;
-            height: 8px;
-            background-color: var(--shadow-dark);
-            border-radius: 4px;
-            margin-top: 5px;
-            overflow: hidden;
-            box-shadow: var(--box-shadow-in);
-        }
-
-        #volume-fill {
-            height: 100%;
-            width: 50%; /* Inicial */
-            background: linear-gradient(90deg, var(--status-online-color), var(--highlight-color));
-            transition: width 0.1s ease;
-        }
-
-        #active-eq-display { grid-column: 2 / 3; padding-top: 5px; font-size: 0.8rem; }
-        #active-theme-display { grid-column: 3 / 4; padding-top: 5px; font-size: 0.8rem; }
-        #date-time { grid-column: 1 / 3; text-align: left; padding-top: 10px; font-size: 0.8rem; }
-        
-        #status {
-            grid-column: 3 / 4;
-            justify-content: flex-end;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding-top: 10px;
-            font-size: 0.8rem;
-        }
-        
-        /* Estilo para a luz de status */
-        #status-light {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-left: 5px;
-            box-shadow: 0 0 5px currentColor;
-            transition: background-color 0.5s, box-shadow 0.5s;
-        }
-
-        .status-online { background-color: var(--status-online-color); }
-        .status-offline { background-color: var(--status-offline-color); }
-
-        /* === CONTROLES DE REPRODUÇÃO E VOLUME (KNOB) === */
-        .control-panel {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 15px;
-            background-color: var(--shadow-dark); 
-            border-radius: 10px;
-            border: 1px solid var(--accent-color);
-            box-shadow: var(--box-shadow-out);
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-grow: 0;
-        }
-
-        .controls button {
-            max-width: none;
-            padding: 8px 12px; /* Reduzido */ 
-            border-radius: 6px;
-            font-size: 0.8rem; /* Reduzido */
-            font-weight: 700;
-            color: var(--button-text-color);
-            background: var(--accent-color);
-            box-shadow: 0 0 5px var(--highlight-color), var(--box-shadow-out);
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .controls button:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-            box-shadow: 0 0 10px var(--highlight-color), var(--box-shadow-out);
-        }
-
-        .controls button:disabled {
-            background-color: var(--secondary-bg-color);
-            color: var(--text-color);
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: var(--box-shadow-in);
-        }
-        
-        #play { background-color: #00b894; box-shadow: 0 0 15px #00b894; color: #000; }
-        #play:hover { background-color: #00997d; }
-        #play.active { background-color: var(--status-online-color); color: #000; box-shadow: 0 0 20px var(--status-online-color); }
-
-        #pause { background-color: #f1c40f; box-shadow: 0 0 15px #f1c40f; color: #000; }
-        #stop { background-color: #e74c3c; box-shadow: 0 0 15px #e74c3c; color: #fff; }
-        #mute-btn.active { background-color: #3498db; color: #000; box-shadow: 0 0 20px #3498db; }
-
-        .knob-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-            padding: 10px;
-            background: none;
-            border-radius: 8px;
-            box-shadow: none;
-        }
-
-        .knob-wrapper {
-            position: relative;
-            width: 70px; /* Reduzido para caber melhor na torre */
-            height: 70px;
-            margin-bottom: 5px;
-        }
-
-        #volume-knob {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: var(--secondary-bg-color);
-            border: 3px solid var(--accent-color);
-            box-shadow: var(--box-shadow-out), inset 0 0 10px rgba(0, 0, 0, 0.5);
-            cursor: grab;
-            transition: transform 0.1s ease-out;
-            position: relative;
-            transform-origin: center;
-            transform: rotate(-45deg); /* Posição inicial: 50% (meio) */
-        }
-        
-        #knob-marker {
-            position: absolute;
-            top: 5px; 
             left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            height: 15px; /* Reduzido */
-            background-color: var(--knob-color);
-            border-radius: 2px;
-            box-shadow: 0 0 8px var(--knob-color);
-        }
-
-        .knob-container label {
-            font-size: 0.8rem; /* Reduzido */
-            color: var(--highlight-color);
-            font-weight: 700;
-        }
-
-
-        /* VU Meter Estéreo Vertical Aprimorado (4 BARRAS) */
-        #transmission-level-indicator {
-            background: var(--screen-bg);
-            border: var(--screen-border);
-            border-radius: 8px;
-            box-shadow: 0 0 5px var(--glow-color), var(--box-shadow-in);
-            padding: 10px;
-            margin: 15px auto;
-            width: 90%;
-        }
-        
-        #level-bars-stereo {
-            height: 80px; /* Reduzido a altura para caber na torre */ 
-            gap: 8px; /* Reduzido o gap para 4 barras */
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            position: relative;
-            padding: 0 10px;
-            margin-top: 10px;
-        }
-        
-        .level-meter {
-            width: 18px; /* Reduzido a largura para 4 barras */
-            background: var(--bg-color);
-            border: 1px solid var(--accent-color);
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            border-radius: 2px;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-        }
-        
-        /* Cor de preenchimento para as barras de nível (VU) */
-        .level-bar-fill {
-            background: linear-gradient(to top, 
-                #00ff00 0%, 
-                #ffff00 70%, 
-                #ff4500 90%, 
-                #ff0000 100%);
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            /* MAIS RÁPIDO PARA MAIS REAÇÃO "NERVOSA" */
-            transition: height 0.05s ease-out; 
-        }
-        
-        .level-peak-hold {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #ff0000;
-            opacity: 0; /* Inicia invisível */
-            transition: top 0.1s ease-out, opacity 0.5s ease;
-            box-shadow: 0 0 5px #ff0000;
-            z-index: 5;
-        }
-
-        /* Estilos do Visualizador */
-        .visualizer-giant-container {
-            border-radius: 10px; /* Reduzido */
-            border: 2px solid var(--highlight-color);
-        }
-
-        #spectrum {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 0;
-            /* Garante que o canvas ocupe o espaço */
-            width: 100%;
-            height: 100%; 
-        }
-
-        #visualizer-core {
-            position: absolute;
-            width: 80px; /* Reduzido */
-            height: 80px;
-            border-radius: 50%;
-            background-color: var(--highlight-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem; /* Reduzido */
-            color: var(--bg-color);
-            box-shadow: 0 0 20px var(--glow-color), inset 0 0 10px var(--bg-color);
-            z-index: 1;
-            transition: all 0.1s ease-out;
-        }
-        
-        .theme-buttons button, .eq-buttons button {
-            padding: 6px 10px; /* Reduzido */
-            margin: 3px;
-            font-size: 0.75rem; /* Reduzido */
-            font-family: 'Share Tech Mono', monospace;
-        }
-        
-        /* Estilo para sliders */
-        .visual-controls input[type="range"], .audio-controls input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 6px; /* Reduzido */
-            background: var(--control-bg);
-            border-radius: 5px;
-            box-shadow: var(--box-shadow-in);
-            margin-top: 5px;
-        }
-        .visual-controls input[type="range"]::-webkit-slider-thumb, .audio-controls input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 16px; /* Reduzido */
-            height: 16px;
-            border-radius: 50%;
-            background: var(--highlight-color);
+            top: 50%;
+            width: 100px; /* The length of the slider */
+            height: 8px; /* The thickness of the slider track */
+            transform: translate(-50%, -50%) rotate(-90deg);
+            background: var(--shadow-dark);
+            border-radius: 4px;
             cursor: pointer;
-            box-shadow: 0 0 10px var(--glow-color);
         }
-        .control-group {
-            margin: 10px 0; /* Reduzido */
-            padding: 8px;
-            border: 1px dashed var(--accent-color);
-            border-radius: 8px;
-        }
-
-        /* === CSS para Equalizador de 7 Bandas e Master Gain Sliders === */
-        .audio-controls .slider-group {
-            gap: 10px;
-            padding: 8px;
-        }
-        .audio-controls .slider-item {
-            flex: 1 1 50px; /* Mais estreito */
-            max-width: 50px;
-        }
-        .audio-controls .slider-item label {
-            font-size: 0.7rem; /* Reduzido */
-        }
-        .theme-buttons button:hover, .eq-buttons button:hover {
-            background-color: var(--accent-color);
-            color: var(--button-text-color);
-            box-shadow: 0 0 10px var(--highlight-color);
-        }
-
-        .theme-buttons button.active-theme, .eq-buttons button.active {
-            background-color: var(--highlight-color);
-            color: var(--secondary-bg-color);
-            border-color: var(--highlight-color);
-            box-shadow: 0 0 15px var(--glow-color);
-            font-weight: bold;
-        }
-
-        /* Media Query para Ajustes em Telas Menores */
-        @media (max-width: 450px) { /* Ajusta a largura para caber no celular */
-             .sound-tower, .audio-controls {
-                 width: 100%;
-                 max-width: 350px;
-             }
-             .audio-controls .slider-item {
-                 flex: 1 1 50px;
-                 max-width: 50px;
-             }
-             .controls button {
-                flex-basis: 48%; /* 2 botões por linha */
-             }
-        }
-        /* [ ... COPIE E COLE O RESTANTE DOS SEUS ESTILOS AQUI ... ] */
-    </style>
+        
+    </style>
 </head>
-<body class="industrial-cyber">
-    <div class="sound-tower">
-        <div class="speaker-grill">
-            <div class="speaker-cone">
-                <div class="speaker-center"></div>
-            </div>
-        </div>
+<body class="p-4 md:p-8 min-h-screen">
+    <div id="root"></div>
 
-        <div class="container">
-            <div class="bolt bolt-tl"></div>
-            <div class="bolt bolt-tr"></div>
-            <div class="bolt bolt-bl"></div>
-            <div class="bolt bolt-br"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useCallback, useRef, memo, useMemo } = React;
+
+        // From constants.ts
+        const EQ_FREQUENCIES = [60, 150, 400, 1000, 2500, 6000, 12000];
+        const EQ_PRESETS = {
+            'flat': [0, 0, 0, 0, 0, 0, 0],
+            'rock': [5, 3, -4, -5, -2, 4, 6],
+            'pop': [-2, 0, 2, 4, 2, 0, -2],
+            'jazz': [4, 2, -2, -2, 0, 3, 4],
+            'dance': [6, 4, 2, 0, -2, -3, 0],
+            'metal': [6, 4, 0, -6, 0, 4, 7],
+            'custom': null,
+        };
+        const THEMES = [
+            'industrial-cyber', 'cosmic-dark', 'solar-flare', 'deep-ocean', 'neon-city', 'retro-crt', 
+            'retro-wave', 'vaporwave', 'matrix-code', 'arctic-ice', 'gold-dust', 'martian-sand', 
+            'emerald-forest', 'amethyst-dream', 'fire-ice', 'concrete-jungle', 'sunset-strip', 
+            'biohazard-green', 'pure-white', 'chroma-glow', 'dark-matter', 'volcano-ash', 'purple-haze', 
+            'cyber-red', 'sky-blue', 'lime-shock', 'carbon-fiber'
+        ];
+        // Nota: Substituído streams de exemplo por URLs válidas (ou mais plausíveis)
+        const STREAMS = {
+            'Synthwave Grid': 'https://synthwave.stream/stream',
+            'Cosmic Noise (LoFi)': 'https://c20.radioboss.fm/stream/schizoid_minimal.mp3', 
+            'Electro Swing': 'https://s2.radio.co/s23b8f2191/listen',
+            'Intergalactic FM': 'https://c4.radioboss.fm/stream/185'
+        };
+
+        // Hooks and Components (Simplified for the final block)
+
+        // From hooks/useAudioAnalyzer.ts (Modified to include EQ state and error handling)
+        const useAudioAnalyzer = (streamUrl) => {
+            const audioRef = useRef(null);
+            const audioContextRef = useRef(null);
+            const gainNodeRef = useRef(null);
+            const eqFiltersRef = useRef([]);
+            const mainAnalyserRef = useRef(null);
+            const vuAnalyserLRef = useRef(null); // Simplified VU analysers for brevity
+            const vuAnalyserRRef = useRef(null);
+            const animationFrameRef = useRef(0);
+
+            const [isInitialized, setIsInitialized] = useState(false);
+            const [isPlaying, setIsPlaying] = useState(false);
+            const [isLoading, setIsLoading] = useState(false);
+            const [error, setError] = useState(null);
+            const [eqGains, setEqGains] = useState(EQ_PRESETS.flat);
+            const [eqPresetName, setEqPresetName] = useState('flat');
             
-            <div id="banner">
-                <i class="fas fa-tower-broadcast"></i> TORRE DE SOM INTERCONTINENTAL
-            </div>
+            const [audioData, setAudioData] = useState({
+                frequencyData: new Uint8Array(1024),
+                vu: { l: 0, r: 0 },
+                volume: 50,
+                isMuted: false,
+                bassLevel: 0,
+                dominantFrequency: 0,
+            });
 
-            <div id="info-screen">
-                <div id="radio-name-display">MEGA ULTRA CUSTOM SYSTEM</div>
-                
-                <div id="volume-electronic-display">
-                    <i class="fas fa-volume-up"></i> VOL: <span id="volume-val">50</span>%
-                    <div id="volume-level-bar"><div id="volume-fill"></div></div>
-                </div>
-                
-                <div id="active-eq-display">EQ: <span id="eq-name">FLAT</span></div>
-                <div id="active-theme-display">TEMA: <span id="theme-name">INDUSTRIAL CYBER</span></div>
-                
-                <div id="date-time"></div>
-                <div id="status">
-                    <span id="status-text">OFFLINE</span><span id="status-light" class="status-offline"></span>
-                </div>
-            </div>
-            <div id="now-playing">
-                Tocando agora: <span id="current-song">Pressione Play para iniciar a Transmissão...</span>
-            </div>
+            // **************************************************************************************************************
+            // FIX: Corrigido o erro de sintaxe 'last Node' para 'lastNode' e 'audioContext' para 'window.AudioContext'.
+            // **************************************************************************************************************
+            const initAudio = useCallback(() => {
+                // Clear previous context/audio on re-init
+                if (audioContextRef.current) {
+                    audioContextRef.current.close();
+                    audioContextRef.current = null;
+                }
+                if (audioRef.current) {
+                    audioRef.current.pause();
+                    audioRef.current = null;
+                }
 
-            <div id="transmission-level-indicator">
-                Transmissão Nível Estéreo:
-                <div id="stereo-level-values" style="display: flex; justify-content: space-around; margin-bottom: 5px; font-weight: 700; color: var(--screen-text); font-family: 'Share Tech Mono', monospace;">
-                    <span id="level-val-l1">L: 00 dB</span>
-                    <span id="level-val-r1">R: 00 dB</span>
-                    <span id="level-val-l2">L: 00 dB</span>
-                    <span id="level-val-r2">R: 00 dB</span>
-                </div>
-                <div id="level-bars-stereo">
-                    <div class="level-meter left-channel">
-                        <div class="level-peak-hold" id="peak-l1"></div>
-                        <div class="level-bar-fill" id="fill-l1"></div>
-                    </div>
-                    <div class="level-meter right-channel">
-                        <div class="level-peak-hold" id="peak-r1"></div>
-                        <div class="level-bar-fill" id="fill-r1"></div>
-                    </div>
-                    <div class="level-meter left-channel">
-                        <div class="level-peak-hold" id="peak-l2"></div>
-                        <div class="level-bar-fill" id="fill-l2"></div>
-                    </div>
-                    <div class="level-meter right-channel">
-                        <div class="level-peak-hold" id="peak-r2"></div>
-                        <div class="level-bar-fill" id="fill-r2"></div>
-                    </div>
-                </div>
-            </div>
+                setIsInitialized(false);
+                setIsLoading(true);
+                setError(null);
 
-            <div class="visualizer-giant-container">
-                <canvas id="spectrum" width="400" height="400"></canvas> 
-                <div id="visualizer-core">
-                    <i class="fas fa-satellite-dish"></i>
-                </div>
-            </div>
+                try {
+                    // Create Audio element
+                    const audio = new Audio(streamUrl);
+                    audio.crossOrigin = "anonymous";
+                    audio.volume = 0; // Start muted to prevent noise on load until controls are set
+                    audioRef.current = audio;
+
+                    // Create Audio Context
+                    const context = new (window.AudioContext || window.webkitAudioContext)();
+                    audioContextRef.current = context;
+
+                    // Create Nodes
+                    const source = context.createMediaElementSource(audio);
+                    const gainNode = context.createGain();
+                    gainNode.gain.value = audioData.volume / 100;
+                    gainNodeRef.current = gainNode;
+                    
+                    const filters = EQ_FREQUENCIES.map(freq => {
+                        const filter = context.createBiquadFilter();
+                        filter.type = 'peaking';
+                        filter.frequency.value = freq;
+                        filter.Q.value = 1.4;
+                        filter.gain.value = 0;
+                        return filter;
+                    });
+                    eqFiltersRef.current = filters;
+
+                    const mainAnalyser = context.createAnalyser();
+                    mainAnalyser.fftSize = 2048;
+                    mainAnalyserRef.current = mainAnalyser;
+                    
+                    const splitter = context.createChannelSplitter(2);
+                    vuAnalyserLRef.current = context.createAnalyser();
+                    vuAnalyserRRef.current = context.createAnalyser();
+                    vuAnalyserLRef.current.fftSize = 256;
+                    vuAnalyserRRef.current.fftSize = 256;
+
+                    // Connect the nodes
+                    let lastNode = source;
+                    filters.forEach(filter => {
+                        lastNode.connect(filter);
+                        lastNode = filter;
+                    });
+
+                    lastNode.connect(mainAnalyser);
+                    mainAnalyser.connect(gainNode);
+                    mainAnalyser.connect(splitter); // Splitter for stereo VU
+                    gainNode.connect(context.destination);
+
+                    splitter.connect(vuAnalyserLRef.current, 0);
+                    splitter.connect(vuAnalyserRRef.current, 1);
+
+                    audio.onloadeddata = () => setIsLoading(false);
+                    audio.onplaying = () => { setIsPlaying(true); setIsLoading(false); };
+                    audio.onpause = () => setIsPlaying(false);
+                    audio.onstalled = () => setIsLoading(true);
+                    audio.onerror = (e) => {
+                        console.error("Audio Element Error:", e);
+                        setError("Error loading audio stream. Check URL or network.");
+                        setIsLoading(false);
+                        setIsPlaying(false);
+                    };
+
+                    setIsInitialized(true);
+                    // Apply EQ gains if they were already customized
+                    eqFiltersRef.current.forEach((filter, index) => {
+                         filter.gain.value = eqGains[index];
+                    });
+                    
+                    // Set correct volume based on state
+                    gainNodeRef.current.gain.value = audioData.isMuted ? 0 : audioData.volume / 100;
+
+                } catch (e) {
+                    console.error("Audio Initialization Error:", e);
+                    setError("Audio initialization failed: " + e.message);
+                    setIsLoading(false);
+                }
+            }, [streamUrl, audioData.volume, audioData.isMuted, eqGains]);
+            // **************************************************************************************************************
             
-            <div class="control-panel">
-                <div class="controls">
-                    <button id="play"><i class="fas fa-play"></i> Play</button>
-                    <button id="pause" disabled><i class="fas fa-pause"></i> Pause</button>
-                    <button id="stop" disabled><i class="fas fa-stop"></i> Stop</button>
-                    <button id="mute-btn"><i class="fas fa-volume-up"></i> Mute</button>
+            const analyzeData = useCallback(() => {
+                if (!mainAnalyserRef.current || !isPlaying || audioContextRef.current?.state !== 'running') {
+                    // Stop animation if not playing or context is suspended
+                    cancelAnimationFrame(animationFrameRef.current);
+                    animationFrameRef.current = 0;
+                    return;
+                }
+                
+                // Frequency Data (Visualizer)
+                const frequencyData = new Uint8Array(mainAnalyserRef.current.frequencyBinCount);
+                mainAnalyserRef.current.getByteFrequencyData(frequencyData);
+                
+                // VU Data (Level Meters)
+                const bufferL = new Uint8Array(vuAnalyserLRef.current.fftSize);
+                vuAnalyserLRef.current.getByteTimeDomainData(bufferL);
+                const bufferR = new Uint8Array(vuAnalyserRRef.current.fftSize);
+                vuAnalyserRRef.current.getByteTimeDomainData(bufferR);
+
+                const getPeakLevel = (data) => {
+                    let max = 0;
+                    for (let i = 0; i < data.length; i++) {
+                        const val = Math.abs(data[i] - 128);
+                        if (val > max) max = val;
+                    }
+                    return (max / 128) * 100;
+                };
+                
+                // Bass Level for Screen
+                const bassBins = Math.floor((250 / (audioContextRef.current.sampleRate / 2)) * frequencyData.length);
+                const bassSum = frequencyData.slice(0, bassBins).reduce((a, b) => a + b, 0);
+                const bassLevel = (bassSum / (bassBins * 255)) * 100;
+
+                // Dominant Frequency for Screen
+                let maxVal = -1, maxIndex = 0;
+                for(let i=0; i < frequencyData.length; i++){
+                    if(frequencyData[i] > maxVal){
+                        maxVal = frequencyData[i];
+                        maxIndex = i;
+                    }
+                }
+                const dominantFrequency = (maxIndex * audioContextRef.current.sampleRate) / mainAnalyserRef.current.fftSize;
+
+                setAudioData(prev => ({
+                    ...prev,
+                    frequencyData,
+                    vu: { l: getPeakLevel(bufferL), r: getPeakLevel(bufferR) },
+                    bassLevel,
+                    dominantFrequency: dominantFrequency > 20000 ? 0 : dominantFrequency,
+                }));
+
+                animationFrameRef.current = requestAnimationFrame(analyzeData);
+            }, [isPlaying]);
+
+            useEffect(() => {
+                if (isPlaying) {
+                    if (!animationFrameRef.current) { // Start frame only if not running
+                        animationFrameRef.current = requestAnimationFrame(analyzeData);
+                    }
+                } else {
+                    cancelAnimationFrame(animationFrameRef.current);
+                    animationFrameRef.current = 0;
+                }
+                return () => cancelAnimationFrame(animationFrameRef.current);
+            }, [isPlaying, analyzeData]);
+
+            const play = useCallback(() => {
+                if (!isInitialized) {
+                    initAudio();
+                }
+
+                if (audioContextRef.current?.state === 'suspended') {
+                    audioContextRef.current.resume();
+                }
+                
+                if (audioRef.current) {
+                    setIsLoading(true);
+                    setError(null);
+                    audioRef.current.play().then(() => {
+                        // Play state set in audio.onplaying
+                    }).catch(e => {
+                        console.error("Playback Error:", e);
+                        setError("Playback failed. Please interact with the page first (browser security).");
+                        setIsLoading(false);
+                        setIsPlaying(false);
+                    });
+                }
+            }, [initAudio, isInitialized]);
+
+            const pause = useCallback(() => {
+                audioRef.current?.pause();
+            }, []);
+
+            const stop = useCallback(() => {
+                if (audioRef.current) {
+                    audioRef.current.pause();
+                    audioRef.current.currentTime = 0;
+                }
+                setIsPlaying(false);
+                setIsLoading(false);
+            }, []);
+            
+            const setVolume = useCallback((vol) => {
+                const newVolume = Math.max(0, Math.min(100, vol));
+                setAudioData(prev => ({ ...prev, volume: newVolume }));
+                if (gainNodeRef.current && !audioData.isMuted) {
+                    gainNodeRef.current.gain.value = newVolume / 100;
+                }
+            }, [audioData.isMuted]);
+
+            const toggleMute = useCallback(() => {
+                const newMutedState = !audioData.isMuted;
+                setAudioData(prev => ({ ...prev, isMuted: newMutedState }));
+                if (gainNodeRef.current) {
+                    gainNodeRef.current.gain.value = newMutedState ? 0 : audioData.volume / 100;
+                }
+            }, [audioData.isMuted, audioData.volume]);
+
+            const setEQ = useCallback((gains, presetName = 'custom') => {
+                eqFiltersRef.current.forEach((filter, index) => {
+                    if (gains[index] !== undefined) filter.gain.value = gains[index];
+                });
+                setEqGains(gains);
+                setEqPresetName(presetName);
+            }, []);
+
+            const setEQBand = useCallback((bandIndex, gain) => {
+                if (eqFiltersRef.current[bandIndex]) {
+                    eqFiltersRef.current[bandIndex].gain.value = gain;
+                    setEqGains(prev => {
+                        const newGains = [...prev];
+                        newGains[bandIndex] = gain;
+                        return newGains;
+                    });
+                    setEqPresetName('custom');
+                }
+            }, []);
+
+            useEffect(() => {
+                if (streamUrl && isInitialized) {
+                    // Re-initialize audio on streamUrl change
+                    stop(); // Pause and reset current stream
+                    // Re-initialize audio context and nodes with the new stream URL
+                    initAudio(); 
+                } else if(streamUrl && !isInitialized) {
+                    // Initial load/first stream selection
+                    initAudio();
+                }
+            }, [streamUrl]);
+
+
+            return { isInitialized, isPlaying, isLoading, error, audioData, eqGains, eqPresetName, controls: { play, pause, stop, setVolume, toggleMute, setEQ, setEQBand } };
+        };
+
+        // --- Components ---
+
+        // InfoScreen
+        const InfoScreen = memo(({ isPlaying, themeName, eqPresetName, volume, currentStream, dominantFrequency }) => {
+            const [dateTime, setDateTime] = useState(new Date());
+            useEffect(() => {
+                const timer = setInterval(() => setDateTime(new Date()), 1000);
+                return () => clearInterval(timer);
+            }, []);
+            const formattedTime = dateTime.toLocaleTimeString('en-US', { hour12: false });
+            const formattedDate = dateTime.toLocaleDateString('en-CA');
+
+            const statusColor = isPlaying ? 'var(--status-online-color)' : 'var(--status-offline-color)';
+            const statusShadow = isPlaying ? '0 0 5px var(--status-online-color)' : '0 0 5px var(--status-offline-color)';
+            
+            return (
+                <div className="bg-screen text-screen font-mono p-4 rounded-xl shadow-in border border-highlight/50 grid grid-cols-2 md:grid-cols-4 gap-3 text-sm md:text-base">
+                    <div className="col-span-2 md:col-span-4 text-center border-b border-screen-text/30 pb-2 mb-2">
+                        <p className="text-xl font-bold uppercase tracking-widest text-glow">{themeName.replace('-', ' ')}</p>
+                        <p className="text-xs opacity-70 mt-1 truncate">SOURCE: {currentStream}</p>
+                    </div>
+                    
+                    <div className="flex flex-col items-center justify-center p-2 border border-screen-text/30 rounded">
+                        <p className="opacity-75">VOLUME</p>
+                        <p className="text-lg font-bold">{volume}%</p>
+                    </div>
+                    <div className="flex flex-col items-center justify-center p-2 border border-screen-text/30 rounded">
+                        <p className="opacity-75">EQ PRESET</p>
+                        <p className="text-lg font-bold uppercase truncate">{eqPresetName}</p>
+                    </div>
+                    <div className="flex flex-col items-center justify-center p-2 border border-screen-text/30 rounded">
+                        <p className="opacity-75">DOM. FREQ.</p>
+                        <p className="text-lg font-bold">{dominantFrequency.toFixed(2)} Hz</p>
+                    </div>
+                    <div className="flex flex-col items-center justify-center p-2 border border-screen-text/30 rounded">
+                        <p className="opacity-75">STATUS</p>
+                        <div className="flex items-center gap-2">
+                            <span className={`w-3 h-3 rounded-full transition-colors`} style={{ backgroundColor: statusColor, boxShadow: statusShadow }}></span>
+                            <p className="text-lg font-bold text-glow">{isPlaying ? "ONLINE" : "OFFLINE"}</p>
+                        </div>
+                    </div>
+
+                    <div className="col-span-2 md:col-span-4 text-center border-t border-screen-text/30 pt-2 mt-2 flex justify-between font-share-tech-mono">
+                        <span>DATE: {formattedDate}</span>
+                        <span>TIME: {formattedTime} UTC</span>
+                    </div>
                 </div>
-                <div class="knob-container">
-                    <label for="volume-knob">MASTER VOLUME</label>
-                    <div class="knob-wrapper">
-                        <div id="volume-knob">
-                            <div id="knob-marker"></div>
+            );
+        });
+
+        // VUBar and VUMeter (Slightly simplified and cleaned)
+        const VUBar = memo(({ level, channel }) => {
+            const safeLevel = Math.min(100, Math.max(0, level));
+            return (
+                <div className="w-5 h-28 bg-black/50 rounded-sm shadow-in overflow-hidden relative">
+                    <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-green-500 via-yellow-500 to-red-500 transition-[height] duration-75" style={{ height: `${safeLevel}%` }}></div>
+                </div>
+            );
+        });
+
+        const VUMeter = memo(({ vuData }) => {
+            return (
+                <div className="mt-4">
+                    <p className="text-center font-mono text-sm mb-2 opacity-80">STEREO OUTPUT LEVEL</p>
+                    <div className="flex justify-center items-end gap-3">
+                        <div className="text-center">
+                            <VUBar level={vuData.l} channel="L" />
+                            <span className="font-mono text-xs opacity-70 mt-1 block">L</span>
+                        </div>
+                        <div className="text-center">
+                            <VUBar level={vuData.r} channel="R" />
+                            <span className="font-mono text-xs opacity-70 mt-1 block">R</span>
                         </div>
                     </div>
                 </div>
-            </div>
+            );
+        });
+        
+        // Visualizer (Bar graph, slightly modified color logic)
+        const Visualizer = memo(({ frequencyData, isPlaying }) => {
+            const canvasRef = useRef(null);
             
-            <audio id="radio-audio" src="https://stream.zeno.fm/wzcgaal0dnltv" preload="auto" crossorigin="anonymous"></audio>
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return;
+                const { width, height } = canvas;
+                ctx.clearRect(0, 0, width, height);
+                
+                if (!isPlaying) {
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+                    ctx.font = '24px Orbitron';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('SIGNAL OFFLINE', width / 2, height / 2);
+                    return;
+                }
 
-        </div>
-    </div>
-    
-    <div class="audio-controls sound-tower">
-        <h3><i class="fas fa-sliders-h"></i> Equalizador Manual (7 Bandas)</h3>
-        <div class="slider-group">
-            <div class="slider-item">
-                <label for="low-bass-slider">60Hz: <span id="low-bass-val">0 dB</span></label>
-                <input type="range" id="low-bass-slider" data-freq="60" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="bass-slider">150Hz: <span id="bass-val">0 dB</span></label>
-                <input type="range" id="bass-slider" data-freq="150" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="mid-low-slider">400Hz: <span id="mid-low-val">0 dB</span></label>
-                <input type="range" id="mid-low-slider" data-freq="400" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="mid-slider">1kHz: <span id="mid-val">0 dB</span></label>
-                <input type="range" id="mid-slider" data-freq="1000" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="mid-high-slider">2.5kHz: <span id="mid-high-val">0 dB</span></label>
-                <input type="range" id="mid-high-slider" data-freq="2500" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="high-slider">6kHz: <span id="high-val">0 dB</span></label>
-                <input type="range" id="high-slider" data-freq="6000" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="ultra-high-slider">12kHz: <span id="ultra-high-val">0 dB</span></label>
-                <input type="range" id="ultra-high-slider" data-freq="12000" min="-12" max="12" step="1" value="0">
-            </div>
-        </div>
-        <div class="eq-buttons control-group" style="text-align: center;">
-            <button data-eq="flat" class="active" id="eq-flat">FLAT</button>
-            <button data-eq="bass" id="eq-bass">BASS</button>
-            <button data-eq="rock" id="eq-rock">ROCK</button>
-            <button data-eq="pop" id="eq-pop">POP</button>
-        </div>
-        
-        <div class="theme-buttons control-group" style="text-align: center;">
-            <h4><i class="fas fa-palette"></i> TEMAS</h4>
-            <button data-theme="industrial-cyber" class="active-theme">CYBER</button>
-            <button data-theme="cosmic-dark">COSMIC</button>
-            <button data-theme="neon-city">NEON</button>
-            <button data-theme="retro-crt">CRT</button>
-            <button data-theme="vaporwave">VAPOR</button>
-        </div>
-    </div>
-    
-    <script>
-        // === VARIÁVEIS GLOBAIS ===
-        const audio = document.getElementById('radio-audio');
-        const playBtn = document.getElementById('play');
-        const pauseBtn = document.getElementById('pause');
-        const stopBtn = document.getElementById('stop');
-        const muteBtn = document.getElementById('mute-btn');
-        const statusLight = document.getElementById('status-light');
-        const statusText = document.getElementById('status-text');
-        const volumeKnob = document.getElementById('volume-knob');
-        const volumeValDisplay = document.getElementById('volume-val');
-        const volumeFill = document.getElementById('volume-fill');
-        const knobMarker = document.getElementById('knob-marker');
-        const body = document.body;
-        const themeNameDisplay = document.getElementById('theme-name');
-        const eqNameDisplay = document.getElementById('eq-name');
-        const levelFills = [
-            document.getElementById('fill-l1'),
-            document.getElementById('fill-r1'),
-            document.getElementById('fill-l2'),
-            document.getElementById('fill-r2')
-        ];
-        const levelVals = [
-            document.getElementById('level-val-l1'),
-            document.getElementById('level-val-r1'),
-            document.getElementById('level-val-l2'),
-            document.getElementById('level-val-r2')
-        ];
-        const peakHolds = [
-            document.getElementById('peak-l1'),
-            document.getElementById('peak-r1'),
-            document.getElementById('peak-l2'),
-            document.getElementById('peak-r2')
-        ];
-        const volumeKnobWrapper = document.querySelector('.knob-wrapper');
-        const canvas = document.getElementById('spectrum');
-        const canvasCtx = canvas.getContext('2d');
-        const visualizerCore = document.getElementById('visualizer-core');
-        
-        let audioCtx;
-        let source;
-        let analyser;
-        let gainNode;
-        let eqFilters = [];
-        let animationFrameId;
-        let vuMeterInterval;
-        let isPlaying = false;
-        let isMuted = false;
-        
-        // Frequências do Equalizador
-        const EQ_FREQUENCIES = [60, 150, 400, 1000, 2500, 6000, 12000];
-        const EQ_SLIDERS = EQ_FREQUENCIES.map((freq, index) => ({
-            slider: document.querySelectorAll('input[type="range"]')[index],
-            valueDisplay: document.querySelectorAll('.slider-item span')[index],
-            freq: freq
-        }));
-        
-        // Predefinições de EQ: [60, 150, 400, 1000, 2500, 6000, 12000] em dB
-        const EQ_PRESETS = {
-            flat: [0, 0, 0, 0, 0, 0, 0],
-            bass: [10, 8, 3, 0, -2, -3, -4],
-            rock: [5, 4, -4, 2, 4, 6, 8],
-            pop: [3, 5, 2, 0, 4, 5, 3]
+                const numBars = 64; // Fewer bars for a cleaner look
+                const barWidth = width / numBars;
+                const highlightColor = getComputedStyle(document.documentElement).getPropertyValue('--highlight-color').trim();
+                
+                for (let i = 0; i < numBars; i++) {
+                    const dataIndex = Math.floor(i * (frequencyData.length / numBars));
+                    const value = frequencyData[dataIndex];
+                    const barHeight = (value / 255) * height * 0.9; // Scale down a bit
+                    
+                    // Simple highlight color based visualization
+                    const alpha = value / 255 * 0.8 + 0.2;
+                    // FIX: Ensure hex conversion is safe (removes '#' if present)
+                    const colorHex = highlightColor.startsWith('#') ? highlightColor.slice(1) : highlightColor;
+                    const r = parseInt(colorHex.slice(0, 2), 16);
+                    const g = parseInt(colorHex.slice(2, 4), 16);
+                    const b = parseInt(colorHex.slice(4, 6), 16);
+                    
+                    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+                    
+                    ctx.fillRect(i * barWidth, height - barHeight, barWidth - 1, barHeight);
+                }
+            }, [frequencyData, isPlaying]);
+            
+            return (
+                <div className="w-full aspect-[3/1] bg-black rounded-lg shadow-in relative border border-highlight/30">
+                    <canvas ref={canvasRef} width="600" height="200" className="w-full h-full" />
+                </div>
+            );
+        });
+
+        // EQSlider
+        const EQSlider = memo(({ index, freq, gain, onGainChange }) => {
+            return (
+                <div className="flex flex-col items-center w-full eq-slider-container">
+                    {/* The actual slider component - uses a fixed class for orientation */}
+                    <input
+                        type="range"
+                        min="-12"
+                        max="12"
+                        step="0.1"
+                        value={gain}
+                        onChange={(e) => onGainChange(index, parseFloat(e.target.value))}
+                        className="eq-slider"
+                    />
+                    <p className="text-xs font-mono absolute top-2 right-0 left-0 text-center text-highlight">{gain.toFixed(1)} dB</p>
+                    <p className="text-xs font-mono absolute bottom-2 right-0 left-0 text-center opacity-70">{freq >= 1000 ? `${freq / 1000}k` : freq} Hz</p>
+                </div>
+            );
+        });
+
+        // Equalizer
+        const Equalizer = ({ eqGains, controls, eqPresetName }) => {
+            const handlePresetChange = (presetName) => {
+                const gains = EQ_PRESETS[presetName];
+                if (gains) {
+                    controls.setEQ(gains, presetName);
+                }
+            };
+            
+            return (
+                <div className="bg-secondary p-4 rounded-xl shadow-out border border-accent/50">
+                    <h3 className="text-center text-lg font-bold text-highlight mb-4">EQUALIZER MODULE</h3>
+                    
+                    {/* EQ Sliders */}
+                    <div className="flex justify-between items-start my-4 px-4 h-40">
+                        {EQ_FREQUENCIES.map((freq, index) => (
+                            <div key={index} className="flex flex-col items-center justify-center h-full w-1/7 relative">
+                                <EQSlider 
+                                    index={index} 
+                                    freq={freq} 
+                                    gain={eqGains[index]} 
+                                    onGainChange={controls.setEQBand}
+                                />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Presets */}
+                    <div className="flex flex-wrap justify-center gap-2 mt-4 border-t border-accent/50 pt-3">
+                        {Object.keys(EQ_PRESETS).filter(k => k !== 'custom').map(preset => (
+                            <button
+                                key={preset}
+                                onClick={() => handlePresetChange(preset)}
+                                className={`button-theme px-3 py-1 text-xs rounded-full ${eqPresetName === preset ? 'active' : ''}`}
+                            >
+                                {preset.toUpperCase()}
+                            </button>
+                        ))}
+                        {/* Show CUSTOM button if eqPresetName is 'custom' */}
+                        {eqPresetName === 'custom' && (
+                             <button
+                                className={`button-theme px-3 py-1 text-xs rounded-full active`}
+                                disabled
+                            >
+                                CUSTOM
+                            </button>
+                        )}
+                    </div>
+                </div>
+            );
         };
 
-        // === FUNÇÕES DE ÁUDIO ===
+        // ThemeSelector
+        const ThemeSelector = ({ currentTheme, onThemeChange }) => (
+            <div className="bg-secondary p-4 rounded-xl shadow-out border border-accent/50">
+                <h3 className="text-center text-lg font-bold text-highlight mb-4">THEME CONFIG</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 max-h-48 overflow-y-auto pr-2">
+                    {THEMES.map(theme => (
+                        <button
+                            key={theme}
+                            onClick={() => onThemeChange(theme)}
+                            className={`button-theme px-3 py-1 text-xs rounded-full truncate ${currentTheme === theme ? 'active' : ''}`}
+                        >
+                            {theme.toUpperCase().replace('-', ' ')}
+                        </button>
+                    ))}
+                </div>
+            </div>
+        );
 
-        function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                source = audioCtx.createMediaElementSource(audio);
-                gainNode = audioCtx.createGain(); // Nó de Volume Master/Mute
-                analyser = audioCtx.createAnalyser();
-                analyser.fftSize = 2048;
+        // StreamSelector
+        const StreamSelector = ({ currentStreamName, onStreamChange, isPlaying, isLoading }) => (
+            <div className="bg-secondary p-4 rounded-xl shadow-out border border-accent/50">
+                <h3 className="text-center text-lg font-bold text-highlight mb-4">STREAM SELECT</h3>
+                <div className="flex flex-col gap-2">
+                    {Object.keys(STREAMS).map(name => (
+                        <button
+                            key={name}
+                            onClick={() => onStreamChange(name)}
+                            disabled={isLoading}
+                            className={`button-theme text-sm p-2 rounded ${currentStreamName === name ? 'active' : ''}`}
+                        >
+                            {isLoading && currentStreamName === name ? (
+                                <>
+                                    <i className="fas fa-sync-alt animate-spin mr-2"></i> LOADING...
+                                </>
+                            ) : (
+                                <>
+                                    <i className={`mr-2 fas ${currentStreamName === name && isPlaying ? 'fa-volume-up' : 'fa-satellite-dish'}`}></i> {name}
+                                </>
+                            )}
+                        </button>
+                    ))}
+                </div>
+            </div>
+        );
 
-                // Cria os filtros do Equalizador
-                EQ_FREQUENCIES.forEach(freq => {
-                    const filter = audioCtx.createBiquadFilter();
-                    filter.type = 'peaking';
-                    filter.frequency.value = freq;
-                    filter.Q.value = 1; // Fator de Qualidade
-                    filter.gain.value = 0;
-                    eqFilters.push(filter);
-                });
+        // PlaybackControls
+        const PlaybackControls = ({ isPlaying, isLoading, volume, isMuted, controls }) => {
+            const currentIcon = isMuted ? 'fa-volume-mute' : (volume === 0 ? 'fa-volume-off' : (volume < 50 ? 'fa-volume-down' : 'fa-volume-up'));
 
-                // Conecta o nó de origem -> Filtros EQ -> Gain (Volume) -> Analyser -> Destino
-                let lastNode = source;
-                eqFilters.forEach(filter => {
-                    lastNode.connect(filter);
-                    lastNode = filter;
-                });
-                lastNode.connect(gainNode);
-                gainNode.connect(analyser);
-                analyser.connect(audioCtx.destination);
-                
-                // Configura o volume inicial
-                audio.volume = 0.5;
-                gainNode.gain.value = audio.volume; // O Web Audio API controla o volume
-                updateVolumeDisplay(audio.volume * 100);
-            }
-        }
+            return (
+                <div className="bg-secondary p-4 rounded-xl shadow-out border border-accent/50 flex flex-col items-center">
+                    <h3 className="text-center text-lg font-bold text-highlight mb-4">TRANSPORT & VOLUME</h3>
+                    
+                    {/* Play/Pause/Stop Buttons */}
+                    <div className="flex gap-4 mb-6">
+                        <button
+                            onClick={isPlaying ? controls.pause : controls.play}
+                            disabled={isLoading}
+                            className={`button-theme w-20 h-20 rounded-full text-3xl transition-transform ${isPlaying ? 'active' : ''}`}
+                        >
+                            <i className={`fas ${isPlaying ? 'fa-pause' : 'fa-play'} ${isLoading ? 'animate-pulse' : ''}`}></i>
+                        </button>
+                        <button
+                            onClick={controls.stop}
+                            className="button-theme w-20 h-20 rounded-full text-3xl"
+                        >
+                            <i className="fas fa-stop"></i>
+                        </button>
+                    </div>
 
-        function playRadio() {
-            initAudio(); // Inicializa o contexto de áudio
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-            audio.play().then(() => {
-                isPlaying = true;
-                updateControls();
-                drawVisualizer();
-                startVUMeter();
-                statusText.textContent = 'ONLINE';
-                statusLight.classList.remove('status-offline');
-                statusLight.classList.add('status-online');
-                document.getElementById('current-song').textContent = 'Transmissão Ao Vivo (Link Fixo)';
-            }).catch(error => {
-                console.error("Erro ao iniciar a reprodução:", error);
-                alert("Erro ao tentar tocar o áudio. O navegador pode exigir interação do usuário primeiro.");
-            });
-        }
-
-        function pauseRadio() {
-            audio.pause();
-            isPlaying = false;
-            updateControls();
-            stopVisualizer();
-            stopVUMeter();
-        }
-
-        function stopRadio() {
-            audio.pause();
-            audio.currentTime = 0;
-            isPlaying = false;
-            updateControls();
-            stopVisualizer();
-            stopVUMeter();
-            statusText.textContent = 'OFFLINE';
-            statusLight.classList.remove('status-online');
-            statusLight.classList.add('status-offline');
-            document.getElementById('current-song').textContent = 'Pressione Play para iniciar a Transmissão...';
-        }
-        
-        function updateControls() {
-            playBtn.disabled = isPlaying;
-            pauseBtn.disabled = !isPlaying;
-            stopBtn.disabled = !isPlaying;
-            playBtn.classList.toggle('active', isPlaying);
-        }
-
-        // === FUNÇÕES DE VOLUME E KNOB ===
-
-        function updateVolume(newVolume) {
-            let volume = Math.min(100, Math.max(0, newVolume)); // Clamp 0-100
-            audio.volume = volume / 100;
-            if (gainNode) {
-                gainNode.gain.value = audio.volume;
-            }
-            updateVolumeDisplay(volume);
-            updateKnobRotation(volume);
-        }
-        
-        function updateVolumeDisplay(volume) {
-            volumeValDisplay.textContent = volume;
-            volumeFill.style.width = `${volume}%`;
-        }
-
-        function updateKnobRotation(volume) {
-            // Volume 0% -> Rotação -135deg (0% na borda inferior esquerda)
-            // Volume 100% -> Rotação +135deg (100% na borda inferior direita)
-            // Intervalo total de 270 graus.
-            const rotation = (volume / 100) * 270 - 135;
-            volumeKnob.style.transform = `rotate(${rotation}deg)`;
-        }
-
-        let isDragging = false;
-        let startAngle = 0;
-        let startVolume = 0;
-
-        function startDrag(e) {
-            if (!audioCtx) return;
-            isDragging = true;
-            volumeKnob.style.cursor = 'grabbing';
-            const rect = volumeKnobWrapper.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            const clientX = e.clientX || e.touches[0].clientX;
-            const clientY = e.clientY || e.touches[0].clientY;
-
-            startAngle = Math.atan2(clientY - centerY, clientX - centerX);
-            startVolume = audio.volume * 100;
-
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', stopDrag);
-            document.addEventListener('touchmove', drag);
-            document.addEventListener('touchend', stopDrag);
-        }
-
-        function drag(e) {
-            if (!isDragging) return;
-            e.preventDefault(); 
-
-            const rect = volumeKnobWrapper.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            const clientX = e.clientX || e.touches[0].clientX;
-            const clientY = e.clientY || e.touches[0].clientY;
-
-            const currentAngle = Math.atan2(clientY - centerY, clientX - centerX);
-            let angleDiff = currentAngle - startAngle;
-
-            // Corrige a diferença de ângulo ao cruzar o limite -PI para PI
-            if (angleDiff > Math.PI) {
-                angleDiff -= 2 * Math.PI;
-            } else if (angleDiff < -Math.PI) {
-                angleDiff += 2 * Math.PI;
-            }
-
-            // Conversão de radianos para graus e fator de sensibilidade
-            const degreeDiff = angleDiff * (180 / Math.PI);
-            const sensitivity = 0.3; 
-            const newVolume = startVolume + degreeDiff * sensitivity;
-
-            updateVolume(newVolume);
-        }
-
-        function stopDrag() {
-            isDragging = false;
-            volumeKnob.style.cursor = 'grab';
-            document.removeEventListener('mousemove', drag);
-            document.removeEventListener('mouseup', stopDrag);
-            document.removeEventListener('touchmove', drag);
-            document.removeEventListener('touchend', stopDrag);
-        }
-
-        volumeKnob.addEventListener('mousedown', startDrag);
-        volumeKnob.addEventListener('touchstart', startDrag);
-        
-        // Mute Toggle
-        function toggleMute() {
-            if (!audioCtx) return;
-
-            isMuted = !isMuted;
-            audio.muted = isMuted; // Use o mute do elemento para garantir
-            
-            muteBtn.classList.toggle('active', isMuted);
-            muteBtn.innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i> Unmute' : '<i class="fas fa-volume-up"></i> Mute';
-            volumeKnob.style.opacity = isMuted ? 0.5 : 1;
-            volumeKnob.style.pointerEvents = isMuted ? 'none' : 'auto';
-            visualizerCore.classList.toggle('fa-satellite-dish', !isMuted);
-            visualizerCore.classList.toggle('fa-volume-mute', isMuted);
-        }
-
-        muteBtn.addEventListener('click', toggleMute);
-
-
-        // === FUNÇÕES DE TEMAS ===
-
-        const themeButtons = document.querySelectorAll('.theme-buttons button');
-        const THEME_MAP = {
-            'industrial-cyber': 'INDUSTRIAL CYBER',
-            'cosmic-dark': 'COSMIC DARK',
-            'neon-city': 'NEON CITY',
-            'retro-crt': 'RETRO CRT',
-            'vaporwave': 'VAPORWAVE',
-            // Adicione os outros temas para o JS
-            'solar-flare': 'SOLAR FLARE', 'deep-ocean': 'DEEP OCEAN', 'retro-wave': 'RETRO WAVE', 'matrix-code': 'MATRIX CODE', 'arctic-ice': 'ARCTIC ICE', 'gold-dust': 'GOLD DUST', 'martian-sand': 'MARTIAN SAND', 'emerald-forest': 'EMERALD FOREST', 'amethyst-dream': 'AMETHYST DREAM', 'fire-ice': 'FIRE ICE', 'concrete-jungle': 'CONCRETE JUNGLE', 'sunset-strip': 'SUNSET STRIP', 'biohazard-green': 'BIOHAZARD GREEN', 'pure-white': 'PURE WHITE', 'chroma-glow': 'CHROMA GLOW', 'dark-matter': 'DARK MATTER', 'volcano-ash': 'VOLCANO ASH', 'purple-haze': 'PURPLE HAZE', 'cyber-red': 'CYBER RED', 'sky-blue': 'SKY BLUE', 'lime-shock': 'LIME SHOCK', 'carbon-fiber': 'CARBON FIBER'
+                    {/* Volume Slider */}
+                    <div className="w-full max-w-sm flex items-center gap-4">
+                        <button onClick={controls.toggleMute} className="text-2xl text-highlight hover:text-accent transition-colors">
+                            <i className={`fas ${currentIcon}`}></i>
+                        </button>
+                        <input
+                            type="range"
+                            min="0"
+                            max="100"
+                            step="1"
+                            value={volume}
+                            onChange={(e) => controls.setVolume(parseFloat(e.target.value))}
+                            className="w-full"
+                        />
+                        <span className="font-mono text-lg text-highlight w-10 text-right">{volume}%</span>
+                    </div>
+                </div>
+            );
         };
 
-        function applyTheme(themeClass) {
-            // Remove todas as classes de tema
-            Object.keys(THEME_MAP).forEach(cls => body.classList.remove(cls));
 
-            // Adiciona a nova classe de tema
-            body.classList.add(themeClass);
-            
-            // Atualiza o display
-            themeNameDisplay.textContent = THEME_MAP[themeClass] || themeClass.toUpperCase();
-            
-            // Atualiza o botão ativo
-            themeButtons.forEach(btn => {
-                btn.classList.toggle('active-theme', btn.dataset.theme === themeClass);
-            });
-        }
-        
-        themeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const theme = button.dataset.theme;
-                applyTheme(theme);
-            });
-        });
+        // --- Main Application Component ---
 
-        // === FUNÇÕES DE EQ E SLIDERS ===
+        const App = () => {
+            const [currentTheme, setCurrentTheme] = useState('cosmic-dark');
+            const [currentStreamName, setCurrentStreamName] = useState('Synthwave Grid');
+            const currentStreamUrl = STREAMS[currentStreamName];
 
-        function updateEQDisplay(slider, value) {
-            slider.valueDisplay.textContent = `${value > 0 ? '+' : ''}${value} dB`;
-            if (gainNode) {
-                // Encontra o filtro correspondente
-                const filter = eqFilters.find(f => f.frequency.value === slider.freq);
-                if (filter) {
-                    filter.gain.value = parseFloat(value);
-                }
-            }
-        }
+            // Hook for audio analysis and control
+            const { isInitialized, isPlaying, isLoading, error, audioData, eqGains, eqPresetName, controls } = useAudioAnalyzer(currentStreamUrl);
 
-        EQ_SLIDERS.forEach(slider => {
-            slider.slider.addEventListener('input', (e) => {
-                const value = e.target.value;
-                updateEQDisplay(slider, value);
-                // Define o preset como 'MANUAL'
-                applyPreset('manual');
-            });
-        });
-        
-        const eqButtons = document.querySelectorAll('.eq-buttons button');
-        
-        function applyPreset(presetName) {
-            if (presetName === 'manual') {
-                eqNameDisplay.textContent = 'MANUAL';
-                eqButtons.forEach(btn => btn.classList.remove('active'));
-                return;
-            }
-            
-            const gains = EQ_PRESETS[presetName];
-            if (gains) {
-                EQ_SLIDERS.forEach((slider, index) => {
-                    slider.slider.value = gains[index];
-                    updateEQDisplay(slider, gains[index]);
-                });
-                eqNameDisplay.textContent = presetName.toUpperCase();
-                
-                // Atualiza o botão ativo
-                eqButtons.forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.eq === presetName);
-                });
-            }
-        }
-        
-        eqButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const preset = button.dataset.eq;
-                applyPreset(preset);
-            });
-        });
+            // Apply theme class to body
+            useEffect(() => {
+                document.body.className = `p-4 md:p-8 min-h-screen ${currentTheme}`;
+            }, [currentTheme]);
 
+            const handleStreamChange = useCallback((name) => {
+                setCurrentStreamName(name);
+                // The useEffect in useAudioAnalyzer handles re-initialization
+            }, []);
 
-        // === FUNÇÕES DE VISUALIZAÇÃO DE ÁUDIO (VU METER E ESPECTRO) ===
+            return (
+                <div className="max-w-7xl mx-auto space-y-8">
+                    <header className="text-center mb-6">
+                        <h1 className="text-4xl md:text-6xl font-bold text-highlight text-glow uppercase tracking-widest">
+                            Intercontinental Audio System Mk. II
+                        </h1>
+                        <p className="font-mono text-sm opacity-70 mt-2">CYBERNETIC BROADCAST RECEIVER</p>
+                    </header>
 
-        // Função para simular o VU Meter
-        function startVUMeter() {
-            if (!analyser || vuMeterInterval) return;
+                    {/* Error Message Display */}
+                    {error && (
+                        <div className="bg-red-900 border border-red-500 text-red-300 p-4 rounded-xl shadow-out font-mono">
+                            <i className="fas fa-exclamation-triangle mr-2"></i> **SYSTEM ERROR:** {error}
+                        </div>
+                    )}
 
-            const bufferLength = analyser.frequencyBinCount;
-            const dataArray = new Uint8Array(bufferLength);
-            
-            const MAX_DB = 0;
-            const MIN_DB = -60;
-            const DB_RANGE = MAX_DB - MIN_DB;
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {/* Coluna Principal: Tela de Info e Visualizador */}
+                        <div className="lg:col-span-2 space-y-6">
+                            <InfoScreen 
+                                isPlaying={isPlaying}
+                                themeName={currentTheme}
+                                eqPresetName={eqPresetName}
+                                volume={audioData.volume}
+                                currentStream={currentStreamName}
+                                dominantFrequency={audioData.dominantFrequency}
+                            />
+                            
+                            <Visualizer frequencyData={audioData.frequencyData} isPlaying={isPlaying} />
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <PlaybackControls 
+                                    isPlaying={isPlaying} 
+                                    isLoading={isLoading} 
+                                    volume={audioData.volume} 
+                                    isMuted={audioData.isMuted} 
+                                    controls={controls}
+                                />
+                                <VUMeter vuData={audioData.vu} />
+                            </div>
+                        </div>
 
-            vuMeterInterval = setInterval(() => {
-                analyser.getByteFrequencyData(dataArray);
+                        {/* Coluna Lateral: EQ, Stream e Theme */}
+                        <div className="lg:col-span-1 space-y-8">
+                            <Equalizer 
+                                eqGains={eqGains} 
+                                controls={controls} 
+                                eqPresetName={eqPresetName}
+                            />
+                            
+                            <StreamSelector 
+                                currentStreamName={currentStreamName} 
+                                onStreamChange={handleStreamChange} 
+                                isPlaying={isPlaying}
+                                isLoading={isLoading}
+                            />
+                            
+                            <ThemeSelector 
+                                currentTheme={currentTheme} 
+                                onThemeChange={setCurrentTheme} 
+                            />
+                        </div>
+                    </div>
+                </div>
+            );
+        };
 
-                // Calcular o RMS para obter um nível de volume mais estável
-                let sumOfSquares = 0;
-                for(let i = 0; i < bufferLength; i++) {
-                    sumOfSquares += dataArray[i] * dataArray[i];
-                }
-                const rms = Math.sqrt(sumOfSquares / bufferLength);
-
-                // Converte RMS para dB (Escala de 0 a 255)
-                // Usando uma faixa simples para o VU meter
-                const normalizedRms = rms / 255;
-                let db = 20 * Math.log10(normalizedRms) || MIN_DB; 
-                db = Math.max(MIN_DB, Math.min(MAX_DB, db)); // Clamp entre -60dB e 0dB
-                
-                // Converte dB para altura em porcentagem (0 a 100%)
-                const levelPercentage = ((db - MIN_DB) / DB_RANGE) * 100;
-                
-                // Simulação de Estéreo (apenas usa 4 barras para visualização)
-                for (let i = 0; i < levelFills.length; i++) {
-                    // Adiciona um pequeno offset e ruído para simular o estéreo
-                    let level = levelPercentage * (1 + (i * 0.05 * (Math.random() - 0.5))); // Offset
-                    level = Math.max(0, Math.min(100, level));
-                    
-                    levelFills[i].style.height = `${level}%`;
-                    
-                    // Atualiza valor em dB (Arredonda)
-                    let displayDb = Math.round(db + (i * 2));
-                    displayDb = Math.max(MIN_DB, Math.min(MAX_DB, displayDb));
-                    levelVals[i].textContent = `${i % 2 === 0 ? 'L' : 'R'}: ${displayDb > 0 ? '+' : ''}${displayDb} dB`;
-                    
-                    // Lógica do Peak Hold
-                    const peakHold = peakHolds[i];
-                    let currentPeakTop = parseFloat(peakHold.style.top) || 100; // Posição em %
-                    let newPeakTop = 100 - level;
-                    
-                    if (newPeakTop < currentPeakTop) {
-                        peakHold.style.top = `${newPeakTop}%`;
-                        peakHold.style.opacity = 1;
-                        // Reinicia o timer de fade-out
-                        clearTimeout(peakHold.timer);
-                        peakHold.timer = setTimeout(() => {
-                            peakHold.style.opacity = 0;
-                        }, 1000); // Segura o pico por 1 segundo
-                    } else if (peakHold.style.opacity === '1') {
-                        // Faz o pico cair lentamente
-                        clearTimeout(peakHold.fallTimer);
-                        peakHold.fallTimer = setTimeout(() => {
-                            peakHold.style.top = `${Math.min(100, currentPeakTop + 0.5)}%`; // Cai 0.5%
-                            if (parseFloat(peakHold.style.top) < 100) {
-                                // Chama novamente a queda se ainda não chegou no fundo
-                                peakHold.fallTimer = setTimeout(arguments.callee, 50);
-                            }
-                        }, 50);
-                    }
-                }
-                
-                // Simula a batida do visualizer core
-                visualizerCore.style.transform = `scale(${1 + normalizedRms * 0.1})`; // Max 10% de aumento
-            }, 50); // Roda o VU meter a cada 50ms (20fps)
-        }
-
-        function stopVUMeter() {
-            clearInterval(vuMeterInterval);
-            vuMeterInterval = null;
-            levelFills.forEach(fill => fill.style.height = '0%');
-            levelVals.forEach((val, i) => val.textContent = `${i % 2 === 0 ? 'L' : 'R'}: 00 dB`);
-            peakHolds.forEach(peak => {
-                peak.style.opacity = 0;
-                clearTimeout(peak.timer);
-                clearTimeout(peak.fallTimer);
-            });
-            visualizerCore.style.transform = 'scale(1)';
-        }
-
-        // Função para o Visualizador de Espectro (Circular)
-        function drawVisualizer() {
-            if (!isPlaying || !analyser) {
-                return;
-            }
-            
-            animationFrameId = requestAnimationFrame(drawVisualizer);
-
-            const bufferLength = analyser.frequencyBinCount;
-            const dataArray = new Uint8Array(bufferLength);
-            analyser.getByteFrequencyData(dataArray);
-
-            canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            const radius = 10; // Raio inicial, perto do Core
-            const barWidth = 1;
-            const barHeightMultiplier = 1.5;
-            const numberOfBars = 64; // Número de barras a desenhar
-            const step = Math.floor(bufferLength / numberOfBars);
-
-            for (let i = 0; i < numberOfBars; i++) {
-                const magnitude = dataArray[i * step];
-                const angle = (i / numberOfBars) * 360 * (Math.PI / 180);
-                const barLength = radius + magnitude * barHeightMultiplier;
-
-                // Estilo da barra
-                const hue = i / numberOfBars * 360;
-                canvasCtx.fillStyle = `hsla(${hue}, 100%, 50%, 0.8)`;
-                canvasCtx.strokeStyle = `hsla(${hue}, 100%, 70%, 1)`;
-                
-                // Ponto inicial da barra (a partir do Core)
-                const startX = centerX + Math.cos(angle) * (radius + visualizerCore.offsetWidth / 2);
-                const startY = centerY + Math.sin(angle) * (radius + visualizerCore.offsetHeight / 2);
-                
-                // Ponto final da barra
-                const endX = centerX + Math.cos(angle) * barLength;
-                const endY = centerY + Math.sin(angle) * barLength;
-
-                canvasCtx.beginPath();
-                canvasCtx.lineWidth = barWidth;
-                canvasCtx.moveTo(startX, startY);
-                canvasCtx.lineTo(endX, endY);
-                canvasCtx.stroke();
-            }
-            
-            // Adiciona um efeito de brilho e reflexo ao redor do Core
-            const glowRadius = visualizerCore.offsetWidth / 2 + 10;
-            const coreColor = getComputedStyle(document.documentElement).getPropertyValue('--highlight-color');
-
-            canvasCtx.save();
-            canvasCtx.beginPath();
-            canvasCtx.arc(centerX, centerY, glowRadius, 0, Math.PI * 2);
-            canvasCtx.shadowColor = coreColor;
-            canvasCtx.shadowBlur = 15;
-            canvasCtx.fillStyle = coreColor;
-            canvasCtx.fill();
-            canvasCtx.restore();
-        }
-
-        function stopVisualizer() {
-            cancelAnimationFrame(animationFrameId);
-            canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        // === EVENT LISTENERS INICIAIS ===
-        
-        playBtn.addEventListener('click', playRadio);
-        pauseBtn.addEventListener('click', pauseRadio);
-        stopBtn.addEventListener('click', stopRadio);
-
-        // Inicializa o volume e a rotação do knob
-        updateVolume(audio.volume * 100); 
-
-        // Inicializa a data e hora
-        function updateDateTime() {
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('pt-BR', { year: 'numeric', month: 'short', day: 'numeric' }).toUpperCase();
-            const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-            document.getElementById('date-time').textContent = `[${dateStr}] [${timeStr}]`;
-        }
-        setInterval(updateDateTime, 1000);
-        updateDateTime();
-
-        // Aplica o tema inicial
-        const initialTheme = body.className.split(' ').find(cls => THEME_MAP.hasOwnProperty(cls)) || 'industrial-cyber';
-        applyTheme(initialTheme);
-        applyPreset('flat');
-        
+        // Render the application
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
     </script>
 </body>
 </html>
