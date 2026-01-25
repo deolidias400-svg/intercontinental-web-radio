@@ -1,1314 +1,506 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Intercontinental Web Radio - Ultra Custom LCD Touch System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <style>
-        /*
-        ====================================
-        === ESTILOS CSS COMPLETOS (COPIADO DO ORIGINAL) ===
-        ====================================
-        */
-        :root {
-            /* Tema Padrão: Cosmic Dark (Fallback) */
-            --bg-color: #12121e;
-            --secondary-bg-color: #1e1e30;
-            --text-color: #e0e0e0;
-            --highlight-color: #00ffc8; /* Ciano Neon */
-            --accent-color: #4b0082; /* Roxo Profundo */
-            --button-text-color: #fff;
-            --control-bg: rgba(255, 255, 255, 0.05);
-            --glow-color: var(--highlight-color);
-            --shadow-dark: #0a0a14;
-            --shadow-light: #22223a;
-            --box-shadow-in: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
-            --box-shadow-out: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-            --status-online-color: #00ff00; /* Neon Green */
-            --status-offline-color: #FF4500; /* Red-Orange */
-            --visualizer-bg: radial-gradient(circle, var(--secondary-bg-color) 40%, var(--bg-color) 100%);
-            --screen-bg: #0d0d20;
-            --screen-text: var(--highlight-color);
-            --screen-border: 1px solid var(--highlight-color);
-            --knob-color: var(--highlight-color);
-        }
-
-        /* --------------------- */
-        /* --- 26 TEMAS COMPLETOS --- */
-        /* --------------------- */
-        .industrial-cyber { 
-            --bg-color: #0d0d0d;
-            --secondary-bg-color: #1a1a1a;
-            --text-color: #c0c0c0;
-            --highlight-color: #ff0077; /* Magenta Neon Agressivo */
-            --accent-color: #00ffff; /* Ciano Neon para Contraste */
-            --button-text-color: #0d0d0d; 
-            --control-bg: rgba(255, 255, 255, 0.03); 
-            --glow-color: var(--highlight-color);
-            --shadow-dark: #000;
-            --shadow-light: #333333;
-            --box-shadow-in: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
-            --box-shadow-out: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
-            --status-online-color: #39ff14; /* Verde Matriz */
-            --screen-bg: #000; 
-            --screen-text: var(--highlight-color);
-            --screen-border: 2px solid var(--accent-color);
-            --knob-color: var(--highlight-color); 
-        }
-
-        .cosmic-dark { 
-            --bg-color: #12121e; --secondary-bg-color: #1e1e30; --text-color: #e0e0e0;
-            --highlight-color: #00ffc8; --accent-color: #4b0082; 
-            --screen-bg: #0d0d20; --screen-text: #00ffc8;
-            --shadow-dark: #0a0a14; --shadow-light: #22223a;
-        }
-        .solar-flare { 
-            --bg-color: #2e0800; --secondary-bg-color: #4f1100; --text-color: #fff8e1;
-            --highlight-color: #ffaa00; --accent-color: #ff4500; 
-            --screen-bg: #3b0a00; --screen-text: #ffaa00;
-            --shadow-dark: #1f0500; --shadow-light: #6e1500;
-        }
-        .deep-ocean { 
-            --bg-color: #001f3f; --secondary-bg-color: #003366; --text-color: #e0f7fa;
-            --highlight-color: #7fffd4; --accent-color: #4169e1; 
-            --screen-bg: #002b5c; --screen-text: #7fffd4;
-            --shadow-dark: #00142b; --shadow-light: #004d99;
-        }
-        .neon-city { 
-            --bg-color: #0f0f0f; --secondary-bg-color: #2a0a2a; --text-color: #f0f0f0;
-            --highlight-color: #ff1aff; --accent-color: #00ffff; 
-            --screen-bg: #1a051a; --screen-text: #ff1aff;
-            --shadow-dark: #000000; --shadow-light: #440044;
-        }
-        .retro-crt { 
-            --bg-color: #050505; --secondary-bg-color: #101010; --text-color: #39ff14;
-            --highlight-color: #39ff14; --accent-color: #00aa00; 
-            --screen-bg: #000000; --screen-text: #39ff14;
-            --shadow-dark: #000; --shadow-light: #222;
-        }
-        .retro-wave { 
-            --bg-color: #200020; --secondary-bg-color: #380038; --text-color: #ffc8ff;
-            --highlight-color: #ff77ff; --accent-color: #00c8ff; 
-            --screen-bg: #2b002b; --screen-text: #ff77ff;
-            --shadow-dark: #150015; --shadow-light: #500050;
-        }
-        .vaporwave { 
-            --bg-color: #1e0f3f; --secondary-bg-color: #3a1e5f; --text-color: #fefefe;
-            --highlight-color: #ff69b4; --accent-color: #00fefe; 
-            --screen-bg: #291549; --screen-text: #ff69b4;
-            --shadow-dark: #0f0720; --shadow-light: #552f85;
-        }
-        .matrix-code { 
-            --bg-color: #051405; --secondary-bg-color: #1a3a1a; --text-color: #aaffaa;
-            --highlight-color: #39ff14; --accent-color: #00aa00; 
-            --screen-bg: #000; --screen-text: #39ff14;
-            --shadow-dark: #000000; --shadow-light: #2c592c;
-        }
-        .arctic-ice { 
-            --bg-color: #edf7f8; --secondary-bg-color: #d0e4e7; --text-color: #003366;
-            --highlight-color: #64f4ff; --accent-color: #b3e5fc; 
-            --screen-bg: #c0dfe6; --screen-text: #003366;
-            --shadow-dark: #c1d3d5; --shadow-light: #ffffff;
-        }
-        .gold-dust { 
-            --bg-color: #332b1b; --secondary-bg-color: #554422; --text-color: #fff8dc;
-            --highlight-color: #ffd700; --accent-color: #aa8d00; 
-            --screen-bg: #443a2a; --screen-text: #ffd700;
-            --shadow-dark: #1e1a10; --shadow-light: #776033;
-        }
-        .martian-sand { 
-            --bg-color: #4a2d24; --secondary-bg-color: #6a443b; --text-color: #f7f0e3;
-            --highlight-color: #ff7f50; --accent-color: #a0522d; 
-            --screen-bg: #5c3730; --screen-text: #ff7f50;
-            --shadow-dark: #3a221e; --shadow-light: #8a5a4a;
-        }
-        .emerald-forest { 
-            --bg-color: #0a2b1f; --secondary-bg-color: #1c4d3c; --text-color: #ccffcc;
-            --highlight-color: #39ff14; --accent-color: #008000; 
-            --screen-bg: #14382c; --screen-text: #39ff14;
-            --shadow-dark: #072219; --shadow-light: #2c6851;
-        }
-        .amethyst-dream { 
-            --bg-color: #2e0a4f; --secondary-bg-color: #4b1a7f; --text-color: #fff0f5;
-            --highlight-color: #e6e6fa; --accent-color: #9932cc; 
-            --screen-bg: #3c1466; --screen-text: #e6e6fa;
-            --shadow-dark: #1f0735; --shadow-light: #6a22b0;
-        }
-        .fire-ice { 
-            --bg-color: #1f1f1f; --secondary-bg-color: #3a3a3a; --text-color: #f0f0f0;
-            --highlight-color: #ff4500; --accent-color: #00ffff; 
-            --screen-bg: #2a2a2a; --screen-text: #ff4500;
-            --shadow-dark: #0a0a0a; --shadow-light: #5a5a5a;
-        }
-        .concrete-jungle { 
-            --bg-color: #505050; --secondary-bg-color: #6a6a6a; --text-color: #eeeeee;
-            --highlight-color: #c0c0c0; --accent-color: #808080; 
-            --screen-bg: #404040; --screen-text: #c0c0c0;
-            --shadow-dark: #3a3a3a; --shadow-light: #8a8a8a;
-        }
-        .sunset-strip { 
-            --bg-color: #3a1a3a; --secondary-bg-color: #552255; --text-color: #fff8e1;
-            --highlight-color: #ff8c00; --accent-color: #ff1493; 
-            --screen-bg: #4a224a; --screen-text: #ff8c00;
-            --shadow-dark: #2a102a; --shadow-light: #7a357a;
-        }
-        .biohazard-green { 
-            --bg-color: #1a1a00; --secondary-bg-color: #3a3a00; --text-color: #eeff88;
-            --highlight-color: #ccff00; --accent-color: #8cff00; 
-            --screen-bg: #2a2a00; --screen-text: #ccff00;
-            --shadow-dark: #0a0a00; --shadow-light: #5a5a00;
-        }
-        .pure-white { 
-            --bg-color: #f7f7f7; --secondary-bg-color: #e0e0e0; --text-color: #333333;
-            --highlight-color: #007bff; --accent-color: #6c757d; 
-            --screen-bg: #ffffff; --screen-text: #007bff;
-            --shadow-dark: #c0c0c0; --shadow-light: #ffffff;
-        }
-        .chroma-glow { 
-            --bg-color: #100010; --secondary-bg-color: #200020; --text-color: #ffffff;
-            --highlight-color: #ff00ff; --accent-color: #00ffff; 
-            --screen-bg: #000; --screen-text: #ff00ff;
-            --shadow-dark: #000; --shadow-light: #300030;
-        }
-        .dark-matter { 
-            --bg-color: #111111; --secondary-bg-color: #222222; --text-color: #666666;
-            --highlight-color: #333333; --accent-color: #1c1c1c; 
-            --screen-bg: #0a0a0a; --screen-text: #333333;
-            --shadow-dark: #000; --shadow-light: #333;
-        }
-        .volcano-ash { 
-            --bg-color: #2b1f1a; --secondary-bg-color: #4a3833; --text-color: #fcfcfc;
-            --highlight-color: #ff4500; --accent-color: #8b4513; 
-            --screen-bg: #382722; --screen-text: #ff4500;
-            --shadow-dark: #1a1411; --shadow-light: #6a504a;
-        }
-        .purple-haze { 
-            --bg-color: #2c0e4a; --secondary-bg-color: #4d1c83; --text-color: #e0e0e0;
-            --highlight-color: #ff00ff; --accent-color: #8a2be2; 
-            --screen-bg: #3a1663; --screen-text: #ff00ff;
-            --shadow-dark: #1d0930; --shadow-light: #6e27b8;
-        }
-        .cyber-red { 
-            --bg-color: #1a0000; --secondary-bg-color: #3a0000; --text-color: #ffaaaa;
-            --highlight-color: #ff0000; --accent-color: #8b0000; 
-            --screen-bg: #2b0000; --screen-text: #ff0000;
-            --shadow-dark: #000; --shadow-light: #5a0000;
-        }
-        .sky-blue { 
-            --bg-color: #0e2d4d; --secondary-bg-color: #1c4f87; --text-color: #f0f8ff;
-            --highlight-color: #4682b4; --accent-color: #87ceeb; 
-            --screen-bg: #16426d; --screen-text: #4682b4;
-            --shadow-dark: #091f33; --shadow-light: #2c68a1;
-        }
-        .lime-shock { 
-            --bg-color: #1c3d0e; --secondary-bg-color: #386b1c; --text-color: #e8ffe0;
-            --highlight-color: #ccff00; --accent-color: #7cfc00; 
-            --screen-bg: #2a5216; --screen-text: #ccff00;
-            --shadow-dark: #102607; --shadow-light: #4a8f27;
-        }
-        .carbon-fiber { 
-            --bg-color: #222222; --secondary-bg-color: #333333; --text-color: #999999;
-            --highlight-color: #aaaaaa; --accent-color: #555555; 
-            --screen-bg: #111111; --screen-text: #aaaaaa;
-            --shadow-dark: #0a0a0a; --shadow-light: #444444;
-        }
-        
-        /* ==================================== */
-        /* === ESTILOS BASE DO COMPONENTE (COPIADO DO ORIGINAL) === */
-        /* ==================================== */
-
-        body {
-            font-family: 'Orbitron', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            transition: all 0.7s ease;
-            position: relative;
-            overflow-x: hidden;
-            user-select: none;
-        }
-
-        .container {
-            background-color: var(--secondary-bg-color);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: var(--box-shadow-out);
-            max-width: 90%;
-            width: 750px;
-            margin-top: 20px;
-            text-align: center;
-            transition: all 0.5s ease;
-            position: relative; 
-        }
-        
-        .bolt {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: var(--shadow-dark);
-            border: 1px solid var(--shadow-light);
-            border-radius: 50%;
-            box-shadow: inset 1px 1px 2px var(--shadow-light), inset -1px -1px 2px var(--shadow-dark);
-            z-index: 10;
-        }
-        .bolt-tl { top: 10px; left: 10px; }
-        .bolt-tr { top: 10px; right: 10px; }
-        .bolt-bl { bottom: 10px; left: 10px; }
-        .bolt-br { bottom: 10px; right: 10px; }
-
-
-        #banner {
-            font-size: clamp(1.5rem, 5vw, 2.2rem);
-            font-weight: 700;
-            color: var(--highlight-color);
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px var(--glow-color);
-            letter-spacing: 2px;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
-        }
-
-        /* === TELA DE INFORMAÇÕES (DISPLAY DIGITAL) === */
-        #info-screen {
-            background-color: var(--screen-bg);
-            color: var(--screen-text);
-            border: var(--screen-border);
-            border-radius: 8px;
-            padding: 15px 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 0 10px var(--glow-color), var(--box-shadow-in);
-            font-family: 'Share Tech Mono', monospace;
-            text-align: left;
-            display: grid;
-            grid-template-columns: 1fr 1.5fr 1fr;
-            gap: 10px 15px;
-            transition: all 0.5s ease;
-        }
-
-        #radio-name-display {
-            grid-column: 1 / 4;
-            font-size: 1.4rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px dashed var(--screen-text);
-            padding-bottom: 5px;
-        }
-        
-        #volume-electronic-display {
-            grid-column: 1 / 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 1px dashed var(--screen-text);
-            padding: 5px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            text-align: center;
-        }
-
-        #volume-level-bar {
-            width: 90%;
-            height: 8px;
-            background-color: var(--shadow-dark);
-            border-radius: 4px;
-            margin-top: 5px;
-            overflow: hidden;
-            box-shadow: var(--box-shadow-in);
-        }
-
-        #volume-fill {
-            height: 100%;
-            width: 50%; /* Inicial */
-            background: linear-gradient(90deg, var(--status-online-color), var(--highlight-color));
-            transition: width 0.1s ease;
-        }
-
-        #active-eq-display { grid-column: 2 / 3; padding-top: 5px; }
-        #active-theme-display { grid-column: 3 / 4; padding-top: 5px; }
-        #date-time { grid-column: 1 / 3; text-align: left; padding-top: 10px; }
-        
-        #status {
-            grid-column: 3 / 4;
-            justify-content: flex-end;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding-top: 10px;
-        }
-        
-        /* Estilo para a luz de status */
-        #status-light {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-left: 5px;
-            box-shadow: 0 0 5px currentColor;
-            transition: background-color 0.5s, box-shadow 0.5s;
-        }
-
-        .status-online { background-color: var(--status-online-color); }
-        .status-offline { background-color: var(--status-offline-color); }
-
-        /* === CONTROLES DE REPRODUÇÃO E VOLUME (KNOB) === */
-        .control-panel {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            width: 100%;
-            margin: 25px 0;
-            padding: 15px;
-            background-color: var(--shadow-dark); 
-            border-radius: 10px;
-            border: 1px solid var(--accent-color);
-            box-shadow: var(--box-shadow-out);
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-grow: 0;
-        }
-
-        .controls button {
-            max-width: none;
-            padding: 10px 15px; 
-            border-radius: 6px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--button-text-color);
-            background: var(--accent-color);
-            box-shadow: 0 0 5px var(--highlight-color), var(--box-shadow-out);
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .controls button:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-            box-shadow: 0 0 10px var(--highlight-color), var(--box-shadow-out);
-        }
-
-        .controls button:disabled {
-            background-color: var(--secondary-bg-color);
-            color: var(--text-color);
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: var(--box-shadow-in);
-        }
-        
-        #play { background-color: #00b894; box-shadow: 0 0 15px #00b894; color: #000; }
-        #play:hover { background-color: #00997d; }
-        #play.active { background-color: var(--status-online-color); color: #000; box-shadow: 0 0 20px var(--status-online-color); }
-
-        #pause { background-color: #f1c40f; box-shadow: 0 0 15px #f1c40f; color: #000; }
-        #stop { background-color: #e74c3c; box-shadow: 0 0 15px #e74c3c; color: #fff; }
-        #mute-btn.active { background-color: #3498db; color: #000; box-shadow: 0 0 20px #3498db; }
-
-        .knob-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-            padding: 10px;
-            background: none;
-            border-radius: 8px;
-            box-shadow: none;
-        }
-
-        .knob-wrapper {
-            position: relative;
-            width: 80px; 
-            height: 80px;
-            margin-bottom: 5px;
-        }
-
-        #volume-knob {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: var(--secondary-bg-color);
-            border: 3px solid var(--accent-color);
-            box-shadow: var(--box-shadow-out), inset 0 0 10px rgba(0, 0, 0, 0.5);
-            cursor: grab;
-            transition: transform 0.1s ease-out;
-            position: relative;
-            transform-origin: center;
-            transform: rotate(-45deg); /* Posição inicial: 50% (meio) */
-        }
-        
-        #knob-marker {
-            position: absolute;
-            top: 5px; 
-            left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            height: 20px;
-            background-color: var(--knob-color);
-            border-radius: 2px;
-            box-shadow: 0 0 8px var(--knob-color);
-        }
-
-        .knob-container label {
-            font-size: 0.9rem;
-            color: var(--highlight-color);
-            font-weight: 700;
-        }
-
-
-        /* VU Meter Estéreo Vertical Aprimorado (4 BARRAS) */
-        #transmission-level-indicator {
-            background: var(--screen-bg);
-            border: var(--screen-border);
-            border-radius: 8px;
-            box-shadow: 0 0 5px var(--glow-color), var(--box-shadow-in);
-            padding: 10px;
-            margin: 15px auto;
-            width: 90%;
-        }
-        
-        #level-bars-stereo {
-            height: 120px; 
-            gap: 10px; /* Reduzido o gap para 4 barras */
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            position: relative;
-            padding: 0 10px;
-            margin-top: 10px;
-        }
-        
-        .level-meter {
-            width: 20px; /* Reduzido a largura para 4 barras */
-            background: var(--bg-color);
-            border: 1px solid var(--accent-color);
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            border-radius: 2px;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-        }
-        
-        /* Cor de preenchimento para as barras de nível (VU) */
-        .level-bar-fill {
-            background: linear-gradient(to top, 
-                #00ff00 0%, 
-                #ffff00 70%, 
-                #ff4500 90%, 
-                #ff0000 100%);
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            /* MAIS RÁPIDO PARA MAIS REAÇÃO "NERVOSA" */
-            transition: height 0.05s ease-out; 
-        }
-        
-        .level-peak-hold {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #ff0000;
-            opacity: 0; /* Inicia invisível */
-            transition: top 0.1s ease-out, opacity 0.5s ease;
-            box-shadow: 0 0 5px #ff0000;
-            z-index: 5;
-        }
-
-        /* Estilos do Visualizador */
-        .visualizer-giant-container {
-            width: 100%;
-            max-width: 450px;
-            aspect-ratio: 1 / 1;
-            margin: 25px auto;
-            border-radius: 15px;
-            background: var(--visualizer-bg);
-            box-shadow: var(--box-shadow-out), 0 0 30px rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.7s ease;
-            border: 3px solid var(--highlight-color);
-        }
-
-        #spectrum {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 0;
-            /* Garante que o canvas ocupe o espaço */
-            width: 100%;
-            height: 100%; 
-        }
-
-        #visualizer-core {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background-color: var(--highlight-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--bg-color);
-            box-shadow: 0 0 20px var(--glow-color), inset 0 0 10px var(--bg-color);
-            z-index: 1;
-            transition: all 0.1s ease-out;
-        }
-        
-        .theme-buttons button, .eq-buttons button {
-            padding: 8px 12px;
-            margin: 5px;
-            border-radius: 5px;
-            background-color: var(--secondary-bg-color);
-            color: var(--highlight-color);
-            border: 1px solid var(--accent-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-            font-family: 'Share Tech Mono', monospace;
-        }
-        
-        /* Estilo para sliders */
-        .visual-controls input[type="range"], .audio-controls input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 8px;
-            background: var(--control-bg);
-            border-radius: 5px;
-            box-shadow: var(--box-shadow-in);
-            margin-top: 10px;
-        }
-        .visual-controls input[type="range"]::-webkit-slider-thumb, .audio-controls input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--highlight-color);
-            cursor: pointer;
-            box-shadow: 0 0 10px var(--glow-color);
-        }
-        .control-group {
-            margin: 15px 0;
-            padding: 10px;
-            border: 1px dashed var(--accent-color);
-            border-radius: 8px;
-        }
-
-        /* === CSS para Equalizador de 7 Bandas e Master Gain Sliders === */
-        .audio-controls .slider-group {
-            display: flex;
-            justify-content: space-around;
-            gap: 15px;
-            margin-top: 15px;
-            padding: 10px;
-            border-top: 1px dashed var(--accent-color);
-            flex-wrap: wrap; 
-        }
-        .audio-controls .slider-item {
-            flex: 1 1 150px; 
-            max-width: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        .audio-controls .slider-item label {
-            margin-bottom: 5px;
-            font-size: 0.8rem;
-            color: var(--highlight-color);
-        }
-
-        .theme-buttons button:hover, .eq-buttons button:hover {
-            background-color: var(--accent-color);
-            color: var(--button-text-color);
-            box-shadow: 0 0 10px var(--highlight-color);
-        }
-
-        .theme-buttons button.active-theme, .eq-buttons button.active {
-            background-color: var(--highlight-color);
-            color: var(--secondary-bg-color);
-            border-color: var(--highlight-color);
-            box-shadow: 0 0 15px var(--glow-color);
-            font-weight: bold;
-        }
-
-        /* Media Query para Ajustes em Telas Menores */
-        @media (max-width: 600px) {
-            .control-panel { flex-direction: column; }
-            .controls { flex-wrap: wrap; margin-bottom: 20px; }
-            .controls button { flex-basis: 45%; }
-            #info-screen { grid-template-columns: 1fr 1fr; }
-            #radio-name-display { grid-column: 1 / 3; }
-            #volume-electronic-display, #active-eq-display, #active-theme-display, #date-time, #status { grid-column: span 1; }
-            .knob-container { flex-direction: column; }
-            .knob-wrapper { width: 90px; height: 90px; }
-            .audio-controls .slider-group { flex-direction: column; gap: 10px; } 
-            .audio-controls .slider-item { margin-bottom: 10px; max-width: 100%;}
-            /* Ajuste o layout das barras VU para telas pequenas */
-            #level-bars-stereo { gap: 5px; height: 80px; }
-            .level-meter { width: 15px; }
-        }
-    </style>
-</head>
-<body class="industrial-cyber">
-    <div class="container">
-        <div class="bolt bolt-tl"></div>
-        <div class="bolt bolt-tr"></div>
-        <div class="bolt bolt-bl"></div>
-        <div class="bolt bolt-br"></div>
-        <div id="banner">
-            <i class="fas fa-microchip"></i> ULTRA CUSTOM LCD SYSTEM
-        </div>
-
-        <div id="info-screen">
-            <div id="radio-name-display">MEGA ULTRA CUSTOM SYSTEM</div>
-            
-            <div id="volume-electronic-display">
-                <i class="fas fa-volume-up"></i> VOL: <span id="volume-val">50</span>%
-                <div id="volume-level-bar"><div id="volume-fill"></div></div>
-            </div>
-            
-            <div id="active-eq-display">EQ: <span id="eq-name">FLAT</span></div>
-            <div id="active-theme-display">TEMA: <span id="theme-name">INDUSTRIAL CYBER</span></div>
-            
-            <div id="date-time"></div>
-            <div id="status">
-                <span id="status-text">OFFLINE</span><span id="status-light" class="status-offline"></span>
-            </div>
-        </div>
-        <div id="now-playing">
-            Tocando agora: <span id="current-song">Pressione Play para iniciar a Transmissão...</span>
-        </div>
-
-        <div id="transmission-level-indicator">
-            Transmissão Nível Estéreo:
-            <div id="stereo-level-values" style="display: flex; justify-content: space-around; margin-bottom: 5px; font-weight: 700; color: var(--screen-text); font-family: 'Share Tech Mono', monospace;">
-                <span id="level-val-l1">L1: 00 dB</span>
-                <span id="level-val-r1">R1: 00 dB</span>
-                <span id="level-val-l2">L2: 00 dB</span>
-                <span id="level-val-r2">R2: 00 dB</span>
-            </div>
-            <div id="level-bars-stereo">
-                <div class="level-meter left-channel">
-                    <div class="level-peak-hold" id="peak-l1"></div>
-                    <div class="level-bar-fill" id="fill-l1"></div>
-                </div>
-                <div class="level-meter right-channel">
-                    <div class="level-peak-hold" id="peak-r1"></div>
-                    <div class="level-bar-fill" id="fill-r1"></div>
-                </div>
-                <div class="level-meter left-channel">
-                    <div class="level-peak-hold" id="peak-l2"></div>
-                    <div class="level-bar-fill" id="fill-l2"></div>
-                </div>
-                <div class="level-meter right-channel">
-                    <div class="level-peak-hold" id="peak-r2"></div>
-                    <div class="level-bar-fill" id="fill-r2"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="visualizer-giant-container">
-            <canvas id="spectrum" width="450" height="450"></canvas> 
-            <div id="visualizer-core">
-                <i class="fas fa-bolt"></i>
-            </div>
-        </div>
-        
-        <div class="control-panel">
-            <div class="controls">
-                <button id="play"><i class="fas fa-play"></i> Play</button>
-                <button id="pause" disabled><i class="fas fa-pause"></i> Pause</button>
-                <button id="stop" disabled><i class="fas fa-stop"></i> Stop</button>
-                <button id="mute-btn"><i class="fas fa-volume-up"></i> Mute</button>
-            </div>
-            <div class="knob-container">
-                <label for="volume-knob">VOLUME</label>
-                <div class="knob-wrapper">
-                    <div id="volume-knob">
-                        <div id="knob-marker"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <audio id="radio-audio" src="https://stream.zeno.fm/wzcgaal0dnltv" preload="auto" crossorigin="anonymous"></audio>
-
-    </div>
-    
-    <div class="audio-controls container">
-        <h3><i class="fas fa-volume-up"></i> Equalizador Manual (7 Bandas)</h3>
-        <div class="slider-group">
-            <div class="slider-item">
-                <label for="low-bass-slider">LOW BASS (60Hz: <span id="low-bass-val">0 dB</span>)</label>
-                <input type="range" id="low-bass-slider" data-freq="60" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="bass-slider">BASS (150Hz: <span id="bass-val">0 dB</span>)</label>
-                <input type="range" id="bass-slider" data-freq="150" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="mid-low-slider">MID LOW (400Hz: <span id="mid-low-val">0 dB</span>)</label>
-                <input type="range" id="mid-low-slider" data-freq="400" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="mid-slider">MID (1kHz: <span id="mid-val">0 dB</span>)</label>
-                <input type="range" id="mid-slider" data-freq="1000" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="mid-high-slider">MID HIGH (2.5kHz: <span id="mid-high-val">0 dB</span>)</label>
-                <input type="range" id="mid-high-slider" data-freq="2500" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="high-slider">HIGH (6kHz: <span id="high-val">0 dB</span>)</label>
-                <input type="range" id="high-slider" data-freq="6000" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="ultra-high-slider">ULTRA HIGH (12kHz: <span id="ultra-high-val">0 dB</span>)</label>
-                <input type="range" id="ultra-high-slider" data-freq="12000" min="-12" max="12" step="1" value="0">
-            </div>
-        </div>
-        <div class="control-group eq-buttons">
-            <button data-eq-preset="flat" class="active">FLAT</button>
-            <button data-eq-preset="rock">ROCK</button>
-            <button data-eq-preset="pop">POP</button>
-            <button data-eq-preset="jazz">JAZZ</button>
-            <button data-eq-preset="dance">DANCE</button>
-        </div>
-    </div>
-
-    <div class="audio-controls container theme-controls">
-        <h3><i class="fas fa-palette"></i> Temas (Interface)</h3>
-        <div class="control-group theme-buttons">
-            <button data-theme="industrial-cyber" class="active-theme">INDUSTRIAL CYBER</button>
-            <button data-theme="cosmic-dark">COSMIC DARK</button>
-            <button data-theme="solar-flare">SOLAR FLARE</button>
-            <button data-theme="deep-ocean">DEEP OCEAN</button>
-            <button data-theme="neon-city">NEON CITY</button>
-            <button data-theme="retro-crt">RETRO CRT</button>
-            <button data-theme="retro-wave">RETRO WAVE</button>
-            <button data-theme="vaporwave">VAPORWAVE</button>
-        </div>
-    </div>
-
-
-    <script>
-        /**
-         * ====================================
-         * === LÓGICA JAVASCRIPT CORRIGIDA E COMPLETA ===
-         * ====================================
-         */
-
-        // --- Variáveis Globais ---
-        const audio = document.getElementById('radio-audio');
-        const playButton = document.getElementById('play');
-        const pauseButton = document.getElementById('pause');
-        const stopButton = document.getElementById('stop');
-        const muteButton = document.getElementById('mute-btn');
-        const volumeKnob = document.getElementById('volume-knob');
-        const statusLight = document.getElementById('status-light');
-        const statusText = document.getElementById('status-text');
-        const volumeValDisplay = document.getElementById('volume-val');
-        const volumeFill = document.getElementById('volume-fill');
-        const currentSongDisplay = document.getElementById('current-song');
-        const dateTimeDisplay = document.getElementById('date-time');
-        const eqNameDisplay = document.getElementById('eq-name');
-        const themeNameDisplay = document.getElementById('theme-name');
-        const body = document.body;
-
-        let audioContext = null;
-        let source = null;
-        let analyser = null;
-        let gainNode = null;
-        let eqNodes = []; // Array para os BiquadFilterNodes (Equalizador)
-        let isPlaying = false;
-        let isMuted = false;
-        let currentVolume = 0.5; // Valor entre 0.0 e 1.0 (50%)
-        let isDraggingKnob = false;
-
-        // Frequências do Equalizador (os sliders)
-        const eqFrequencies = [60, 150, 400, 1000, 2500, 6000, 12000];
-
-        // Presets do Equalizador (dB de ganho)
-        const eqPresets = {
-            'flat': [0, 0, 0, 0, 0, 0, 0],
-            'rock': [8, 5, -2, 2, 6, 4, 8],
-            'pop': [-3, 0, 5, 2, 0, -2, -5],
-            'jazz': [2, 4, 0, 3, 0, 4, 2],
-            'dance': [6, 4, 0, -2, 0, 4, 6]
-        };
-
-        // --- Funções da Web Audio API e Visualização ---
-
-        /** Inicializa a Web Audio API (deve ser chamada após uma interação do usuário) */
-        function initAudioContext() {
-            if (audioContext) return; // Já inicializado
-
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            source = audioContext.createMediaElementSource(audio);
-            gainNode = audioContext.createGain();
-            analyser = audioContext.createAnalyser();
-
-            // Configuração do Analyser (para VU Meter e Visualizador)
-            analyser.fftSize = 2048; // Tamanho da FFT para o visualizador
-            analyser.smoothingTimeConstant = 0.7;
-
-            // Criação dos BiquadFilterNodes para o Equalizador
-            eqFrequencies.forEach(freq => {
-                const filter = audioContext.createBiquadFilter();
-                filter.type = 'peaking'; // Filtro para equalização paramétrica
-                filter.frequency.value = freq;
-                filter.Q.value = 1.0; // Q-factor
-                filter.gain.value = 0; // Ganho inicial em 0 dB (Flat)
-                eqNodes.push(filter);
-            });
-
-            // Conecta os nós: Source -> EQ Filters (em cadeia) -> Gain -> Analyser -> Destination
-            let previousNode = source;
-            eqNodes.forEach(filter => {
-                previousNode.connect(filter);
-                previousNode = filter;
-            });
-
-            previousNode.connect(gainNode);
-            gainNode.connect(analyser);
-            analyser.connect(audioContext.destination);
-
-            // Ajusta o volume inicial do GainNode para corresponder ao volume inicial do HTMLAudioElement
-            gainNode.gain.value = audio.volume;
-
-            // Inicia os loops de visualização e VU Meter
-            requestAnimationFrame(drawVisualizer);
-            setInterval(updateVUMeter, 50); // Atualiza o VU Meter mais rapidamente
-        }
-
-        /** Atualiza o Equalizador com um preset ou valores dos sliders */
-        function updateEQ(presetName = null) {
-            if (!audioContext) return;
-
-            let gains;
-            if (presetName && eqPresets[presetName]) {
-                gains = eqPresets[presetName];
-                document.querySelectorAll('.audio-controls input[type="range"]').forEach((slider, index) => {
-                    slider.value = gains[index]; // Define o valor do slider
-                });
-                eqNameDisplay.textContent = presetName.toUpperCase();
-            } else {
-                // Lê os valores dos sliders
-                const sliderValues = Array.from(document.querySelectorAll('.audio-controls input[type="range"]')).map(slider => parseFloat(slider.value));
-                gains = sliderValues;
-                eqNameDisplay.textContent = 'CUSTOM';
-            }
-
-            // Aplica os ganhos aos BiquadFilterNodes
-            eqNodes.forEach((filter, index) => {
-                filter.gain.value = gains[index];
-            });
-
-            // Atualiza os labels dos sliders (dB)
-            document.querySelectorAll('.audio-controls .slider-item').forEach((item, index) => {
-                const valSpan = item.querySelector('span');
-                valSpan.textContent = `${gains[index]} dB`;
-            });
-            
-            // Atualiza o estado ativo dos botões de preset
-            document.querySelectorAll('.eq-buttons button').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.eqPreset === presetName) {
-                    btn.classList.add('active');
-                }
-            });
-        }
-
-        /** Atualiza os Medidores de Nível (VU Meter) */
-        function updateVUMeter() {
-            if (!analyser || !isPlaying) {
-                // Reseta as barras para zero se não estiver tocando
-                document.querySelectorAll('.level-bar-fill').forEach(fill => fill.style.height = '0%');
-                document.querySelectorAll('.level-peak-hold').forEach(peak => peak.style.opacity = '0');
-                return;
-            }
-
-            // Analyser para obter o nível de áudio (RMS ou Peak)
-            const bufferLength = analyser.frequencyBinCount;
-            const dataArray = new Uint8Array(bufferLength);
-            analyser.getByteTimeDomainData(dataArray);
-
-            // Calcula o RMS (Root Mean Square) como uma aproximação do volume percebido
-            let sumOfSquares = 0;
-            for (let i = 0; i < bufferLength; i++) {
-                // Normaliza e calcula a diferença de 128 (meio)
-                const value = (dataArray[i] / 128.0) - 1.0; 
-                sumOfSquares += value * value;
-            }
-            const rms = Math.sqrt(sumOfSquares / bufferLength);
-
-            // Mapeia o RMS para uma altura de barra (0 a 100%)
-            // O valor de "height" deve ser mais alto com volume mais alto
-            // Mapeamento não linear para reagir melhor a volumes mais baixos
-            const vuLevel = Math.min(100, Math.max(0, rms * rms * 200 * (audio.volume * 2))); // Ajuste para sensibilidade
-
-            // Simula 4 barras, 2 canais (L/R) * 2 barras por canal (por design do HTML)
-            const fills = document.querySelectorAll('.level-bar-fill');
-            const peaks = document.querySelectorAll('.level-peak-hold');
-            const vals = document.querySelectorAll('#stereo-level-values span');
-
-            fills.forEach((fill, index) => {
-                // Alterna entre uma pequena variação para simular stereo/diferença de 4 barras
-                const level = vuLevel * (0.9 + (index * 0.05) % 0.2); 
-                fill.style.height = `${level}%`;
-
-                // --- Lógica de Peak Hold (Pico) ---
-                const peakElement = peaks[index];
-                let currentPeak = parseFloat(peakElement.dataset.peakLevel || '0');
-
-                if (level > currentPeak) {
-                    currentPeak = level; // Novo pico
-                    peakElement.dataset.peakLevel = currentPeak;
-                    peakElement.style.top = `${100 - currentPeak}%`;
-                    peakElement.style.opacity = '1';
-                }
-
-                // Decaimento do Pico
-                if (Date.now() - (peakElement.dataset.peakTime || 0) > 300) {
-                    currentPeak = Math.max(0, currentPeak - 1.5); // Decaimento suave
-                    peakElement.dataset.peakLevel = currentPeak;
-                    peakElement.dataset.peakTime = Date.now();
-                    if (currentPeak <= 0) {
-                        peakElement.style.opacity = '0';
-                    } else {
-                         peakElement.style.top = `${100 - currentPeak}%`;
-                    }
-                }
-                
-                // Conversão de nível para dB (aproximada, apenas para visualização)
-                const dB = level === 0 ? '-Inf' : (20 * Math.log10(level / 100)).toFixed(1);
-                vals[index].textContent = vals[index].id.slice(-2).toUpperCase() + `: ${dB} dB`;
-            });
-        }
-
-        /** Desenha o Visualizador de Espectro */
-        function drawVisualizer() {
-            if (!analyser) {
-                requestAnimationFrame(drawVisualizer);
-                return;
-            }
-
-            const canvas = document.getElementById('spectrum');
-            const ctx = canvas.getContext('2d');
-            const WIDTH = canvas.width;
-            const HEIGHT = canvas.height;
-
-            // Obtém os dados de frequência (Spectrum Data)
-            const bufferLength = analyser.frequencyBinCount;
-            const dataArray = new Uint8Array(bufferLength);
-            analyser.getByteFrequencyData(dataArray);
-
-            // Limpa o canvas
-            ctx.clearRect(0, 0, WIDTH, HEIGHT);
-
-            // Define a cor de base e o efeito de brilho
-            const glowColor = getComputedStyle(body).getPropertyValue('--glow-color').trim();
-            const highlightColor = getComputedStyle(body).getPropertyValue('--highlight-color').trim();
-
-            ctx.shadowColor = glowColor;
-            ctx.shadowBlur = isPlaying ? 15 : 0; // Adiciona brilho quando tocando
-            
-            // === Desenho: Círculos Concéntricos (Exemplo de Visualização) ===
-            const centerX = WIDTH / 2;
-            const centerY = HEIGHT / 2;
-            const maxRadius = Math.min(WIDTH, HEIGHT) / 2;
-            const numCircles = 64; // Número de barras de frequência a serem usadas
-
-            for (let i = 0; i < numCircles; i++) {
-                // Mapeia o dado de frequência para um fator de escala (0 a 1)
-                // Usando uma escala de 20% a 100% dos dados para melhor visualização
-                const freqLevel = dataArray[i] / 255; 
-                const radius = maxRadius * (i / numCircles);
-                
-                // Calcula a "pulsação" para a borda do círculo
-                const pulse = freqLevel * maxRadius * 0.1; 
-
-                // Desenha o círculo
-                ctx.beginPath();
-                // O círculo externo pulsa
-                const currentRadius = radius + pulse;
-                ctx.arc(centerX, centerY, currentRadius, 0, 2 * Math.PI);
-                
-                // Gradiente Radial
-                const gradient = ctx.createRadialGradient(centerX, centerY, currentRadius * 0.5, centerX, centerY, currentRadius);
-                gradient.addColorStop(0, `${highlightColor}33`); // Brilho suave no centro
-                gradient.addColorStop(1, `${highlightColor}aa`); // Cor sólida na borda
-                
-                ctx.strokeStyle = gradient;
-                ctx.lineWidth = 1 + (freqLevel * 3); // Linha mais grossa em volumes altos
-                ctx.stroke();
-            }
-
-            // Desenha a próxima animação
-            requestAnimationFrame(drawVisualizer);
-        }
-
-        // --- Funções de Controle ---
-
-        /** Inicia a reprodução */
-        function playRadio() {
-            initAudioContext(); // Inicializa o contexto de áudio
-            audioContext.resume(); // Garante que o contexto esteja ativo
-            audio.play().then(() => {
-                isPlaying = true;
-                updateControls();
-                updateStatus('ONLINE', 'status-online');
-                currentSongDisplay.textContent = "Live Stream - Intercontinental Web Radio"; // Simulação de nome de música
-            }).catch(e => {
-                console.error("Erro ao tentar tocar o áudio:", e);
-                updateStatus('ERRO', 'status-offline');
-                currentSongDisplay.textContent = "Erro: Clique Play novamente. Permissão de Áudio.";
-            });
-        }
-
-        /** Pausa a reprodução */
-        function pauseRadio() {
-            audio.pause();
-            isPlaying = false;
-            updateControls();
-            updateStatus('PAUSADO', 'status-offline');
-            currentSongDisplay.textContent = "Transmissão Pausada...";
-        }
-
-        /** Para a reprodução (e reseta a stream) */
-        function stopRadio() {
-            audio.pause();
-            audio.currentTime = 0;
-            isPlaying = false;
-            updateControls();
-            updateStatus('OFFLINE', 'status-offline');
-            currentSongDisplay.textContent = "Pressione Play para iniciar a Transmissão...";
-        }
-
-        /** Alterna o Mute */
-        function toggleMute() {
-            isMuted = !isMuted;
-            audio.muted = isMuted;
-
-            const icon = muteButton.querySelector('i');
-            icon.className = isMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
-            muteButton.classList.toggle('active', isMuted);
-            
-            // Se silenciado, a barra de volume e o valor devem refletir 0%
-            updateVolumeDisplay(isMuted ? 0 : currentVolume);
-            
-            // O nó de ganho deve ser zerado (exceto se você quiser que o knob controle o gainNode)
-            if (gainNode) {
-                 gainNode.gain.value = isMuted ? 0 : currentVolume;
-            }
-        }
-
-        /** Atualiza o estado visual dos botões de controle */
-        function updateControls() {
-            playButton.classList.toggle('active', isPlaying);
-            playButton.disabled = isPlaying;
-            pauseButton.disabled = !isPlaying;
-            stopButton.disabled = !isPlaying;
-        }
-
-        /** Atualiza o display de volume e o knob */
-        function updateVolumeDisplay(vol) {
-            const percentage = Math.round(vol * 100);
-            volumeValDisplay.textContent = percentage;
-            volumeFill.style.width = `${percentage}%`;
-            
-            // O giro do knob é mapeado: 0% = -135deg, 100% = 135deg. Total: 270deg.
-            // (vol * 270) - 135
-            const rotation = (vol * 270) - 135; 
-            volumeKnob.style.transform = `rotate(${rotation}deg)`;
-            
-            // Atualiza o volume real do áudio e o GainNode se a Web Audio API estiver ativa
-            audio.volume = vol;
-            if (gainNode) {
-                // Se não estiver silenciado
-                if (!isMuted) {
-                    gainNode.gain.value = vol;
-                }
-            }
-        }
-        
-        /** Atualiza o display de status */
-        function updateStatus(text, className) {
-            statusText.textContent = text;
-            statusLight.className = '';
-            statusLight.classList.add(className);
-        }
-
-        /** Atualiza o relógio digital */
-        function updateTime() {
-            const now = new Date();
-            const date = now.toLocaleDateString('pt-BR', { year: 'numeric', month: 'numeric', day: 'numeric' });
-            const time = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            dateTimeDisplay.textContent = `DATA/HORA: ${date} ${time}`;
-        }
-        
-        /** Muda o tema (classe no body) */
-        function changeTheme(themeName) {
-            body.className = themeName; // Define a nova classe de tema
-            themeNameDisplay.textContent = themeName.toUpperCase().replace('-', ' ');
-            document.querySelectorAll('.theme-buttons button').forEach(btn => {
-                btn.classList.remove('active-theme');
-                if (btn.dataset.theme === themeName) {
-                    btn.classList.add('active-theme');
-                }
-            });
-        }
-
-
-        // --- Event Listeners ---
-
-        playButton.addEventListener('click', playRadio);
-        pauseButton.addEventListener('click', pauseRadio);
-        stopButton.addEventListener('click', stopRadio);
-        muteButton.addEventListener('click', toggleMute);
-
-        // --- Lógica do Knob de Volume (Drag and Drop / Mouse) ---
-        volumeKnob.addEventListener('mousedown', (e) => {
-            if (e.button !== 0) return; // Apenas clique esquerdo
-            isDraggingKnob = true;
-            volumeKnob.style.cursor = 'grabbing';
-            e.preventDefault(); 
-            document.addEventListener('mousemove', handleKnobMove);
-            document.addEventListener('mouseup', handleKnobRelease);
-        });
-
-        // Lógica para toque (Touch)
-        volumeKnob.addEventListener('touchstart', (e) => {
-            isDraggingKnob = true;
-            volumeKnob.style.cursor = 'grabbing';
-            e.preventDefault(); 
-            document.addEventListener('touchmove', handleKnobMove);
-            document.addEventListener('touchend', handleKnobRelease);
-        });
-
-        function handleKnobMove(e) {
-            if (!isDraggingKnob) return;
-
-            // Obtém as coordenadas (mouse ou toque)
-            const clientX = e.clientX || e.touches[0].clientX;
-            const clientY = e.clientY || e.touches[0].clientY;
-
-            // Calcula a posição do centro do knob
-            const rect = volumeKnob.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            // Calcula o ângulo em radianos (-PI a PI)
-            const angleRad = Math.atan2(clientY - centerY, clientX - centerX);
-            // Converte para graus (0 a 360)
-            let angleDeg = angleRad * (180 / Math.PI) + 90; // +90 para ter 0 no topo
-
-            // Normaliza o ângulo para 0 a 360
-            if (angleDeg < 0) angleDeg += 360; 
-
-            // Mapeamento: Queremos um arco de 270 graus, começando no 225 deg (7h) e terminando no 315 deg (5h) do círculo
-            // Na sua CSS, o estado inicial (50%) é -45deg, que é 315deg
-            // O estado mínimo (0%) deve ser -135deg, que é 225deg
-            // O estado máximo (100%) deve ser 135deg (ou 495deg), que é 135deg
-
-            let volume;
-
-            // Caso 1: Região inferior esquerda (225 a 360 deg)
-            if (angleDeg >= 225 && angleDeg <= 360) {
-                // Mapeia 225deg (0%) para 360deg (50%)
-                volume = (angleDeg - 225) / (360 - 225) * 0.5;
-            } 
-            // Caso 2: Região superior (0 a 135 deg)
-            else if (angleDeg >= 0 && angleDeg <= 135) {
-                // Mapeia 0deg (50%) para 135deg (100%)
-                volume = 0.5 + (angleDeg / 135) * 0.5;
-            }
-            // Caso 3: Regiões intermediárias (Clamp)
-            else {
-                // Se estiver entre 135deg e 225deg, clamp para 100% ou 0%
-                volume = (angleDeg > 135 && angleDeg < 180) ? 1.0 : 0.0;
-            }
-
-            // Garante que o volume esteja entre 0 e 1 (por segurança)
-            volume = Math.max(0, Math.min(1, volume));
-            currentVolume = volume;
-            updateVolumeDisplay(currentVolume);
-
-            // Se for mouse, previne seleção
-            if (e.preventDefault) e.preventDefault(); 
-        }
-
-        function handleKnobRelease() {
-            isDraggingKnob = false;
-            volumeKnob.style.cursor = 'grab';
-            document.removeEventListener('mousemove', handleKnobMove);
-            document.removeEventListener('mouseup', handleKnobRelease);
-            document.removeEventListener('touchmove', handleKnobMove);
-            document.removeEventListener('touchend', handleKnobRelease);
-        }
-
-        // --- Lógica dos Sliders do EQ ---
-        document.querySelectorAll('.audio-controls input[type="range"]').forEach(slider => {
-            slider.addEventListener('input', () => {
-                // Aplica o EQ e define como Custom
-                updateEQ(); 
-            });
-        });
-
-        // --- Lógica dos Botões de Preset do EQ ---
-        document.querySelectorAll('.eq-buttons button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const preset = e.target.dataset.eqPreset;
-                updateEQ(preset);
-            });
-        });
-        
-        // --- Lógica dos Botões de Tema ---
-        document.querySelectorAll('.theme-buttons button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const theme = e.target.dataset.theme;
-                changeTheme(theme);
-            });
-        });
-
-        // --- Inicialização ---
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Inicializa o volume para a posição e display (50% = -45deg)
-            updateVolumeDisplay(currentVolume); 
-            // Inicializa o relógio
-            setInterval(updateTime, 1000); 
-            updateTime();
-            // Inicializa o EQ
-            updateEQ('flat');
-            // Inicializa o tema ativo no display (deve corresponder à classe inicial 'industrial-cyber')
-            changeTheme('industrial-cyber');
-        });
-        
-        // Corrige o bug do Web Audio API que só pode ser inicializado após a interação do usuário
-        // Tenta inicializar o contexto quando o usuário interage pela primeira vez com a página (clique/toque)
-        document.body.addEventListener('click', initAudioContext, { once: true });
-        document.body.addEventListener('touchstart', initAudioContext, { once: true });
-
-    </script>
-</body>
-</html>
+:root {
+    /* === Variáveis CSS Base (Tema Industrial Cyber) === */
+    --base-bg-color: #0b0d10;
+    --secondary-bg-color: #1a1c24;
+    --primary-text-color: #f0f0f0;
+
+    /* Tela (LCD) */
+    --screen-bg: #0d0d20;
+    --screen-text: #00ffc8; /* Tom ciano/verde brilhante */
+    --screen-shadow: 0 0 10px rgba(0, 255, 200, 0.6);
+    --screen-border-color: #006651;
+
+    /* Acentos (Glow/Highlight) */
+    --highlight-color: #00ffc8;
+    --highlight-secondary: #00a080;
+    --glow-color: rgba(0, 255, 200, 0.4);
+    --button-bg: #222530;
+    --button-hover-bg: #333642;
+
+    /* Status Light */
+    --status-online: #00ff00;
+    --status-offline: #ff0000;
+
+    /* Medidor de Nível (VU Meter) */
+    --level-fill-color: #00ffc8;
+    --level-peak-color: #ff3300;
+}
+
+/* === VARIÁVEIS DE TEMA ADICIONAIS (Minimalista para exemplo) === */
+.cosmic-dark {
+    --screen-text: #e0b0ff; /* Roxo suave */
+    --highlight-color: #e0b0ff;
+    --glow-color: rgba(224, 176, 255, 0.4);
+    --level-fill-color: #e0b0ff;
+}
+
+.solar-flare {
+    --screen-text: #ff9900; /* Laranja Vívido */
+    --highlight-color: #ff9900;
+    --glow-color: rgba(255, 153, 0, 0.5);
+    --level-fill-color: #ff9900;
+}
+/* ... Adicione mais 23 temas aqui seguindo a mesma estrutura ... */
+/* Apenas para demonstração, vou focar no tema principal e na estrutura. */
+.retro-crt {
+    --base-bg-color: #121614;
+    --screen-bg: #1e381b;
+    --screen-text: #96e08c; /* Verde CRT */
+    --screen-shadow: 0 0 4px rgba(150, 224, 140, 0.8), inset 0 0 5px rgba(0, 0, 0, 0.5);
+    --highlight-color: #96e08c;
+    --glow-color: rgba(150, 224, 140, 0.4);
+    --level-fill-color: #96e08c;
+}
+
+/* ==================================== */
+/* === ESTILOS DO NOVO MINI SYSTEM === */
+/* ==================================== */
+
+/* Novo: Classe para esconder conteúdo visualmente, mas manter para leitores de tela (Acessibilidade) */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* === ESTRUTURA GLOBAL === */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Share Tech Mono', monospace;
+    background-color: var(--base-bg-color);
+    color: var(--primary-text-color);
+    transition: background-color 0.5s ease, color 0.5s ease;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--secondary-bg-color);
+    border: 3px solid var(--highlight-secondary);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Parafusos/Cantoneiras */
+.bolt {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: var(--button-bg);
+    border: 2px solid var(--highlight-secondary);
+    z-index: 10;
+}
+
+.bolt-tl { top: -1px; left: -1px; border-radius: 0 0 5px 0; }
+.bolt-tr { top: -1px; right: -1px; border-radius: 0 0 0 5px; }
+.bolt-bl { bottom: -1px; left: -1px; border-radius: 0 5px 0 0; }
+.bolt-br { bottom: -1px; right: -1px; border-radius: 5px 0 0 0; }
+
+header#banner {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    color: var(--highlight-color);
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--highlight-secondary);
+    text-shadow: 0 0 10px var(--glow-color);
+}
+
+/* === TELA DE INFORMAÇÕES (DISPLAY DIGITAL) === */
+#info-screen {
+    background-color: var(--screen-bg);
+    color: var(--screen-text);
+    border: 3px solid var(--screen-border-color);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: var(--screen-shadow), inset 0 0 10px rgba(0, 0, 0, 0.8);
+    font-family: 'Orbitron', sans-serif;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 20px;
+    text-align: left;
+}
+
+#radio-name-display {
+    grid-column: 1 / 3;
+    font-size: 1.8rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+#volume-electronic-display, #active-eq-display, #active-theme-display, #date-time, #status {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px dashed rgba(0, 255, 200, 0.3);
+}
+
+#status {
+    justify-content: flex-end;
+}
+
+#volume-electronic-display {
+    display: block;
+    grid-column: 1 / 3;
+    padding-bottom: 10px;
+}
+
+#volume-electronic-display i {
+    margin-right: 5px;
+}
+
+#volume-level-bar {
+    width: 100%;
+    height: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--screen-text);
+    margin-top: 5px;
+}
+
+#volume-fill {
+    height: 100%;
+    background-color: var(--screen-text);
+    transition: width 0.1s linear;
+}
+
+#status-light {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 8px;
+    box-shadow: 0 0 5px currentColor;
+    transition: background-color 0.5s ease;
+}
+
+.status-online { background-color: var(--status-online); }
+.status-offline { background-color: var(--status-offline); }
+
+#now-playing {
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 10px;
+    background-color: var(--button-bg);
+    border-radius: 5px;
+    border-left: 5px solid var(--highlight-color);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+#current-song {
+    font-weight: 700;
+    color: var(--highlight-color);
+}
+
+/* === INDICADOR DE NÍVEL DE TRANSMISSÃO (VU Meter) === */
+#transmission-level-indicator {
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: var(--screen-bg);
+    border: 2px solid var(--screen-border-color);
+    border-radius: 5px;
+}
+
+#level-bars-stereo {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    height: 100px;
+    align-items: flex-end;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 5px;
+}
+
+.level-meter {
+    flex-grow: 1;
+    background-color: #333;
+    border: 1px solid var(--primary-text-color);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.level-bar-fill {
+    width: 100%;
+    background: linear-gradient(to top, var(--level-fill-color) 0%, #ff0000 90%);
+    position: absolute;
+    bottom: 0;
+    transition: height 0.05s linear;
+}
+
+.level-peak-hold {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--level-peak-color);
+    box-shadow: 0 0 5px var(--level-peak-color);
+    transition: top 0.1s ease;
+}
+
+/* === VISUALIZADOR DE ESPECTRO (CANVAS) === */
+.visualizer-giant-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 20px auto;
+    background-color: #000;
+    border: 3px solid var(--highlight-color);
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--glow-color);
+}
+
+#spectrum {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%; /* Garante que o canvas também seja redondo */
+}
+
+#visualizer-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    width: 10%;
+    height: 10%;
+    border-radius: 50%;
+    background-color: var(--highlight-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--base-bg-color);
+    box-shadow: 0 0 15px var(--highlight-color);
+    transition: transform 0.1s ease;
+}
+
+/* ======================================== */
+/* === NOVO LAYOUT DE CONTROLE INTEGRADO === */
+/* ======================================== */
+.control-panel {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: var(--button-bg);
+    border-radius: 8px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    background-color: var(--button-bg);
+    color: var(--primary-text-color);
+    border: 2px solid var(--highlight-secondary);
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: 700;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+button:hover:not(:disabled) {
+    background-color: var(--button-hover-bg);
+    color: var(--highlight-color);
+    box-shadow: 0 0 5px var(--glow-color);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button.active, .active-theme, .eq-buttons button.active {
+    background-color: var(--highlight-color);
+    color: var(--base-bg-color);
+    border-color: var(--highlight-color);
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+/* === BOTÃO DE VOLUME GIRATÓRIO (KNOB) APRIMORADO === */
+.knob-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+}
+
+.knob-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 5px;
+}
+
+#volume-knob {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 70% 30%, var(--primary-text-color), var(--button-bg));
+    border: 5px solid var(--secondary-bg-color);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8), 0 5px 10px rgba(0, 0, 0, 0.5);
+    cursor: grab;
+    position: absolute;
+    transition: transform 0.05s linear; /* Para a animação do JS */
+}
+
+#knob-marker {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 15px;
+    background-color: var(--level-peak-color);
+    border-radius: 2px;
+    box-shadow: 0 0 8px var(--level-peak-color);
+}
+
+
+/* === EQUALIZADOR E CONTROLES DE SLIDER === */
+.audio-controls, .eq-presets, .visual-controls {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid var(--highlight-secondary);
+    border-radius: 8px;
+    background-color: var(--secondary-bg-color);
+}
+
+.audio-controls h3, .eq-presets h3, .visual-controls h3 {
+    margin-top: 0;
+    border-bottom: 1px solid var(--highlight-secondary);
+    padding-bottom: 10px;
+    color: var(--highlight-color);
+}
+
+.slider-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.slider-item {
+    flex: 1 1 80px; /* Garante que tenha espaço para 7 itens e quebre se necessário */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    text-align: center;
+}
+
+.slider-item label {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    color: var(--primary-text-color);
+    min-height: 25px; /* Para manter o alinhamento do slider */
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    background: var(--button-bg);
+    outline: none;
+    border-radius: 5px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+    transition: background 0.2s;
+}
+
+/* Chrome/Safari */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--highlight-color);
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--glow-color);
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--highlight-color);
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--glow-color);
+    border: none;
+}
+
+/* === PRESETS E TEMAS === */
+.eq-buttons, .theme-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.visual-controls .control-group {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed var(--highlight-secondary);
+    text-align: center;
+}
+.visual-controls .control-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+        margin: 10px auto;
+    }
+    #info-screen {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+    #radio-name-display {
+        grid-column: 1 / 2;
+        font-size: 1.5rem;
+    }
+    .control-panel {
+        flex-direction: column;
+    }
+    .controls {
+        margin-bottom: 15px;
+    }
+    .slider-group {
+        justify-content: center;
+    }
+    .slider-item {
+        flex: 1 1 45%; /* 2 items por linha */
+    }
+}
