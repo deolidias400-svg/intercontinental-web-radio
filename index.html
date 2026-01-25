@@ -1,366 +1,239 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Intercontinental • Gold Console V5</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intercontinental Gold - 2 Anos de Elite</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-<style>
-:root{
-  --gold:#d6b44a;
-}
+    <style>
+        :root { --gold: #ffd700; --gold-liquid: linear-gradient(135deg, #4b3621, #ffd700, #fff5b7, #b8860b); }
+        
+        body { 
+            background: #000; 
+            background-image: radial-gradient(circle at center, #222 0%, #000 100%), url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            color: #fff; font-family: 'Orbitron', sans-serif;
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px;
+        }
 
-body{
-  margin:0;
-  font-family:'Orbitron',sans-serif;
-  color:#fff;
-  background:#050300;
-  overflow-x:hidden;
-}
+        /* EFEITO OURO LÍQUIDO NAS BORDAS */
+        .gold-module {
+            background: rgba(10, 10, 10, 0.9);
+            border: 4px solid;
+            border-image: var(--gold-liquid) 1;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            margin-bottom: 20px;
+            width: 100%; max-width: 800px;
+            border-radius: 4px; /* Ouro líquido exige linhas precisas */
+            position: relative;
+        }
 
-.wallpaper{
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at 20% 20%,#3d2b00,#050300),
-    radial-gradient(circle at 80% 80%,#1a1200,#000);
-  z-index:-2;
-  transition:filter .3s ease;
-}
+        .glass-screen {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.1);
+            padding: 15px;
+        }
 
-.section{
-  max-width:1200px;
-  margin:48px auto;
-  padding:34px;
-  border-radius:30px;
-  background:linear-gradient(120deg,rgba(214,180,74,.22),rgba(255,255,255,.02));
-  border:1px solid rgba(214,180,74,.45);
-  box-shadow:0 0 60px rgba(214,180,74,.45);
-  position:relative;
-  overflow:hidden;
-}
+        /* TEXTO DOURADO */
+        .txt-gold {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(to bottom, #fff5b7, #ffd700, #b8860b);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+        }
 
-.section::before{
-  content:"";
-  position:absolute;
-  inset:-60%;
-  background:
-    radial-gradient(circle,#ffd70044,transparent 65%),
-    linear-gradient(140deg,#b38b0033,#ffd70055,#5e450033);
-  animation:liquid 28s linear infinite;
-}
-@keyframes liquid{to{transform:rotate(360deg)}}
+        /* BARRAS E ANALISADORES */
+        .bar { transition: height 0.05s ease; width: 100%; border-radius: 2px 2px 0 0; }
+        .vu-led { height: 100px; width: 15px; background: #111; border: 1px solid #333; position: relative; }
+        .vu-fill { position: absolute; bottom: 0; width: 100%; background: linear-gradient(to top, #0f0, #ff0, #f00); }
 
-header h1{
-  text-align:center;
-  font-size:60px;
-  color:var(--gold);
-  text-shadow:0 0 40px rgba(214,180,74,1);
-}
-header h2{
-  text-align:center;
-  letter-spacing:.4em;
-  opacity:.85;
-}
+        /* AGULHAS */
+        .needle { position: absolute; bottom: 0; left: 50%; width: 2px; transform-origin: bottom center; transition: transform 0.05s ease; filter: drop-shadow(0 0 5px currentColor); }
 
-/* LCD */
-#lcd{
-  background:#020202;
-  border-radius:20px;
-  padding:28px;
-  font-family:monospace;
-  color:#00ffe0;
-  box-shadow:inset 0 0 40px #00ffe055;
-}
-#lcd span{color:#fff}
+        /* VOX AI */
+        .vox-sphere {
+            width: 60px; height: 60px;
+            background: radial-gradient(circle at 30% 30%, #00f2fe, #0055ff);
+            border-radius: 50%; box-shadow: 0 0 30px #00f2fe;
+            cursor: pointer; animation: float 3s infinite ease-in-out;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-/* PLAYER */
-.controls{
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-}
-#play{
-  width:130px;
-  height:130px;
-  border-radius:50%;
-  border:none;
-  font-size:34px;
-  background:radial-gradient(circle,var(--gold),#6a4e00);
-  box-shadow:0 0 50px rgba(214,180,74,1);
-  cursor:pointer;
-}
-input[type=range]{width:280px}
-
-/* SPECTRUM */
-canvas{
-  width:100%;
-  height:220px;
-  background:#000;
-  border-radius:20px;
-}
-
-/* HZ */
-.hz{display:flex;gap:20px}
-.hz div{
-  flex:1;
-  height:22px;
-  background:#222;
-  border-radius:14px;
-  overflow:hidden;
-}
-.hz span{
-  display:block;
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#0055ff,#00ffff,#00ff66);
-}
-
-/* NEEDLES */
-.needles{
-  display:flex;
-  justify-content:space-around;
-}
-.meter{
-  width:36px;
-  height:200px;
-  background:#111;
-  border-radius:18px;
-  overflow:hidden;
-}
-.meter span{
-  display:block;
-  width:100%;
-  height:6%;
-}
-
-/* EQ */
-.eq{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:18px;
-}
-.eq button{
-  padding:18px;
-  border:none;
-  border-radius:16px;
-  background:#1b1b1b;
-  color:#fff;
-  cursor:pointer;
-  box-shadow:0 0 20px rgba(0,0,0,.9);
-}
-
-/* THEMES */
-.themes{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(72px,1fr));
-  gap:14px;
-}
-.theme{
-  height:52px;
-  border-radius:12px;
-  cursor:pointer;
-}
-
-/* VOX */
-#vox{
-  margin:auto;
-  width:180px;
-  height:180px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  background:radial-gradient(circle,#00ffff,#002a2a);
-  box-shadow:0 0 55px #00ffff;
-  cursor:pointer;
-}
-
-/* PORTALS */
-.portal{
-  display:block;
-  padding:22px;
-  margin:16px 0;
-  border-radius:18px;
-  text-decoration:none;
-  color:#fff;
-  backdrop-filter:blur(10px);
-  box-shadow:0 0 30px rgba(0,0,0,.9);
-}
-</style>
+        .custom-scroll::-webkit-scrollbar { height: 4px; width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--gold); }
+    </style>
 </head>
-
 <body>
+    <div id="root"></div>
 
-<div class="wallpaper" id="wallpaper"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
 
-<header class="section">
-  <h1>INTERCONTINENTAL</h1>
-  <h2>2 ANOS DE SUCESSO</h2>
-</header>
+        const STREAM_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
+        const PORTALS = [
+            { n: "PANDORA", u: "https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio", c: "#FF4D4D" },
+            { n: "DYNAC-X", u: "https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio", c: "#4DFF88" },
+            { n: "VOX I.A", u: "https://sites.google.com/view/vox-i-a/in%C3%ADcio", c: "#4D94FF" },
+            { n: "TRENDS", u: "https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html", c: "#FFFF4D" },
+            { n: "YOUTUBE", u: "https://www.youtube.com/@RadioWebintercontinental", c: "#FF0000" }
+        ];
 
-<div class="section" id="lcd">
-  ⏱ DATA/HORA: <span id="clock"></span><br>
-  📡 STATUS: <span id="status">OFFLINE</span><br>
-  🎚 EQ ATIVO: <span id="eqName">Flat</span><br>
-  🎨 TEMA: <span id="themeName">Gold</span><br>
-  📢 INFO: <span id="broadcast">Bem-vindo à Intercontinental</span>
-</div>
+        const EQs = ["DYNAMIC", "GOLD", "STADIUM", "BASS+", "CLUB", "VOX", "FLAT"];
+        const THEMES = Array.from({length: 26}, (_, i) => `hsl(${i * 13.8}, 100%, 50%)`);
 
-<div class="section">
-  <div class="controls">
-    <button id="play">▶</button>
-    <input type="range" id="volume" min="0" max="1" step="0.01" value="0.8">
-  </div>
-</div>
+        const App = () => {
+            const [isPlaying, setIsPlaying] = useState(false);
+            const [freq, setFreq] = useState(new Uint8Array(32));
+            const [theme, setTheme] = useState('#ffd700');
+            const [eq, setEq] = useState('GOLD');
+            const [vol, setVol] = useState(0.8);
+            const [time, setTime] = useState(new Date());
+            const [voxMsg, setVoxMsg] = useState("Intercontinental Gold Ativada.");
 
-<div class="section">
-  <canvas id="spectrum"></canvas>
-</div>
+            const audioRef = useRef(null);
+            const analyserRef = useRef(null);
 
-<div class="section">
-  <div class="hz">
-    <div><span id="hz1"></span></div>
-    <div><span id="hz2"></span></div>
-    <div><span id="hz3"></span></div>
-    <div><span id="hz4"></span></div>
-  </div>
-</div>
+            useEffect(() => {
+                const timer = setInterval(() => setTime(new Date()), 1000);
+                if(window.lucide) window.lucide.createIcons();
+                return () => clearInterval(timer);
+            }, []);
 
-<div class="section">
-  <div class="needles">
-    <div class="meter"><span id="n1" style="background:#0066ff"></span></div>
-    <div class="meter"><span id="n2" style="background:#ff0000"></span></div>
-    <div class="meter"><span id="n3" style="background:#00ff66"></span></div>
-  </div>
-</div>
+            const toggleRadio = () => {
+                if (!audioRef.current) {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    const audio = new Audio(STREAM_URL);
+                    audio.crossOrigin = "anonymous";
+                    const source = ctx.createMediaElementSource(audio);
+                    const analyser = ctx.createAnalyser();
+                    analyser.fftSize = 64;
+                    source.connect(analyser);
+                    analyser.connect(ctx.destination);
+                    audioRef.current = audio;
+                    analyserRef.current = analyser;
+                    const loop = () => {
+                        const data = new Uint8Array(analyser.frequencyBinCount);
+                        analyser.getByteFrequencyData(data);
+                        setFreq([...data]);
+                        requestAnimationFrame(loop);
+                    };
+                    loop();
+                }
+                isPlaying ? audioRef.current.pause() : audioRef.current.play();
+                setIsPlaying(!isPlaying);
+            };
 
-<div class="section">
-  <h3>Equalizadores</h3>
-  <div class="eq">
-    <button onclick="setEQ('Flat',0,0,0)">Flat</button>
-    <button onclick="setEQ('Bass Boost',10,0,-3)">Bass</button>
-    <button onclick="setEQ('Mid Focus',0,8,0)">Médio</button>
-    <button onclick="setEQ('Treble Boost',-3,0,10)">Agudo</button>
-    <button onclick="setEQ('Rock',7,4,7)">Rock</button>
-    <button onclick="setEQ('Dance',10,-2,10)">Dance</button>
-    <button onclick="setEQ('Voice',-2,7,-2)">Voz</button>
-  </div>
-</div>
+            const talkAI = () => {
+                const tips = [
+                    "Dica: O álbum 'Golden Hits' é o mais ouvido hoje!",
+                    "Você sabia? Este player usa tecnologia de ouro líquido.",
+                    "Sintonize na Pandora para lançamentos exclusivos!",
+                    "O modo Super Gold otimiza os médios e agudos."
+                ];
+                setVoxMsg(tips[Math.floor(Math.random()*tips.length)]);
+            };
 
-<div class="section">
-  <h3>26 Temas</h3>
-  <div class="themes" id="themes"></div>
-</div>
+            return (
+                <div className="w-full flex flex-col items-center">
+                    
+                    {/* MÓDULO 1: CABEÇALHO */}
+                    <header className="text-center mb-10">
+                        <h1 className="txt-gold text-6xl md:text-8xl font-black">INTERCONTINENTAL</h1>
+                        <p className="text-yellow-500 tracking-[0.8em] font-bold md:text-xl">2 ANOS DE SUCESSO</p>
+                    </header>
 
-<div class="section">
-  <div id="vox">VOX I.A<br>CLIQUE</div>
-</div>
+                    {/* MÓDULO 2: LCD INFORMATIVO */}
+                    <div className="gold-module glass-screen flex justify-between items-center px-8 py-4 font-mono text-yellow-500">
+                        <div className="text-left">
+                            <div>DATA: {time.toLocaleDateString()}</div>
+                            <div>HORA: {time.toLocaleTimeString()}</div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-xs">STATUS</div>
+                            <div className={isPlaying ? "text-green-500 animate-pulse" : "text-red-500"}>
+                                {isPlaying ? "• ONLINE" : "• OFFLINE"}
+                            </div>
+                        </div>
+                        <div className="text-right text-xs">
+                            <div>EQ: {eq}</div>
+                            <div className="truncate w-24">TEMA: {theme}</div>
+                        </div>
+                    </div>
 
-<div class="section">
-  <a class="portal" style="background:#6a00ff55" href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio">Pandora & Euterpe</a>
-  <a class="portal" style="background:#ff005555" href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio">Dynac X</a>
-  <a class="portal" style="background:#00ffaa55" href="https://sites.google.com/view/vox-i-a/in%C3%ADcio">VOX I.A</a>
-  <a class="portal" style="background:#ffaa0055" href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html">Blog</a>
-  <a class="portal" style="background:#ff000055" href="https://www.youtube.com/@RadioWebintercontinental">YouTube</a>
-</div>
+                    {/* MÓDULO 3: AGULHAS E VOX AI */}
+                    <div className="gold-module glass-screen grid grid-cols-1 md:grid-cols-3 gap-4 items-center h-48">
+                        <div className="relative h-full border-r border-yellow-900/50">
+                            <div className="needle h-32 text-red-600" style={{transform: `rotate(${(freq[2]/255*100)-50}deg)`}} />
+                            <div className="absolute bottom-2 w-full text-center text-[8px] font-bold">BASS</div>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                            <div className="vox-sphere" onClick={talkAI}></div>
+                            <div className="text-[9px] text-blue-400 text-center px-2">{voxMsg}</div>
+                        </div>
+                        <div className="relative h-full border-l border-yellow-900/50">
+                            <div className="needle h-32 text-green-500" style={{transform: `rotate(${(freq[10]/255*100)-50}deg)`}} />
+                            <div className="needle h-28 text-blue-500" style={{transform: `rotate(${(freq[20]/255*100)-50}deg)`}} />
+                            <div className="absolute bottom-2 w-full text-center text-[8px] font-bold">MID / TREBLE</div>
+                        </div>
+                    </div>
 
-<script>
-const audio=new Audio("https://stream.zeno.fm/wzcgaal0dnltv");
-audio.crossOrigin="anonymous";
-const ctx=new AudioContext();
-const src=ctx.createMediaElementSource(audio);
+                    {/* MÓDULO 4: ANALISADOR DE ESPECTRO E TORRES */}
+                    <div className="gold-module glass-screen flex items-end gap-4 h-56 p-6">
+                        <div className="flex gap-2 h-full">
+                            {[2, 8, 15, 24].map(i => (
+                                <div key={i} className="vu-led"><div className="vu-fill" style={{height: `${(freq[i]/255)*100}%`}} /></div>
+                            ))}
+                        </div>
+                        <div className="flex-1 flex items-end gap-1 h-full border-x border-yellow-900/30 px-2">
+                            {Array.from(freq).map((v, i) => (
+                                <div key={i} className="bar" style={{height: `${(v/255)*100}%`, background: theme}} />
+                            ))}
+                        </div>
+                        <div className="flex flex-col justify-center gap-2">
+                            <button onClick={toggleRadio} className="w-16 h-16 rounded-full border-4 border-yellow-500 flex items-center justify-center bg-black hover:bg-yellow-500 transition-all group">
+                                <i data-lucide={isPlaying ? "pause" : "play"} className="w-8 h-8 group-hover:text-black" />
+                            </button>
+                            <input type="range" min="0" max="1" step="0.1" value={vol} onChange={(e) => {setVol(e.target.value); audioRef.current.volume = e.target.value;}} className="w-16 accent-yellow-500" />
+                        </div>
+                    </div>
 
-const low=ctx.createBiquadFilter(); low.type="lowshelf"; low.frequency.value=200;
-const mid=ctx.createBiquadFilter(); mid.type="peaking"; mid.frequency.value=1200;
-const high=ctx.createBiquadFilter(); high.type="highshelf"; high.frequency.value=3500;
+                    {/* MÓDULO 5: EQUALIZADORES E TEMAS */}
+                    <div className="gold-module glass-screen space-y-4">
+                        <div className="flex flex-wrap justify-center gap-2">
+                            {EQs.map(e => (
+                                <button key={e} onClick={() => setEq(e)} className={`px-4 py-1 text-[10px] font-bold border ${eq===e ? 'bg-yellow-500 text-black' : 'border-yellow-500 text-yellow-500'}`}>{e}</button>
+                            ))}
+                        </div>
+                        <div className="flex gap-2 overflow-x-auto pb-2 custom-scroll">
+                            {THEMES.map((c, i) => (
+                                <button key={i} onClick={() => setTheme(c)} className="w-8 h-8 shrink-0 rounded" style={{background: c}} />
+                            ))}
+                        </div>
+                    </div>
 
-src.connect(low); low.connect(mid); mid.connect(high);
+                    {/* MÓDULO 6: PORTAIS COLORIDOS */}
+                    <div className="w-full max-w-[800px] grid grid-cols-1 md:grid-cols-5 gap-2">
+                        {PORTALS.map((p, i) => (
+                            <a key={i} href={p.u} target="_blank" className="gold-module glass-screen p-3 text-[10px] font-black text-center hover:scale-105 transition-all" style={{borderColor: p.c, color: p.c}}>
+                                {p.n}
+                            </a>
+                        ))}
+                    </div>
 
-const analyser=ctx.createAnalyser();
-high.connect(analyser); analyser.connect(ctx.destination);
+                </div>
+            );
+        };
 
-const data=new Uint8Array(analyser.frequencyBinCount);
-const canvas=document.getElementById("spectrum");
-const c=canvas.getContext("2d");
-
-let needle=[0,0,0];
-
-function render(){
-  requestAnimationFrame(render);
-  analyser.getByteFrequencyData(data);
-
-  let energy=data.reduce((a,b)=>a+b)/data.length;
-  document.getElementById("wallpaper").style.filter=`brightness(${0.8+energy/600})`;
-
-  c.clearRect(0,0,canvas.width,canvas.height);
-  for(let i=0;i<180;i++){
-    let v=data[i];
-    c.fillStyle=`rgb(${v+90},${v/2},0)`;
-    c.fillRect(i*6,canvas.height-v/2,4,v/2);
-  }
-
-  hz1.style.width=data[8]+"%";
-  hz2.style.width=data[32]+"%";
-  hz3.style.width=data[64]+"%";
-  hz4.style.width=data[128]+"%";
-
-  needle[0]+=((data[14]/2)-needle[0])*.2;
-  needle[1]+=((data[46]/2)-needle[1])*.2;
-  needle[2]+=((data[92]/2)-needle[2])*.2;
-
-  n1.style.height=needle[0]+"%";
-  n2.style.height=needle[1]+"%";
-  n3.style.height=needle[2]+"%";
-}
-render();
-
-play.onclick=()=>{
-  if(audio.paused){
-    ctx.resume(); audio.play();
-    status.textContent="ONLINE"; play.textContent="⏸";
-  }else{
-    audio.pause();
-    status.textContent="OFFLINE"; play.textContent="▶";
-  }
-};
-
-volume.oninput=e=>audio.volume=e.target.value;
-setInterval(()=>clock.textContent=new Date().toLocaleString(),1000);
-
-function setEQ(name,l,m,h){
-  eqName.textContent=name;
-  low.gain.value=l;
-  mid.gain.value=m;
-  high.gain.value=h;
-}
-
-const themes=document.getElementById("themes");
-for(let i=1;i<=26;i++){
-  let t=document.createElement("div");
-  t.className="theme";
-  t.style.background=`hsl(${i*13},80%,50%)`;
-  t.onclick=()=>{
-    document.body.style.background=
-      `radial-gradient(circle at top,hsl(${i*13},60%,20%),#000),
-       radial-gradient(circle at bottom,hsl(${i*13},40%,10%),#000)`;
-    themeName.textContent="Tema "+i;
-  };
-  themes.appendChild(t);
-}
-
-const voxTips=[
- "A Intercontinental conecta culturas pelo som.",
- "Experimente mudar o EQ para cada estilo musical.",
- "Use temas para criar sua identidade visual.",
- "Este console reage em tempo real à música."
-];
-vox.onclick=()=>{
-  broadcast.textContent=voxTips[Math.floor(Math.random()*voxTips.length)];
-};
-</script>
-
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+        setTimeout(() => window.lucide.createIcons(), 1000);
+    </script>
 </body>
 </html>
