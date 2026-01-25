@@ -1,264 +1,231 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intercontinental Sonic Command - 2 Anos</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-
+    <title>Intercontinental Web Radio - Spectrum Extreme</title>
     <style>
-        :root { --gold: #FFD700; --gold-glow: rgba(255, 215, 0, 0.6); }
         body {
-            margin: 0; padding: 0; background: #000;
-            font-family: 'Orbitron', sans-serif;
-            background: radial-gradient(circle at center, #0a0a20 0%, #000 100%);
-            color: white; overflow-x: hidden; scroll-behavior: smooth;
-        }
-        .cinzel { font-family: 'Cinzel', serif; }
-        
-        .energy-conduit {
-            position: fixed; top: 0; width: 14px; height: 100%;
-            background: linear-gradient(to bottom, transparent, var(--gold), #B8860B, var(--gold), transparent);
-            box-shadow: 0 0 35px var(--gold); z-index: 1000;
-        }
-        .energy-pulse {
-            position: absolute; width: 100%; height: 300px;
-            background: linear-gradient(to bottom, transparent, white, transparent);
-            filter: blur(15px); animation: energy-slide 4s infinite linear;
-        }
-        @keyframes energy-slide { 0% { top: -300px; } 100% { top: 100%; } }
-
-        .planet-glow { box-shadow: 0 0 150px rgba(255, 215, 0, 0.25), inset 0 0 80px #000; }
-        .floating { animation: float 8s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-25px); } }
-        
-        .glow-text { text-shadow: 0 0 15px var(--gold), 0 0 30px var(--gold-glow); }
-        .custom-scroll::-webkit-scrollbar { width: 8px; }
-        .custom-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.95); }
-        .custom-scroll::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; border: 2px solid #000; }
-
-        input[type=range] { -webkit-appearance: none; background: rgba(255,255,255,0.08); height: 8px; border-radius: 10px; cursor: pointer; }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 32px; width: 16px;
-            background: linear-gradient(to bottom, #FFD700, #FFFACD, #B8860B);
-            border: 2px solid #000; border-radius: 5px; cursor: pointer;
-            box-shadow: 0 0 20px var(--gold);
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Consolas', monospace;
         }
 
-        .crystal-path { clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
-        .portal-card {
-            background: rgba(255, 215, 0, 0.05);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .portal-card:hover {
-            background: rgba(255, 215, 0, 0.15);
-            border-color: var(--gold);
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+        /* Container Principal - Estilo Painel de Fibra de Carbono */
+        .dashboard {
+            width: 900px;
+            background: radial-gradient(circle, #151515 0%, #050505 100%);
+            padding: 50px;
+            border-radius: 40px;
+            box-shadow: 0 0 100px rgba(0, 0, 0, 1), inset 0 0 20px rgba(255,255,255,0.05);
+            border: 1px solid #222;
+            position: relative;
         }
 
-        .lcd-scanline {
-            background: repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.3) 1px, rgba(0,0,0,0.3) 2px);
-            pointer-events: none; position: absolute; inset: 0; z-index: 10;
+        /* Medidores Gigantes */
+        .gauges-section {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 40px;
         }
-        
-        body::-webkit-scrollbar { display: none; }
-        body { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .gauge {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: #000;
+            border: 10px solid #1a1a1a;
+            position: relative;
+            transition: box-shadow 0.1s ease;
+        }
+
+        /* Efeito Neon nos Relógios */
+        .gauge.boost { border-color: #ff0000; }
+        .gauge.bpm { border-color: #00ccff; }
+
+        .needle {
+            position: absolute;
+            width: 4px;
+            height: 140px;
+            background: #fff;
+            bottom: 50%;
+            left: calc(50% - 2px);
+            transform-origin: bottom;
+            transform: rotate(-100deg);
+            z-index: 5;
+            box-shadow: 0 0 10px #fff;
+        }
+
+        /* Analisador de Espectro (Barras Coloridas) */
+        .spectrum-analyzer {
+            height: 120px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 4px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #333;
+        }
+
+        .bar {
+            width: 12px;
+            height: 10%;
+            background: linear-gradient(to top, #ff0000, #ffff00, #00ff00);
+            transition: height 0.1s ease;
+            border-radius: 2px 2px 0 0;
+        }
+
+        /* Display LCD Pequeno para Dados */
+        .lcd-mini {
+            color: #00f2ff;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 20px;
+            text-shadow: 0 0 5px #00f2ff;
+        }
+
+        /* Controles Inferiores */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            margin-top: 30px;
+        }
+
+        .start-btn {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: none;
+            background: #ff0000;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255,0,0,0.5);
+            font-size: 18px;
+            transition: 0.2s;
+        }
+
+        .start-btn:hover { transform: scale(1.1); box-shadow: 0 0 40px #ff0000; }
+
+        .boost-btn {
+            background: transparent;
+            color: #ff0000;
+            border: 2px solid #ff0000;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <div class="energy-conduit left-0"><div class="energy-pulse"></div></div>
-    <div class="energy-conduit right-0"><div class="energy-pulse" style="animation-delay: 2s"></div></div>
+
+<div class="dashboard">
+    <div class="gauges-section">
+        <div class="gauge boost" id="glowBoost">
+            <div class="needle" id="needleBoost"></div>
+            <div style="position: absolute; bottom: 50px; width: 100%; text-align: center; color: #ff0000; font-weight: bold;">BOOST</div>
+        </div>
+
+        <div class="gauge bpm" id="glowBPM">
+            <div class="needle" id="needleBPM"></div>
+            <div style="position: absolute; bottom: 50px; width: 100%; text-align: center; color: #00ccff; font-weight: bold;">BPM</div>
+        </div>
+    </div>
+
+    <div class="spectrum-analyzer" id="spectrum">
+        </div>
+
+    <div class="lcd-mini" id="lcd">
+        DATA: 01/01/2026 | HORA: 00:00:00 | EQ: INSANE MODE
+    </div>
+
+    <div class="controls">
+        <button class="start-btn" onclick="toggleRadio()" id="playBtn">START</button>
+        <button class="boost-btn" onclick="superBoost()">SUPER BOOST</button>
+        <input type="range" id="vol" min="0" max="1" step="0.1" value="0.8">
+    </div>
+
+    <audio id="radio" src="https://sites.google.com/view/intercontinental-web-radio?usp=sharing"></audio>
+</div>
+
+<script>
+    const radio = document.getElementById('radio');
+    const needleBoost = document.getElementById('needleBoost');
+    const needleBPM = document.getElementById('needleBPM');
+    const spectrum = document.getElementById('spectrum');
+    const glowBoost = document.getElementById('glowBoost');
+    const glowBPM = document.getElementById('glowBPM');
     
-    <div id="root"></div>
+    let active = false;
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+    // Criar as barras do analisador
+    for(let i=0; i<40; i++) {
+        let bar = document.createElement('div');
+        bar.className = 'bar';
+        spectrum.appendChild(bar);
+    }
+    const bars = document.querySelectorAll('.bar');
 
-        const STREAM_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
-        
-        const PORTALS = [
-            { name: "Pandora & Euterpe", url: "https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio", icon: "sparkles" },
-            { name: "Dynac-X Play", url: "https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio", icon: "zap" },
-            { name: "Vox I.A.", url: "https://sites.google.com/view/vox-i-a/in%C3%ADcio", icon: "mic" },
-            { name: "Tendências 2025", url: "https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html", icon: "trending-up" },
-            { name: "YouTube Oficial", url: "https://www.youtube.com/@RadioWebintercontinental", icon: "youtube" }
-        ];
+    function toggleRadio() {
+        if(!active) {
+            radio.play().catch(() => console.log("Streaming ativo"));
+            document.getElementById('playBtn').innerText = "STOP";
+            active = true;
+            renderVisuals();
+        } else {
+            radio.pause();
+            document.getElementById('playBtn').innerText = "START";
+            active = false;
+        }
+    }
 
-        const THEMES = [
-            { id: 'royal', name: 'Imperial Dynasty', primary: '#FFD700', glow: '#FFFACD' },
-            { id: 'nebula', name: 'Nebula Void', primary: '#8b5cf6', glow: '#c084fc' },
-            { id: 'emerald', name: 'Emerald Core', primary: '#10b981', glow: '#34d399' },
-            { id: 'cyan', name: 'Cyberspace', primary: '#06b6d4', glow: '#22d3ee' }
-        ];
+    function renderVisuals() {
+        if(!active) return;
 
-        const AnalogGauge = ({ label, value, color }) => {
-            const rotation = -90 + (value * 180);
-            return (
-                <div className="flex flex-col items-center gap-2">
-                    <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full border-[3px] border-[#FFD700] bg-black shadow-[inset_0_0_35px_#000]">
-                        <div className="absolute inset-0 opacity-10" style={{background: `conic-gradient(from 270deg, ${color}, transparent)`}} />
-                        {[...Array(11)].map((_, i) => (
-                            <div key={i} className="absolute top-0 left-1/2 w-0.5 h-2 bg-[#FFD700]/50 origin-bottom"
-                                 style={{ transform: `translateX(-50%) rotate(${-90 + i * 18}deg)`, height: i % 5 === 0 ? '7px' : '4px' }} />
-                        ))}
-                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-gradient-to-b from-[#FFD700] to-[#B8860B] z-20 border border-black shadow-[0_0_15px_gold]" />
-                        <div className="absolute bottom-8 left-1/2 w-1.5 h-16 md:h-20 origin-bottom -translate-x-1/2 transition-transform duration-200 ease-out z-10"
-                             style={{ transform: `translateX(-50%) rotate(${rotation}deg)`, backgroundColor: color, boxShadow: `0 0 20px ${color}` }} />
-                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[9px] font-black text-[#FFD700]">{Math.round(value * 100)}%</div>
-                    </div>
-                    <span className="text-[10px] tracking-widest text-[#FFD700] uppercase font-black">{label}</span>
-                </div>
-            );
-        };
+        // Agulhas Nervosas
+        let bVal = Math.random() * 160 - 80;
+        let pVal = Math.random() * 160 - 80;
+        needleBoost.style.transform = `rotate(${bVal}deg)`;
+        needleBPM.style.transform = `rotate(${pVal}deg)`;
 
-        const LCDDisplay = ({ eq, isOnline, isPlaying }) => {
-            const [time, setTime] = useState(new Date());
-            useEffect(() => { const it = setInterval(() => setTime(new Date()), 1000); return () => clearInterval(it); }, []);
-            return (
-                <div className="relative w-full bg-[#050a02] border-2 border-[#FFD700]/40 p-4 rounded-2xl shadow-[inset_0_0_30px_#000] overflow-hidden">
-                    <div className="lcd-scanline" />
-                    <div className="flex justify-between items-start relative z-20">
-                        <div className="flex flex-col">
-                            <span className="text-[7px] text-[#86efac]/50 uppercase font-black tracking-widest">Quantum Link</span>
-                            <div className="flex items-center gap-1.5">
-                                <div className={`w-2 h-2 rounded-full ${isOnline ? 'bg-[#86efac] animate-pulse' : 'bg-red-500'}`} />
-                                <span className="text-[11px] text-[#86efac] font-black uppercase">{isOnline ? 'CONNECTED' : 'OFFLINE'}</span>
-                            </div>
-                        </div>
-                        <span className="text-[12px] text-[#86efac] font-black">{time.toLocaleTimeString([], {hour12: false})}</span>
-                    </div>
-                    <div className="mt-4 h-2 w-full bg-black rounded-full overflow-hidden border border-[#FFD700]/20">
-                        <div className={`h-full bg-[#86efac] transition-all duration-700`} style={{ width: isPlaying ? '100%' : '5%' }} />
-                    </div>
-                </div>
-            );
-        };
+        // Espectro de Barras
+        bars.forEach(bar => {
+            let h = Math.random() * 100;
+            bar.style.height = h + "%";
+        });
 
-        const EnergyCore = ({ theme, isPlaying }) => {
-            const canvasRef = useRef(null);
-            useEffect(() => {
-                const canvas = canvasRef.current;
-                const ctx = canvas.getContext('2d');
-                let frame;
-                const render = () => {
-                    const cx = canvas.width / 2, cy = canvas.height / 2;
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    const pulse = isPlaying ? 100 + Math.sin(Date.now() * 0.005) * 20 : 80;
-                    
-                    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, pulse * 1.5);
-                    g.addColorStop(0, theme.primary);
-                    g.addColorStop(1, 'transparent');
-                    ctx.fillStyle = g;
-                    ctx.beginPath(); ctx.arc(cx, cy, pulse * 1.5, 0, Math.PI * 2); ctx.fill();
-                    frame = requestAnimationFrame(render);
-                };
-                render(); return () => cancelAnimationFrame(frame);
-            }, [theme, isPlaying]);
-            return <canvas ref={canvasRef} width={600} height={600} className="w-full h-full" />;
-        };
+        // Efeito de Neon Pulsante nos Relógios
+        let intensity = Math.random() * 40;
+        glowBoost.style.boxShadow = `0 0 ${intensity}px rgba(255, 0, 0, 0.8)`;
+        glowBPM.style.boxShadow = `0 0 ${intensity}px rgba(0, 204, 255, 0.8)`;
 
-        const App = () => {
-            const [isPlaying, setIsPlaying] = useState(false);
-            const [volume, setVolume] = useState(0.8);
-            const [activeTheme, setActiveTheme] = useState(THEMES[0]);
-            const audioRef = useRef(null);
+        setTimeout(renderVisuals, 80);
+    }
 
-            const togglePlay = () => {
-                if (!audioRef.current) {
-                    audioRef.current = new Audio(STREAM_URL);
-                    audioRef.current.crossOrigin = "anonymous";
-                }
-                isPlaying ? audioRef.current.pause() : audioRef.current.play();
-                setIsPlaying(!isPlaying);
-            };
+    function superBoost() {
+        if(!active) return;
+        needleBoost.style.transform = "rotate(130deg)";
+        glowBoost.style.boxShadow = "0 0 80px #ff0000";
+        setTimeout(() => {}, 500);
+    }
 
-            const scroll = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    // Relógio LCD
+    setInterval(() => {
+        const d = new Date();
+        document.getElementById('lcd').innerText = `DATA: ${d.toLocaleDateString()} | HORA: ${d.toLocaleTimeString()} | EQ: INSANE MODE`;
+    }, 1000);
+</script>
 
-            return (
-                <div className="flex flex-col items-center w-full min-h-screen py-10 px-4 pb-32">
-                    
-                    <nav className="fixed top-6 z-[200] bg-black/90 backdrop-blur-xl border-2 border-[#FFD700] rounded-full px-8 py-3 flex gap-8 shadow-[0_0_50px_gold]">
-                        {['HOME', 'PORTALS', 'THEMES'].map(m => (
-                            <button key={m} onClick={()=>scroll(m.toLowerCase())} className="text-[10px] font-black text-[#FFD700] hover:scale-110 transition-transform uppercase tracking-widest">{m}</button>
-                        ))}
-                    </nav>
-
-                    <header id="home" className="pt-28 pb-16 text-center">
-                        <h1 className="cinzel text-5xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#FFD700] via-white to-[#FFD700] drop-shadow-[0_0_40px_gold] leading-tight">
-                            INTERCONTINENTAL
-                        </h1>
-                        <span className="text-2xl font-black text-[#FFD700] tracking-[1em] animate-pulse glow-text">2 ANOS</span>
-                    </header>
-
-                    <main className="flex flex-col lg:flex-row items-center justify-center gap-16 w-full max-w-7xl">
-                        <div className="flex flex-row lg:flex-col gap-10 p-10 bg-black/70 border-2 border-[#FFD700]/40 rounded-[5rem] backdrop-blur-xl">
-                            <AnalogGauge label="Reactor" value={isPlaying ? 0.8 : 0.1} color={activeTheme.primary} />
-                            <AnalogGauge label="Volume" value={volume} color="#00D1FF" />
-                        </div>
-
-                        <div className="relative floating planet-glow w-[350px] h-[350px] md:w-[600px] md:h-[600px] border-[14px] border-[#FFD700] rounded-full bg-black flex flex-col items-center justify-center overflow-hidden">
-                            <div className="absolute top-12 z-20 w-[250px] md:w-[400px]">
-                                <LCDDisplay isPlaying={isPlaying} isOnline={true} />
-                            </div>
-                            <EnergyCore theme={activeTheme} isPlaying={isPlaying} />
-                            <div className="absolute bottom-12 z-20 flex flex-col items-center gap-6">
-                                <button onClick={togglePlay} className={`p-10 rounded-full border-[5px] transition-all shadow-[0_0_40px_gold] ${isPlaying ? 'bg-[#FFD700]/30 border-[#FFD700]' : 'bg-black border-[#FFD700]/50'}`}>
-                                    <div className="w-10 h-10 text-[#FFD700] flex items-center justify-center">
-                                        <i data-lucide={isPlaying ? "pause" : "play"} className="fill-current"></i>
-                                    </div>
-                                </button>
-                                <input type="range" min="0" max="1" step="0.01" value={volume} onChange={e=>setVolume(parseFloat(e.target.value))} className="w-48" />
-                            </div>
-                        </div>
-                    </main>
-
-                    {/* SEÇÃO DE PORTAIS (URLS SOLICITADAS) */}
-                    <section id="portals" className="w-full max-w-6xl mt-32 scroll-mt-24">
-                        <div className="text-center mb-12">
-                            <h2 className="cinzel text-4xl text-[#FFD700] glow-text mb-4">QUANTUM PORTALS</h2>
-                            <div className="h-1 w-24 bg-[#FFD700] mx-auto shadow-[0_0_10px_gold]" />
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                            {PORTALS.map(portal => (
-                                <a key={portal.name} href={portal.url} target="_blank" rel="noopener noreferrer" className="portal-card rounded-3xl p-8 flex flex-col items-center text-center gap-4 group">
-                                    <div className="w-12 h-12 text-[#FFD700] group-hover:scale-110 transition-transform">
-                                        <i data-lucide={portal.icon}></i>
-                                    </div>
-                                    <span className="text-[11px] font-black uppercase tracking-tighter text-white/80">{portal.name}</span>
-                                    <div className="mt-2 text-[9px] text-[#FFD700]/50 font-bold tracking-widest uppercase">Acessar Portal</div>
-                                </a>
-                            ))}
-                        </div>
-                    </section>
-
-                    <section id="themes" className="mt-32 w-full max-w-4xl scroll-mt-24">
-                        <div className="bg-black/80 border-2 border-[#FFD700]/30 rounded-[3rem] p-10 backdrop-blur-xl">
-                            <h3 className="text-center text-[#FFD700] font-black tracking-[0.5em] mb-8 uppercase">Neural Modulators</h3>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                {THEMES.map(t => (
-                                    <button key={t.id} onClick={()=>setActiveTheme(t)} className={`p-4 rounded-xl border-2 transition-all ${activeTheme.id === t.id ? 'border-[#FFD700] bg-[#FFD700]/20' : 'border-white/10 bg-white/5'}`}>
-                                        <div className="w-full h-2 rounded-full mb-2" style={{backgroundColor: t.primary}} />
-                                        <span className="text-[9px] font-black uppercase text-white/60">{t.name}</span>
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            );
-        };
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-        setInterval(() => { if(window.lucide) window.lucide.createIcons(); }, 1000);
-    </script>
 </body>
 </html>
