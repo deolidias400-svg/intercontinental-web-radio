@@ -2,288 +2,346 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Intercontinental • 2 Anos</title>
+<title>Intercontinental • Gold Studio V8</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- PWA -->
+<link rel="manifest" href="data:application/json,{
+  &quot;name&quot;:&quot;Intercontinental Rádio&quot;,
+  &quot;short_name&quot;:&quot;Intercontinental&quot;,
+  &quot;start_url&quot;:&quot;./&quot;,
+  &quot;display&quot;:&quot;standalone&quot;,
+  &quot;background_color&quot;:&quot;#000000&quot;,
+  &quot;theme_color&quot;:&quot;#d6b44a&quot;
+}">
+<meta name="theme-color" content="#d6b44a">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --gold1:#fff2b0;
-  --gold2:#ffd700;
-  --gold3:#b8860b;
-  --glass:rgba(0,0,0,.65);
+ --gold:#d6b44a;
+ --glass:rgba(255,255,255,.07);
 }
-
+*{box-sizing:border-box}
 body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:
-    radial-gradient(circle at top,#333,#000),
-    linear-gradient(120deg,#220000,#001122,#220022);
-  color:#fff;
+ margin:0;
+ font-family:'Orbitron',sans-serif;
+ background:#000;
+ color:#fff;
 }
 
-/* ====== CABEÇALHO ====== */
-header{
-  text-align:center;
-  padding:40px 10px;
+#bg{
+ position:fixed; inset:0;
+ background:
+  radial-gradient(circle at 20% 20%,#3a2a00,#050300),
+  radial-gradient(circle at 80% 80%,#120c00,#000);
+ z-index:-2;
+ transition:filter .4s, background .8s;
 }
+
+.panel{
+ max-width:1320px;
+ margin:42px auto;
+ padding:34px;
+ border-radius:30px;
+ background:linear-gradient(135deg,rgba(214,180,74,.24),rgba(0,0,0,.7));
+ border:1px solid rgba(214,180,74,.55);
+ box-shadow:0 0 70px rgba(214,180,74,.5);
+ position:relative;
+ overflow:hidden;
+}
+.panel::before{
+ content:"";
+ position:absolute; inset:-70%;
+ background:
+  radial-gradient(circle,#ffd70033,transparent 65%),
+  linear-gradient(140deg,#b38b0022,#ffd70044,#5e450022);
+ animation:liquid 26s linear infinite;
+}
+@keyframes liquid{to{transform:rotate(360deg)}}
+
+/* HEADER */
 header h1{
-  font-size:3.5rem;
-  margin:0;
-  background:linear-gradient(var(--gold1),var(--gold2),var(--gold3));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+ text-align:center;
+ font-size:66px;
+ color:var(--gold);
+ text-shadow:0 0 55px rgba(214,180,74,1);
 }
-header p{
-  letter-spacing:.4em;
-  color:#ffd700;
-}
-
-/* ====== MÓDULO BASE ====== */
-.module{
-  margin:20px auto;
-  max-width:900px;
-  border:4px solid;
-  border-image:linear-gradient(135deg,#3a2a14,#ffd700,#fff,#b8860b) 1;
-  background:var(--glass);
-  box-shadow:0 0 30px rgba(255,215,0,.3);
-  padding:20px;
+header h2{
+ text-align:center;
+ letter-spacing:.45em;
+ opacity:.85;
 }
 
-/* ====== LCD ====== */
+/* LCD */
 #lcd{
-  display:flex;
-  justify-content:space-between;
-  font-family:monospace;
-  color:#ffd700;
+ font-family:monospace;
+ background:#020202;
+ border-radius:20px;
+ padding:22px;
+ box-shadow:inset 0 0 45px #00ffe055;
+ color:#00ffe0;
+ line-height:1.6;
 }
 
-/* ====== CONTROLES ====== */
-#controls{
-  text-align:center;
+/* CONTROLS */
+.controls{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:46px;
+ flex-wrap:wrap;
 }
-#playBtn{
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  border:4px solid #ffd700;
-  background:black;
-  color:#ffd700;
-  font-size:22px;
-  cursor:pointer;
+#play{
+ width:140px;height:140px;
+ border-radius:50%;
+ border:none;
+ font-size:42px;
+ cursor:pointer;
+ background:radial-gradient(circle,var(--gold),#6a4e00);
+ box-shadow:0 0 60px rgba(214,180,74,1);
 }
-#volume{
-  width:200px;
+input[type=range]{width:300px}
+
+/* SPECTRUM */
+canvas{
+ width:100%;
+ height:280px;
+ background:#000;
+ border-radius:22px;
 }
 
-/* ====== HERTZ ====== */
-.hertz{
-  display:flex;
-  gap:10px;
-  height:120px;
+/* VU */
+.vu{
+ display:flex;
+ justify-content:space-around;
 }
-.hbar{
-  flex:1;
-  background:#111;
-  border:1px solid #444;
-  position:relative;
+.meter{
+ width:40px;height:260px;
+ background:#111;
+ border-radius:22px;
+ overflow:hidden;
 }
-.hfill{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  background:linear-gradient(to top,#0f0,#ff0,#f00);
+.meter span{
+ display:block;
+ width:100%;
+ height:0%;
 }
 
-/* ====== ESPECTRO ====== */
-#spectrum{
-  display:flex;
-  gap:2px;
-  height:160px;
+/* EQ */
+.eq{
+ display:grid;
+ grid-template-columns:repeat(7,1fr);
+ gap:22px;
+ text-align:center;
 }
-.spec{
-  flex:1;
-  background:#ffd700;
-}
-
-/* ====== AGULHAS ====== */
-.needles{
-  position:relative;
-  height:160px;
-}
-.needle{
-  position:absolute;
-  bottom:0;
-  left:50%;
-  width:3px;
-  transform-origin:bottom;
-}
-.red{background:red;height:130px;}
-.green{background:lime;height:150px;}
-.blue{background:cyan;height:110px;}
-
-/* ====== EQ ====== */
-#eqs button, #themes button{
-  margin:4px;
-  padding:6px 10px;
-  cursor:pointer;
+.eq input{
+ writing-mode:bt-lr;
+ -webkit-appearance:slider-vertical;
+ height:200px;
 }
 
-/* ====== VOX ====== */
+/* THEMES */
+.themes{
+ display:grid;
+ grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
+ gap:20px;
+}
+.theme{
+ height:64px;
+ border-radius:18px;
+ cursor:pointer;
+ box-shadow:0 0 30px rgba(0,0,0,.9);
+}
+
+/* VOX */
 #vox{
-  text-align:center;
-  cursor:pointer;
-}
-#voxBall{
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  background:radial-gradient(circle,#00f,#008);
-  margin:0 auto;
-  box-shadow:0 0 20px #00f;
+ margin:auto;
+ width:200px;height:200px;
+ border-radius:50%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ background:radial-gradient(circle,#00ffff,#003333);
+ box-shadow:0 0 80px #00ffff;
+ cursor:pointer;
 }
 
-/* ====== PORTAIS ====== */
+/* PORTALS */
 .portal{
-  margin:10px 0;
-  padding:15px;
-  text-align:center;
-  border:2px solid;
-  font-weight:bold;
+ display:block;
+ padding:24px;
+ margin:18px 0;
+ border-radius:20px;
+ text-decoration:none;
+ color:#fff;
+ font-size:15px;
+ box-shadow:0 0 34px rgba(0,0,0,.9);
 }
 </style>
 </head>
 
 <body>
+<div id="bg"></div>
 
-<header>
-  <h1>INTERCONTINENTAL</h1>
-  <p>2 ANOS DE SUCESSO</p>
+<header class="panel">
+ <h1>INTERCONTINENTAL</h1>
+ <h2>2 ANOS DE SUCESSO</h2>
 </header>
 
-<div class="module" id="lcd">
-  <div id="date"></div>
-  <div id="status">OFFLINE</div>
-  <div id="info">EQ: GOLD</div>
+<div class="panel" id="lcd">
+ ⏱ <span id="clock"></span><br>
+ 📡 STATUS: <span id="status">OFFLINE</span><br>
+ 🎚 EQ: <span id="eqName">FLAT</span> |
+ 🎨 <span id="themeName">GOLD</span><br>
+ 📢 <span id="broadcast">Sistema Intercontinental pronto.</span>
 </div>
 
-<div class="module" id="controls">
-  <button id="playBtn">▶</button><br><br>
-  <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8">
+<div class="panel">
+ <div class="controls">
+  <button id="play">▶</button>
+  <input type="range" id="volume" min="0" max="1" step="0.01" value="0.85">
+ </div>
 </div>
 
-<div class="module hertz">
-  <div class="hbar"><div class="hfill" id="h1"></div></div>
-  <div class="hbar"><div class="hfill" id="h2"></div></div>
-  <div class="hbar"><div class="hfill" id="h3"></div></div>
-  <div class="hbar"><div class="hfill" id="h4"></div></div>
+<div class="panel"><canvas id="spectrum"></canvas></div>
+
+<div class="panel">
+ <div class="vu">
+  <div class="meter"><span id="v1" style="background:#0055ff"></span></div>
+  <div class="meter"><span id="v2" style="background:#ff0000"></span></div>
+  <div class="meter"><span id="v3" style="background:#00ff66"></span></div>
+ </div>
 </div>
 
-<div class="module" id="spectrum"></div>
-
-<div class="module needles">
-  <div class="needle red" id="n1"></div>
-  <div class="needle green" id="n2"></div>
-  <div class="needle blue" id="n3"></div>
+<div class="panel">
+ <h3>Equalizador Profissional</h3>
+ <div class="eq" id="eqUI"></div>
 </div>
 
-<div class="module" id="eqs"></div>
-<div class="module" id="themes"></div>
-
-<div class="module" id="vox">
-  <div id="voxBall"></div>
-  <p id="voxText">Clique para dicas musicais</p>
+<div class="panel">
+ <h3>Temas Visuais</h3>
+ <div class="themes" id="themes"></div>
 </div>
 
-<div class="module portal" style="color:#ff4d4d;border-color:#ff4d4d">
-  https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio
+<div class="panel">
+ <div id="vox">VOX I.A<br>LOCUTORA</div>
 </div>
-<div class="module portal" style="color:#4dff88;border-color:#4dff88">
-  https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio
-</div>
-<div class="module portal" style="color:#4d94ff;border-color:#4d94ff">
-  https://sites.google.com/view/vox-i-a/in%C3%ADcio
-</div>
-<div class="module portal" style="color:#ffff4d;border-color:#ffff4d">
-  https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html
-</div>
-<div class="module portal" style="color:#ff0000;border-color:#ff0000">
-  https://www.youtube.com/@RadioWebintercontinental
+
+<div class="panel">
+ <a class="portal" style="background:#6a00ff55" href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio">Pandora & Euterpe</a>
+ <a class="portal" style="background:#ff005555" href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio">Dynac-X</a>
+ <a class="portal" style="background:#00ffaa55" href="https://sites.google.com/view/vox-i-a/in%C3%ADcio">VOX I.A</a>
+ <a class="portal" style="background:#ffaa0055" href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html">Blog</a>
+ <a class="portal" style="background:#ff000055" href="https://www.youtube.com/@RadioWebintercontinental">YouTube</a>
 </div>
 
 <script>
-/* === AUDIO === */
-const audio=new Audio("https://stream.zeno.fm/wzcgaal0dnltv");
+const stream="https://stream.zeno.fm/wzcgaal0dnltv";
+const audio=new Audio(stream);
 audio.crossOrigin="anonymous";
 const ctx=new AudioContext();
 const src=ctx.createMediaElementSource(audio);
+
+const freqs=[60,170,350,1000,3500,10000,16000];
+const filters=freqs.map(f=>{
+ let b=ctx.createBiquadFilter();
+ b.type="peaking"; b.frequency.value=f; b.Q.value=1;
+ return b;
+});
+src.connect(filters[0]);
+filters.reduce((a,b)=>{a.connect(b);return b});
 const analyser=ctx.createAnalyser();
-analyser.fftSize=128;
-src.connect(analyser);
+filters.at(-1).connect(analyser);
 analyser.connect(ctx.destination);
+analyser.fftSize=2048;
 
 const data=new Uint8Array(analyser.frequencyBinCount);
+const c=spectrum.getContext("2d");
+let vu=[0,0,0];
 
-/* === ESPECTRO === */
-const spectrum=document.getElementById("spectrum");
-for(let i=0;i<32;i++){
-  const d=document.createElement("div");
-  d.className="spec";
-  spectrum.appendChild(d);
-}
-
-/* === LOOP === */
 function loop(){
-  analyser.getByteFrequencyData(data);
+ requestAnimationFrame(loop);
+ analyser.getByteFrequencyData(data);
 
-  document.getElementById("h1").style.height=data[2]+"px";
-  document.getElementById("h2").style.height=data[6]+"px";
-  document.getElementById("h3").style.height=data[12]+"px";
-  document.getElementById("h4").style.height=data[20]+"px";
+ c.clearRect(0,0,spectrum.width,spectrum.height);
+ for(let i=0;i<340;i++){
+  let v=data[i];
+  c.fillStyle=`rgb(${v+90},${v/2},0)`;
+  c.fillRect(i*4,spectrum.height-v/2,3,v/2);
+ }
 
-  [...spectrum.children].forEach((b,i)=>{
-    b.style.height=(data[i]/255*100)+"%";
-  });
+ vu[0]+=((data[40]/2)-vu[0])*.2;
+ vu[1]+=((data[100]/2)-vu[1])*.2;
+ vu[2]+=((data[180]/2)-vu[2])*.2;
 
-  document.getElementById("n1").style.transform=`rotate(${data[3]/255*100-50}deg)`;
-  document.getElementById("n2").style.transform=`rotate(${data[10]/255*100-50}deg)`;
-  document.getElementById("n3").style.transform=`rotate(${data[20]/255*100-50}deg)`;
-
-  requestAnimationFrame(loop);
+ v1.style.height=vu[0]+"%";
+ v2.style.height=vu[1]+"%";
+ v3.style.height=vu[2]+"%";
 }
 loop();
 
-/* === CONTROLES === */
-playBtn.onclick=()=>{
-  if(audio.paused){
-    ctx.resume();
-    audio.play();
-    playBtn.textContent="⏸";
-    status.textContent="ONLINE";
-  }else{
-    audio.pause();
-    playBtn.textContent="▶";
-    status.textContent="OFFLINE";
-  }
+play.onclick=()=>{
+ if(audio.paused){
+  ctx.resume(); audio.play();
+  play.textContent="⏸";
+  status.textContent="ONLINE";
+  speak("Intercontinental ao vivo para o mundo.");
+ }else{
+  audio.pause();
+  play.textContent="▶";
+  status.textContent="OFFLINE";
+  speak("Transmissão pausada.");
+ }
 };
 volume.oninput=e=>audio.volume=e.target.value;
+setInterval(()=>clock.textContent=new Date().toLocaleString(),1000);
 
-/* === LCD === */
-setInterval(()=>{
-  date.textContent=new Date().toLocaleString();
-},1000);
+/* EQ UI */
+filters.forEach((f,i)=>{
+ let d=document.createElement("div");
+ d.innerHTML=`
+ <input type="range" min="-12" max="12" value="0" step="1">
+ <label>${freqs[i]}Hz</label>`;
+ d.querySelector("input").oninput=e=>{
+  f.gain.value=e.target.value;
+  eqName.textContent="CUSTOM";
+ };
+ eqUI.appendChild(d);
+});
 
-/* === VOX === */
+/* THEMES */
+for(let i=1;i<=26;i++){
+ let t=document.createElement("div");
+ t.className="theme";
+ t.style.background=`linear-gradient(135deg,hsl(${i*12},70%,40%),#000)`;
+ t.onclick=()=>{
+  bg.style.background=
+   `radial-gradient(circle at 20% 20%,hsl(${i*12},60%,20%),#000)`;
+  themeName.textContent="TEMA "+i;
+  speak("Tema alterado.");
+ };
+ themes.appendChild(t);
+}
+
+/* VOX */
 const tips=[
-  "Dica: Hoje o álbum mais ouvido é GOLD HITS",
-  "Este player reage em tempo real ao som",
-  "Use os temas para mudar o clima",
-  "Intercontinental no ar 24h"
+ "Bem-vindo à Intercontinental Web Rádio.",
+ "Explore os temas e personalize sua experiência.",
+ "O som aqui é qualidade profissional.",
+ "Intercontinental conecta culturas."
 ];
-vox.onclick=()=>{
-  voxText.textContent=tips[Math.floor(Math.random()*tips.length)];
-};
+function speak(t){
+ broadcast.textContent=t;
+ if("speechSynthesis"in window){
+  let u=new SpeechSynthesisUtterance(t);
+  u.lang="pt-BR";
+  speechSynthesis.speak(u);
+ }
+}
+vox.onclick=()=>speak(tips[Math.floor(Math.random()*tips.length)]);
 </script>
-
 </body>
 </html>
