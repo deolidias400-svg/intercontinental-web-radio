@@ -3,104 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intercontinental Gold - 2 Anos Elite</title>
+    <title>Intercontinental Gold - AI Edition</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        :root { 
-            --theme-color: #ffd700; 
-            --gold-glow: rgba(255, 215, 0, 0.3);
-        }
-        
-        body {
-            background: #000;
-            color: #fff;
-            font-family: 'Orbitron', sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-            background-image: radial-gradient(circle at center, #151505 0%, #000 100%);
+        :root { --theme: #ffd700; --boost: #ff0000; }
+        body { background: #000; color: #fff; font-family: 'Orbitron', sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow-x: hidden; }
+
+        .gold-chassis {
+            border: 8px solid;
+            border-image: linear-gradient(45deg, #4b3621, #ffd700, #fff5b7, #b8860b) 1;
+            background: #080808;
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.2);
+            border-radius: 40px;
         }
 
-        /* CHASSI CURVADO E LUXUOSO */
-        .master-chassis {
-            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
-            border: 4px solid transparent;
-            border-image: linear-gradient(135deg, #4b3621, #ffd700, #fff5b7, #b8860b) 1;
-            border-radius: 60px; /* Bordas bem arredondadas */
-            box-shadow: 0 0 80px var(--gold-glow), inset 0 0 20px rgba(255,255,255,0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* EFEITO VIDRO (GLASSMORPHISM) NO LCD */
         .glass-lcd {
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            box-shadow: inset 0 0 30px var(--theme-color);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--theme);
+            box-shadow: inset 0 0 20px var(--theme);
+            font-family: 'Share Tech Mono', monospace;
         }
 
-        /* BARRAS DE MEDIÇÃO COM GLOW */
-        .meter-fill {
-            background: linear-gradient(to top, #00ff00 0%, #ffff00 50%, #ff0000 100%);
-            box-shadow: 0 0 15px var(--theme-color);
-            border-radius: 10px;
-            transition: height 0.08s ease;
-        }
+        /* AGULHAS TURBO */
+        .needle { position: absolute; bottom: 0; left: 50%; width: 3px; transform-origin: bottom center; transition: transform 0.05s ease-out; }
 
-        /* BOTÃO PLAY DE CRISTAL */
-        .btn-play-crystal {
-            width: 100px; height: 100px;
+        /* BARRAS RÁPIDAS */
+        .spec-bar { flex: 1; transition: height 0.04s ease; background: var(--theme); }
+        .boosting { background: linear-gradient(to top, #ff0000, #ff8800) !important; box-shadow: 0 0 10px #ff0000; }
+
+        /* ASSISTENTE IA */
+        .ai-assistant {
+            width: 50px; height: 50px;
+            background: radial-gradient(circle, #00d2ff, #0022ff);
             border-radius: 50%;
-            background: linear-gradient(145deg, #222, #000);
-            border: 3px solid var(--theme-color);
-            box-shadow: 0 0 20px var(--theme-color);
+            box-shadow: 0 0 20px #00d2ff;
             cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.3s active:scale-90;
+            animation: pulse 2s infinite;
         }
 
-        .btn-play-crystal.on {
-            background: var(--theme-color);
-            color: #000;
-            box-shadow: 0 0 50px var(--theme-color);
-        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 40px #00d2ff; } 100% { transform: scale(1); } }
 
-        /* AGULHAS ESTILIZADAS */
-        .needle-wrap {
-            width: 100%; height: 80px;
-            background: radial-gradient(circle, #222, #000);
-            border-radius: 50% 50% 5px 5px;
-            position: relative;
-            border: 1px solid #444;
+        .boost-btn {
+            background: #440000; border: 2px solid #ff0000; color: #ff0000;
+            transition: all 0.3s; font-weight: 900;
         }
+        .boost-btn.active { background: #ff0000; color: #fff; box-shadow: 0 0 30px #ff0000; }
 
-        .needle {
-            position: absolute; bottom: 5px; left: 50%;
-            width: 2px; height: 65px;
-            transform-origin: bottom center;
-            box-shadow: 0 0 5px currentColor;
-        }
-
-        /* CUSTOM SCROLLBAR */
         .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: 10px; }
-
-        .title-gold {
-            font-family: 'Cinzel', serif;
-            background: linear-gradient(to bottom, #fff5b7 0%, #ffd700 50%, #b8860b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(255,215,0,0.5));
-        }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--theme); }
     </style>
 </head>
 <body>
@@ -111,35 +68,34 @@
 
         const STREAM_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
         const PORTALS = [
-            { n: "PANDORA", u: "https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio", c: "#FF4D4D", i: "music" },
-            { n: "DYNAC-X", u: "https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio", c: "#4DFF88", i: "globe" },
-            { n: "VOX I.A", u: "https://sites.google.com/view/vox-i-a/in%C3%ADcio", c: "#4D94FF", i: "cpu" },
-            { n: "TRENDS", u: "https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html", c: "#FFFF4D", i: "trending-up" },
-            { n: "YOUTUBE", u: "https://www.youtube.com/@RadioWebintercontinental", c: "#FF4DFF", i: "youtube" }
+            { n: "PANDORA", u: "https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio", c: "#FF4D4D" },
+            { n: "DYNAC-X", u: "https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio", c: "#4DFF88" },
+            { n: "VOX I.A", u: "https://sites.google.com/view/vox-i-a/in%C3%ADcio", c: "#4D94FF" },
+            { n: "TRENDS", u: "https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html", c: "#FFFF4D" },
+            { n: "YOUTUBE", u: "https://www.youtube.com/@RadioWebintercontinental", c: "#FF0000" }
         ];
 
-        const THEMES = Array.from({length: 26}, (_, i) => `hsl(${i * 13.8}, 80%, 50%)`);
-        const EQs = ["DYNAMIC", "GOLD", "STADIUM", "VOCAL", "BASS", "NIGHT", "FLAT"];
+        const EQs = ["FLAT", "ROCK", "POP", "JAZZ", "DANCE", "GOLD", "STADIUM"];
+        const THEMES = Array.from({length: 26}, (_, i) => `hsl(${i * 13.8}, 100%, 50%)`);
 
         const App = () => {
             const [isPlaying, setIsPlaying] = useState(false);
+            const [isBoost, setIsBoost] = useState(false);
             const [theme, setTheme] = useState('#ffd700');
-            const [vol, setVol] = useState(0.8);
             const [eq, setEq] = useState('GOLD');
-            const [freqData, setFreqData] = useState(new Uint8Array(32));
-            const [dateTime, setDateTime] = useState(new Date());
-
+            const [vol, setVol] = useState(0.7);
+            const [freq, setFreq] = useState(new Uint8Array(32));
+            const [msg, setMsg] = useState("");
+            
             const audioRef = useRef(null);
             const analyserRef = useRef(null);
 
             useEffect(() => {
-                document.documentElement.style.setProperty('--theme-color', theme);
-                const timer = setInterval(() => setDateTime(new Date()), 1000);
+                document.documentElement.style.setProperty('--theme', theme);
                 if(window.lucide) window.lucide.createIcons();
-                return () => clearInterval(timer);
-            }, [theme, isPlaying]);
+            }, [theme]);
 
-            const toggleStream = () => {
+            const startAudio = () => {
                 if (!audioRef.current) {
                     const ctx = new (window.AudioContext || window.webkitAudioContext)();
                     const audio = new Audio(STREAM_URL);
@@ -155,7 +111,7 @@
                     const loop = () => {
                         const data = new Uint8Array(analyser.frequencyBinCount);
                         analyser.getByteFrequencyData(data);
-                        setFreqData([...data]);
+                        setFreq([...data]);
                         requestAnimationFrame(loop);
                     };
                     loop();
@@ -164,140 +120,89 @@
                 setIsPlaying(!isPlaying);
             };
 
+            const talkToAI = () => {
+                const phrases = ["Olá! Que tal ouvirmos os sucessos de 2 anos da Intercontinental?", "Dica: Use o Super Boost para sentir o grave!", "A rádio está em alta fidelidade hoje!", "Vox I.A pronta para te ajudar!"];
+                setMsg(phrases[Math.floor(Math.random() * phrases.length)]);
+                setTimeout(() => setMsg(""), 5000);
+            };
+
             return (
-                <div className="p-4 md:p-8 w-full max-w-7xl">
-                    <header className="text-center mb-10">
-                        <h1 className="title-gold text-5xl md:text-8xl font-black mb-2">INTERCONTINENTAL</h1>
-                        <div className="flex items-center justify-center gap-4">
-                            <div className="h-px w-20 bg-yellow-600" />
-                            <span className="text-yellow-500 font-bold tracking-[0.5em] text-sm md:text-xl">EDITION 2 ANOS</span>
-                            <div className="h-px w-20 bg-yellow-600" />
+                <div className="p-4 w-full max-w-6xl">
+                    <div className="gold-chassis p-8 relative">
+                        {/* ASSISTENTE IA */}
+                        <div className="absolute -top-6 -right-6 flex flex-col items-end">
+                            {msg && <div className="bg-blue-600 p-2 rounded-xl text-[10px] mb-2 max-w-[150px] shadow-lg">{msg}</div>}
+                            <div className="ai-assistant" onClick={talkToAI}></div>
                         </div>
-                    </header>
 
-                    <div className="master-chassis p-8 md:p-12">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                            
-                            {/* COLUNA ESQUERDA: SENSORES ANALÓGICOS */}
-                            <div className="lg:col-span-3 space-y-6">
-                                <div className="glass-lcd p-6 space-y-4">
-                                    <h3 className="text-[9px] font-black text-center opacity-70">TRI-PHASE MONITOR</h3>
-                                    <div className="needle-wrap">
-                                        <div className="needle text-red-500" style={{ transform: `rotate(${(freqData[2]/255 * 100)-50}deg)` }} />
-                                        <div className="needle text-green-500 !h-14" style={{ transform: `rotate(${(freqData[8]/255 * 100)-50}deg)` }} />
-                                        <div className="needle text-blue-500" style={{ transform: `rotate(${(freqData[15]/255 * 100)-50}deg)` }} />
-                                    </div>
-                                    <div className="flex justify-between px-2">
-                                        <div className="w-3 h-20 bg-black/50 rounded-full relative overflow-hidden">
-                                            <div className="meter-fill w-full absolute bottom-0" style={{height: `${(freqData[3]/255)*100}%`}} />
-                                        </div>
-                                        <div className="w-3 h-20 bg-black/50 rounded-full relative overflow-hidden">
-                                            <div className="meter-fill w-full absolute bottom-0" style={{height: `${(freqData[10]/255)*100}%`}} />
-                                        </div>
-                                        <div className="w-3 h-20 bg-black/50 rounded-full relative overflow-hidden">
-                                            <div className="meter-fill w-full absolute bottom-0" style={{height: `${(freqData[20]/255)*100}%`}} />
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-between text-[7px] font-bold text-center opacity-50">
-                                        <span>HERTZ</span><span>STEREO</span><span>BEAT</span>
-                                    </div>
+                        <header className="text-center mb-6">
+                            <h1 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-100 to-yellow-600">INTERCONTINENTAL</h1>
+                        </header>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            {/* ESQUERDA: AGULHAS E TEMAS */}
+                            <div className="lg:col-span-3 space-y-4">
+                                <div className="glass-lcd p-4 h-32 relative overflow-hidden rounded-xl">
+                                    <div className="needle h-24 bg-red-500 shadow-[0_0_10px_red]" style={{ transform: `rotate(${(freq[2]/255*100)-50}deg)` }} />
+                                    <div className="needle h-20 bg-green-500 shadow-[0_0_10px_green]" style={{ transform: `rotate(${(freq[10]/255*100)-50}deg)` }} />
+                                    <div className="needle h-24 bg-blue-500 shadow-[0_0_10px_blue]" style={{ transform: `rotate(${(freq[20]/255*100)-50}deg)` }} />
+                                    <div className="absolute bottom-1 w-full text-center text-[8px]">BASS / MID / HIGH</div>
                                 </div>
-
-                                <div className="glass-lcd p-4">
-                                    <h3 className="text-[9px] font-black text-center mb-4 uppercase">26 Modulators</h3>
-                                    <div className="grid grid-cols-5 gap-2 h-40 overflow-y-auto custom-scroll pr-2">
+                                <div className="glass-lcd p-4 rounded-xl">
+                                    <div className="grid grid-cols-6 gap-1 h-32 overflow-y-auto custom-scroll">
                                         {THEMES.map((c, i) => (
-                                            <button key={i} onClick={() => setTheme(c)} 
-                                                className="w-full aspect-square rounded-lg hover:scale-110 transition border border-white/10" 
-                                                style={{backgroundColor: c}} />
+                                            <button key={i} onClick={() => setTheme(c)} className="h-6 rounded" style={{background: c}} />
                                         ))}
                                     </div>
                                 </div>
                             </div>
 
-                            {/* COLUNA CENTRAL: COMANDO PRINCIPAL */}
-                            <div className="lg:col-span-6 space-y-8 flex flex-col items-center">
-                                <div className="glass-lcd w-full p-8 relative overflow-hidden">
-                                    <div className="flex justify-between text-[10px] font-mono text-current mb-4">
-                                        <span>{dateTime.toLocaleDateString()}</span>
-                                        <span className="animate-pulse">{isPlaying ? 'LIVE STREAM ACTIVE' : 'SYSTEM STANDBY'}</span>
-                                        <span>{dateTime.toLocaleTimeString()}</span>
+                            {/* CENTRO: LCD E PLAY */}
+                            <div className="lg:col-span-6 space-y-4">
+                                <div className="glass-lcd p-6 rounded-[2rem] text-center">
+                                    <div className="flex justify-between text-[9px] text-current opacity-70 mb-2">
+                                        <span>VOL: {Math.round(vol * 100)}%</span>
+                                        <span>EQ: {eq}</span>
+                                        <span>THEME: {theme}</span>
                                     </div>
-                                    
-                                    <div className="text-center py-6 border-y border-white/5 my-4">
-                                        <h2 className="text-4xl md:text-6xl font-black tracking-tighter" style={{textShadow: `0 0 20px ${theme}`}}>
-                                            {isPlaying ? "ON AIR" : "READY"}
-                                        </h2>
-                                        <p className="text-[10px] mt-2 opacity-60">PRESET: {eq} | FREQ: 44.1 KHZ</p>
-                                    </div>
-
-                                    <div className="flex items-end gap-1 h-32 justify-center">
-                                        {Array.from(freqData).slice(0, 32).map((v, i) => (
-                                            <div key={i} className="flex-1 bg-current transition-all" 
-                                                style={{height: `${(v/255)*100}%`, opacity: (i/32) + 0.3}} />
+                                    <h2 className="text-3xl font-black mb-4 tracking-widest">{isPlaying ? "ON AIR" : "STANDBY"}</h2>
+                                    <div className="flex items-end gap-1 h-24">
+                                        {Array.from(freq).slice(0, 24).map((v, i) => (
+                                            <div key={i} className={`spec-bar ${isBoost ? 'boosting' : ''}`} style={{height: `${(v/255)*100}%`}} />
                                         ))}
                                     </div>
                                 </div>
 
-                                <div className="flex items-center gap-10">
-                                    <div className="flex flex-col items-center gap-2">
-                                        <input type="range" min="0" max="1" step="0.01" value={vol} 
-                                            onChange={(e) => {setVol(e.target.value); if(audioRef.current) audioRef.current.volume = e.target.value;}}
-                                            className="w-32 accent-current cursor-pointer" />
-                                        <span className="text-[9px] font-bold">VOLUME {Math.round(vol*100)}%</span>
-                                    </div>
-
-                                    <button onClick={toggleStream} className={`btn-play-crystal ${isPlaying ? 'on' : ''}`}>
-                                        <i data-lucide={isPlaying ? "pause" : "play"} className="w-12 h-12" />
+                                <div className="flex justify-center items-center gap-6">
+                                    <button onClick={() => {setIsBoost(!isBoost); if(audioRef.current) audioRef.current.volume = isBoost ? vol : 1;}} className={`boost-btn px-4 py-2 rounded-full text-[10px] ${isBoost ? 'active' : ''}`}>SUPER BOOST</button>
+                                    <button onClick={startAudio} className="w-20 h-20 rounded-full border-4 border-current flex items-center justify-center bg-black hover:bg-current hover:text-black transition shadow-lg">
+                                        <i data-lucide={isPlaying ? "pause" : "play"} className="w-10 h-10" />
                                     </button>
-
-                                    <div className="text-center">
-                                        <div className="text-[9px] font-bold mb-1">SIGNAL</div>
-                                        <div className="flex gap-1">
-                                            {[1,2,3,4,5].map(i => (
-                                                <div key={i} className={`w-1 h-4 rounded-full ${isPlaying ? 'bg-current animate-bounce' : 'bg-white/10'}`} style={{animationDelay: `${i*0.1}s`}} />
-                                            ))}
-                                        </div>
-                                    </div>
+                                    <input type="range" min="0" max="1" step="0.1" value={vol} onChange={(e) => {setVol(e.target.value); audioRef.current.volume = e.target.value;}} className="w-24 accent-current" />
                                 </div>
 
-                                <div className="flex flex-wrap justify-center gap-3">
+                                <div className="flex flex-wrap justify-center gap-2">
                                     {EQs.map(e => (
-                                        <button key={e} onClick={() => setEq(e)} 
-                                            className={`px-4 py-1.5 rounded-full text-[9px] font-black border transition-all ${eq === e ? 'bg-current text-black border-white' : 'border-white/20 hover:border-current'}`}>
-                                            {e}
-                                        </button>
+                                        <button key={e} onClick={() => setEq(e)} className={`px-3 py-1 text-[8px] font-bold border ${eq===e ? 'bg-current text-black' : 'border-current text-current'}`}>{e}</button>
                                     ))}
                                 </div>
                             </div>
 
-                            {/* COLUNA DIREITA: PORTAIS ELITE */}
-                            <div className="lg:col-span-3 space-y-4">
-                                <h3 className="text-[10px] font-black text-center opacity-50 mb-6">OFFICIAL PORTALS</h3>
+                            {/* DIREITA: URLS */}
+                            <div className="lg:col-span-3 space-y-2">
                                 {PORTALS.map((p, i) => (
-                                    <a key={i} href={p.u} target="_blank" 
-                                        className="group flex items-center justify-between p-4 glass-lcd border-transparent hover:border-current transition-all transform hover:-translate-x-2">
-                                        <div className="flex items-center gap-3">
-                                            <i data-lucide={p.i} className="w-4 h-4" style={{color: p.c}} />
-                                            <span className="text-[10px] font-black" style={{color: p.c}}>{p.n}</span>
-                                        </div>
-                                        <i data-lucide="chevron-right" className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all" />
-                                    </a>
+                                    <a key={i} href={p.u} target="_blank" className="flex items-center gap-3 p-3 glass-lcd rounded-lg hover:translate-x-1 transition text-[10px] font-black" style={{color: p.c}}>{p.n}</a>
                                 ))}
                             </div>
                         </div>
                     </div>
-                    
-                    <footer className="mt-10 text-center text-[9px] font-bold text-yellow-700 tracking-[0.3em] uppercase">
-                        Radio Intercontinental &copy; 2026 | Built for Excellence
-                    </footer>
                 </div>
             );
         };
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
-        setTimeout(() => { if(window.lucide) window.lucide.createIcons(); }, 1000);
+        setTimeout(() => window.lucide.createIcons(), 1000);
     </script>
 </body>
 </html>
