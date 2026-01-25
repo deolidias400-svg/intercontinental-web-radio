@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Intercontinental Gold Legend • 2 Anos</title>
 
+<!-- CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -14,33 +15,61 @@
 
 <style>
 :root{
---gold:#ffd700;
---liquid:linear-gradient(135deg,#3a2a14,#ffd700,#fff5b7,#b8860b);
+  --gold:#ffd700;
+  --liquid:linear-gradient(135deg,#3b2a14,#ffd700,#fff5b7,#b8860b);
 }
+
 body{
-background:radial-gradient(circle at top,#222,#000);
-color:#fff;
-font-family:Orbitron,sans-serif;
-padding:40px 15px;
+  background:radial-gradient(circle at top,#222,#000);
+  color:#fff;
+  font-family:Orbitron,sans-serif;
+  padding:40px 16px;
 }
+
 .gold{
-border:4px solid;
-border-image:var(--liquid) 1;
-background:rgba(0,0,0,.85);
-box-shadow:0 0 40px rgba(255,215,0,.25);
+  border:4px solid;
+  border-image:var(--liquid) 1;
+  background:rgba(0,0,0,.85);
+  box-shadow:0 0 40px rgba(255,215,0,.25);
 }
+
 .glass{
-background:rgba(0,0,0,.7);
-border:1px solid rgba(255,215,0,.3);
+  background:rgba(0,0,0,.75);
+  border:1px solid rgba(255,215,0,.35);
 }
+
 .txt-gold{
-font-family:Cinzel,serif;
-background:linear-gradient(#fff5b7,#ffd700,#b8860b);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+  font-family:Cinzel,serif;
+  background:linear-gradient(#fff5b7,#ffd700,#b8860b);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-.bar{width:100%;border-radius:2px;transition:height .05s}
-.needle{position:absolute;bottom:0;left:50%;width:2px;transform-origin:bottom;filter:drop-shadow(0 0 6px currentColor)}
+
+.bar{
+  width:100%;
+  border-radius:2px;
+  transition:height .05s linear;
+}
+
+.needle{
+  position:absolute;
+  bottom:0;
+  left:50%;
+  width:2px;
+  transform-origin:bottom center;
+  filter:drop-shadow(0 0 8px currentColor);
+}
+
+.portal{
+  padding:18px;
+  text-align:center;
+  font-weight:900;
+  border-radius:14px;
+  border:2px solid;
+  transition:.3s;
+}
+.portal:hover{transform:scale(1.05);}
+
 </style>
 </head>
 
@@ -48,142 +77,160 @@ background:linear-gradient(#fff5b7,#ffd700,#b8860b);
 <div id="root"></div>
 
 <script type="text/babel">
-const {useState,useEffect,useRef}=React;
+const {useState,useEffect}=React;
+
 const STREAM="https://stream.zeno.fm/wzcgaal0dnltv";
 
 const PORTALS=[
-{n:"PANDORA",u:"https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio",c:"#ff4d4d"},
-{n:"DYNAC-X",u:"https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio",c:"#4dff88"},
-{n:"VOX I.A",u:"https://sites.google.com/view/vox-i-a/in%C3%ADcio",c:"#4d94ff"},
-{n:"TRENDS",u:"https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html",c:"#ffff4d"},
-{n:"YOUTUBE",u:"https://www.youtube.com/@RadioWebintercontinental",c:"#ff0000"}
+ {n:"PANDORA",u:"https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio",c:"#ff4d4d"},
+ {n:"DYNAC-X",u:"https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio",c:"#4dff88"},
+ {n:"VOX I.A",u:"https://sites.google.com/view/vox-i-a/in%C3%ADcio",c:"#4d94ff"},
+ {n:"TRENDS",u:"https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html",c:"#ffff4d"},
+ {n:"YOUTUBE",u:"https://www.youtube.com/@RadioWebintercontinental",c:"#ff0000"}
 ];
 
 const EQS=["DYNAMIC","GOLD","STADIUM","BASS+","CLUB","VOX","FLAT"];
 const THEMES=Array.from({length:26},(_,i)=>`hsl(${i*14},100%,50%)`);
 
 function App(){
-const[audio,setAudio]=useState(null);
-const[analyser,setAnalyser]=useState(null);
-const[freq,setFreq]=useState(new Uint8Array(32));
-const[play,setPlay]=useState(false);
-const[theme,setTheme]=useState("#ffd700");
-const[eq,setEq]=useState("GOLD");
-const[time,setTime]=useState(new Date());
-const[vox,setVox]=useState("Clique para dicas musicais.");
+  const[audio,setAudio]=useState(null);
+  const[analyser,setAnalyser]=useState(null);
+  const[freq,setFreq]=useState(new Uint8Array(32));
+  const[play,setPlay]=useState(false);
+  const[theme,setTheme]=useState("#ffd700");
+  const[eq,setEq]=useState("GOLD");
+  const[time,setTime]=useState(new Date());
+  const[vox,setVox]=useState("Clique para dicas musicais.");
 
-useEffect(()=>{
-setInterval(()=>setTime(new Date()),1000);
-lucide.createIcons();
-},[]);
+  useEffect(()=>{
+    setInterval(()=>setTime(new Date()),1000);
+    lucide.createIcons();
+  },[]);
 
-const toggle=()=>{
-if(!audio){
-const ctx=new AudioContext();
-const a=new Audio(STREAM);
-a.crossOrigin="anonymous";
-const src=ctx.createMediaElementSource(a);
-const an=ctx.createAnalyser();
-an.fftSize=64;
-src.connect(an);
-an.connect(ctx.destination);
-setAudio(a);
-setAnalyser(an);
-const loop=()=>{
-const d=new Uint8Array(an.frequencyBinCount);
-an.getByteFrequencyData(d);
-setFreq([...d]);
-requestAnimationFrame(loop);
-};
-loop();
-a.play();
-setPlay(true);
-}else{
-play?audio.pause():audio.play();
-setPlay(!play);
-}
-};
+  const toggle=()=>{
+    if(!audio){
+      const ctx=new (window.AudioContext||window.webkitAudioContext)();
+      const a=new Audio(STREAM);
+      a.crossOrigin="anonymous";
+      const src=ctx.createMediaElementSource(a);
+      const an=ctx.createAnalyser();
+      an.fftSize=64;
+      src.connect(an);
+      an.connect(ctx.destination);
+      setAudio(a);
+      setAnalyser(an);
+      const loop=()=>{
+        const d=new Uint8Array(an.frequencyBinCount);
+        an.getByteFrequencyData(d);
+        setFreq([...d]);
+        requestAnimationFrame(loop);
+      };
+      loop();
+      a.play();
+      setPlay(true);
+    }else{
+      play?audiopause():audio.play();
+      setPlay(!play);
+    }
+  };
 
-const talk=()=>{
-const tips=[
-"🎧 Hoje o álbum mais ouvido é GOLD HITS.",
-"🔥 Este player reage em tempo real ao som.",
-"💿 Explore a Pandora para lançamentos.",
-"🎚️ O modo GOLD equilibra médios e brilho."
-];
-setVox(tips[Math.floor(Math.random()*tips.length)]);
-};
+  function audiopause(){audio.pause();}
 
-return(
-<div className="max-w-[920px] mx-auto space-y-10">
+  const talk=()=>{
+    const tips=[
+      "🎧 Álbum do momento: GOLD HITS",
+      "🔥 Player reage em tempo real ao som",
+      "🎚️ EQ GOLD realça médios e brilho",
+      "📡 Intercontinental ao vivo agora"
+    ];
+    setVox(tips[Math.floor(Math.random()*tips.length)]);
+  };
 
-<header className="text-center">
-<h1 className="txt-gold text-6xl md:text-8xl">INTERCONTINENTAL</h1>
-<p className="text-yellow-500 tracking-[0.6em]">2 ANOS DE SUCESSO</p>
-</header>
+  return(
+  <div className="max-w-[960px] mx-auto space-y-10">
 
-<section className="gold glass p-4 flex justify-between text-yellow-400 font-mono text-sm">
-<div>{time.toLocaleDateString()}<br/>{time.toLocaleTimeString()}</div>
-<div className={play?"text-green-400":"text-red-500"}>
-{play?"● ONLINE":"● OFFLINE"}
-</div>
-<div>EQ:{eq}<br/>TEMA</div>
-</section>
+    {/* CABEÇALHO */}
+    <header className="text-center">
+      <h1 className="txt-gold text-6xl md:text-8xl">INTERCONTINENTAL</h1>
+      <p className="text-yellow-500 tracking-[0.6em]">2 ANOS DE SUCESSO</p>
+    </header>
 
-<section className="gold glass p-8 text-center">
-<button onClick={toggle}
-className="w-24 h-24 rounded-full border-4 border-yellow-500 flex items-center justify-center mx-auto hover:bg-yellow-500 transition">
-<i data-lucide={play?"pause":"play"} className="w-10 h-10"/>
-</button>
-</section>
+    {/* LCD */}
+    <section className="gold glass p-4 flex justify-between text-yellow-400 font-mono text-sm">
+      <div>{time.toLocaleDateString()}<br/>{time.toLocaleTimeString()}</div>
+      <div className={play?"text-green-400":"text-red-500"}>
+        {play?"● ONLINE":"● OFFLINE"}
+      </div>
+      <div>EQ:{eq}<br/>TEMA</div>
+    </section>
 
-<section className="gold glass p-6 h-48 flex items-end gap-1">
-{freq.map((v,i)=>(
-<div key={i} className="bar" style={{height:`${v/255*100}%`,background:theme}}/>
-))}
-</section>
+    {/* PLAY */}
+    <section className="gold glass p-8 text-center">
+      <button onClick={toggle}
+        className="w-24 h-24 rounded-full border-4 border-yellow-500 flex items-center justify-center mx-auto hover:bg-yellow-500 transition">
+        <i data-lucide={play?"pause":"play"} className="w-10 h-10"/>
+      </button>
+    </section>
 
-<section className="gold glass p-6 relative h-48">
-<div className="needle text-red-500 h-32" style={{transform:`rotate(${freq[3]/255*100-50}deg)`}}/>
-<div className="needle text-green-500 h-36" style={{transform:`rotate(${freq[10]/255*100-50}deg)`}}/>
-<div className="needle text-blue-500 h-28" style={{transform:`rotate(${freq[20]/255*100-50}deg)`}}/>
-</section>
+    {/* ANALISADOR */}
+    <section className="gold glass p-6 h-48 flex items-end gap-1">
+      {freq.map((v,i)=>(
+        <div key={i} className="bar"
+          style={{height:`${v/255*100}%`,background:theme}}/>
+      ))}
+    </section>
 
-<section className="gold glass p-4 space-y-3">
-<div className="flex flex-wrap gap-2 justify-center">
-{EQS.map(e=>(
-<button key={e} onClick={()=>setEq(e)}
-className={eq===e?"bg-yellow-500 text-black px-3":"border border-yellow-500 text-yellow-500 px-3"}>
-{e}
-</button>
-))}
-</div>
-<div className="flex gap-2 overflow-x-auto">
-{THEMES.map((c,i)=>(
-<div key={i} onClick={()=>setTheme(c)}
-className="w-8 h-8 cursor-pointer" style={{background:c}}/>
-))}
-</div>
-</section>
+    {/* AGULHAS */}
+    <section className="gold glass p-6 relative h-48">
+      <div className="needle text-red-500 h-32"
+        style={{transform:`rotate(${freq[3]/255*100-50}deg)`}}/>
+      <div className="needle text-green-500 h-36"
+        style={{transform:`rotate(${freq[10]/255*100-50}deg)`}}/>
+      <div className="needle text-blue-500 h-28"
+        style={{transform:`rotate(${freq[20]/255*100-50}deg)`}}/>
+    </section>
 
-<section className="gold glass p-6 text-center">
-<div onClick={talk}
-className="mx-auto w-16 h-16 rounded-full bg-blue-500 shadow-lg animate-pulse cursor-pointer"></div>
-<p className="text-blue-400 text-xs mt-3">{vox}</p>
-</section>
+    {/* EQ + TEMAS */}
+    <section className="gold glass p-4 space-y-4">
+      <div className="flex flex-wrap gap-2 justify-center">
+        {EQS.map(e=>(
+          <button key={e} onClick={()=>setEq(e)}
+            className={eq===e
+              ?"bg-yellow-500 text-black px-3 py-1"
+              :"border border-yellow-500 text-yellow-500 px-3 py-1"}>
+            {e}
+          </button>
+        ))}
+      </div>
+      <div className="flex gap-2 overflow-x-auto">
+        {THEMES.map((c,i)=>(
+          <div key={i} onClick={()=>setTheme(c)}
+            className="w-8 h-8 cursor-pointer"
+            style={{background:c}}/>
+        ))}
+      </div>
+    </section>
 
-<section className="grid md:grid-cols-5 gap-2">
-{PORTALS.map(p=>(
-<a key={p.n} href={p.u} target="_blank"
-className="gold glass p-3 text-center font-bold hover:scale-105"
-style={{color:p.c}}>
-{p.n}
-</a>
-))}
-</section>
+    {/* VOX */}
+    <section className="gold glass p-6 text-center">
+      <div onClick={talk}
+        className="mx-auto w-16 h-16 rounded-full bg-blue-500 shadow-lg animate-pulse cursor-pointer"></div>
+      <p className="text-blue-400 text-xs mt-3">{vox}</p>
+    </section>
 
-</div>
-);
+    {/* PORTAIS */}
+    <section className="grid md:grid-cols-5 gap-2">
+      {PORTALS.map(p=>(
+        <a key={p.n} href={p.u} target="_blank"
+          className="portal gold glass"
+          style={{color:p.c,borderColor:p.c}}>
+          {p.n}
+        </a>
+      ))}
+    </section>
+
+  </div>
+  );
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
