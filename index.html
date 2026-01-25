@@ -1,233 +1,192 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Intercontinental Gold - Elite 2 Anos</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intercontinental Gold Legend • 2 Anos</title>
 
-    <style>
-        body { 
-            /* PAPEL DE PAREDE COLORIDO E CHAMATIVO */
-            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop');
-            background-size: cover; background-attachment: fixed;
-            min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow-x: hidden;
-        }
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
 
-        /* EFEITO OURO LÍQUIDO */
-        .gold-border {
-            border: 6px solid;
-            border-image: linear-gradient(135deg, #4b3621, #ffd700, #fff5b7, #b8860b, #ffd700) 1;
-            background: linear-gradient(145deg, rgba(30,30,10,0.95), rgba(10,10,5,0.98));
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.6), inset 0 0 20px rgba(255, 215, 0, 0.2);
-            border-radius: 20px;
-        }
-
-        .lcd-glass {
-            background: rgba(0, 20, 0, 0.9);
-            border: 2px solid #ffd700;
-            box-shadow: 0 0 15px #ffd700, inset 0 0 15px #ffd700;
-            font-family: 'Share Tech Mono', monospace;
-            color: #0f0;
-        }
-
-        /* AGULHAS REAIS */
-        .analog-meter {
-            width: 100%; height: 120px; background: #111; border: 2px solid #b8860b;
-            position: relative; overflow: hidden; border-radius: 10px 10px 0 0;
-        }
-        .needle {
-            position: absolute; bottom: 0; left: 50%; width: 2px; height: 90%;
-            transform-origin: bottom center; transition: transform 0.05s cubic-bezier(0.1, 0.5, 0.1, 1);
-            z-index: 10;
-        }
-        .meter-scale { position: absolute; top: 10px; width: 100%; text-align: center; color: #b8860b; font-size: 8px; }
-
-        /* ANALISADOR NERVOSO */
-        .spec-bar { flex: 1; transition: height 0.04s ease; background: linear-gradient(to top, #ffd700, #fff); }
-
-        .vox-sphere {
-            width: 70px; height: 70px; background: radial-gradient(circle at 30% 30%, #00f2fe, #0055ff);
-            border-radius: 50%; box-shadow: 0 0 30px #00f2fe; cursor: pointer;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 50px #00f2fe; } 100% { transform: scale(1); } }
-
-        .gold-btn {
-            background: linear-gradient(to bottom, #ffd700, #b8860b);
-            color: #000; font-weight: 900; border: 1px solid #fff;
-            transition: all 0.3s;
-        }
-        .gold-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px #ffd700; }
-    </style>
+<style>
+:root{
+--gold:#ffd700;
+--liquid:linear-gradient(135deg,#3a2a14,#ffd700,#fff5b7,#b8860b);
+}
+body{
+background:radial-gradient(circle at top,#222,#000);
+color:#fff;
+font-family:Orbitron,sans-serif;
+padding:40px 15px;
+}
+.gold{
+border:4px solid;
+border-image:var(--liquid) 1;
+background:rgba(0,0,0,.85);
+box-shadow:0 0 40px rgba(255,215,0,.25);
+}
+.glass{
+background:rgba(0,0,0,.7);
+border:1px solid rgba(255,215,0,.3);
+}
+.txt-gold{
+font-family:Cinzel,serif;
+background:linear-gradient(#fff5b7,#ffd700,#b8860b);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+.bar{width:100%;border-radius:2px;transition:height .05s}
+.needle{position:absolute;bottom:0;left:50%;width:2px;transform-origin:bottom;filter:drop-shadow(0 0 6px currentColor)}
+</style>
 </head>
+
 <body>
-    <div id="root"></div>
+<div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+<script type="text/babel">
+const {useState,useEffect,useRef}=React;
+const STREAM="https://stream.zeno.fm/wzcgaal0dnltv";
 
-        const STREAM_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
-        const PORTALS = [
-            { n: "PANDORA", u: "https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio", c: "#FF4D4D" },
-            { n: "DYNAC-X", u: "https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio", c: "#4DFF88" },
-            { n: "VOX I.A", u: "https://sites.google.com/view/vox-i-a/in%C3%ADcio", c: "#4D94FF" },
-            { n: "TRENDS", u: "https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html", c: "#FFFF4D" },
-            { n: "YOUTUBE", u: "https://www.youtube.com/@RadioWebintercontinental", c: "#FF0000" }
-        ];
+const PORTALS=[
+{n:"PANDORA",u:"https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio",c:"#ff4d4d"},
+{n:"DYNAC-X",u:"https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio",c:"#4dff88"},
+{n:"VOX I.A",u:"https://sites.google.com/view/vox-i-a/in%C3%ADcio",c:"#4d94ff"},
+{n:"TRENDS",u:"https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html",c:"#ffff4d"},
+{n:"YOUTUBE",u:"https://www.youtube.com/@RadioWebintercontinental",c:"#ff0000"}
+];
 
-        const EQs = ["DYNAMIC", "GOLD", "STADIUM", "BASS+", "CLUB", "VOX", "FLAT"];
-        const THEMES = Array.from({length: 26}, (_, i) => `hsl(${i * 13.8}, 100%, 50%)`);
+const EQS=["DYNAMIC","GOLD","STADIUM","BASS+","CLUB","VOX","FLAT"];
+const THEMES=Array.from({length:26},(_,i)=>`hsl(${i*14},100%,50%)`);
 
-        const App = () => {
-            const [isPlaying, setIsPlaying] = useState(false);
-            const [freq, setFreq] = useState(new Uint8Array(32));
-            const [theme, setTheme] = useState('#ffd700');
-            const [eq, setEq] = useState('GOLD');
-            const [vol, setVol] = useState(0.8);
-            const [time, setTime] = useState(new Date());
-            const [voxMsg, setVoxMsg] = useState("Sou sua assistente Intercontinental. Clique em mim!");
+function App(){
+const[audio,setAudio]=useState(null);
+const[analyser,setAnalyser]=useState(null);
+const[freq,setFreq]=useState(new Uint8Array(32));
+const[play,setPlay]=useState(false);
+const[theme,setTheme]=useState("#ffd700");
+const[eq,setEq]=useState("GOLD");
+const[time,setTime]=useState(new Date());
+const[vox,setVox]=useState("Clique para dicas musicais.");
 
-            const audioRef = useRef(null);
-            const analyserRef = useRef(null);
+useEffect(()=>{
+setInterval(()=>setTime(new Date()),1000);
+lucide.createIcons();
+},[]);
 
-            useEffect(() => {
-                const timer = setInterval(() => setTime(new Date()), 1000);
-                if(window.lucide) window.lucide.createIcons();
-                return () => clearInterval(timer);
-            }, []);
+const toggle=()=>{
+if(!audio){
+const ctx=new AudioContext();
+const a=new Audio(STREAM);
+a.crossOrigin="anonymous";
+const src=ctx.createMediaElementSource(a);
+const an=ctx.createAnalyser();
+an.fftSize=64;
+src.connect(an);
+an.connect(ctx.destination);
+setAudio(a);
+setAnalyser(an);
+const loop=()=>{
+const d=new Uint8Array(an.frequencyBinCount);
+an.getByteFrequencyData(d);
+setFreq([...d]);
+requestAnimationFrame(loop);
+};
+loop();
+a.play();
+setPlay(true);
+}else{
+play?audio.pause():audio.play();
+setPlay(!play);
+}
+};
 
-            const start = () => {
-                if (!audioRef.current) {
-                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                    const audio = new Audio(STREAM_URL);
-                    audio.crossOrigin = "anonymous";
-                    const source = ctx.createMediaElementSource(audio);
-                    const analyser = ctx.createAnalyser();
-                    analyser.fftSize = 64;
-                    source.connect(analyser);
-                    analyser.connect(ctx.destination);
-                    audioRef.current = audio;
-                    analyserRef.current = analyser;
-                    const loop = () => {
-                        const data = new Uint8Array(analyser.frequencyBinCount);
-                        analyser.getByteFrequencyData(data);
-                        setFreq([...data]);
-                        requestAnimationFrame(loop);
-                    };
-                    loop();
-                }
-                isPlaying ? audioRef.current.pause() : audioRef.current.play();
-                setIsPlaying(!isPlaying);
-            };
+const talk=()=>{
+const tips=[
+"🎧 Hoje o álbum mais ouvido é GOLD HITS.",
+"🔥 Este player reage em tempo real ao som.",
+"💿 Explore a Pandora para lançamentos.",
+"🎚️ O modo GOLD equilibra médios e brilho."
+];
+setVox(tips[Math.floor(Math.random()*tips.length)]);
+};
 
-            return (
-                <div className="w-full max-w-4xl p-4 flex flex-col gap-6">
-                    {/* CABEÇALHO */}
-                    <div className="text-center">
-                        <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter" style={{color: '#ffd700', textShadow: '4px 4px 0 #4b3621, 0 0 30px #ffd700'}}>INTERCONTINENTAL</h1>
-                        <p className="text-white font-bold tracking-[0.5em] text-xl" style={{textShadow: '2px 2px 5px #000'}}>2 ANOS DE SUCESSO</p>
-                    </div>
+return(
+<div className="max-w-[920px] mx-auto space-y-10">
 
-                    {/* MÓDULO 1: LCD E AGULHAS (INDIVIDUALIZADOS) */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="gold-border p-4 flex flex-col items-center">
-                            <span className="text-[10px] text-yellow-500 font-bold mb-2 uppercase">Grave - Red Needle</span>
-                            <div className="analog-meter">
-                                <div className="meter-scale">0 . . . 5 . . . 10</div>
-                                <div className="needle bg-red-600 shadow-[0_0_10px_red]" style={{transform: `rotate(${(freq[2]/255*100)-50}deg)`}} />
-                            </div>
-                        </div>
-                        <div className="gold-border p-4 flex flex-col items-center">
-                            <span className="text-[10px] text-yellow-500 font-bold mb-2 uppercase">Mid - Green Needle</span>
-                            <div className="analog-meter">
-                                <div className="meter-scale">-20 . . . 0 . . . +20</div>
-                                <div className="needle bg-green-500 shadow-[0_0_10px_green]" style={{transform: `rotate(${(freq[10]/255*100)-50}deg)`}} />
-                            </div>
-                        </div>
-                        <div className="gold-border p-4 flex flex-col items-center">
-                            <span className="text-[10px] text-yellow-500 font-bold mb-2 uppercase">Treble - Blue Needle</span>
-                            <div className="analog-meter">
-                                <div className="meter-scale">LO . . . . . . . HI</div>
-                                <div className="needle bg-blue-500 shadow-[0_0_10px_blue]" style={{transform: `rotate(${(freq[20]/255*100)-50}deg)`}} />
-                            </div>
-                        </div>
-                    </div>
+<header className="text-center">
+<h1 className="txt-gold text-6xl md:text-8xl">INTERCONTINENTAL</h1>
+<p className="text-yellow-500 tracking-[0.6em]">2 ANOS DE SUCESSO</p>
+</header>
 
-                    {/* MÓDULO 2: TELA LCD INFORMATIVA */}
-                    <div className="gold-border lcd-glass p-6 grid grid-cols-2 md:grid-cols-4 text-[12px] gap-4">
-                        <div><span className="text-yellow-500">DATA:</span> {time.toLocaleDateString()}</div>
-                        <div><span className="text-yellow-500">HORA:</span> {time.toLocaleTimeString()}</div>
-                        <div><span className="text-yellow-500">EQUALIZADOR:</span> {eq}</div>
-                        <div className={isPlaying ? "text-green-400 animate-pulse font-black" : "text-red-500"}>
-                            STATUS: {isPlaying ? "ONLINE" : "OFFLINE"}
-                        </div>
-                    </div>
+<section className="gold glass p-4 flex justify-between text-yellow-400 font-mono text-sm">
+<div>{time.toLocaleDateString()}<br/>{time.toLocaleTimeString()}</div>
+<div className={play?"text-green-400":"text-red-500"}>
+{play?"● ONLINE":"● OFFLINE"}
+</div>
+<div>EQ:{eq}<br/>TEMA</div>
+</section>
 
-                    {/* MÓDULO 3: ANALISADOR NERVOSO E CONTROLES */}
-                    <div className="gold-border p-6 flex flex-col md:flex-row items-center gap-6">
-                        {/* 4 BARRAS HERTZ LATERAIS */}
-                        <div className="flex gap-2 h-40">
-                            {[2, 8, 16, 24].map(i => (
-                                <div key={i} className="w-4 h-full bg-black border border-yellow-500 relative">
-                                    <div className="absolute bottom-0 w-full bg-yellow-400" style={{height: `${(freq[i]/255)*100}%`}} />
-                                </div>
-                            ))}
-                        </div>
+<section className="gold glass p-8 text-center">
+<button onClick={toggle}
+className="w-24 h-24 rounded-full border-4 border-yellow-500 flex items-center justify-center mx-auto hover:bg-yellow-500 transition">
+<i data-lucide={play?"pause":"play"} className="w-10 h-10"/>
+</button>
+</section>
 
-                        {/* ANALISADOR CENTRAL */}
-                        <div className="flex-1 h-40 flex items-end gap-1 px-4 bg-black/50 rounded border border-yellow-900">
-                            {Array.from(freq).map((v, i) => (
-                                <div key={i} className="spec-bar" style={{height: `${(v/255)*100}%`, background: theme}} />
-                            ))}
-                        </div>
+<section className="gold glass p-6 h-48 flex items-end gap-1">
+{freq.map((v,i)=>(
+<div key={i} className="bar" style={{height:`${v/255*100}%`,background:theme}}/>
+))}
+</section>
 
-                        {/* PLAY/PAUSE E VOLUME */}
-                        <div className="flex flex-col items-center gap-4">
-                            <button onClick={start} className="w-20 h-20 rounded-full gold-btn flex items-center justify-center">
-                                <i data-lucide={isPlaying ? "pause" : "play"} className="w-10 h-10" />
-                            </button>
-                            <input type="range" min="0" max="1" step="0.1" value={vol} onChange={(e) => {setVol(e.target.value); audioRef.current.volume = e.target.value;}} className="w-24 accent-yellow-500" />
-                        </div>
-                    </div>
+<section className="gold glass p-6 relative h-48">
+<div className="needle text-red-500 h-32" style={{transform:`rotate(${freq[3]/255*100-50}deg)`}}/>
+<div className="needle text-green-500 h-36" style={{transform:`rotate(${freq[10]/255*100-50}deg)`}}/>
+<div className="needle text-blue-500 h-28" style={{transform:`rotate(${freq[20]/255*100-50}deg)`}}/>
+</section>
 
-                    {/* MÓDULO 4: VOX AI E 7 EQUALIZADORES */}
-                    <div className="gold-border p-6 flex flex-col md:flex-row items-center gap-8">
-                        <div className="flex flex-col items-center">
-                            <div className="vox-sphere" onClick={() => setVoxMsg("O álbum 'Intercontinental Hits' está disponível no YouTube!")}></div>
-                            <p className="text-[10px] text-blue-300 mt-2 text-center w-32 font-bold">{voxMsg}</p>
-                        </div>
-                        <div className="flex-1 flex flex-wrap justify-center gap-2">
-                            {EQs.map(e => (
-                                <button key={e} onClick={() => setEq(e)} className="px-3 py-1 text-[10px] gold-btn rounded">{e}</button>
-                            ))}
-                        </div>
-                        <div className="flex flex-wrap w-40 gap-1 overflow-y-auto max-h-20">
-                            {THEMES.map((c, i) => (
-                                <button key={i} onClick={() => setTheme(c)} className="w-6 h-6 rounded" style={{background: c}} />
-                            ))}
-                        </div>
-                    </div>
+<section className="gold glass p-4 space-y-3">
+<div className="flex flex-wrap gap-2 justify-center">
+{EQS.map(e=>(
+<button key={e} onClick={()=>setEq(e)}
+className={eq===e?"bg-yellow-500 text-black px-3":"border border-yellow-500 text-yellow-500 px-3"}>
+{e}
+</button>
+))}
+</div>
+<div className="flex gap-2 overflow-x-auto">
+{THEMES.map((c,i)=>(
+<div key={i} onClick={()=>setTheme(c)}
+className="w-8 h-8 cursor-pointer" style={{background:c}}/>
+))}
+</div>
+</section>
 
-                    {/* PORTAIS COLORIDOS */}
-                    <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
-                        {PORTALS.map((p, i) => (
-                            <a key={i} href={p.u} target="_blank" className="p-2 gold-border text-[9px] font-black text-center" style={{color: p.c, borderColor: p.c}}>
-                                {p.n}
-                            </a>
-                        ))}
-                    </div>
-                </div>
-            );
-        };
+<section className="gold glass p-6 text-center">
+<div onClick={talk}
+className="mx-auto w-16 h-16 rounded-full bg-blue-500 shadow-lg animate-pulse cursor-pointer"></div>
+<p className="text-blue-400 text-xs mt-3">{vox}</p>
+</section>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-        setTimeout(() => window.lucide.createIcons(), 1000);
-    </script>
+<section className="grid md:grid-cols-5 gap-2">
+{PORTALS.map(p=>(
+<a key={p.n} href={p.u} target="_blank"
+className="gold glass p-3 text-center font-bold hover:scale-105"
+style={{color:p.c}}>
+{p.n}
+</a>
+))}
+</section>
+
+</div>
+);
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
 </body>
 </html>
