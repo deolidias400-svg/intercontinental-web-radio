@@ -1,1356 +1,309 @@
+novo player
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Intercontinental Web Radio - Ultra Custom LCD Touch System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <style>
-        /* ==================================== */
-        /* === Variáveis CSS Globais/Temas === */
-        /* ==================================== */
-        :root {
-            /* Tema Padrão: Cosmic Dark (Fallback) */
-            --bg-color: #12121e;
-            --secondary-bg-color: #1e1e30;
-            --text-color: #e0e0e0;
-            --highlight-color: #00ffc8; /* Ciano Neon */
-            --accent-color: #4b0082; /* Roxo Profundo */
-            --button-text-color: #fff;
-            --control-bg: rgba(255, 255, 255, 0.05);
-            --glow-color: var(--highlight-color);
-            --shadow-dark: #0a0a14;
-            --shadow-light: #22223a;
-            --box-shadow-in: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
-            --box-shadow-out: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-            --status-online-color: #00ff00; /* Neon Green */
-            --status-offline-color: #FF4500; /* Red-Orange */
-            --visualizer-bg: radial-gradient(circle, var(--secondary-bg-color) 40%, var(--bg-color) 100%);
-            --screen-bg: #0d0d20;
-            --screen-text: var(--highlight-color);
-            --screen-border: 1px solid var(--highlight-color);
-            --knob-color: var(--highlight-color);
-        }
+<meta charset="UTF-8">
+<title>INTERCONTINENTAL • DIGITAL ENGINE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* --------------------- */
-        /* --- 26 TEMAS COMPLETOS --- */
-        /* --------------------- */
-        .industrial-cyber { 
-            --bg-color: #0d0d0d;
-            --secondary-bg-color: #1a1a1a;
-            --text-color: #c0c0c0;
-            --highlight-color: #ff0077; /* Magenta Neon Agressivo */
-            --accent-color: #00ffff; /* Ciano Neon para Contraste */
-            --button-text-color: #0d0d0d; 
-            --control-bg: rgba(255, 255, 255, 0.03); 
-            --glow-color: var(--highlight-color);
-            --shadow-dark: #000;
-            --shadow-light: #333333;
-            --box-shadow-in: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
-            --box-shadow-out: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
-            --status-online-color: #39ff14; /* Verde Matriz */
-            --screen-bg: #000; 
-            --screen-text: var(--highlight-color);
-            --screen-border: 2px solid var(--accent-color);
-            --knob-color: var(--highlight-color); 
-        }
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
-        .cosmic-dark { 
-            --bg-color: #12121e; --secondary-bg-color: #1e1e30; --text-color: #e0e0e0;
-            --highlight-color: #00ffc8; --accent-color: #4b0082; 
-            --screen-bg: #0d0d20; --screen-text: #00ffc8;
-            --shadow-dark: #0a0a14; --shadow-light: #22223a;
-        }
-        .solar-flare { 
-            --bg-color: #2e0800; --secondary-bg-color: #4f1100; --text-color: #fff8e1;
-            --highlight-color: #ffaa00; --accent-color: #ff4500; 
-            --screen-bg: #3b0a00; --screen-text: #ffaa00;
-            --shadow-dark: #1f0500; --shadow-light: #6e1500;
-        }
-        .deep-ocean { 
-            --bg-color: #001f3f; --secondary-bg-color: #003366; --text-color: #e0f7fa;
-            --highlight-color: #7fffd4; --accent-color: #4169e1; 
-            --screen-bg: #002b5c; --screen-text: #7fffd4;
-            --shadow-dark: #00142b; --shadow-light: #004d99;
-        }
-        .neon-city { 
-            --bg-color: #0f0f0f; --secondary-bg-color: #2a0a2a; --text-color: #f0f0f0;
-            --highlight-color: #ff1aff; --accent-color: #00ffff; 
-            --screen-bg: #1a051a; --screen-text: #ff1aff;
-            --shadow-dark: #000000; --shadow-light: #440044;
-        }
-        .retro-crt { 
-            --bg-color: #050505; --secondary-bg-color: #101010; --text-color: #39ff14;
-            --highlight-color: #39ff14; --accent-color: #00aa00; 
-            --screen-bg: #000000; --screen-text: #39ff14;
-            --shadow-dark: #000; --shadow-light: #222;
-        }
-        .retro-wave { 
-            --bg-color: #200020; --secondary-bg-color: #380038; --text-color: #ffc8ff;
-            --highlight-color: #ff77ff; --accent-color: #00c8ff; 
-            --screen-bg: #2b002b; --screen-text: #ff77ff;
-            --shadow-dark: #150015; --shadow-light: #500050;
-        }
-        .vaporwave { 
-            --bg-color: #1e0f3f; --secondary-bg-color: #3a1e5f; --text-color: #fefefe;
-            --highlight-color: #ff69b4; --accent-color: #00fefe; 
-            --screen-bg: #291549; --screen-text: #ff69b4;
-            --shadow-dark: #0f0720; --shadow-light: #552f85;
-        }
-        .matrix-code { 
-            --bg-color: #051405; --secondary-bg-color: #1a3a1a; --text-color: #aaffaa;
-            --highlight-color: #39ff14; --accent-color: #00aa00; 
-            --screen-bg: #000; --screen-text: #39ff14;
-            --shadow-dark: #000000; --shadow-light: #2c592c;
-        }
-        .arctic-ice { 
-            --bg-color: #edf7f8; --secondary-bg-color: #d0e4e7; --text-color: #003366;
-            --highlight-color: #64f4ff; --accent-color: #b3e5fc; 
-            --screen-bg: #c0dfe6; --screen-text: #003366;
-            --shadow-dark: #c1d3d5; --shadow-light: #ffffff;
-        }
-        .gold-dust { 
-            --bg-color: #332b1b; --secondary-bg-color: #554422; --text-color: #fff8dc;
-            --highlight-color: #ffd700; --accent-color: #aa8d00; 
-            --screen-bg: #443a2a; --screen-text: #ffd700;
-            --shadow-dark: #1e1a10; --shadow-light: #776033;
-        }
-        .martian-sand { 
-            --bg-color: #4a2d24; --secondary-bg-color: #6a443b; --text-color: #f7f0e3;
-            --highlight-color: #ff7f50; --accent-color: #a0522d; 
-            --screen-bg: #5c3730; --screen-text: #ff7f50;
-            --shadow-dark: #3a221e; --shadow-light: #8a5a4a;
-        }
-        .emerald-forest { 
-            --bg-color: #0a2b1f; --secondary-bg-color: #1c4d3c; --text-color: #ccffcc;
-            --highlight-color: #39ff14; --accent-color: #008000; 
-            --screen-bg: #14382c; --screen-text: #39ff14;
-            --shadow-dark: #072219; --shadow-light: #2c6851;
-        }
-        .amethyst-dream { 
-            --bg-color: #2e0a4f; --secondary-bg-color: #4b1a7f; --text-color: #fff0f5;
-            --highlight-color: #e6e6fa; --accent-color: #9932cc; 
-            --screen-bg: #3c1466; --screen-text: #e6e6fa;
-            --shadow-dark: #1f0735; --shadow-light: #6a22b0;
-        }
-        .fire-ice { 
-            --bg-color: #1f1f1f; --secondary-bg-color: #3a3a3a; --text-color: #f0f0f0;
-            --highlight-color: #ff4500; --accent-color: #00ffff; 
-            --screen-bg: #2a2a2a; --screen-text: #ff4500;
-            --shadow-dark: #0a0a0a; --shadow-light: #5a5a5a;
-        }
-        .concrete-jungle { 
-            --bg-color: #505050; --secondary-bg-color: #6a6a6a; --text-color: #eeeeee;
-            --highlight-color: #c0c0c0; --accent-color: #808080; 
-            --screen-bg: #404040; --screen-text: #c0c0c0;
-            --shadow-dark: #3a3a3a; --shadow-light: #8a8a8a;
-        }
-        .sunset-strip { 
-            --bg-color: #3a1a3a; --secondary-bg-color: #552255; --text-color: #fff8e1;
-            --highlight-color: #ff8c00; --accent-color: #ff1493; 
-            --screen-bg: #4a224a; --screen-text: #ff8c00;
-            --shadow-dark: #2a102a; --shadow-light: #7a357a;
-        }
-        .biohazard-green { 
-            --bg-color: #1a1a00; --secondary-bg-color: #3a3a00; --text-color: #eeff88;
-            --highlight-color: #ccff00; --accent-color: #8cff00; 
-            --screen-bg: #2a2a00; --screen-text: #ccff00;
-            --shadow-dark: #0a0a00; --shadow-light: #5a5a00;
-        }
-        .pure-white { 
-            --bg-color: #f7f7f7; --secondary-bg-color: #e0e0e0; --text-color: #333333;
-            --highlight-color: #007bff; --accent-color: #6c757d; 
-            --screen-bg: #ffffff; --screen-text: #007bff;
-            --shadow-dark: #c0c0c0; --shadow-light: #ffffff;
-        }
-        .chroma-glow { 
-            --bg-color: #100010; --secondary-bg-color: #200020; --text-color: #ffffff;
-            --highlight-color: #ff00ff; --accent-color: #00ffff; 
-            --screen-bg: #000; --screen-text: #ff00ff;
-            --shadow-dark: #000; --shadow-light: #300030;
-        }
-        .dark-matter { 
-            --bg-color: #111111; --secondary-bg-color: #222222; --text-color: #666666;
-            --highlight-color: #333333; --accent-color: #1c1c1c; 
-            --screen-bg: #0a0a0a; --screen-text: #333333;
-            --shadow-dark: #000; --shadow-light: #333;
-        }
-        .volcano-ash { 
-            --bg-color: #2b1f1a; --secondary-bg-color: #4a3833; --text-color: #fcfcfc;
-            --highlight-color: #ff4500; --accent-color: #8b4513; 
-            --screen-bg: #382722; --screen-text: #ff4500;
-            --shadow-dark: #1a1411; --shadow-light: #6a504a;
-        }
-        .purple-haze { 
-            --bg-color: #2c0e4a; --secondary-bg-color: #4d1c83; --text-color: #e0e0e0;
-            --highlight-color: #ff00ff; --accent-color: #8a2be2; 
-            --screen-bg: #3a1663; --screen-text: #ff00ff;
-            --shadow-dark: #1d0930; --shadow-light: #6e27b8;
-        }
-        .cyber-red { 
-            --bg-color: #1a0000; --secondary-bg-color: #3a0000; --text-color: #ffaaaa;
-            --highlight-color: #ff0000; --accent-color: #8b0000; 
-            --screen-bg: #2b0000; --screen-text: #ff0000;
-            --shadow-dark: #000; --shadow-light: #5a0000;
-        }
-        .sky-blue { 
-            --bg-color: #0e2d4d; --secondary-bg-color: #1c4f87; --text-color: #f0f8ff;
-            --highlight-color: #4682b4; --accent-color: #87ceeb; 
-            --screen-bg: #16426d; --screen-text: #4682b4;
-            --shadow-dark: #091f33; --shadow-light: #2c68a1;
-        }
-        .lime-shock { 
-            --bg-color: #1c3d0e; --secondary-bg-color: #386b1c; --text-color: #e8ffe0;
-            --highlight-color: #ccff00; --accent-color: #7cfc00; 
-            --screen-bg: #2a5216; --screen-text: #ccff00;
-            --shadow-dark: #102607; --shadow-light: #4a8f27;
-        }
-        .carbon-fiber { 
-            --bg-color: #222222; --secondary-bg-color: #333333; --text-color: #999999;
-            --highlight-color: #aaaaaa; --accent-color: #555555; 
-            --screen-bg: #111111; --screen-text: #aaaaaa;
-            --shadow-dark: #0a0a0a; --shadow-light: #444444;
-        }
-        
-        /* ==================================== */
-        /* === ESTILOS BASE DO COMPONENTE === */
-        /* ==================================== */
+<style>
+:root{
+--gold:#FFD700;
+--blue:#00e5ff;
+--red:#ff0033;
+}
 
-        body {
-            font-family: 'Orbitron', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            transition: all 0.7s ease;
-            position: relative;
-            overflow-x: hidden;
-            user-select: none;
-        }
+body{
+margin:0;
+background:radial-gradient(circle,#111,#000);
+font-family:'Orbitron',sans-serif;
+color:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
 
-        .container {
-            background-color: var(--secondary-bg-color);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: var(--box-shadow-out);
-            max-width: 90%;
-            width: 750px;
-            margin-top: 20px;
-            text-align: center;
-            transition: all 0.5s ease;
-            position: relative; 
-        }
-        
-        .bolt {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: var(--shadow-dark);
-            border: 1px solid var(--shadow-light);
-            border-radius: 50%;
-            box-shadow: inset 1px 1px 2px var(--shadow-light), inset -1px -1px 2px var(--shadow-dark);
-            z-index: 10;
-        }
-        .bolt-tl { top: 10px; left: 10px; }
-        .bolt-tr { top: 10px; right: 10px; }
-        .bolt-bl { bottom: 10px; left: 10px; }
-        .bolt-br { bottom: 10px; right: 10px; }
+.frame{
+width:1200px;
+background:linear-gradient(135deg,#6b4e00,#ffd700,#6b4e00);
+padding:35px;
+border-radius:60px;
+box-shadow:0 30px 80px #000,inset 0 0 20px #fff;
+}
 
+.deck{
+background:#050505;
+border-radius:40px;
+padding:40px;
+box-shadow:inset 0 0 40px #000;
+}
 
-        #banner {
-            font-size: clamp(1.5rem, 5vw, 2.2rem);
-            font-weight: 700;
-            color: var(--highlight-color);
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px var(--glow-color);
-            letter-spacing: 2px;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
-        }
+.lcd{
+background:#001a00;
+color:#00ff55;
+font-family:'Share Tech Mono';
+padding:15px;
+border-radius:12px;
+border:2px solid var(--gold);
+}
 
-        /* === TELA DE INFORMAÇÕES (DISPLAY DIGITAL) === */
-        #info-screen {
-            background-color: var(--screen-bg);
-            color: var(--screen-text);
-            border: var(--screen-border);
-            border-radius: 8px;
-            padding: 15px 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 0 10px var(--glow-color), var(--box-shadow-in);
-            font-family: 'Share Tech Mono', monospace;
-            text-align: left;
-            display: grid;
-            grid-template-columns: 1fr 1.5fr 1fr;
-            gap: 10px 15px;
-            transition: all 0.5s ease;
-        }
+/* VU */
+.vu-bar{
+width:100%;
+height:16px;
+background:#111;
+border-radius:10px;
+overflow:hidden;
+border:1px solid #333;
+}
+.vu-fill{
+height:100%;
+width:0%;
+background:linear-gradient(to right,#00ff41,#fbff00,#ff0000);
+transition:width .08s linear;
+}
 
-        #radio-name-display {
-            grid-column: 1 / 4;
-            font-size: 1.4rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px dashed var(--screen-text);
-            padding-bottom: 5px;
-        }
-        
-        #volume-electronic-display {
-            grid-column: 1 / 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 1px dashed var(--screen-text);
-            padding: 5px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            text-align: center;
-        }
+/* GAUGES */
+.gauge{
+width:160px;height:90px;
+border:2px solid var(--gold);
+border-radius:80px 80px 10px 10px;
+position:relative;
+background:#000;
+}
+.needle{
+position:absolute;
+bottom:5px;
+left:50%;
+width:3px;
+height:70px;
+transform-origin:bottom;
+background:red;
+}
 
-        #volume-level-bar {
-            width: 90%;
-            height: 8px;
-            background-color: var(--shadow-dark);
-            border-radius: 4px;
-            margin-top: 5px;
-            overflow: hidden;
-            box-shadow: var(--box-shadow-in);
-        }
+/* KNOB */
+.knob{
+width:200px;height:200px;
+border-radius:50%;
+background:conic-gradient(var(--red),var(--blue));
+border:10px solid #111;
+box-shadow:0 20px 50px #000;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+.knob span{font-size:42px;font-weight:900}
 
-        #volume-fill {
-            height: 100%;
-            width: 50%; /* Inicial */
-            background: linear-gradient(90deg, var(--status-online-color), var(--highlight-color));
-            transition: width 0.1s ease;
-        }
+/* EQ */
+.eq-btn{
+background:#111;border:1px solid #555;
+padding:14px 6px;border-radius:8px;
+font-size:11px;font-weight:900;
+}
+.eq-btn.active{
+background:var(--gold);
+color:#000;
+box-shadow:0 0 20px var(--gold);
+}
 
-        #active-eq-display { grid-column: 2 / 3; padding-top: 5px; }
-        #active-theme-display { grid-column: 3 / 4; padding-top: 5px; }
-        #date-time { grid-column: 1 / 3; text-align: left; padding-top: 10px; }
-        
-        #status {
-            grid-column: 3 / 4;
-            justify-content: flex-end;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding-top: 10px;
-        }
-        
-        /* Estilo para a luz de status */
-        #status-light {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-left: 5px;
-            box-shadow: 0 0 5px currentColor;
-            transition: background-color 0.5s, box-shadow 0.5s;
-        }
+/* TEMAS */
+.theme-btn{
+background:rgba(255,215,0,.15);
+border:1px solid rgba(255,215,0,.4);
+border-radius:10px;
+font-size:11px;
+font-weight:900;
+padding:8px;
+}
 
-        .status-online { background-color: var(--status-online-color); }
-        .status-offline { background-color: var(--status-offline-color); }
-
-        /* === CONTROLES DE REPRODUÇÃO E VOLUME (KNOB) === */
-        .control-panel {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            width: 100%;
-            margin: 25px 0;
-            padding: 15px;
-            background-color: var(--shadow-dark); 
-            border-radius: 10px;
-            border: 1px solid var(--accent-color);
-            box-shadow: var(--box-shadow-out);
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-grow: 0;
-        }
-
-        .controls button {
-            max-width: none;
-            padding: 10px 15px; 
-            border-radius: 6px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--button-text-color);
-            background: var(--accent-color);
-            box-shadow: 0 0 5px var(--highlight-color), var(--box-shadow-out);
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .controls button:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-            box-shadow: 0 0 10px var(--highlight-color), var(--box-shadow-out);
-        }
-
-        .controls button:disabled {
-            background-color: var(--secondary-bg-color);
-            color: var(--text-color);
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: var(--box-shadow-in);
-        }
-        
-        #play { background-color: #00b894; box-shadow: 0 0 15px #00b894; color: #000; }
-        #play:hover { background-color: #00997d; }
-        #play.active { background-color: var(--status-online-color); color: #000; box-shadow: 0 0 20px var(--status-online-color); }
-
-        #pause { background-color: #f1c40f; box-shadow: 0 0 15px #f1c40f; color: #000; }
-        #stop { background-color: #e74c3c; box-shadow: 0 0 15px #e74c3c; color: #fff; }
-        #mute-btn.active { background-color: #3498db; color: #000; box-shadow: 0 0 20px #3498db; }
-
-        .knob-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-            padding: 10px;
-            background: none;
-            border-radius: 8px;
-            box-shadow: none;
-        }
-
-        .knob-wrapper {
-            position: relative;
-            width: 80px; 
-            height: 80px;
-            margin-bottom: 5px;
-        }
-
-        #volume-knob {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: var(--secondary-bg-color);
-            border: 3px solid var(--accent-color);
-            box-shadow: var(--box-shadow-out), inset 0 0 10px rgba(0, 0, 0, 0.5);
-            cursor: grab;
-            transition: transform 0.1s ease-out;
-            position: relative;
-            transform-origin: center;
-            transform: rotate(-45deg); /* Posição inicial: 50% (meio) */
-        }
-        
-        #knob-marker {
-            position: absolute;
-            top: 5px; 
-            left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            height: 20px;
-            background-color: var(--knob-color);
-            border-radius: 2px;
-            box-shadow: 0 0 8px var(--knob-color);
-        }
-
-        .knob-container label {
-            font-size: 0.9rem;
-            color: var(--highlight-color);
-            font-weight: 700;
-        }
-
-
-        /* VU Meter Estéreo Vertical Aprimorado (4 BARRAS) */
-        #transmission-level-indicator {
-            background: var(--screen-bg);
-            border: var(--screen-border);
-            border-radius: 8px;
-            box-shadow: 0 0 5px var(--glow-color), var(--box-shadow-in);
-            padding: 10px;
-            margin: 15px auto;
-            width: 90%;
-        }
-        
-        #level-bars-stereo {
-            height: 120px; 
-            gap: 10px; /* Reduzido o gap para 4 barras */
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            position: relative;
-            padding: 0 10px;
-            margin-top: 10px;
-        }
-        
-        .level-meter {
-            width: 20px; /* Reduzido a largura para 4 barras */
-            background: var(--bg-color);
-            border: 1px solid var(--accent-color);
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            border-radius: 2px;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-        }
-        
-        /* Cor de preenchimento para as barras de nível (VU) */
-        .level-bar-fill {
-            background: linear-gradient(to top, 
-                #00ff00 0%, 
-                #ffff00 70%, 
-                #ff4500 90%, 
-                #ff0000 100%);
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            /* MAIS RÁPIDO PARA MAIS REAÇÃO "NERVOSA" */
-            transition: height 0.05s ease-out; 
-        }
-        
-        .level-peak-hold {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #ff0000;
-            opacity: 0; /* Inicia invisível */
-            transition: top 0.1s ease-out, opacity 0.5s ease;
-            box-shadow: 0 0 5px #ff0000;
-            z-index: 5;
-        }
-
-        /* Estilos do Visualizador */
-        .visualizer-giant-container {
-            width: 100%;
-            max-width: 450px;
-            aspect-ratio: 1 / 1;
-            margin: 25px auto;
-            border-radius: 15px;
-            background: var(--visualizer-bg);
-            box-shadow: var(--box-shadow-out), 0 0 30px rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.7s ease;
-            border: 3px solid var(--highlight-color);
-        }
-
-        #spectrum {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 0;
-            /* Garante que o canvas ocupe o espaço */
-            width: 100%;
-            height: 100%; 
-        }
-
-        #visualizer-core {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background-color: var(--highlight-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--bg-color);
-            box-shadow: 0 0 20px var(--glow-color), inset 0 0 10px var(--bg-color);
-            z-index: 1;
-            transition: all 0.1s ease-out;
-        }
-        
-        .theme-buttons button, .eq-buttons button {
-            padding: 8px 12px;
-            margin: 5px;
-            border-radius: 5px;
-            background-color: var(--secondary-bg-color);
-            color: var(--highlight-color);
-            border: 1px solid var(--accent-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-            font-family: 'Share Tech Mono', monospace;
-        }
-        
-        /* Estilo para sliders */
-        .visual-controls input[type="range"], .audio-controls input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 8px;
-            background: var(--control-bg);
-            border-radius: 5px;
-            box-shadow: var(--box-shadow-in);
-            margin-top: 10px;
-        }
-        .visual-controls input[type="range"]::-webkit-slider-thumb, .audio-controls input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--highlight-color);
-            cursor: pointer;
-            box-shadow: 0 0 10px var(--glow-color);
-        }
-        .control-group {
-            margin: 15px 0;
-            padding: 10px;
-            border: 1px dashed var(--accent-color);
-            border-radius: 8px;
-        }
-
-        /* === CSS para Equalizador de 7 Bandas e Master Gain Sliders === */
-        .audio-controls .slider-group {
-            display: flex;
-            justify-content: space-around;
-            gap: 15px;
-            margin-top: 15px;
-            padding: 10px;
-            border-top: 1px dashed var(--accent-color);
-            flex-wrap: wrap; 
-        }
-        .audio-controls .slider-item {
-            flex: 1 1 150px; 
-            max-width: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        .audio-controls .slider-item label {
-            margin-bottom: 5px;
-            font-size: 0.8rem;
-            color: var(--highlight-color);
-        }
-
-        .theme-buttons button:hover, .eq-buttons button:hover {
-            background-color: var(--accent-color);
-            color: var(--button-text-color);
-            box-shadow: 0 0 10px var(--highlight-color);
-        }
-
-        .theme-buttons button.active-theme, .eq-buttons button.active {
-            background-color: var(--highlight-color);
-            color: var(--secondary-bg-color);
-            border-color: var(--highlight-color);
-            box-shadow: 0 0 15px var(--glow-color);
-            font-weight: bold;
-        }
-
-        /* Media Query para Ajustes em Telas Menores */
-        @media (max-width: 600px) {
-            .control-panel { flex-direction: column; }
-            .controls { flex-wrap: wrap; margin-bottom: 20px; }
-            .controls button { flex-basis: 45%; }
-            #info-screen { grid-template-columns: 1fr 1fr; }
-            #radio-name-display { grid-column: 1 / 3; }
-            #volume-electronic-display, #active-eq-display, #active-theme-display, #date-time, #status { grid-column: span 1; }
-            .knob-container { flex-direction: column; }
-            .knob-wrapper { width: 90px; height: 90px; }
-            .audio-controls .slider-group { flex-direction: column; gap: 10px; } 
-            .audio-controls .slider-item { margin-bottom: 10px; max-width: 100%;}
-            /* Ajuste o layout das barras VU para telas pequenas */
-            #level-bars-stereo { gap: 5px; height: 80px; }
-            .level-meter { width: 15px; }
-        }
-    </style>
+.boost{
+animation:pulse .6s infinite alternate;
+}
+@keyframes pulse{
+from{box-shadow:0 0 10px red;}
+to{box-shadow:0 0 40px red;transform:scale(1.05);}
+}
+</style>
 </head>
-<body class="industrial-cyber">
-    <div class="container">
-        <div class="bolt bolt-tl"></div>
-        <div class="bolt bolt-tr"></div>
-        <div class="bolt bolt-bl"></div>
-        <div class="bolt bolt-br"></div>
-        <div id="banner">
-            <i class="fas fa-microchip"></i> ULTRA CUSTOM LCD SYSTEM
-        </div>
 
-        <div id="info-screen">
-            <div id="radio-name-display">MEGA ULTRA CUSTOM SYSTEM</div>
-            
-            <div id="volume-electronic-display">
-                <i class="fas fa-volume-up"></i> VOL: <span id="volume-val">50</span>%
-                <div id="volume-level-bar"><div id="volume-fill"></div></div>
-            </div>
-            
-            <div id="active-eq-display">EQ: <span id="eq-name">FLAT</span></div>
-            <div id="active-theme-display">TEMA: <span id="theme-name">INDUSTRIAL CYBER</span></div>
-            
-            <div id="date-time"></div>
-            <div id="status">
-                <span id="status-text">OFFLINE</span><span id="status-light" class="status-offline"></span>
-            </div>
-        </div>
-        <div id="now-playing">
-            Tocando agora: <span id="current-song">Pressione Play para iniciar a Transmissão...</span>
-        </div>
-
-        <div id="transmission-level-indicator">
-            Transmissão Nível Estéreo:
-            <div id="stereo-level-values" style="display: flex; justify-content: space-around; margin-bottom: 5px; font-weight: 700; color: var(--screen-text); font-family: 'Share Tech Mono', monospace;">
-                <span id="level-val-l1">L1: 00 dB</span>
-                <span id="level-val-r1">R1: 00 dB</span>
-                <span id="level-val-l2">L2: 00 dB</span>
-                <span id="level-val-r2">R2: 00 dB</span>
-            </div>
-            <div id="level-bars-stereo">
-                <div class="level-meter left-channel">
-                    <div class="level-peak-hold" id="peak-l1"></div>
-                    <div class="level-bar-fill" id="fill-l1"></div>
-                </div>
-                <div class="level-meter right-channel">
-                    <div class="level-peak-hold" id="peak-r1"></div>
-                    <div class="level-bar-fill" id="fill-r1"></div>
-                </div>
-                <div class="level-meter left-channel">
-                    <div class="level-peak-hold" id="peak-l2"></div>
-                    <div class="level-bar-fill" id="fill-l2"></div>
-                </div>
-                <div class="level-meter right-channel">
-                    <div class="level-peak-hold" id="peak-r2"></div>
-                    <div class="level-bar-fill" id="fill-r2"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="visualizer-giant-container">
-            <canvas id="spectrum" width="450" height="450"></canvas> 
-            <div id="visualizer-core">
-                <i class="fas fa-bolt"></i>
-            </div>
-        </div>
-        
-        <div class="control-panel">
-            <div class="controls">
-                <button id="play"><i class="fas fa-play"></i> Play</button>
-                <button id="pause" disabled><i class="fas fa-pause"></i> Pause</button>
-                <button id="stop" disabled><i class="fas fa-stop"></i> Stop</button>
-                <button id="mute-btn"><i class="fas fa-volume-up"></i> Mute</button>
-            </div>
-            <div class="knob-container">
-                <label for="volume-knob">VOLUME</label>
-                <div class="knob-wrapper">
-                    <div id="volume-knob">
-                        <div id="knob-marker"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <audio id="radio-audio" src="https://stream.zeno.fm/wzcgaal0dnltv" preload="auto" crossorigin="anonymous"></audio>
-
-    </div>
-    
-    <div class="audio-controls container">
-        <h3><i class="fas fa-volume-up"></i> Equalizador Manual (7 Bandas)</h3>
-        <div class="slider-group">
-            <div class="slider-item">
-                <label for="low-bass-slider">LOW BASS (60Hz: <span id="low-bass-val">0 dB</span>)</label>
-                <input type="range" id="low-bass-slider" data-freq="60" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="bass-slider">BASS (150Hz: <span id="bass-val">0 dB</span>)</label>
-                <input type="range" id="bass-slider" data-freq="150" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="mid-low-slider">MID LOW (400Hz: <span id="mid-low-val">0 dB</span>)</label>
-                <input type="range" id="mid-low-slider" data-freq="400" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="mid-slider">MID (1kHz: <span id="mid-val">0 dB</span>)</label>
-                <input type="range" id="mid-slider" data-freq="1000" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="mid-high-slider">MID HIGH (2.5kHz: <span id="mid-high-val">0 dB</span>)</label>
-                <input type="range" id="mid-high-slider" data-freq="2500" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="high-slider">HIGH (6kHz: <span id="high-val">0 dB</span>)</label>
-                <input type="range" id="high-slider" data-freq="6000" min="-12" max="12" step="1" value="0">
-            </div>
-            <div class="slider-item">
-                <label for="ultra-high-slider">ULTRA HIGH (12kHz: <span id="ultra-high-val">0 dB</span>)</label>
-                <input type="range" id="ultra-high-slider" data-freq="12000" min="-12" max="12" step="1" value="0">
-            </div>
-        </div>
-        <div class="control-group eq-buttons">
-            <button data-preset="flat" class="active">FLAT</button>
-            <button data-preset="rock">ROCK</button>
-            <button data-preset="pop">POP</button>
-            <button data-preset="jazz">JAZZ</button>
-            <button data-preset="dance">DANCE</button>
-            <button data-preset="metal">METAL</button>
-        </div>
-    </div>
-
-    <div class="visual-controls container">
-        <h3><i class="fas fa-palette"></i> Controles Visuais e Tema</h3>
-        <div class="control-group theme-buttons">
-            <button data-theme="industrial-cyber" class="active-theme">INDUSTRIAL CYBER</button>
-            <button data-theme="cosmic-dark">COSMIC DARK</button>
-            <button data-theme="solar-flare">SOLAR FLARE</button>
-            <button data-theme="deep-ocean">DEEP OCEAN</button>
-            <button data-theme="neon-city">NEON CITY</button>
-            <button data-theme="retro-crt">RETRO CRT</button>
-            <button data-theme="retro-wave">RETRO WAVE</button>
-            <button data-theme="vaporwave">VAPORWAVE</button>
-            <button data-theme="matrix-code">MATRIX CODE</button>
-            <button data-theme="arctic-ice">ARCTIC ICE</button>
-            <button data-theme="gold-dust">GOLD DUST</button>
-            <button data-theme="martian-sand">MARTIAN SAND</button>
-            <button data-theme="emerald-forest">EMERALD FOREST</button>
-            <button data-theme="amethyst-dream">AMETHYST DREAM</button>
-            <button data-theme="fire-ice">FIRE ICE</button>
-            <button data-theme="concrete-jungle">CONCRETE JUNGLE</button>
-            <button data-theme="sunset-strip">SUNSET STRIP</button>
-            <button data-theme="biohazard-green">BIOHAZARD GREEN</button>
-            <button data-theme="pure-white">PURE WHITE</button>
-            <button data-theme="chroma-glow">CHROMA GLOW</button>
-            <button data-theme="dark-matter">DARK MATTER</button>
-            <button data-theme="volcano-ash">VOLCANO ASH</button>
-            <button data-theme="purple-haze">PURPLE HAZE</button>
-            <button data-theme="cyber-red">CYBER RED</button>
-            <button data-theme="sky-blue">SKY BLUE</button>
-            <button data-theme="lime-shock">LIME SHOCK</button>
-            <button data-theme="carbon-fiber">CARBON FIBER</button>
-        </div>
-    </div>
-
-    <script>
-        // ====================================
-        // === VARIÁVEIS GLOBAIS / ESTADO ===
-        // ====================================
-        const audio = document.getElementById('radio-audio');
-        const playBtn = document.getElementById('play');
-        const pauseBtn = document.getElementById('pause');
-        const stopBtn = document.getElementById('stop');
-        const muteBtn = document.getElementById('mute-btn');
-        const volumeKnob = document.getElementById('volume-knob');
-        const knobMarker = document.getElementById('knob-marker');
-        const volumeValDisplay = document.getElementById('volume-val');
-        const volumeFill = document.getElementById('volume-fill');
-        const spectrumCanvas = document.getElementById('spectrum');
-        const visualizerCore = document.getElementById('visualizer-core');
-        const ctx = spectrumCanvas.getContext('2d');
-        const eqSliders = document.querySelectorAll('.audio-controls input[type="range"]');
-        const themeButtons = document.querySelectorAll('.theme-buttons button');
-        const eqButtons = document.querySelectorAll('.eq-buttons button');
-        const statusLight = document.getElementById('status-light');
-        const statusText = document.getElementById('status-text');
-        const nowPlayingDisplay = document.getElementById('current-song');
-        const dateDisplay = document.getElementById('date-time');
-
-        let audioContext;
-        let source;
-        let analyser;
-        let gainNode;
-        let splitter;
-        let analyserL1, analyserR1;
-        let analyserL2, analyserR2; // Analisadores adicionais para VU "nervoso"
-        let filters = [];
-        let isPlaying = false;
-        let volumeLevel = 50;
-        let isMuted = false;
-        let animationFrameId = null;
-
-        // Peak Hold para 4 canais
-        const peakHolds = { 
-            'l1': 0, 'r1': 0, 
-            'l2': 0, 'r2': 0 
-        };
-        const peakElements = {
-            'l1': document.getElementById('peak-l1'), 'r1': document.getElementById('peak-r1'),
-            'l2': document.getElementById('peak-l2'), 'r2': document.getElementById('peak-r2')
-        };
-        const fillElements = {
-            'l1': document.getElementById('fill-l1'), 'r1': document.getElementById('fill-r1'),
-            'l2': document.getElementById('fill-l2'), 'r2': document.getElementById('fill-r2')
-        };
-        const levelValElements = {
-            'l1': document.getElementById('level-val-l1'), 'r1': document.getElementById('level-val-r1'),
-            'l2': document.getElementById('level-val-l2'), 'r2': document.getElementById('level-val-r2')
-        };
-
-        const NUM_BANDS = 100; // Número de barras de espectro
-        const VU_SAMPLE_SIZE = 128; // Reduzido para mais reatividade (nervoso)
-
-        const EQ_FREQUENCIES = [60, 150, 400, 1000, 2500, 6000, 12000];
-        const EQ_PRESETS = {
-            'flat': [0, 0, 0, 0, 0, 0, 0],
-            'rock': [8, 4, -4, 0, 4, 8, 4],
-            'pop': [-2, 0, 2, 4, 2, 0, -2],
-            'jazz': [4, 6, 0, -3, 0, 6, 4],
-            'dance': [6, 4, 2, 0, 2, 4, 6],
-            'metal': [8, 4, 0, -6, 0, 4, 8],
-        };
-
-        // ====================================
-        // === FUNÇÕES DO ÁUDIO WEB ===
-        // ====================================
-
-        function initAudioContext() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                source = audioContext.createMediaElementSource(audio);
-                
-                // 1. Criar o Gain Node (Volume Master)
-                gainNode = audioContext.createGain();
-                gainNode.gain.value = volumeLevel / 100;
-
-                // 2. Criar os filtros de EQ (7 Bandas)
-                filters = EQ_FREQUENCIES.map(freq => {
-                    const filter = audioContext.createBiquadFilter();
-                    filter.type = 'peaking';
-                    filter.frequency.value = freq;
-                    filter.Q.value = 1.0;
-                    filter.gain.value = 0; // Começa em FLAT
-                    return filter;
-                });
-
-                // 3. Criar o Analisador Principal para Espectro
-                analyser = audioContext.createAnalyser();
-                analyser.fftSize = 2048;
-
-                // 4. Criar o Splitter para VU Meter (Estéreo)
-                splitter = audioContext.createChannelSplitter(2);
-
-                // 5. Criar Analisadores para VU Meter (L1, R1, L2, R2)
-                analyserL1 = audioContext.createAnalyser(); analyserL1.fftSize = VU_SAMPLE_SIZE;
-                analyserR1 = audioContext.createAnalyser(); analyserR1.fftSize = VU_SAMPLE_SIZE;
-                analyserL2 = audioContext.createAnalyser(); analyserL2.fftSize = VU_SAMPLE_SIZE; // Analisador extra L
-                analyserR2 = audioContext.createAnalyser(); analyserR2.fftSize = VU_SAMPLE_SIZE; // Analisador extra R
-
-                // Conectar os nós
-                // Fonte -> EQ Filters (cadeia)
-                let lastNode = source;
-                filters.forEach(filter => {
-                    lastNode.connect(filter);
-                    lastNode = filter;
-                });
-
-                // Último Filtro -> Analisador Principal -> Splitter -> Gain Node (para saída)
-                lastNode.connect(analyser);
-                analyser.connect(splitter);
-                
-                // Conectar Analisadores VU e Gain Node
-                splitter.connect(analyserL1, 0); // Canal Esquerdo 1
-                splitter.connect(analyserR1, 1); // Canal Direito 1
-                splitter.connect(analyserL2, 0); // Canal Esquerdo 2 (extra)
-                splitter.connect(analyserR2, 1); // Canal Direito 2 (extra)
-
-                analyser.connect(gainNode); // Conecta o Analisador Principal ao Gain Node
-                gainNode.connect(audioContext.destination);
-
-                setupEQControls();
-                updateEQ(EQ_PRESETS['flat']); // Garante que o estado visual inicial seja FLAT
-            }
-        }
-
-        // ====================================
-        // === FUNÇÕES DE REPRODUÇÃO E CONTROLES ===
-        // ====================================
-
-        function playRadio() {
-            initAudioContext();
-            if (audioContext.state === 'suspended') {
-                audioContext.resume();
-            }
-            audio.play().then(() => {
-                isPlaying = true;
-                updateControls(true);
-                updateStatus(true);
-                animateVisuals();
-                nowPlayingDisplay.textContent = "Transmissão Intercontinental... [SIGNAL LOCK]"; // Simula info
-            }).catch(error => {
-                console.error("Erro ao tentar tocar o rádio:", error);
-                nowPlayingDisplay.textContent = "ERRO: Não foi possível iniciar a Transmissão. Verifique o stream.";
-                updateStatus(false);
-            });
-        }
-
-        function pauseRadio() {
-            audio.pause();
-            isPlaying = false;
-            updateControls(false);
-            updateStatus(true); // O Status pode ser Online mesmo em Pausa
-        }
-
-        function stopRadio() {
-            audio.pause();
-            audio.currentTime = 0;
-            isPlaying = false;
-            updateControls(false);
-            updateStatus(false);
-            cancelAnimationFrame(animationFrameId);
-            clearVisuals();
-            nowPlayingDisplay.textContent = "Pressione Play para iniciar a Transmissão...";
-        }
-
-        function toggleMute() {
-            isMuted = !isMuted;
-            audio.muted = isMuted;
-            muteBtn.classList.toggle('active', isMuted);
-            muteBtn.innerHTML = isMuted ? '<i class="fas fa-volume-off"></i> Unmute' : '<i class="fas fa-volume-up"></i> Mute';
-            volumeKnob.style.opacity = isMuted ? 0.5 : 1;
-            volumeFill.style.opacity = isMuted ? 0.5 : 1;
-        }
-
-        function updateVolume(value) {
-            volumeLevel = value;
-            if (gainNode) {
-                gainNode.gain.value = volumeLevel / 100;
-            }
-            volumeValDisplay.textContent = volumeLevel;
-            volumeFill.style.width = `${volumeLevel}%`;
-
-            // Rotação do Knob (-135deg é 0%, 135deg é 100%)
-            const rotation = (volumeLevel * 2.7) - 135;
-            volumeKnob.style.transform = `rotate(${rotation}deg)`;
-        }
-
-        function updateControls(playing) {
-            playBtn.classList.toggle('active', playing);
-            playBtn.disabled = playing;
-            pauseBtn.disabled = !playing;
-            stopBtn.disabled = !playing;
-            visualizerCore.style.transform = playing ? 'scale(1.1)' : 'scale(1.0)';
-            visualizerCore.style.boxShadow = playing ? `0 0 25px var(--glow-color), inset 0 0 15px var(--bg-color)` : `0 0 20px var(--glow-color), inset 0 0 10px var(--bg-color)`;
-        }
-
-        function updateStatus(online) {
-            statusLight.classList.toggle('status-online', online);
-            statusLight.classList.toggle('status-offline', !online);
-            statusText.textContent = online ? 'ONLINE' : 'OFFLINE';
-        }
-
-        // ====================================
-        // === FUNÇÕES DO VISUALIZADOR ===
-        // ====================================
-
-        function clearVisuals() {
-            // Limpa o Canvas
-            ctx.clearRect(0, 0, spectrumCanvas.width, spectrumCanvas.height);
-            // Zera as barras VU
-            ['l1', 'r1', 'l2', 'r2'].forEach(key => {
-                fillElements[key].style.height = '0%';
-                levelValElements[key].textContent = `${key.toUpperCase()}: 00 dB`;
-                peakElements[key].style.opacity = 0;
-                peakHolds[key] = 0;
-            });
-        }
-
-        // --- NOVO: FUNÇÃO DE COR MULTICOLORIDA PARA BARRAS DE ESPECTRO ---
-        function getColor(index, total) {
-            const step = index / total;
-            let r, g, b;
-
-            // Transição Azul -> Verde (0.0 a 0.33)
-            if (step < 0.33) {
-                r = 0;
-                g = Math.floor(255 * (step / 0.33));
-                b = Math.floor(255 * (1 - (step / 0.33)));
-            }
-            // Transição Verde -> Amarelo (0.33 a 0.66)
-            else if (step < 0.66) {
-                r = Math.floor(255 * ((step - 0.33) / 0.33));
-                g = 255;
-                b = 0;
-            }
-            // Transição Amarelo -> Vermelho (0.66 a 1.0)
-            else {
-                r = 255;
-                g = Math.floor(255 * (1 - ((step - 0.66) / 0.34)));
-                b = 0;
-            }
-            
-            // Força o vermelho no final (segurança para o último elemento)
-            if (index === total - 1) { r = 255; g = 0; b = 0; }
-
-            return `rgb(${r}, ${g}, ${b})`;
-        }
-
-        function drawSpectrum() {
-            const dataArray = new Uint8Array(analyser.frequencyBinCount);
-            analyser.getByteFrequencyData(dataArray);
-
-            ctx.clearRect(0, 0, spectrumCanvas.width, spectrumCanvas.height);
-
-            const barWidth = (spectrumCanvas.width / NUM_BANDS) * 0.9;
-            let x = 0;
-
-            for (let i = 0; i < NUM_BANDS; i++) {
-                // Ajusta o índice para pegar amostras logarítmicas (melhor visualização)
-                const index = Math.floor(i * (dataArray.length / NUM_BANDS));
-                const value = dataArray[index];
-                const barHeight = value * (spectrumCanvas.height / 256);
-
-                // Aplica a cor multicolorida (Azul -> Verde -> Amarelo -> Vermelho)
-                ctx.fillStyle = getColor(i, NUM_BANDS);
-                
-                // Desenha a barra
-                ctx.fillRect(x, spectrumCanvas.height - barHeight, barWidth, barHeight);
-
-                x += barWidth + (spectrumCanvas.width / NUM_BANDS) * 0.1;
-            }
-        }
-        
-        // Função para converter o valor do analisador (0-255) em dB (simulado)
-        function byteToDb(byte) {
-            // Mapeia 0-255 para -60dB a 0dB (simulação)
-            const minDb = -60;
-            const maxDb = 0;
-            if (byte === 0) return minDb;
-            
-            // Fator de conversão logarítmica (simulada)
-            const db = minDb + (byte / 255) * (maxDb - minDb) * 1.5; // Multiplicado por 1.5 para um medidor mais "nervoso"
-            return Math.min(maxDb, db); // Limita a 0 dB (o máximo)
-        }
-
-        // --- NOVO: ATUALIZA 4 BARRAS DE NÍVEL ESTÉREO ---
-        function updateStereoLevelBars() {
-            const bufferL1 = new Uint8Array(analyserL1.fftSize);
-            const bufferR1 = new Uint8Array(analyserR1.fftSize);
-            const bufferL2 = new Uint8Array(analyserL2.fftSize);
-            const bufferR2 = new Uint8Array(analyserR2.fftSize);
-
-            // Obter dados de tempo (simples, não estéreo real, mas reage ao som)
-            analyserL1.getByteTimeDomainData(bufferL1);
-            analyserR1.getByteTimeDomainData(bufferR1);
-            // Usar frequência para as barras extras (para variar um pouco e ter 4 barras "nervosas")
-            analyserL2.getByteFrequencyData(bufferL2); 
-            analyserR2.getByteFrequencyData(bufferR2);
-
-            // Calcula o pico (RMS simples) para cada canal
-            const getPeak = (buffer) => {
-                let sumOfSquares = 0;
-                for (let i = 0; i < buffer.length; i++) {
-                    const value = (buffer[i] - 128) / 128; // Normaliza para -1.0 a 1.0
-                    sumOfSquares += value * value;
-                }
-                const rms = Math.sqrt(sumOfSquares / buffer.length);
-                return rms * 100; // Retorna em %
-            };
-            
-            // Função para calcular o nível para as barras 2 e 4 (usam dados de frequência)
-            const getFreqLevel = (buffer) => {
-                let max = 0;
-                for (let i = 0; i < buffer.length; i++) {
-                    if (buffer[i] > max) max = buffer[i];
-                }
-                // Mapeia de 0-255 para 0-100%
-                return (max / 255) * 100;
-            };
-
-            const levels = {
-                'l1': getPeak(bufferL1),
-                'r1': getPeak(bufferR1),
-                'l2': getFreqLevel(bufferL2),
-                'r2': getFreqLevel(bufferR2)
-            };
-            
-            // Aplica os níveis e Peak Hold
-            Object.keys(levels).forEach(key => {
-                const level = levels[key];
-                
-                // Aplica ao preenchimento (Fill)
-                fillElements[key].style.height = `${Math.min(100, level)}%`;
-
-                // Converte para dB para o display (apenas L1 e R1 para simplificação)
-                const dbValue = key.includes('1') ? byteToDb(Math.floor((level / 100) * 255)) : byteToDb(Math.floor((level / 100) * 255));
-                levelValElements[key].textContent = `${key.toUpperCase()}: ${dbValue.toFixed(2)} dB`;
-                
-                // Peak Hold (Mantém o pico por um tempo)
-                if (level > peakHolds[key]) {
-                    peakHolds[key] = level;
-                    setTimeout(() => {
-                        peakHolds[key] *= 0.8; // Decay
-                    }, 100); 
-                }
-                
-                const peakHeight = (100 - peakHolds[key]);
-                peakElements[key].style.top = `${peakHeight}%`;
-                peakElements[key].style.opacity = peakHolds[key] > 5 ? 1 : 0;
-            });
-        }
-
-
-        function animateVisuals() {
-            if (isPlaying) {
-                drawSpectrum();
-                if (audioContext && splitter) {
-                    updateStereoLevelBars();
-                }
-            }
-            animationFrameId = requestAnimationFrame(animateVisuals);
-        }
-
-        // ====================================
-        // === FUNÇÕES DE TEMAS E EQ ===
-        // ====================================
-
-        function changeTheme(themeName) {
-            document.body.className = themeName;
-            document.getElementById('theme-name').textContent = themeName.toUpperCase().replace('-', ' ');
-            themeButtons.forEach(btn => {
-                btn.classList.toggle('active-theme', btn.dataset.theme === themeName);
-            });
-        }
-
-        function setupThemeControls() {
-            themeButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    changeTheme(button.dataset.theme);
-                });
-            });
-        }
-        
-        function updateEQ(gains) {
-            if (filters.length !== gains.length) return;
-
-            gains.forEach((gainValue, index) => {
-                const slider = eqSliders[index];
-                const filter = filters[index];
-
-                filter.gain.value = gainValue;
-                slider.value = gainValue;
-                document.getElementById(slider.id.replace('-slider', '-val')).textContent = `${gainValue} dB`;
-            });
-        }
-
-        function setupEQControls() {
-            // Slider Control
-            eqSliders.forEach((slider, index) => {
-                slider.addEventListener('input', () => {
-                    const gainValue = parseFloat(slider.value);
-                    const freq = parseFloat(slider.dataset.freq);
-                    
-                    if (filters[index]) {
-                        filters[index].gain.value = gainValue;
-                    }
-                    document.getElementById(slider.id.replace('-slider', '-val')).textContent = `${gainValue} dB`;
-
-                    // Remove classe 'active' dos presets ao mover um slider
-                    eqButtons.forEach(btn => btn.classList.remove('active'));
-                    document.getElementById('eq-name').textContent = 'MANUAL';
-                });
-            });
-
-            // Preset Buttons
-            eqButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const presetName = button.dataset.preset;
-                    const gains = EQ_PRESETS[presetName];
-                    
-                    if (gains) {
-                        updateEQ(gains);
-                        document.getElementById('eq-name').textContent = presetName.toUpperCase();
-                        
-                        eqButtons.forEach(btn => btn.classList.remove('active'));
-                        button.classList.add('active');
-                    }
-                });
-            });
-        }
-
-        // ====================================
-        // === CONTROLE DO KNOB (Volume) ===
-        // ====================================
-
-        function setupKnobControl() {
-            let isDragging = false;
-            let startY = 0;
-            let currentVolume = volumeLevel;
-
-            volumeKnob.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                startY = e.clientY;
-                currentVolume = volumeLevel;
-                volumeKnob.style.cursor = 'grabbing';
-                e.preventDefault();
-            });
-
-            document.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-
-                const deltaY = startY - e.clientY;
-                let newVolume = currentVolume + Math.round(deltaY / 2); // Mais sensível
-                
-                newVolume = Math.max(0, Math.min(100, newVolume));
-                updateVolume(newVolume);
-            });
-
-            document.addEventListener('mouseup', () => {
-                if (isDragging) {
-                    isDragging = false;
-                    volumeKnob.style.cursor = 'grab';
-                }
-            });
-
-            // Suporte a Roda do Mouse (Scroll)
-            volumeKnob.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                let newVolume = volumeLevel;
-                if (e.deltaY < 0) {
-                    newVolume = Math.min(100, volumeLevel + 1);
-                } else {
-                    newVolume = Math.max(0, volumeLevel - 1);
-                }
-                updateVolume(newVolume);
-            });
-        }
-
-        // ====================================
-        // === INICIALIZAÇÃO E EVENTOS ===
-        // ====================================
-
-        function updateDateTime() {
-            const now = new Date();
-            const date = now.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            const time = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-            dateDisplay.textContent = `DATA/HORA: ${date} ${time}`;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Setup Inicial
-            updateVolume(50);
-            updateStatus(false);
-            updateControls(false);
-            setupKnobControl();
-            setupThemeControls();
-            setInterval(updateDateTime, 1000);
-            updateDateTime();
-            
-            // Eventos de Reprodução
-            playBtn.addEventListener('click', playRadio);
-            pauseBtn.addEventListener('click', pauseRadio);
-            stopBtn.addEventListener('click', stopRadio);
-            muteBtn.addEventListener('click', toggleMute);
-
-            // Ajusta o tamanho do Canvas
-            const containerSize = spectrumCanvas.parentElement.clientWidth;
-            spectrumCanvas.width = containerSize;
-            spectrumCanvas.height = containerSize;
-            window.addEventListener('resize', () => {
-                const newContainerSize = spectrumCanvas.parentElement.clientWidth;
-                spectrumCanvas.width = newContainerSize;
-                spectrumCanvas.height = newContainerSize;
-            });
-
-            // Configuração inicial do EQ é feita dentro de initAudioContext
-            // A inicialização do AudioContext só ocorre ao clicar em Play.
-        });
-
-    </script>
+<body>
+<div class="frame" id="frame">
+<div class="deck">
+
+<!-- TOPO -->
+<div class="flex justify-between items-center mb-10">
+<div>
+<h1 class="text-5xl font-black italic text-yellow-400">INTERCONTINENTAL</h1>
+<p class="text-xs tracking-[0.6em] opacity-60">DIGITAL ENGINE RADIO</p>
+</div>
+
+<div class="lcd w-80">
+<div class="flex justify-between border-b border-green-900 pb-1 mb-1">
+<span id="clock" class="text-2xl">00:00:00</span>
+<span id="date" class="text-xs">--/--/----</span>
+</div>
+<div class="flex justify-between text-xs font-black">
+<span id="status">ENGINE: OFF</span>
+<span id="mode">MODE: STOCK</span>
+</div>
+</div>
+</div>
+
+<!-- CORPO -->
+<div class="grid grid-cols-12 gap-10">
+
+<!-- ESQUERDA -->
+<div class="col-span-3 flex flex-col gap-4">
+<div class="vu-bar"><div id="vu1" class="vu-fill"></div></div>
+<div class="vu-bar"><div id="vu2" class="vu-fill"></div></div>
+<div class="vu-bar"><div id="vu3" class="vu-fill"></div></div>
+
+<div class="flex flex-col items-center gap-6 mt-6">
+<div class="gauge"><div id="n1" class="needle"></div><p class="text-center text-xs">PRESSURE</p></div>
+<div class="gauge"><div id="n2" class="needle bg-cyan-400"></div><p class="text-center text-xs">RPM</p></div>
+<div class="gauge"><div id="n3" class="needle bg-yellow-300"></div><p class="text-center text-xs">BALANCE</p></div>
+</div>
+</div>
+
+<!-- CENTRO -->
+<div class="col-span-6 flex flex-col gap-6">
+<canvas id="engine" height="320"></canvas>
+
+<div class="grid grid-cols-4 gap-4">
+<button id="play" class="bg-zinc-800 py-6 rounded-xl font-black">START</button>
+<button id="pause" class="bg-zinc-700 py-6 rounded-xl font-black">STOP</button>
+<button id="mute" class="bg-zinc-700 py-6 rounded-xl font-black">MUTE</button>
+<button id="nitro" class="bg-red-900 py-6 rounded-xl font-black">NITRO</button>
+</div>
+
+<div class="grid grid-cols-7 gap-2">
+<script>
+['ECO','SPORT','CITY','TURBO','VOICE','NIGHT','STOCK']
+.forEach(m=>document.write(`<button class="eq-btn" onclick="setMode('${m}',this)">${m}</button>`));
+</script>
+</div>
+</div>
+
+<!-- DIREITA -->
+<div class="col-span-3 flex flex-col items-center gap-6">
+<div class="knob" id="knob"><span id="vol">80</span></div>
+
+<div class="grid grid-cols-4 gap-2 max-h-56 overflow-y-auto">
+<script>
+for(let i=1;i<=26;i++){
+document.write(`<button class="theme-btn" onclick="setTheme(${i})">${i}</button>`);
+}
+</script>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<script>
+const RADIO="https://stream.zeno.fm/wzcgaal0dnltv";
+const audio=new Audio(RADIO);
+audio.crossOrigin="anonymous";
+
+let ctx,analyser,data;
+let nitroActive=false;
+let vol=80;
+
+play.onclick=async()=>{
+if(!ctx){
+ctx=new AudioContext();
+analyser=ctx.createAnalyser();
+analyser.fftSize=256;
+data=new Uint8Array(analyser.frequencyBinCount);
+
+const src=ctx.createMediaElementSource(audio);
+src.connect(analyser);
+analyser.connect(ctx.destination);
+}
+await ctx.resume();
+audio.play();
+status.innerText="ENGINE: RUNNING";
+animate();
+};
+
+pause.onclick=()=>audio.pause();
+mute.onclick=()=>audio.muted=!audio.muted;
+
+nitro.onclick=()=>{
+nitroActive=!nitroActive;
+nitro.classList.toggle("boost",nitroActive);
+status.innerText=nitroActive?"NITRO: ACTIVE":"ENGINE: RUNNING";
+};
+
+function animate(){
+requestAnimationFrame(animate);
+analyser.getByteFrequencyData(data);
+
+/* CANVAS */
+engine.width=engine.offsetWidth;
+engine.height=engine.offsetHeight;
+const c=engine.getContext("2d");
+c.clearRect(0,0,engine.width,engine.height);
+
+const cx=engine.width/2;
+const cy=engine.height/2;
+const r=Math.min(cx,cy)-20;
+
+data.forEach((v,i)=>{
+const a=i/data.length*Math.PI*2;
+const p=(v/255)*(nitroActive?1.6:1)*r;
+c.strokeStyle=nitroActive?"#ff0033":"#00e5ff";
+c.lineWidth=3;
+c.beginPath();
+c.moveTo(cx+Math.cos(a)*(r-p),cy+Math.sin(a)*(r-p));
+c.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);
+c.stroke();
+});
+
+/* VU */
+vu1.style.width=(data[10]/255*100)+"%";
+vu2.style.width=(data[30]/255*100)+"%";
+vu3.style.width=(data[60]/255*100)+"%";
+
+/* AGULHAS */
+n1.style.transform=`rotate(${data[15]/255*160-80}deg)`;
+n2.style.transform=`rotate(${data[40]/255*160-80}deg)`;
+n3.style.transform=`rotate(${data[80]/255*160-80}deg)`;
+}
+
+/* VOLUME */
+knob.onwheel=e=>{
+e.preventDefault();
+vol=e.deltaY<0?Math.min(100,vol+2):Math.max(0,vol-2);
+audio.volume=vol/100;
+vol.innerText=vol;
+knob.style.transform=`rotate(${vol*2-100}deg)`;
+};
+
+/* CLOCK */
+setInterval(()=>{
+const d=new Date();
+clock.innerText=d.toLocaleTimeString();
+date.innerText=d.toLocaleDateString();
+},1000);
+
+/* MODOS */
+function setMode(m,b){
+document.querySelectorAll(".eq-btn").forEach(x=>x.classList.remove("active"));
+b.classList.add("active");
+mode.innerText="MODE: "+m;
+}
+
+/* TEMAS */
+function setTheme(n){
+frame.style.filter=`hue-rotate(${n*14}deg) brightness(${1+n/40})`;
+}
+</script>
 </body>
 </html>
