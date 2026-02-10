@@ -1,4 +1,5 @@
-novo player
+ 
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -26,6 +27,7 @@ display:flex;
 justify-content:center;
 align-items:center;
 min-height:100vh;
+overflow-x: hidden;
 }
 
 .frame{
@@ -34,6 +36,7 @@ background:linear-gradient(135deg,#6b4e00,#ffd700,#6b4e00);
 padding:35px;
 border-radius:60px;
 box-shadow:0 30px 80px #000,inset 0 0 20px #fff;
+transition: all 0.5s ease;
 }
 
 .deck{
@@ -50,6 +53,7 @@ font-family:'Share Tech Mono';
 padding:15px;
 border-radius:12px;
 border:2px solid var(--gold);
+text-shadow: 0 0 5px #00ff55;
 }
 
 /* VU */
@@ -75,6 +79,7 @@ border:2px solid var(--gold);
 border-radius:80px 80px 10px 10px;
 position:relative;
 background:#000;
+overflow: hidden;
 }
 .needle{
 position:absolute;
@@ -84,26 +89,31 @@ width:3px;
 height:70px;
 transform-origin:bottom;
 background:red;
+transition: transform 0.1s ease-out;
 }
 
 /* KNOB */
 .knob{
-width:200px;height:200px;
+width:180px;height:180px;
 border-radius:50%;
-background:conic-gradient(var(--red),var(--blue));
-border:10px solid #111;
-box-shadow:0 20px 50px #000;
+background: radial-gradient(circle, #222, #000);
+border:8px solid #333;
+box-shadow:0 10px 30px #000;
 display:flex;
 align-items:center;
 justify-content:center;
+cursor: ns-resize;
+transition: transform 0.1s;
 }
-.knob span{font-size:42px;font-weight:900}
+.knob span{font-size:42px;font-weight:900; color: var(--gold)}
 
 /* EQ */
 .eq-btn{
 background:#111;border:1px solid #555;
 padding:14px 6px;border-radius:8px;
 font-size:11px;font-weight:900;
+transition: all 0.3s;
+cursor: pointer;
 }
 .eq-btn.active{
 background:var(--gold);
@@ -111,7 +121,6 @@ color:#000;
 box-shadow:0 0 20px var(--gold);
 }
 
-/* TEMAS */
 .theme-btn{
 background:rgba(255,215,0,.15);
 border:1px solid rgba(255,215,0,.4);
@@ -119,14 +128,17 @@ border-radius:10px;
 font-size:11px;
 font-weight:900;
 padding:8px;
+cursor: pointer;
 }
 
-.boost{
+.boost-active{
 animation:pulse .6s infinite alternate;
+border-color: red !important;
+color: red !important;
 }
 @keyframes pulse{
-from{box-shadow:0 0 10px red;}
-to{box-shadow:0 0 40px red;transform:scale(1.05);}
+from{box-shadow:0 0 10px red; transform: scale(1);}
+to{box-shadow:0 0-40px red; transform: scale(1.05);}
 }
 </style>
 </head>
@@ -135,7 +147,6 @@ to{box-shadow:0 0 40px red;transform:scale(1.05);}
 <div class="frame" id="frame">
 <div class="deck">
 
-<!-- TOPO -->
 <div class="flex justify-between items-center mb-10">
 <div>
 <h1 class="text-5xl font-black italic text-yellow-400">INTERCONTINENTAL</h1>
@@ -144,56 +155,56 @@ to{box-shadow:0 0 40px red;transform:scale(1.05);}
 
 <div class="lcd w-80">
 <div class="flex justify-between border-b border-green-900 pb-1 mb-1">
-<span id="clock" class="text-2xl">00:00:00</span>
-<span id="date" class="text-xs">--/--/----</span>
+<span id="clockDisplay" class="text-2xl">00:00:00</span>
+<span id="dateDisplay" class="text-xs">--/--/----</span>
 </div>
 <div class="flex justify-between text-xs font-black">
-<span id="status">ENGINE: OFF</span>
-<span id="mode">MODE: STOCK</span>
+<span id="statusTxt">ENGINE: OFF</span>
+<span id="modeTxt">MODE: STOCK</span>
 </div>
 </div>
 </div>
 
-<!-- CORPO -->
 <div class="grid grid-cols-12 gap-10">
 
-<!-- ESQUERDA -->
 <div class="col-span-3 flex flex-col gap-4">
 <div class="vu-bar"><div id="vu1" class="vu-fill"></div></div>
 <div class="vu-bar"><div id="vu2" class="vu-fill"></div></div>
 <div class="vu-bar"><div id="vu3" class="vu-fill"></div></div>
 
 <div class="flex flex-col items-center gap-6 mt-6">
-<div class="gauge"><div id="n1" class="needle"></div><p class="text-center text-xs">PRESSURE</p></div>
-<div class="gauge"><div id="n2" class="needle bg-cyan-400"></div><p class="text-center text-xs">RPM</p></div>
-<div class="gauge"><div id="n3" class="needle bg-yellow-300"></div><p class="text-center text-xs">BALANCE</p></div>
+<div class="gauge"><div id="n1" class="needle"></div><p class="absolute bottom-1 w-full text-center text-[10px]">PRESSURE</p></div>
+<div class="gauge"><div id="n2" class="needle bg-cyan-400"></div><p class="absolute bottom-1 w-full text-center text-[10px]">RPM</p></div>
+<div class="gauge"><div id="n3" class="needle bg-yellow-300"></div><p class="absolute bottom-1 w-full text-center text-[10px]">BALANCE</p></div>
 </div>
 </div>
 
-<!-- CENTRO -->
 <div class="col-span-6 flex flex-col gap-6">
 <canvas id="engine" height="320"></canvas>
 
 <div class="grid grid-cols-4 gap-4">
-<button id="play" class="bg-zinc-800 py-6 rounded-xl font-black">START</button>
-<button id="pause" class="bg-zinc-700 py-6 rounded-xl font-black">STOP</button>
-<button id="mute" class="bg-zinc-700 py-6 rounded-xl font-black">MUTE</button>
-<button id="nitro" class="bg-red-900 py-6 rounded-xl font-black">NITRO</button>
+<button id="playBtn" class="bg-zinc-800 hover:bg-green-700 py-6 rounded-xl font-black transition">START</button>
+<button id="pauseBtn" class="bg-zinc-700 hover:bg-red-700 py-6 rounded-xl font-black transition">STOP</button>
+<button id="muteBtn" class="bg-zinc-700 py-6 rounded-xl font-black transition">MUTE</button>
+<button id="nitroBtn" class="bg-red-900 py-6 rounded-xl font-black transition">NITRO</button>
 </div>
 
 <div class="grid grid-cols-7 gap-2">
-<script>
-['ECO','SPORT','CITY','TURBO','VOICE','NIGHT','STOCK']
-.forEach(m=>document.write(`<button class="eq-btn" onclick="setMode('${m}',this)">${m}</button>`));
-</script>
+<button class="eq-btn active" onclick="setMode('STOCK', this)">STOCK</button>
+<button class="eq-btn" onclick="setMode('ECO', this)">ECO</button>
+<button class="eq-btn" onclick="setMode('SPORT', this)">SPORT</button>
+<button class="eq-btn" onclick="setMode('CITY', this)">CITY</button>
+<button class="eq-btn" onclick="setMode('TURBO', this)">TURBO</button>
+<button class="eq-btn" onclick="setMode('VOICE', this)">VOICE</button>
+<button class="eq-btn" onclick="setMode('NIGHT', this)">NIGHT</button>
 </div>
 </div>
 
-<!-- DIREITA -->
 <div class="col-span-3 flex flex-col items-center gap-6">
-<div class="knob" id="knob"><span id="vol">80</span></div>
+<div class="knob" id="knobControl"><span id="volDisplay">80</span></div>
+<p class="text-xs font-bold text-yellow-500">SCROLL TO VOLUME</p>
 
-<div class="grid grid-cols-4 gap-2 max-h-56 overflow-y-auto">
+<div class="grid grid-cols-4 gap-2 max-h-48 overflow-y-auto p-2 bg-black/40 rounded-lg">
 <script>
 for(let i=1;i<=26;i++){
 document.write(`<button class="theme-btn" onclick="setTheme(${i})">${i}</button>`);
@@ -207,103 +218,186 @@ document.write(`<button class="theme-btn" onclick="setTheme(${i})">${i}</button>
 </div>
 
 <script>
-const RADIO="https://stream.zeno.fm/wzcgaal0dnltv";
-const audio=new Audio(RADIO);
-audio.crossOrigin="anonymous";
+// Configurações de Áudio
+const RADIO_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
+const audio = new Audio(RADIO_URL);
+audio.crossOrigin = "anonymous";
 
-let ctx,analyser,data;
-let nitroActive=false;
-let vol=80;
+let audioCtx, analyser, source, nitroGain, dataArray;
+let lowFilter, midFilter, highFilter;
+let isNitro = false;
+let currentVol = 80;
 
-play.onclick=async()=>{
-if(!ctx){
-ctx=new AudioContext();
-analyser=ctx.createAnalyser();
-analyser.fftSize=256;
-data=new Uint8Array(analyser.frequencyBinCount);
+// Inicializa o Contexto de Áudio (Obrigatório clique do usuário)
+async function initAudio() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Analisador para os gráficos
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 256;
+        dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-const src=ctx.createMediaElementSource(audio);
-src.connect(analyser);
-analyser.connect(ctx.destination);
+        // Filtros de Equalização (BiquadFilterNodes)
+        lowFilter = audioCtx.createBiquadFilter();
+        lowFilter.type = 'lowshelf';
+        lowFilter.frequency.value = 320;
+
+        midFilter = audioCtx.createBiquadFilter();
+        midFilter.type = 'peaking';
+        midFilter.frequency.value = 1000;
+        midFilter.Q.value = 1;
+
+        highFilter = audioCtx.createBiquadFilter();
+        highFilter.type = 'highshelf';
+        highFilter.frequency.value = 3200;
+
+        // Boost de Volume (Nitro)
+        nitroGain = audioCtx.createGain();
+        nitroGain.gain.value = 1.0;
+
+        // Conexões: Audio -> Nitro -> Low -> Mid -> High -> Analyser -> Destination
+        source = audioCtx.createMediaElementSource(audio);
+        source.connect(nitroGain);
+        nitroGain.connect(lowFilter);
+        lowFilter.connect(midFilter);
+        midFilter.connect(highFilter);
+        highFilter.connect(analyser);
+        analyser.connect(audioCtx.destination);
+    }
 }
-await ctx.resume();
-audio.play();
-status.innerText="ENGINE: RUNNING";
-animate();
+
+playBtn.onclick = async () => {
+    await initAudio();
+    if (audioCtx.state === 'suspended') await audioCtx.resume();
+    audio.play();
+    statusTxt.innerText = "ENGINE: RUNNING";
+    animate();
 };
 
-pause.onclick=()=>audio.pause();
-mute.onclick=()=>audio.muted=!audio.muted;
-
-nitro.onclick=()=>{
-nitroActive=!nitroActive;
-nitro.classList.toggle("boost",nitroActive);
-status.innerText=nitroActive?"NITRO: ACTIVE":"ENGINE: RUNNING";
+pauseBtn.onclick = () => {
+    audio.pause();
+    statusTxt.innerText = "ENGINE: STOPPED";
 };
 
-function animate(){
-requestAnimationFrame(animate);
-analyser.getByteFrequencyData(data);
-
-/* CANVAS */
-engine.width=engine.offsetWidth;
-engine.height=engine.offsetHeight;
-const c=engine.getContext("2d");
-c.clearRect(0,0,engine.width,engine.height);
-
-const cx=engine.width/2;
-const cy=engine.height/2;
-const r=Math.min(cx,cy)-20;
-
-data.forEach((v,i)=>{
-const a=i/data.length*Math.PI*2;
-const p=(v/255)*(nitroActive?1.6:1)*r;
-c.strokeStyle=nitroActive?"#ff0033":"#00e5ff";
-c.lineWidth=3;
-c.beginPath();
-c.moveTo(cx+Math.cos(a)*(r-p),cy+Math.sin(a)*(r-p));
-c.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);
-c.stroke();
-});
-
-/* VU */
-vu1.style.width=(data[10]/255*100)+"%";
-vu2.style.width=(data[30]/255*100)+"%";
-vu3.style.width=(data[60]/255*100)+"%";
-
-/* AGULHAS */
-n1.style.transform=`rotate(${data[15]/255*160-80}deg)`;
-n2.style.transform=`rotate(${data[40]/255*160-80}deg)`;
-n3.style.transform=`rotate(${data[80]/255*160-80}deg)`;
-}
-
-/* VOLUME */
-knob.onwheel=e=>{
-e.preventDefault();
-vol=e.deltaY<0?Math.min(100,vol+2):Math.max(0,vol-2);
-audio.volume=vol/100;
-vol.innerText=vol;
-knob.style.transform=`rotate(${vol*2-100}deg)`;
+muteBtn.onclick = () => {
+    audio.muted = !audio.muted;
+    muteBtn.classList.toggle("bg-yellow-600", audio.muted);
 };
 
-/* CLOCK */
-setInterval(()=>{
-const d=new Date();
-clock.innerText=d.toLocaleTimeString();
-date.innerText=d.toLocaleDateString();
-},1000);
+// Lógica do BOTÃO NITRO (BOOST)
+nitroBtn.onclick = () => {
+    if(!audioCtx) return;
+    isNitro = !isNitro;
+    nitroBtn.classList.toggle("boost-active", isNitro);
+    
+    // Aumenta o ganho real do áudio
+    nitroGain.gain.setTargetAtTime(isNitro ? 2.5 : 1.0, audioCtx.currentTime, 0.1);
+    statusTxt.innerText = isNitro ? "NITRO: ACTIVE" : "ENGINE: RUNNING";
+};
 
-/* MODOS */
-function setMode(m,b){
-document.querySelectorAll(".eq-btn").forEach(x=>x.classList.remove("active"));
-b.classList.add("active");
-mode.innerText="MODE: "+m;
+// Função de Animação (Visualizadores)
+function animate() {
+    requestAnimationFrame(animate);
+    if(!analyser) return;
+    
+    analyser.getByteFrequencyData(dataArray);
+
+    // Canvas Visualizer
+    const c = engine.getContext("2d");
+    engine.width = engine.offsetWidth;
+    engine.height = engine.offsetHeight;
+    c.clearRect(0, 0, engine.width, engine.height);
+
+    const cx = engine.width / 2;
+    const cy = engine.height / 2;
+    const r = Math.min(cx, cy) - 30;
+
+    dataArray.forEach((v, i) => {
+        const angle = (i / dataArray.length) * Math.PI * 2;
+        const amplitude = (v / 255) * (isNitro ? 1.4 : 1.0) * r;
+        
+        c.strokeStyle = isNitro ? "#ff0033" : "#00e5ff";
+        c.lineWidth = 3;
+        c.beginPath();
+        c.moveTo(cx + Math.cos(angle) * (r - amplitude), cy + Math.sin(angle) * (r - amplitude));
+        c.lineTo(cx + Math.cos(angle) * r, cy + Math.sin(angle) * r);
+        c.stroke();
+    });
+
+    // VU Bars
+    vu1.style.width = (dataArray[5] / 255 * 100) + "%";
+    vu2.style.width = (dataArray[15] / 255 * 100) + "%";
+    vu3.style.width = (dataArray[40] / 255 * 100) + "%";
+
+    // Gauges (Agulhas)
+    n1.style.transform = `rotate(${(dataArray[10] / 255) * 160 - 80}deg)`;
+    n2.style.transform = `rotate(${(dataArray[30] / 255) * 160 - 80}deg)`;
+    n3.style.transform = `rotate(${(dataArray[60] / 255) * 160 - 80}deg)`;
 }
 
-/* TEMAS */
-function setTheme(n){
-frame.style.filter=`hue-rotate(${n*14}deg) brightness(${1+n/40})`;
+// Controle de Volume via Mouse Wheel no Knob
+knobControl.onwheel = (e) => {
+    e.preventDefault();
+    currentVol = e.deltaY < 0 ? Math.min(100, currentVol + 5) : Math.max(0, currentVol - 5);
+    audio.volume = currentVol / 100;
+    volDisplay.innerText = currentVol;
+    knobControl.style.transform = `rotate(${(currentVol * 3.6) - 180}deg)`;
+};
+
+// Lógica de EQUALIZADOR (Modos)
+function setMode(m, btn) {
+    if(!audioCtx) return;
+
+    document.querySelectorAll(".eq-btn").forEach(x => x.classList.remove("active"));
+    btn.classList.add("active");
+    modeTxt.innerText = "MODE: " + m;
+
+    // Reset de ganhos
+    lowFilter.gain.value = 0;
+    midFilter.gain.value = 0;
+    highFilter.gain.value = 0;
+
+    switch(m) {
+        case 'TURBO':
+            lowFilter.gain.value = 15;
+            highFilter.gain.value = 10;
+            break;
+        case 'ECO':
+            lowFilter.gain.value = -10;
+            highFilter.gain.value = -5;
+            break;
+        case 'SPORT':
+            lowFilter.gain.value = 8;
+            midFilter.gain.value = 2;
+            highFilter.gain.value = 8;
+            break;
+        case 'VOICE':
+            midFilter.gain.value = 12;
+            break;
+        case 'NIGHT':
+            lowFilter.gain.value = 5;
+            highFilter.gain.value = -15;
+            break;
+        case 'CITY':
+            midFilter.gain.value = 5;
+            lowFilter.gain.value = 2;
+            break;
+    }
 }
+
+// Temas (Hue Rotate)
+function setTheme(n) {
+    frame.style.filter = `hue-rotate(${n * 14}deg) brightness(${1 + n/50})`;
+}
+
+// Relógio
+setInterval(() => {
+    const d = new Date();
+    clockDisplay.innerText = d.toLocaleTimeString();
+    dateDisplay.innerText = d.toLocaleDateString();
+}, 1000);
+
 </script>
 </body>
 </html>
