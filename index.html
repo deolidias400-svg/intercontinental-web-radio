@@ -1,278 +1,924 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INTERCONTINENTAL • AURUM ULTIMATE</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planeta Intercontinental Sound</title>
     
+    <!-- DEPENDÊNCIAS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
-    
+    <!-- FONTES E ÍCONES -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         body {
-            margin: 0;
-            background: #000;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            background-color: #050505;
+            font-family: 'Rajdhani', sans-serif;
+            overflow: hidden;
+            user-select: none;
         }
-
-        /* Ouro Supremo - Gradiente de Chassi */
-        .gold-chassis {
-            background: linear-gradient(145deg, #8a6e2f 0%, #d4af37 25%, #fcf6ba 50%, #d4af37 75%, #8a6e2f 100%);
-            border: 4px solid #f9e2af;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.4);
-        }
-
-        .inner-panel {
-            background: rgba(0, 0, 0, 0.92);
-            border: 2px solid rgba(212, 175, 55, 0.3);
-        }
-
-        .gold-text {
-            background: linear-gradient(to bottom, #fcf6ba 20%, #d4af37 50%, #8a6e2f 80%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
-        }
-
-        .gold-button {
-            background: linear-gradient(to bottom, #fcf6ba, #d4af37, #aa8b22);
-            color: #000;
-            font-weight: 900;
-            text-shadow: 0 1px 0 rgba(255,255,255,0.3);
-            border: 1px solid #000;
-            transition: all 0.2s;
-        }
-        .gold-button:active { transform: scale(0.95); filter: brightness(1.2); }
-
-        .nitro-active { animation: shake 0.1s infinite; }
-        @keyframes shake {
-            0% { transform: translate(1px, 1px); }
-            50% { transform: translate(-1px, -1px); }
-            100% { transform: translate(1px, -1px); }
-        }
-
-        .theme-dot {
-            width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3);
-            cursor: pointer; transition: transform 0.2s;
-        }
-        .theme-dot:hover { transform: scale(1.3); border-color: white; }
-
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .font-mono-lcd { font-family: 'Share Tech Mono', monospace; }
+        .font-mono-tech { font-family: 'Share Tech Mono', monospace; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.3); }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 255, 200, 0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 200, 0.6); }
+
+        /* Vertical Range Input Styling */
+        input[type=range][orient=vertical] {
+            writing-mode: bt-lr; /* IE */
+            -webkit-appearance: slider-vertical; /* WebKit */
+            appearance: slider-vertical;
+            width: 8px;
+            height: 100px;
+            padding: 0 5px;
+        }
+        
+        .text-shadow-lg { text-shadow: 0 0 10px currentColor; }
+        .text-shadow-sm { text-shadow: 0 0 5px currentColor; }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useRef, useCallback } = React;
-        const RADIO_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
+        const { useState, useEffect, useCallback, useRef, memo } = React;
 
-        // Ícones
-        const Play = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>;
-        const Stop = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="5" width="14" height="14" rx="2"/></svg>;
+        // --- CONSTANTES ---
+        const STREAM_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
+        
+        const EQ_FREQUENCIES = [30, 60, 120, 250, 500, 1000, 2000, 4000, 8000, 12000, 16000];
+        
+        const EQ_PRESETS = {
+            'flat': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            'rock': [6, 4, 2, -2, -4, -3, 0, 2, 4, 5, 6],
+            'pop': [-3, -1, 1, 3, 4, 2, 0, -1, -2, -3, -4],
+            'jazz': [5, 3, 0, -2, -3, -2, 0, 2, 3, 4, 5],
+            'dance': [7, 5, 3, 0, -2, -4, -3, -1, 1, 3, 5],
+            'metal': [7, 5, 2, -5, -7, -5, -2, 1, 4, 6, 8],
+            'vocal': [0, 2, 4, 3, 1, 0, -1, -2, -3, -4, -5],
+            'bass': [9, 7, 5, 3, 0, -3, -5, -7, -8, -9, -10],
+            'treble': [-8, -7, -6, -4, -2, 0, 2, 4, 6, 8, 9],
+            'chill': [4, 2, 0, -1, -2, -1, 0, 1, 2, 3, 4],
+        };
 
-        const App = () => {
-            const [isPlaying, setIsPlaying] = useState(false);
-            const [isNitro, setIsNitro] = useState(false);
-            const [volume, setVolume] = useState(80);
-            const [currentMode, setCurrentMode] = useState('STOCK');
-            const [themeHue, setThemeHue] = useState(0);
-            const [currentTime, setCurrentTime] = useState(new Date());
-            const [stats, setStats] = useState({ pressure: 0, rpm: 0, vu: [0, 0, 0] });
+        const THEMES = [
+            'industrial-cyber', 'cosmic-dark', 'solar-flare', 'deep-ocean', 'neon-city', 'retro-crt', 
+            'retro-wave', 'vaporwave', 'matrix-code', 'arctic-ice', 'gold-dust', 'martian-sand', 
+            'emerald-forest', 'amethyst-dream', 'fire-ice', 'concrete-jungle', 'sunset-strip', 
+            'biohazard-green', 'pure-white', 'chroma-glow', 'dark-matter', 'volcano-ash', 'purple-haze', 
+            'cyber-red', 'sky-blue', 'lime-shock', 'carbon-fiber'
+        ];
 
+        const SAMPLE_TRACKS = [
+            { artist: "Cybernetic Orchestra", title: "Neon Dreams" },
+            { artist: "Synthwave Enigma", title: "Midnight Protocol" },
+            { artist: "AI DJ Unit", title: "Quantum Groove" },
+            { artist: "Digital Phoenix", title: "Echoes of Tomorrow" },
+            { artist: "Future Funk Collective", title: "Electric City Nights" }
+        ];
+
+        // --- HOOK: USE AUDIO ---
+        const useAudio = (url) => {
+            const audioContextRef = useRef(null);
             const audioRef = useRef(null);
-            const audioCtxRef = useRef(null);
-            const analyserRef = useRef(null);
-            const nitroGainRef = useRef(null);
-            const filtersRef = useRef({});
+            const gainNodeRef = useRef(null);
+            const mainAnalyserRef = useRef(null);
+            const eqFiltersRef = useRef([]);
+            const djFiltersRef = useRef([]);
+            const delayNodeRef = useRef(null);
+            const feedbackGainRef = useRef(null);
+            
+            // Super Boost Nodes
+            const boostFilterRef = useRef(null);
+            const compressorRef = useRef(null);
+            
+            // VU Meter Analysers
+            const vuAnalyserL1Ref = useRef(null);
+            const vuAnalyserR1Ref = useRef(null);
+            const vuAnalyserL2Ref = useRef(null);
+            const vuAnalyserR2Ref = useRef(null);
+
+            const animationFrameRef = useRef(0);
+            const autoLevelIntervalRef = useRef(null);
+            const metadataIntervalRef = useRef(null);
+
+            const [isInitialized, setIsInitialized] = useState(false);
+            const [isPlaying, setIsPlaying] = useState(false);
+            const [isLoading, setIsLoading] = useState(false);
+            const [error, setError] = useState(null);
+            const [isAutoLevelActive, setIsAutoLevelActive] = useState(false);
+
+            const [audioData, setAudioData] = useState({
+                frequencyData: new Uint8Array(1024),
+                timeDomainData: new Uint8Array(1024),
+                vu: { l1: 0, r1: 0, l2: 0, r2: 0 },
+                volume: 50,
+                isMuted: false,
+                bassLevel: 0,
+                isSuperBoostActive: false,
+                dominantFrequency: 0,
+                dynamicRange: 0,
+                rpmValue: 0,
+                nowPlaying: SAMPLE_TRACKS[0],
+            });
+
+            // Simulated Metadata
+            useEffect(() => {
+                let trackIndex = 0;
+                if (isPlaying) {
+                    metadataIntervalRef.current = setInterval(() => {
+                        trackIndex = (trackIndex + 1) % SAMPLE_TRACKS.length;
+                        setAudioData(prev => ({ ...prev, nowPlaying: SAMPLE_TRACKS[trackIndex] }));
+                    }, 15000);
+                } else {
+                    clearInterval(metadataIntervalRef.current);
+                }
+                return () => clearInterval(metadataIntervalRef.current);
+            }, [isPlaying]);
+
+            const initAudio = useCallback(() => {
+                if (isInitialized) return;
+
+                setIsLoading(true);
+                setError(null);
+
+                const audio = new Audio(url);
+                audio.crossOrigin = "anonymous";
+                audioRef.current = audio;
+
+                audio.addEventListener('canplay', () => setIsLoading(false));
+                audio.addEventListener('waiting', () => setIsLoading(true));
+                audio.addEventListener('playing', () => setIsLoading(false));
+                audio.addEventListener('error', (e) => {
+                    console.error("Audio Error:", e);
+                    setError("Stream error. Try refreshing.");
+                    setIsLoading(false);
+                    setIsPlaying(false);
+                });
+
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                const context = new AudioContextClass();
+                audioContextRef.current = context;
+
+                const source = context.createMediaElementSource(audio);
+                const gainNode = context.createGain();
+                gainNode.gain.value = audioData.volume / 100;
+                gainNodeRef.current = gainNode;
+                
+                // EQ
+                const filters = EQ_FREQUENCIES.map(freq => {
+                    const filter = context.createBiquadFilter();
+                    filter.type = 'peaking';
+                    filter.frequency.value = freq;
+                    filter.Q.value = 1.4;
+                    filter.gain.value = 0;
+                    return filter;
+                });
+                eqFiltersRef.current = filters;
+
+                // DJ Mixer
+                const djBassFilter = context.createBiquadFilter();
+                djBassFilter.type = 'lowshelf';
+                djBassFilter.frequency.value = 250;
+                const djMidFilter = context.createBiquadFilter();
+                djMidFilter.type = 'peaking';
+                djMidFilter.frequency.value = 1000;
+                const djTrebleFilter = context.createBiquadFilter();
+                djTrebleFilter.type = 'highshelf';
+                djTrebleFilter.frequency.value = 4000;
+                djFiltersRef.current = [djBassFilter, djMidFilter, djTrebleFilter];
+
+                // Super Boost Filter (Low Shelf for Bass Punch)
+                const boostFilter = context.createBiquadFilter();
+                boostFilter.type = 'lowshelf';
+                boostFilter.frequency.value = 60;
+                boostFilter.gain.value = 0; // Default off
+                boostFilterRef.current = boostFilter;
+
+                // Compressor
+                const compressor = context.createDynamicsCompressor();
+                compressor.threshold.value = -24;
+                compressor.knee.value = 30;
+                compressor.ratio.value = 12;
+                compressor.attack.value = 0.003;
+                compressor.release.value = 0.25;
+                compressorRef.current = compressor;
+
+                // Delay
+                const delay = context.createDelay(1.0);
+                delay.delayTime.value = 0;
+                delayNodeRef.current = delay;
+                const feedbackGain = context.createGain();
+                feedbackGain.gain.value = 0;
+                feedbackGainRef.current = feedbackGain;
+                delay.connect(feedbackGain);
+                feedbackGain.connect(delay);
+
+                const mainAnalyser = context.createAnalyser();
+                mainAnalyser.fftSize = 2048;
+                mainAnalyserRef.current = mainAnalyser;
+
+                const splitter = context.createChannelSplitter(2);
+                vuAnalyserL1Ref.current = context.createAnalyser(); vuAnalyserL1Ref.current.fftSize = 256;
+                vuAnalyserR1Ref.current = context.createAnalyser(); vuAnalyserR1Ref.current.fftSize = 256;
+                vuAnalyserL2Ref.current = context.createAnalyser(); vuAnalyserL2Ref.current.fftSize = 256;
+                vuAnalyserR2Ref.current = context.createAnalyser(); vuAnalyserR2Ref.current.fftSize = 256;
+
+                // Routing
+                let lastNode = source;
+                
+                // Connect EQ
+                filters.forEach(filter => {
+                    lastNode.connect(filter);
+                    lastNode = filter;
+                });
+                
+                // Connect DJ Filters
+                djFiltersRef.current.forEach(filter => {
+                    lastNode.connect(filter);
+                    lastNode = filter;
+                });
+
+                // Connect Boost & Compressor
+                lastNode.connect(boostFilter);
+                boostFilter.connect(compressor);
+                lastNode = compressor;
+                
+                // Connect Delay
+                lastNode.connect(delay); 
+                delay.connect(mainAnalyser); 
+                feedbackGain.connect(mainAnalyser); 
+                lastNode.connect(mainAnalyser); 
+                
+                // Connect to Destination
+                mainAnalyser.connect(splitter);
+                splitter.connect(gainNode);
+                gainNode.connect(context.destination);
+
+                splitter.connect(vuAnalyserL1Ref.current, 0);
+                splitter.connect(vuAnalyserR1Ref.current, 1);
+                splitter.connect(vuAnalyserL2Ref.current, 0);
+                splitter.connect(vuAnalyserR2Ref.current, 1);
+
+                setIsInitialized(true);
+                setIsLoading(false);
+            }, [isInitialized, url, audioData.volume]);
+
+            const analyzeData = useCallback(() => {
+                if (!mainAnalyserRef.current || !isPlaying || !audioContextRef.current) return;
+                
+                const frequencyData = new Uint8Array(mainAnalyserRef.current.frequencyBinCount);
+                mainAnalyserRef.current.getByteFrequencyData(frequencyData);
+
+                const timeDomainData = new Uint8Array(mainAnalyserRef.current.fftSize);
+                mainAnalyserRef.current.getByteTimeDomainData(timeDomainData);
+                
+                const getPeakLevel = (analyser) => {
+                    if (!analyser) return 0;
+                    const data = new Uint8Array(analyser.fftSize);
+                    analyser.getByteTimeDomainData(data);
+                    let max = 0;
+                    for (let i = 0; i < data.length; i++) {
+                        const val = Math.abs(data[i] - 128);
+                        if (val > max) max = val;
+                    }
+                    return (max / 128) * 100;
+                };
+
+                const getFreqLevel = (analyser) => {
+                    if (!analyser) return 0;
+                    const data = new Uint8Array(analyser.frequencyBinCount);
+                    analyser.getByteFrequencyData(data);
+                    let sum = 0;
+                    for(let i = 0; i < data.length; i++) sum += data[i];
+                    return (sum / (data.length * 255)) * 100;
+                }
+                
+                const bassBins = Math.floor((250 / (audioContextRef.current.sampleRate / 2)) * frequencyData.length);
+                const bassSum = frequencyData.slice(0, bassBins).reduce((a, b) => a + b, 0);
+                const bassLevel = (bassSum / (bassBins * 255)) * 100;
+
+                let maxVal = -1, maxIndex = 0;
+                for(let i=0; i < frequencyData.length; i++){
+                    if(frequencyData[i] > maxVal){
+                        maxVal = frequencyData[i];
+                        maxIndex = i;
+                    }
+                }
+                const dominantFrequency = (maxIndex * audioContextRef.current.sampleRate / mainAnalyserRef.current.fftSize);
+                const rms = Math.sqrt(timeDomainData.reduce((sum, val) => sum + Math.pow((val - 128) / 128, 2), 0) / timeDomainData.length) || 0;
+                const rpmValue = Math.min(100, rms * 200); 
+
+                setAudioData(prev => ({
+                    ...prev,
+                    frequencyData,
+                    timeDomainData,
+                    vu: { 
+                        l1: getPeakLevel(vuAnalyserL1Ref.current),
+                        r1: getPeakLevel(vuAnalyserR1Ref.current),
+                        l2: getFreqLevel(vuAnalyserL2Ref.current),
+                        r2: getFreqLevel(vuAnalyserR2Ref.current),
+                    },
+                    bassLevel,
+                    dominantFrequency: Math.min(5000, dominantFrequency),
+                    dynamicRange: Math.max(0, getPeakLevel(vuAnalyserL1Ref.current) - getFreqLevel(vuAnalyserL2Ref.current)),
+                    rpmValue: rpmValue,
+                }));
+
+                animationFrameRef.current = requestAnimationFrame(analyzeData);
+            }, [isPlaying]);
+
+            // Auto Level Logic
+            useEffect(() => {
+                if (isAutoLevelActive && isPlaying && gainNodeRef.current && audioContextRef.current && mainAnalyserRef.current) {
+                    autoLevelIntervalRef.current = setInterval(() => {
+                        const timeDomainData = new Uint8Array(mainAnalyserRef.current.fftSize);
+                        mainAnalyserRef.current.getByteTimeDomainData(timeDomainData);
+                        const rms = Math.sqrt(timeDomainData.reduce((sum, val) => sum + Math.pow((val - 128) / 128, 2), 0) / timeDomainData.length);
+                        
+                        const currentGain = gainNodeRef.current.gain.value;
+                        const targetLoudness = 0.3;
+                        const adjustmentFactor = 0.005;
+
+                        if (rms < targetLoudness - 0.02) { 
+                            gainNodeRef.current.gain.setTargetAtTime(Math.min(1, currentGain + adjustmentFactor), audioContextRef.current.currentTime, 0.1);
+                        } else if (rms > targetLoudness + 0.02) { 
+                            gainNodeRef.current.gain.setTargetAtTime(Math.max(0, currentGain - adjustmentFactor), audioContextRef.current.currentTime, 0.1);
+                        }
+                        setAudioData(prev => ({ ...prev, volume: Math.round(gainNodeRef.current.gain.value * 100) }));
+
+                    }, 100);
+                } else {
+                    clearInterval(autoLevelIntervalRef.current);
+                }
+                return () => clearInterval(autoLevelIntervalRef.current);
+            }, [isAutoLevelActive, isPlaying]);
+
+            useEffect(() => {
+                if (isPlaying) {
+                    animationFrameRef.current = requestAnimationFrame(analyzeData);
+                } else {
+                    cancelAnimationFrame(animationFrameRef.current);
+                }
+                return () => cancelAnimationFrame(animationFrameRef.current);
+            }, [isPlaying, analyzeData]);
+
+            const play = useCallback(() => {
+                if (!isInitialized) initAudio();
+                if(audioContextRef.current?.state === 'suspended') audioContextRef.current.resume();
+                setIsLoading(true);
+                audioRef.current?.play().then(() => {
+                    setIsPlaying(true);
+                    setIsLoading(false);
+                    setError(null);
+                }).catch(e => {
+                    console.error("Play Error:", e);
+                    setError("Playback failed.");
+                    setIsLoading(false);
+                    setIsPlaying(false);
+                });
+            }, [initAudio, isInitialized]);
+
+            const pause = useCallback(() => {
+                audioRef.current?.pause();
+                setIsPlaying(false);
+                setIsLoading(false);
+            }, []);
+
+            const stop = useCallback(() => {
+                if (audioRef.current) {
+                    audioRef.current.pause();
+                    audioRef.current.currentTime = 0;
+                }
+                setIsPlaying(false);
+                setIsLoading(false);
+            }, []);
+            
+            const setVolume = useCallback((vol) => {
+                const newVolume = Math.max(0, Math.min(100, vol));
+                setAudioData(prev => ({ ...prev, volume: newVolume }));
+                if (gainNodeRef.current && !audioData.isMuted) {
+                    gainNodeRef.current.gain.value = newVolume / 100;
+                }
+            }, [audioData.isMuted]);
+
+            const toggleMute = useCallback(() => {
+                const newMutedState = !audioData.isMuted;
+                setAudioData(prev => ({ ...prev, isMuted: newMutedState }));
+                if (gainNodeRef.current) {
+                    gainNodeRef.current.gain.value = newMutedState ? 0 : audioData.volume / 100;
+                }
+            }, [audioData.isMuted, audioData.volume]);
+
+            const toggleAutoLevel = useCallback(() => {
+                setIsAutoLevelActive(prev => {
+                    const newState = !prev;
+                    if (!newState && gainNodeRef.current && audioContextRef.current) {
+                        gainNodeRef.current.gain.setTargetAtTime(audioData.volume / 100, audioContextRef.current.currentTime, 0.1);
+                    }
+                    return newState;
+                });
+            }, [audioData.volume]);
+
+            const toggleSuperBoost = useCallback(() => {
+                const isActive = !audioData.isSuperBoostActive;
+                setAudioData(prev => ({ ...prev, isSuperBoostActive: isActive }));
+                
+                if (boostFilterRef.current && audioContextRef.current) {
+                    const targetGain = isActive ? 12 : 0; // Boost bass by 12dB
+                    boostFilterRef.current.gain.setTargetAtTime(targetGain, audioContextRef.current.currentTime, 0.2);
+                }
+            }, [audioData.isSuperBoostActive]);
+
+            const setEQ = useCallback((gains) => {
+                eqFiltersRef.current.forEach((filter, index) => {
+                    if (gains[index] !== undefined) filter.gain.value = gains[index];
+                });
+            }, []);
+
+            const setEQBand = useCallback((bandIndex, gain) => {
+                if (eqFiltersRef.current[bandIndex]) eqFiltersRef.current[bandIndex].gain.value = gain;
+            }, []);
+
+            const setDJEQBand = useCallback((bandIndex, gain) => {
+                if (djFiltersRef.current[bandIndex]) djFiltersRef.current[bandIndex].gain.value = gain;
+            }, []);
+
+            const setDelayEffect = useCallback((time, feedback) => {
+                if (delayNodeRef.current && feedbackGainRef.current && audioContextRef.current) {
+                    delayNodeRef.current.delayTime.setTargetAtTime(time, audioContextRef.current.currentTime, 0.05);
+                    feedbackGainRef.current.gain.setTargetAtTime(feedback, audioContextRef.current.currentTime, 0.05);
+                }
+            }, []);
+
+            return { 
+                isInitialized, isPlaying, isLoading, error, isAutoLevelActive, audioData, 
+                controls: { play, pause, stop, setVolume, toggleMute, toggleAutoLevel, toggleSuperBoost, setEQ, setEQBand, setDJEQBand, setDelayEffect } 
+            };
+        };
+
+        // --- COMPONENT: VISUALIZER ---
+        const PlanetVisualizer = ({ frequencyData, isPlaying }) => {
             const canvasRef = useRef(null);
 
             useEffect(() => {
-                const t = setInterval(() => setCurrentTime(new Date()), 1000);
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return;
+                const { width, height } = canvas;
+                
+                ctx.clearRect(0, 0, width, height);
+                
+                if (!isPlaying) {
+                    const gradient = ctx.createRadialGradient(width/2, height/2, width * 0.05, width/2, height/2, width * 0.5);
+                    gradient.addColorStop(0, 'rgba(255, 0, 255, 0.1)');
+                    gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0,0,width,height);
+                    return;
+                }
+                
+                const centerX = width / 2;
+                const centerY = height / 2;
+                const maxRadius = Math.min(width, height) / 2;
+                
+                const bassEnergy = frequencyData.slice(0, 8).reduce((a, b) => a + b, 0) / (8 * 255);
+                const midEnergy = frequencyData.slice(20, 100).reduce((a, b) => a + b, 0) / (80 * 255);
+                
+                // 1. BACKGROUND GLOW (Pulsing Magenta)
+                const coreRadius = maxRadius * (0.35 + bassEnergy * 0.15);
+                const bgGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, maxRadius);
+                bgGradient.addColorStop(0, `rgba(255, 255, 255, ${0.5 + bassEnergy * 0.5})`); // White hot center
+                bgGradient.addColorStop(0.2, `rgba(255, 0, 255, ${0.4 + bassEnergy * 0.3})`); // Magenta inner
+                bgGradient.addColorStop(0.5, `rgba(0, 255, 255, ${0.2 + midEnergy * 0.2})`); // Cyan mid
+                bgGradient.addColorStop(1, 'rgba(0,0,0,0)');
+                
+                ctx.globalCompositeOperation = 'lighter';
+                ctx.fillStyle = bgGradient;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, coreRadius * 1.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // 2. SHOCKWAVES (When bass hits)
+                if (bassEnergy > 0.55) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(255, 0, 255, ${bassEnergy - 0.2})`;
+                    ctx.lineWidth = 4 + bassEnergy * 20;
+                    ctx.arc(centerX, centerY, maxRadius * (0.5 + bassEnergy * 0.4), 0, Math.PI * 2);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(0, 255, 255, ${(bassEnergy - 0.2) * 0.5})`;
+                    ctx.lineWidth = 2;
+                    ctx.arc(centerX, centerY, maxRadius * (0.6 + bassEnergy * 0.5), 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+
+                // 3. MAGNETIC SPECTRUM BARS
+                const barCount = 140;
+                const baseRadius = maxRadius * 0.55;
+                const angleStep = (Math.PI * 2) / barCount;
+                const rotationOffset = Date.now() * 0.001; 
+
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(rotationOffset);
+                ctx.translate(-centerX, -centerY);
+
+                for (let i = 0; i < barCount; i++) {
+                    const dataIndex = Math.floor(Math.abs(Math.sin(i / barCount * Math.PI * 2)) * frequencyData.length * 0.5);
+                    const value = frequencyData[dataIndex];
+                    
+                    const boost = Math.pow(value / 255, 1.8); 
+                    const barHeight = boost * (maxRadius * 0.45); 
+                    
+                    const angle = i * angleStep;
+                    
+                    const x1 = centerX + Math.cos(angle) * baseRadius;
+                    const y1 = centerY + Math.sin(angle) * baseRadius;
+                    const x2 = centerX + Math.cos(angle) * (baseRadius + barHeight);
+                    const y2 = centerY + Math.sin(angle) * (baseRadius + barHeight);
+                    
+                    const isCyan = i % 2 === 0;
+                    const hue = isCyan ? 180 : 300; 
+                    const saturation = 100;
+                    const lightness = 50 + (boost * 50);
+                    const alpha = 0.6 + (boost * 0.4);
+                    
+                    ctx.strokeStyle = `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
+                    ctx.lineWidth = 3;
+                    ctx.lineCap = 'butt';
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.stroke();
+                }
+                ctx.restore();
+                ctx.globalCompositeOperation = 'source-over';
+
+            }, [frequencyData, isPlaying]);
+
+            return <canvas ref={canvasRef} width="1000" height="1000" className="absolute inset-0 w-full h-full rounded-full pointer-events-none mix-blend-screen transform scale-110" />;
+        };
+
+        // --- COMPONENTES: WIDGETS ---
+        const SpectrumBars = ({ frequencyData, isPlaying }) => {
+            const canvasRef = useRef(null);
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return;
+                const { width, height } = canvas;
+                ctx.clearRect(0, 0, width, height);
+                if (!isPlaying) return;
+                const barWidth = (width / 40) - 2; 
+                const barCount = 40; 
+                const centerX = width / 2;
+                for (let i = 0; i < barCount / 2; i++) {
+                     const dataIndex = Math.floor(i * (frequencyData.length / (barCount / 2) / 2)); 
+                     const value = frequencyData[dataIndex];
+                     const barHeight = (value / 255) * height;
+                     const hue = (i / (barCount/2)) * 180 + 180; 
+                     ctx.fillStyle = `hsla(${hue}, 100%, 60%, 0.8)`;
+                     ctx.fillRect(centerX + (i * (barWidth + 2)), height/2 - barHeight/2, barWidth, barHeight);
+                     ctx.fillRect(centerX - ((i + 1) * (barWidth + 2)), height/2 - barHeight/2, barWidth, barHeight);
+                }
+            }, [frequencyData, isPlaying]);
+            return <canvas ref={canvasRef} width="400" height="100" className="w-[80%] h-[80px] mt-2 mix-blend-screen opacity-90" />;
+        };
+
+        const TransmissionBars = ({ left, right }) => {
+            const renderBar = (level) => {
+                const segments = 15;
+                return (
+                    <div className="flex flex-col-reverse gap-[2px] h-32 w-2 bg-black/50 p-[1px] rounded-sm border border-white/10">
+                        {Array.from({ length: segments }).map((_, i) => {
+                            const isActive = (level / 100) * segments > i;
+                            let colorClass = 'bg-cyan-500';
+                            if (i > segments * 0.6) colorClass = 'bg-fuchsia-500'; 
+                            if (i > segments * 0.85) colorClass = 'bg-red-500';
+                            return (
+                                <div key={i} className={`w-full flex-1 rounded-[1px] transition-opacity duration-75 ${isActive ? `${colorClass} shadow-[0_0_4px_currentColor]` : 'bg-gray-800/50'}`} />
+                            );
+                        })}
+                    </div>
+                );
+            };
+            return (
+                <div className="flex justify-between w-full px-8 absolute top-1/2 -translate-y-1/2 pointer-events-none opacity-80">
+                    <div className="flex gap-1">{renderBar(left)}</div>
+                    <div className="flex gap-1">{renderBar(right)}</div>
+                </div>
+            );
+        };
+
+        const Gauge = ({ value, max, label, unit, color = 'var(--theme-color, #00ffc8)' }) => {
+            const percentage = Math.min(1, Math.max(0, value / max));
+            return (
+                <div className="flex flex-col items-center justify-center relative w-14 h-14 md:w-16 md:h-16 scale-90 md:scale-100">
+                    <svg viewBox="0 0 100 60" className="w-full overflow-visible">
+                         <path d="M 10,50 A 40,40 0 0 1 90,50" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="6" strokeLinecap="round" />
+                         <path d="M 10,50 A 40,40 0 0 1 90,50" fill="none" stroke={color} strokeWidth="6" strokeLinecap="round" 
+                               strokeDasharray="126" strokeDashoffset={126 * (1 - percentage)} 
+                               className="drop-shadow-[0_0_5px_currentColor]"
+                         />
+                    </svg>
+                    <div className="absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+                        <div className="text-xs font-bold text-white leading-none shadow-black drop-shadow-md">{Math.round(value)}</div>
+                        <div className="text-[6px] text-cyan-300/70 leading-none mt-[1px]">{unit}</div>
+                    </div>
+                    <div className="absolute -bottom-1 left-0 right-0 text-center">
+                        <div className="text-[6px] font-mono text-cyan-500 tracking-wider uppercase">{label}</div>
+                    </div>
+                </div>
+            );
+        };
+
+        const RotaryVolume = ({ volume, onChange }) => {
+            const handleWheel = (e) => {
+                onChange(Math.min(100, Math.max(0, volume - e.deltaY * 0.1)));
+            };
+            const radius = 30;
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference - (volume / 100) * circumference;
+            return (
+                <div className="relative w-20 h-20 flex items-center justify-center group" onWheel={handleWheel}>
+                    <svg className="w-full h-full -rotate-90 pointer-events-none">
+                        <circle cx="50%" cy="50%" r={radius} stroke="rgba(255,255,255,0.1)" strokeWidth="6" fill="transparent" />
+                        <circle cx="50%" cy="50%" r={radius} stroke="var(--theme-color, #00ffc8)" strokeWidth="6" fill="transparent" 
+                            strokeDasharray={circumference} strokeDashoffset={offset} strokeLinecap="round"
+                            className="transition-[stroke-dashoffset] duration-75 drop-shadow-[0_0_8px_var(--theme-color)]" />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                         <input type="range" min="0" max="100" value={volume} onChange={(e) => onChange(parseFloat(e.target.value))}
+                            className="absolute inset-0 opacity-0 cursor-pointer w-full h-full" title="Volume" />
+                         <div className="text-center pointer-events-none">
+                             <i className="fas fa-volume-up text-xs text-white/50 mb-1"></i>
+                             <div className="font-bold text-white text-sm">{Math.round(volume)}%</div>
+                         </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const ControlButton = ({ icon, onClick, isActive, size = 'md', color = 'text-cyan-400' }) => {
+            const sizeClasses = size === 'sm' ? 'w-10 h-10 text-lg' : size === 'lg' ? 'w-16 h-16 text-2xl' : 'w-12 h-12 text-xl';
+            return (
+                <button onClick={onClick} className={`${sizeClasses} rounded-full flex items-center justify-center backdrop-blur-md border border-white/10 transition-all duration-200
+                    ${isActive ? 'bg-white/20 shadow-[0_0_20px_rgba(255,255,255,0.4)] text-white scale-110' : 'bg-black/40 hover:bg-white/10 ' + color}
+                    hover:scale-105 active:scale-95 group`}>
+                    <i className={`fas fa-${icon} drop-shadow-[0_0_5px_currentColor]`}></i>
+                </button>
+            );
+        };
+
+        const SuperBoostButton = ({ isActive, onClick }) => {
+            return (
+                <button onClick={onClick} className={`
+                    relative w-14 h-14 rounded-full flex flex-col items-center justify-center
+                    transition-all duration-300 border border-white/10
+                    ${isActive 
+                        ? 'bg-fuchsia-600 shadow-[0_0_30px_#d946ef] scale-110 animate-pulse' 
+                        : 'bg-black/40 hover:bg-white/10 hover:shadow-[0_0_15px_#d946ef]'
+                    }
+                `}>
+                    <div className={`absolute inset-0 rounded-full border-2 border-fuchsia-500/50 ${isActive ? 'animate-ping opacity-75' : 'hidden'}`}></div>
+                    <i className={`fas fa-bolt text-lg ${isActive ? 'text-white' : 'text-fuchsia-500'} drop-shadow-[0_0_5px_currentColor]`}></i>
+                    <span className="text-[6px] font-bold mt-0.5 text-white/80 tracking-tighter">BOOST</span>
+                </button>
+            );
+        }
+
+        const DigitalClock = () => {
+            const [time, setTime] = useState(new Date());
+            useEffect(() => {
+                const t = setInterval(() => setTime(new Date()), 1000);
                 return () => clearInterval(t);
             }, []);
+            return (
+                <div className="flex flex-col items-center font-mono-tech text-cyan-300 text-shadow-sm">
+                     <div className="text-lg leading-none tracking-widest drop-shadow-[0_0_5px_rgba(0,255,255,0.5)]">{time.toLocaleTimeString([], {hour12: false})}</div>
+                     <div className="text-[10px] opacity-70 tracking-widest">{time.toLocaleDateString()}</div>
+                </div>
+            );
+        };
 
-            const initAudio = () => {
-                if (audioCtxRef.current) return;
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const analyser = ctx.createAnalyser(); analyser.fftSize = 256;
-                
-                const low = ctx.createBiquadFilter(); low.type = 'lowshelf'; low.frequency.value = 320;
-                const mid = ctx.createBiquadFilter(); mid.type = 'peaking'; mid.frequency.value = 1000;
-                const high = ctx.createBiquadFilter(); high.type = 'highshelf'; high.frequency.value = 3200;
-                
-                const nitroGain = ctx.createGain();
-                const audio = new Audio(RADIO_URL);
-                audio.crossOrigin = "anonymous";
-                
-                const source = ctx.createMediaElementSource(audio);
-                source.connect(nitroGain).connect(low).connect(mid).connect(high).connect(analyser).connect(ctx.destination);
-                
-                audioRef.current = audio;
-                audioCtxRef.current = ctx;
-                analyserRef.current = analyser;
-                nitroGainRef.current = nitroGain;
-                filtersRef.current = { low, mid, high };
-            };
+        // --- COMPONENT: SETTINGS ---
+        const HolographicSettings = ({ show, onClose, controls, eqPreset, setEqPreset, djGains, setDjGains, delayTime, setDelayTime, delayFeedback, setDelayFeedback, currentTheme, setCurrentTheme }) => {
+            if (!show) return null;
+            return (
+                <div className="absolute inset-0 rounded-full z-50 flex items-center justify-center backdrop-blur-xl bg-black/80 animate-[fadeIn_0.3s_ease-out_forwards] border-4 border-double border-cyan-900/50">
+                    <div className="w-[80%] h-[80%] overflow-y-auto p-6 text-center relative scrollbar-hide">
+                        <button onClick={onClose} className="absolute top-0 right-4 text-white/50 hover:text-white text-2xl"><i className="fas fa-times"></i></button>
+                        <h2 className="text-cyan-400 font-orbitron text-xl mb-6 tracking-widest border-b border-cyan-500/30 pb-2">SYSTEM CONFIG</h2>
+                        <div className="mb-6">
+                            <h3 className="text-xs font-mono text-cyan-200/70 mb-2">AUDIO EQUALIZATION</h3>
+                            <div className="flex flex-wrap justify-center gap-2">
+                                {Object.keys(EQ_PRESETS).map(p => (
+                                    <button key={p} onClick={() => { setEqPreset(p); controls.setEQ(EQ_PRESETS[p]); }} 
+                                        className={`px-2 py-1 text-[10px] rounded border ${eqPreset === p ? 'bg-cyan-500 text-black border-cyan-500' : 'border-cyan-500/30 text-cyan-500'}`}>
+                                        {p.toUpperCase()}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="flex justify-center gap-1 mt-4 h-24 items-end">
+                                {EQ_FREQUENCIES.map((f, i) => (
+                                     <div key={f} className="flex flex-col items-center w-3">
+                                        <input type="range" min="-15" max="15" step="1" defaultValue={0} 
+                                            onChange={(e) => controls.setEQBand(i, parseFloat(e.target.value))}
+                                            className="h-20 w-1 bg-white/10 appearance-none rounded-full cursor-pointer accent-cyan-400" 
+                                            orient="vertical"
+                                        />
+                                     </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="mb-6 border-t border-cyan-500/30 pt-4">
+                            <h3 className="text-xs font-mono text-cyan-200/70 mb-2">DJ MIXER & FX</h3>
+                            <div className="flex justify-center gap-6 mb-4">
+                                {['LOW', 'MID', 'HIGH'].map((label, i) => (
+                                    <div key={label} className="flex flex-col items-center">
+                                        <span className="text-[8px] mb-1 text-cyan-300">{label}</span>
+                                        <input type="range" min="-12" max="12" value={djGains[i]} onChange={(e) => {
+                                            const v = parseFloat(e.target.value);
+                                            const newGains = [...djGains]; newGains[i] = v;
+                                            setDjGains(newGains);
+                                            controls.setDJEQBand(i, v);
+                                        }} className="w-16 accent-purple-500 h-1 bg-white/20 rounded-lg appearance-none cursor-pointer" />
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="flex justify-center gap-4">
+                                <div className="flex flex-col items-center w-1/2">
+                                    <span className="text-[8px] mb-1 text-cyan-300">DELAY TIME</span>
+                                    <input type="range" min="0" max="1" step="0.05" value={delayTime} onChange={(e) => {
+                                        const v = parseFloat(e.target.value); setDelayTime(v); controls.setDelayEffect(v, delayFeedback);
+                                    }} className="w-full accent-pink-500 h-1 bg-white/20 rounded-lg appearance-none" />
+                                </div>
+                                <div className="flex flex-col items-center w-1/2">
+                                    <span className="text-[8px] mb-1 text-cyan-300">FEEDBACK</span>
+                                    <input type="range" min="0" max="0.9" step="0.05" value={delayFeedback} onChange={(e) => {
+                                        const v = parseFloat(e.target.value); setDelayFeedback(v); controls.setDelayEffect(delayTime, v);
+                                    }} className="w-full accent-pink-500 h-1 bg-white/20 rounded-lg appearance-none" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mb-4 border-t border-cyan-500/30 pt-4">
+                            <h3 className="text-xs font-mono text-cyan-200/70 mb-2">VISUAL CORE THEME</h3>
+                            <select value={currentTheme} onChange={(e) => setCurrentTheme(e.target.value)} className="bg-black border border-cyan-500 text-cyan-400 text-xs p-1 rounded w-full">
+                                {THEMES.map(t => <option key={t} value={t}>{t.toUpperCase()}</option>)}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
 
-            const togglePlay = async () => {
-                initAudio();
-                if (audioCtxRef.current.state === 'suspended') await audioCtxRef.current.resume();
-                isPlaying ? audioRef.current.pause() : audioRef.current.play();
-                setIsPlaying(!isPlaying);
-            };
+        // --- APP PRINCIPAL ---
+        const App = () => {
+            const [currentTheme, setCurrentTheme] = useState('cosmic-dark');
+            const [eqPreset, setEqPreset] = useState('flat');
+            const [djGains, setDjGains] = useState([0, 0, 0]);
+            const [delayTime, setDelayTime] = useState(0);
+            const [delayFeedback, setDelayFeedback] = useState(0);
+            const [showSettings, setShowSettings] = useState(false);
+            
+            const { isPlaying, isLoading, error, audioData, controls } = useAudio(STREAM_URL);
 
-            const changeEQ = (m) => {
-                setCurrentMode(m);
-                if (!filtersRef.current.low) return;
-                const { low, mid, high } = filtersRef.current;
-                low.gain.value = 0; mid.gain.value = 0; high.gain.value = 0;
-                if (m === 'TURBO') { low.gain.value = 15; high.gain.value = 10; }
-                if (m === 'SPORT') { low.gain.value = 10; mid.gain.value = 4; high.gain.value = 10; }
-                if (m === 'ECO') { low.gain.value = -10; high.gain.value = -5; }
-                if (m === 'VOICE') { mid.gain.value = 12; }
-                if (m === 'NIGHT') { low.gain.value = 5; high.gain.value = -15; }
-            };
-
-            // Visualizer Effect
             useEffect(() => {
-                if (!isPlaying || !analyserRef.current) return;
-                const ctx = canvasRef.current.getContext('2d');
-                const data = new Uint8Array(analyserRef.current.frequencyBinCount);
-                let frame;
-                const render = () => {
-                    analyserRef.current.getByteFrequencyData(data);
-                    setStats({ pressure: data[10], rpm: data[40], vu: [data[5], data[15], data[30]] });
-                    ctx.clearRect(0,0,600,400);
-                    ctx.save();
-                    ctx.translate(300, 200);
-                    data.forEach((val, i) => {
-                        const angle = (i / data.length) * Math.PI * 2;
-                        const r = 80 + (val/2);
-                        ctx.beginPath();
-                        ctx.strokeStyle = `hsl(${themeHue + (i*2)}, 80%, 60%)`;
-                        ctx.lineWidth = 2;
-                        ctx.moveTo(Math.cos(angle)*70, Math.sin(angle)*70);
-                        ctx.lineTo(Math.cos(angle)*r, Math.sin(angle)*r);
-                        ctx.stroke();
-                    });
-                    ctx.restore();
-                    frame = requestAnimationFrame(render);
-                };
-                render();
-                return () => cancelAnimationFrame(frame);
-            }, [isPlaying, themeHue]);
+                const root = document.documentElement;
+                const hue = currentTheme.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % 360;
+                root.style.setProperty('--theme-hue', hue.toString());
+                root.style.setProperty('--theme-color', `hsl(${hue}, 80%, 60%)`);
+            }, [currentTheme]);
 
             return (
-                <div className={`gold-chassis p-1 rounded-[4rem] transition-all duration-500 ${isNitro ? 'nitro-active' : ''}`} style={{ filter: `hue-rotate(${themeHue}deg)` }}>
-                    <div className="inner-panel p-8 md:p-12 rounded-[3.8rem] w-full max-w-7xl">
+                <div className="min-h-screen w-full bg-[#050505] flex items-center justify-center overflow-hidden relative font-orbitron select-none">
+                    {/* Stars & Background */}
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900 via-black to-black opacity-100 z-0"></div>
+                    <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(white 1px, transparent 1px)', backgroundSize: '50px 50px' }}></div>
+                    <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-150 contrast-150 mix-blend-overlay"></div>
+                    
+                    {/* DECORATIVE RINGS (Outside) */}
+                    <div className="absolute w-[120vw] h-[120vw] max-w-[900px] max-h-[900px] border border-cyan-500/10 rounded-full pointer-events-none animate-[spin_60s_linear_infinite] shadow-[0_0_50px_rgba(0,255,255,0.05)]"></div>
+                    <div className="absolute w-[140vw] h-[140vw] max-w-[1100px] max-h-[1100px] border border-fuchsia-500/10 rounded-full pointer-events-none animate-[spin_80s_linear_infinite_reverse] shadow-[0_0_50px_rgba(255,0,255,0.05)]"></div>
+
+                    {/* PLANET CONTAINER */}
+                    <div className="relative z-10 w-[95vw] h-[95vw] max-w-[700px] max-h-[700px] aspect-square rounded-full shadow-2xl group transition-all duration-500">
                         
-                        {/* Header */}
-                        <div className="flex flex-col lg:flex-row justify-between items-center gap-8 mb-10 border-b-2 border-[#d4af37]/30 pb-10">
-                            <div>
-                                <h1 className="text-6xl md:text-8xl font-orbitron font-black gold-text italic">INTERCONTINENTAL</h1>
-                                <p className="text-[10px] tracking-[0.8em] font-bold text-[#d4af37] mt-2">SUPREME GOLDEN AUDIO STATION</p>
-                            </div>
+                        {/* ATMOSPHERE GLOW (Magenti/Cyan Mix) */}
+                        <div className="absolute inset-0 rounded-full transition-all duration-1000 animate-pulse" 
+                             style={{ 
+                                 boxShadow: `
+                                    0 0 60px var(--theme-color, #00ffc8), 
+                                    inset 0 0 100px rgba(0,0,0,0.9),
+                                    0 0 120px rgba(255, 0, 255, 0.2)
+                                 `, 
+                                 border: `2px solid rgba(255,255,255,0.1)` 
+                             }}>
+                        </div>
+
+                        {/* SURFACE SHADOW */}
+                        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(40,40,50,0),rgba(0,0,0,0.9))] z-20 pointer-events-none"></div>
+
+                        {/* VISUALIZER CORE (The Ball) */}
+                        <div className="absolute inset-0 rounded-full overflow-hidden z-0 opacity-90 scale-[1.01]">
+                            <PlanetVisualizer frequencyData={audioData.frequencyData} isPlaying={isPlaying} />
+                        </div>
+                        
+                        {/* TRANSMISSION BARS (Sides) */}
+                        <div className="absolute inset-0 z-25 rounded-full overflow-hidden">
+                            <TransmissionBars left={audioData.vu.l1} right={audioData.vu.r1} />
+                        </div>
+
+                        {/* MAIN INTERFACE LAYER */}
+                        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center text-center p-10">
                             
-                            <div className="bg-black border-2 border-[#d4af37] p-6 rounded-3xl shadow-[0_0_30px_rgba(212,175,55,0.2)] w-full md:w-96">
-                                <div className="flex justify-between items-center mb-2">
-                                    <span className="text-[10px] font-mono-lcd text-[#d4af37]">SYSTEM_CLOCK</span>
-                                    <div className="flex gap-1">
-                                        {[...Array(3)].map((_,i) => <div key={i} className="w-1 h-3 bg-[#d4af37] animate-pulse" style={{animationDelay: `${i*0.2}s`}} />)}
+                            {/* TOP HEADER */}
+                            <div className="mb-auto pt-8 w-full flex flex-col items-center">
+                                <div className="text-xs md:text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-fuchsia-300 tracking-[0.2em] mb-3 drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]">
+                                    PLANETA INTERCONTINENTAL
+                                </div>
+                                <div className="mb-3 transform scale-110"><DigitalClock /></div>
+                                <div className="flex items-center gap-2 bg-black/60 px-4 py-1.5 rounded-full border border-white/10 backdrop-blur-md shadow-lg">
+                                    <div className={`w-2 h-2 rounded-full ${error ? 'bg-red-600 shadow-[0_0_8px_red]' : isPlaying ? 'bg-green-500 shadow-[0_0_8px_lime] animate-pulse' : 'bg-yellow-500'}`}></div>
+                                    <div className={`text-[10px] font-bold tracking-wider ${error ? 'text-red-500' : isPlaying ? 'text-green-400' : 'text-yellow-500'}`}>
+                                        {error ? "OFFLINE" : isLoading ? "INITIALIZING..." : isPlaying ? "ON AIR - LIVE" : "STANDBY MODE"}
                                     </div>
                                 </div>
-                                <div className="text-5xl font-mono-lcd font-bold gold-text text-center">{currentTime.toLocaleTimeString()}</div>
                             </div>
-                        </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                            {/* Equalizers & Stats */}
-                            <div className="lg:col-span-3 space-y-8 order-2 lg:order-1">
-                                <div className="bg-black/50 p-6 rounded-3xl border border-[#d4af37]/30">
-                                    <h3 className="text-[10px] font-black text-[#d4af37] mb-6 uppercase tracking-widest text-center">Engine Presets</h3>
-                                    <div className="grid grid-cols-2 gap-2">
-                                        {['STOCK', 'SPORT', 'TURBO', 'ECO', 'VOICE', 'NIGHT', 'CITY'].map(m => (
-                                            <button key={m} onClick={() => changeEQ(m)} className={`py-3 rounded-lg text-[10px] font-black transition-all ${currentMode === m ? 'gold-button scale-105' : 'bg-[#111] text-[#d4af37]/50 border border-[#d4af37]/20 hover:text-[#d4af37]'}`}>
-                                                {m}
-                                            </button>
-                                        ))}
-                                    </div>
+                            {/* MIDDLE METERS */}
+                            <div className="flex-1 flex flex-col justify-center items-center w-full max-w-[90%] relative">
+                                <div className="grid grid-cols-4 gap-4 md:gap-8 w-full max-w-[450px] mb-8 px-2 justify-items-center relative z-20">
+                                   <Gauge value={audioData.bassLevel} max={100} label="BASS" unit="%" color="#ef4444" />
+                                   <Gauge value={audioData.rpmValue} max={100} label="RPM" unit="" color="#eab308" />
+                                   <Gauge value={audioData.dominantFrequency} max={5000} label="FREQ" unit="Hz" color="#3b82f6" />
+                                   <Gauge value={audioData.dynamicRange} max={50} label="DYN" unit="dB" color="#d946ef" />
                                 </div>
                                 
-                                <div className="flex flex-col gap-6 items-center bg-black/50 p-6 rounded-3xl border border-[#d4af37]/30">
-                                    <div className="text-center">
-                                        <div className="text-2xl font-mono-lcd gold-text">{Math.round((stats.pressure/255)*100)}%</div>
-                                        <div className="text-[8px] font-bold text-[#d4af37]">THRUST PRESSURE</div>
-                                    </div>
-                                    <div className="text-center">
-                                        <div className="text-2xl font-mono-lcd gold-text">{Math.round((stats.rpm/255)*8000)}</div>
-                                        <div className="text-[8px] font-bold text-[#d4af37]">CORE RPM</div>
-                                    </div>
+                                <div className="absolute bottom-2 left-0 right-0 flex justify-center pointer-events-none opacity-80 z-10">
+                                    <SpectrumBars frequencyData={audioData.frequencyData} isPlaying={isPlaying} />
                                 </div>
+
+                                {isPlaying ? (
+                                    <div className="mb-8 z-30 relative animate-[fadeIn_1s_ease-out]">
+                                        <h1 className="font-black text-xl md:text-3xl text-white drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] leading-tight tracking-wide mix-blend-overlay">
+                                            {audioData.nowPlaying.title}
+                                        </h1>
+                                        <p className="font-mono-tech text-cyan-300 text-sm md:text-lg mt-2 tracking-widest uppercase drop-shadow-md">
+                                            {audioData.nowPlaying.artist}
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <div className="text-white/40 text-sm tracking-widest mb-8 font-mono animate-pulse">WAITING FOR SIGNAL...</div>
+                                )}
                             </div>
 
-                            {/* Center Visualizer */}
-                            <div className="lg:col-span-6 order-1 lg:order-2">
-                                <div className="relative rounded-[3rem] border-4 border-[#d4af37]/50 bg-black h-[400px] overflow-hidden shadow-[inset_0_0_50px_rgba(212,175,55,0.3)]">
-                                    <canvas ref={canvasRef} width={600} height={400} className="w-full h-full" />
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <button onClick={togglePlay} className="w-28 h-28 rounded-full gold-button flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.6)]">
-                                            {isPlaying ? <Stop /> : <Play />}
-                                        </button>
+                            {/* BOTTOM CONTROLS */}
+                            <div className="mt-auto pb-8 flex flex-col items-center gap-6 w-full">
+                                 <div className="flex items-center justify-center gap-6 md:gap-8">
+                                    <ControlButton icon={audioData.isMuted ? 'volume-mute' : 'volume-up'} onClick={controls.toggleMute} size="sm" isActive={audioData.isMuted} color="text-red-400" />
+                                    
+                                    <div className="relative mx-2">
+                                        <div className={`absolute inset-0 bg-cyan-400 rounded-full blur-3xl opacity-20 ${isPlaying ? 'animate-pulse' : 'hidden'}`}></div>
+                                        {isPlaying ? 
+                                            <ControlButton icon="pause" onClick={controls.pause} size="lg" color="text-cyan-300" isActive={true} /> : 
+                                            <ControlButton icon="play" onClick={controls.play} size="lg" color="text-cyan-300" />
+                                        }
                                     </div>
-                                </div>
-                                
-                                <div className="flex justify-between mt-6 px-4">
-                                    <button onClick={() => {setIsNitro(!isNitro); if(nitroGainRef.current) nitroGainRef.current.gain.value = !isNitro ? 2.5 : 1;}} className={`flex-1 mx-2 py-4 rounded-xl font-black text-xs border-2 transition-all ${isNitro ? 'bg-red-600 text-white border-white animate-pulse shadow-[0_0_30px_red]' : 'gold-button'}`}>
-                                        NITRO OVERDRIVE
-                                    </button>
-                                    <button className="flex-1 mx-2 py-4 rounded-xl gold-button">8D SPATIAL</button>
-                                </div>
-                            </div>
 
-                            {/* Volume & Themes */}
-                            <div className="lg:col-span-3 flex flex-col gap-8 order-3">
-                                <div className="bg-black/50 p-8 rounded-3xl border border-[#d4af37]/30 flex flex-col items-center">
-                                    <span className="text-[10px] font-black text-[#d4af37] mb-4">THRUST CONTROL</span>
-                                    <input type="range" min="0" max="100" value={volume} onChange={(e) => {setVolume(e.target.value); if(audioRef.current) audioRef.current.volume = e.target.value/100;}} 
-                                           className="w-full h-2 bg-[#111] rounded-lg appearance-none cursor-pointer accent-[#fcf6ba]"/>
-                                    <div className="text-4xl font-mono-lcd gold-text mt-4">{volume}%</div>
-                                </div>
-
-                                {/* Seletor de 26 Temas */}
-                                <div className="bg-black/50 p-6 rounded-3xl border border-[#d4af37]/30">
-                                    <h3 className="text-[9px] font-black text-[#d4af37] mb-4 text-center tracking-widest uppercase">Select Atmosphere (26 Modes)</h3>
-                                    <div className="grid grid-cols-7 gap-2">
-                                        {[...Array(26)].map((_, i) => (
-                                            <div key={i} className="theme-dot" 
-                                                 style={{ backgroundColor: `hsl(${(i * 360) / 26}, 70%, 50%)` }}
-                                                 onClick={() => setThemeHue((i * 360) / 26)}
-                                            />
-                                        ))}
-                                    </div>
-                                    <p className="text-center text-[8px] text-[#d4af37]/40 mt-4 font-bold">CLICK TO POLARIZE INTERFACE</p>
-                                </div>
+                                    {/* SUPER BOOST BUTTON */}
+                                    <SuperBoostButton isActive={audioData.isSuperBoostActive} onClick={controls.toggleSuperBoost} />
+                                    
+                                    <ControlButton icon="sliders-h" onClick={() => setShowSettings(true)} size="sm" color="text-purple-300" />
+                                 </div>
+                                 
+                                 <div className="flex items-center justify-center gap-10 w-full px-8 scale-110">
+                                    <RotaryVolume volume={audioData.volume} onChange={(v) => controls.setVolume(v)} />
+                                 </div>
                             </div>
                         </div>
 
-                        {/* Footer decorative rivets */}
-                        <div className="flex justify-between mt-12 pt-6 border-t border-[#d4af37]/10">
-                            <span className="text-[9px] font-orbitron font-bold text-[#d4af37]/40 uppercase tracking-widest">Model: Aurum Ultimate V.4</span>
-                            <div className="flex gap-2">
-                                {[1,2,3,4].map(i => <div key={i} className="w-2 h-2 rounded-full bg-[#d4af37]/20" />)}
-                            </div>
-                            <span className="text-[9px] font-orbitron font-bold text-[#d4af37]/40 uppercase tracking-widest">Encoding: 192KBPS High-Fidelity</span>
-                        </div>
+                        {/* SETTINGS MODAL */}
+                        <HolographicSettings show={showSettings} onClose={() => setShowSettings(false)} 
+                            controls={controls} eqPreset={eqPreset} setEqPreset={setEqPreset}
+                            djGains={djGains} setDjGains={setDjGains}
+                            delayTime={delayTime} setDelayTime={setDelayTime}
+                            delayFeedback={delayFeedback} setDelayFeedback={setDelayFeedback}
+                            currentTheme={currentTheme} setCurrentTheme={setCurrentTheme}
+                        />
                     </div>
                 </div>
             );
