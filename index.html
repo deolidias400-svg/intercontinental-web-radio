@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Intercontinental Audio System - Wallpaper Edition</title>
+    <title>Intercontinental Audio System - Completo e Corrigido</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
@@ -13,242 +13,829 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
+        /* VARIÁVEIS BASE (COSMIC DARK) */
         :root {
             --bg-color: #12121e;
-            --secondary-bg-color: rgba(30, 30, 48, 0.7); /* Transparência para o papel de parede */
+            --secondary-bg-color: #1e1e30;
             --text-color: #e0e0e0;
-            --highlight-color: #00ffc8;
+            --highlight-color: #00ffc8; /* Brilho principal */
             --accent-color: #4b0082;
-            --screen-bg: rgba(13, 13, 32, 0.85);
+            --screen-bg: #0d0d20;
             --screen-text: #00ffc8;
-            --shadow-dark: #000000;
+            --shadow-dark: #0a0a14;
             --shadow-light: #22223a;
         }
+        
+        /* -------------------------------------- */
+        /* DEFINIÇÕES DOS 26 TEMAS (CYBER NEUMORFISMO) */
+        /* -------------------------------------- */
+        
+        .industrial-cyber { --bg-color: #0d0d0d; --secondary-bg-color: #1a1a1a; --text-color: #c0c0c0; --highlight-color: #ff0077; --accent-color: #00ffff; --screen-bg: #000; --screen-text: #ff0077; --shadow-dark: #000; --shadow-light: #333333; }
+        .cosmic-dark { --bg-color: #12121e; --secondary-bg-color: #1e1e30; --text-color: #e0e0e0; --highlight-color: #00ffc8; --accent-color: #4b0082; --screen-bg: #0d0d20; --screen-text: #00ffc8; --shadow-dark: #0a0a14; --shadow-light: #22223a; }
+        .solar-flare { --bg-color: #1f1f0a; --secondary-bg-color: #383810; --text-color: #fffae6; --highlight-color: #ffd700; --accent-color: #ff4500; --screen-bg: #2b2b00; --screen-text: #ffd700; --shadow-dark: #151500; --shadow-light: #50501a; }
+        .deep-ocean { --bg-color: #0a1e1f; --secondary-bg-color: #14383a; --text-color: #e6faff; --highlight-color: #00bfff; --accent-color: #1e90ff; --screen-bg: #0d2a2b; --screen-text: #00bfff; --shadow-dark: #08181a; --shadow-light: #225052; }
+        .neon-city { --bg-color: #0f0f0f; --secondary-bg-color: #2a0a2a; --text-color: #f0f0f0; --highlight-color: #ff1aff; --accent-color: #00ffff; --screen-bg: #1a051a; --screen-text: #ff1aff; --shadow-dark: #000000; --shadow-light: #440044; }
+        .retro-crt { --bg-color: #2c2c2c; --secondary-bg-color: #444444; --text-color: #f0f0f0; --highlight-color: #7cfc00; --accent-color: #32cd32; --screen-bg: #333333; --screen-text: #7cfc00; --shadow-dark: #1f1f1f; --shadow-light: #5c5c5c; }
+        .retro-wave { --bg-color: #200020; --secondary-bg-color: #380038; --text-color: #ffc8ff; --highlight-color: #ff77ff; --accent-color: #00c8ff; --screen-bg: #2b002b; --screen-text: #ff77ff; --shadow-dark: #150015; --shadow-light: #500050; }
+        .vaporwave { --bg-color: #2d0a3f; --secondary-bg-color: #4b1a6a; --text-color: #ffc8ff; --highlight-color: #00ffff; --accent-color: #ff0077; --screen-bg: #3c1254; --screen-text: #00ffff; --shadow-dark: #1f072c; --shadow-light: #6a2e8e; }
+        .matrix-code { --bg-color: #051405; --secondary-bg-color: #1a3a1a; --text-color: #aaffaa; --highlight-color: #39ff14; --accent-color: #00aa00; --screen-bg: #000; --screen-text: #39ff14; --shadow-dark: #000000; --shadow-light: #2c592c; }
+        .arctic-ice { --bg-color: #0f1c2c; --secondary-bg-color: #1a3a5a; --text-color: #e0f8ff; --highlight-color: #87cefa; --accent-color: #4682b4; --screen-bg: #102538; --screen-text: #87cefa; --shadow-dark: #0a141f; --shadow-light: #2e4d6d; }
+        .gold-dust { --bg-color: #332b1a; --secondary-bg-color: #59472e; --text-color: #fff8dc; --highlight-color: #ffc72c; --accent-color: #b8860b; --screen-bg: #4a3c22; --screen-text: #ffc72c; --shadow-dark: #261f14; --shadow-light: #7a6341; }
+        .martian-sand { --bg-color: #2c1a1a; --secondary-bg-color: #4a2e2e; --text-color: #f0c0b0; --highlight-color: #ff4500; --accent-color: #b03a2e; --screen-bg: #382424; --screen-text: #ff4500; --shadow-dark: #1f1414; --shadow-light: #6d4141; }
+        .emerald-forest { --bg-color: #1a2c1a; --secondary-bg-color: #2e4a2e; --text-color: #c0ffc0; --highlight-color: #3cb371; --accent-color: #2e8b57; --screen-bg: #243824; --screen-text: #3cb371; --shadow-dark: #141f14; --shadow-light: #416d41; }
+        .amethyst-dream { --bg-color: #241a2c; --secondary-bg-color: #382e4a; --text-color: #e0ccff; --highlight-color: #9932cc; --accent-color: #8a2be2; --screen-bg: #2c2438; --screen-text: #9932cc; --shadow-dark: #1a141f; --shadow-light: #4d416d; }
+        .fire-ice { --bg-color: #1a1a2c; --secondary-bg-color: #2e2e4a; --text-color: #f0f0ff; --highlight-color: #ff4500; --accent-color: #4682b4; --screen-bg: #242438; --screen-text: #ff4500; --shadow-dark: #14141f; --shadow-light: #41416d; }
+        .concrete-jungle { --bg-color: #3a3a3a; --secondary-bg-color: #505050; --text-color: #e8e8e8; --highlight-color: #aaaaaa; --accent-color: #888888; --screen-bg: #404040; --screen-text: #aaaaaa; --shadow-dark: #2c2c2c; --shadow-light: #606060; }
+        .sunset-strip { --bg-color: #3a2e1a; --secondary-bg-color: #50472e; --text-color: #fff8e0; --highlight-color: #ff8c00; --accent-color: #ff6347; --screen-bg: #403a24; --screen-text: #ff8c00; --shadow-dark: #2c2414; --shadow-light: #605741; }
+        .biohazard-green { --bg-color: #1a2c1a; --secondary-bg-color: #2e4a2e; --text-color: #c0ffc0; --highlight-color: #7cfc00; --accent-color: #32cd32; --screen-bg: #243824; --screen-text: #7cfc00; --shadow-dark: #141f14; --shadow-light: #416d41; }
+        .pure-white { --bg-color: #f0f0f0; --secondary-bg-color: #ffffff; --text-color: #1e1e1e; --highlight-color: #007bff; --accent-color: #87cefa; --screen-bg: #e5e5e5; --screen-text: #007bff; --shadow-dark: #c8c8c8; --shadow-light: #ffffff; }
+        .chroma-glow { --bg-color: #1c1a2c; --secondary-bg-color: #302e4a; --text-color: #ffffff; --highlight-color: #ff00ff; --accent-color: #00ffc8; --screen-bg: #242438; --screen-text: #ff00ff; --shadow-dark: #14121f; --shadow-light: #403e6d; }
+        .dark-matter { --bg-color: #000000; --secondary-bg-color: #1a1a1a; --text-color: #c0c0c0; --highlight-color: #333333; --accent-color: #555555; --screen-bg: #000; --screen-text: #555555; --shadow-dark: #000; --shadow-light: #333333; }
+        .volcano-ash { --bg-color: #2e1a1a; --secondary-bg-color: #4a2e2e; --text-color: #f5f5f5; --highlight-color: #dc143c; --accent-color: #8b0000; --screen-bg: #382424; --screen-text: #dc143c; --shadow-dark: #1f1414; --shadow-light: #6d4141; }
+        .purple-haze { --bg-color: #241a2c; --secondary-bg-color: #382e4a; --text-color: #e0ccff; --highlight-color: #8a2be2; --accent-color: #4b0082; --screen-bg: #2c2438; --screen-text: #8a2be2; --shadow-dark: #1a141f; --shadow-light: #4d416d; }
+        .cyber-red { --bg-color: #2c1a1a; --secondary-bg-color: #4a2e2e; --text-color: #f5f5f5; --highlight-color: #ff0000; --accent-color: #8b0000; --screen-bg: #382424; --screen-text: #ff0000; --shadow-dark: #1f1414; --shadow-light: #6d4141; }
+        .sky-blue { --bg-color: #1a2c3a; --secondary-bg-color: #2e4a50; --text-color: #e0f8ff; --highlight-color: #00aaff; --accent-color: #1e90ff; --screen-bg: #243840; --screen-text: #00aaff; --shadow-dark: #141f26; --shadow-light: #416d80; }
+        .lime-shock { --bg-color: #1a2c1a; --secondary-bg-color: #2e4a2e; --text-color: #e0ffc0; --highlight-color: #bfff00; --accent-color: #7cfc00; --screen-bg: #243824; --screen-text: #bfff00; --shadow-dark: #141f14; --shadow-light: #416d41; }
+        .carbon-fiber { --bg-color: #202020; --secondary-bg-color: #303030; --text-color: #cccccc; --highlight-color: #a0a0a0; --accent-color: #505050; --screen-bg: #101010; --screen-text: #a0a0a0; --shadow-dark: #151515; --shadow-light: #404040; }
 
-        /* --- TEMAS COM OPACIDADE AJUSTADA PARA O FUNDO APARECER --- */
-        .industrial-cyber { --bg-color: transparent; --secondary-bg-color: rgba(26, 26, 26, 0.8); --screen-bg: rgba(0,0,0,0.9); --highlight-color: #ff0077; }
-        .cosmic-dark { --bg-color: transparent; --secondary-bg-color: rgba(30, 30, 48, 0.8); --screen-bg: rgba(13, 13, 32, 0.9); --highlight-color: #00ffc8; }
-        .neon-city { --bg-color: transparent; --secondary-bg-color: rgba(42, 10, 42, 0.8); --screen-bg: rgba(26, 5, 26, 0.9); --highlight-color: #ff1aff; }
-        /* Outros temas seguem a mesma lógica... */
 
+        /* ESTILOS GERAIS E CYBER-NEUMORFISMO */
         body { 
             font-family: 'Orbitron', sans-serif; 
-            /* CONFIGURAÇÃO DO PAPEL DE PAREDE */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                              url('https://radiointercontinental.com.br/wp-content/uploads/2023/10/fundo-site.jpg'); /* Link sugerido da Intercontinental */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            
+            background-color: var(--bg-color); 
             color: var(--text-color); 
-            transition: all 0.5s ease; 
-            user-select: none;
-            min-height: 100vh;
-            margin: 0;
+            transition: background-color 0.5s ease, color 0.5s ease; 
+            user-select: none; 
+            /* Importante: A classe do tema será injetada aqui pelo JS */
         }
-
-        /* EFEITO DE VIDRO NOS PAINÉIS */
-        .glass-panel { 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
-            background-color: var(--secondary-bg-color);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .bg-secondary { background-color: var(--secondary-bg-color); backdrop-filter: blur(8px); }
-        .bg-screen { background-color: var(--screen-bg); backdrop-filter: blur(4px); }
         
-        .text-glow { text-shadow: 0 0 12px var(--highlight-color); }
-        .shadow-out { box-shadow: 10px 10px 30px rgba(0,0,0,0.5); }
-        .shadow-in { box-shadow: inset 2px 2px 10px rgba(0,0,0,0.5); }
+        /* Estilos de Brilho, Sombra, etc. (Usando VARIAVEIS) */
+        .text-glow { text-shadow: 0 0 12px var(--highlight-color), 0 0 5px rgba(0, 0, 0, 0.5); }
+        .bg-secondary { background-color: var(--secondary-bg-color); }
+        .bg-screen { background-color: var(--screen-bg); }
+        .shadow-out { box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light); }
+        .shadow-in { box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light); }
+        .shadow-glow-active { box-shadow: 0 0 15px var(--highlight-color), 0 0 5px var(--highlight-color), 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light) !important; }
+        .shadow-glow-screen { box-shadow: 0 0 10px var(--screen-text), inset 0 0 10px var(--screen-text), inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light); }
+        
+        /* Glassmorphism para Controles */
+        .glass-panel { backdrop-filter: blur(5px); background-color: var(--secondary-bg-color) / 80; border: 1px solid var(--highlight-color) / 20; }
 
+        /* Estilo dos Botões de Controle (Usando VARIAVEIS) */
         .control-button {
-            transition: all 0.2s ease;
+            transition: all 0.2s ease-in-out;
             border: 2px solid var(--accent-color);
-            background-color: rgba(0,0,0,0.3);
+            background-color: var(--secondary-bg-color);
             color: var(--highlight-color);
         }
         .control-button:hover {
             transform: scale(1.05);
+            color: white;
             background-color: var(--accent-color);
-            box-shadow: 0 0 15px var(--highlight-color);
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 15px var(--highlight-color) !important;
+        }
+        .control-button.active {
+            color: var(--bg-color);
+            background-color: var(--highlight-color);
+            box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light), 0 0 20px var(--highlight-color) !important;
         }
 
-        input[type=range] { -webkit-appearance: none; background: rgba(0,0,0,0.5); border-radius: 5px; }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
-            background: var(--highlight-color); box-shadow: 0 0 10px var(--highlight-color);
+        /* Estilo dos Botões de Preset e Tema */
+        .button-theme {
+            transition: all 0.2s ease-in-out;
+            border: 1px solid var(--accent-color);
+            background-color: var(--secondary-bg-color);
+            color: var(--text-color);
+            padding: 4px 8px;
+            border-radius: 4px;
         }
+        .button-theme:hover {
+            color: var(--highlight-color);
+            background-color: var(--accent-color);
+            border-color: var(--highlight-color);
+        }
+        .button-theme.active {
+            color: var(--bg-color);
+            background-color: var(--highlight-color);
+            border-color: var(--highlight-color);
+            font-weight: bold;
+        }
+        
+        /* Estilização do Slider Vertical (EQ) */
+        input[type=range] { -webkit-appearance: none; width: 100%; height: 10px; background: var(--shadow-dark); outline: none; opacity: 0.8; transition: opacity .2s; border-radius: 5px; }
+        input[type=range]:hover { opacity: 1; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
+            background: var(--highlight-color); cursor: pointer;
+            box-shadow: 0 0 10px var(--highlight-color), 0 0 5px white;
+        }
+        .eq-slider { width: 80px !important; height: 10px !important; writing-mode: bt-lr; transform: rotate(180deg); }
     </style>
 </head>
-<body class="cosmic-dark">
+<body>
     <div id="root"></div>
 
     <script type="text/babel">
         const { useState, useEffect, useCallback, useRef, memo } = React;
 
+        // --- CONSTANTES ---
         const EQ_FREQUENCIES = [60, 150, 400, 1000, 2500, 6000, 12000];
         const EQ_PRESETS = {
             'flat': [0, 0, 0, 0, 0, 0, 0],
             'rock': [5, 3, -4, -5, -2, 4, 6],
             'pop': [-2, 0, 2, 4, 2, 0, -2],
+            'jazz': [4, 2, -2, -2, 0, 3, 4],
             'dance': [6, 4, 2, 0, -2, -3, 0],
+            'metal': [6, 4, 0, -6, 0, 4, 7],
         };
-        const THEMES = ['cosmic-dark', 'neon-city', 'industrial-cyber', 'deep-ocean', 'retro-wave'];
+        const THEMES = [
+            'industrial-cyber', 'cosmic-dark', 'solar-flare', 'deep-ocean', 'neon-city', 'retro-crt', 
+            'retro-wave', 'vaporwave', 'matrix-code', 'arctic-ice', 'gold-dust', 'martian-sand', 
+            'emerald-forest', 'amethyst-dream', 'fire-ice', 'concrete-jungle', 'sunset-strip', 
+            'biohazard-green', 'pure-white', 'chroma-glow', 'dark-matter', 'volcano-ash', 'purple-haze', 
+            'cyber-red', 'sky-blue', 'lime-shock', 'carbon-fiber'
+        ];
 
-        // --- HOOK DE ÁUDIO ---
+        // Referência global para o AudioContext
+        let audioContextRef = { current: null };
+        let gainNodeRef = { current: null };
+        let eqFiltersRef = { current: [] };
+
+        // --- HOOK DE ÁUDIO E ANÁLISE (useAudioAnalyzer) ---
         const useAudioAnalyzer = (streamUrl) => {
             const audioRef = useRef(null);
             const mainAnalyserRef = useRef(null);
-            const gainNodeRef = useRef(null);
+            const vuAnalyserL1Ref = useRef(null);
+            const vuAnalyserR1Ref = useRef(null);
+            const vuAnalyserL2Ref = useRef(null);
+            const vuAnalyserR2Ref = useRef(null);
+            const animationFrameRef = useRef(0);
+
+            const [isInitialized, setIsInitialized] = useState(false);
             const [isPlaying, setIsPlaying] = useState(false);
+            
             const [audioData, setAudioData] = useState({
-                frequencyData: new Uint8Array(128),
-                volume: 80,
-                vu: { l1: 0, r1: 0 }
+                frequencyData: new Uint8Array(1024),
+                vu: { l1: 0, r1: 0, l2: 0, r2: 0 },
+                volume: 50,
+                isMuted: false,
+                bassLevel: 0,
+                dominantFrequency: 0,
             });
 
-            const initAudio = () => {
-                if (mainAnalyserRef.current) return;
+            const initAudio = useCallback(() => {
+                // Previne re-inicialização
+                if (isInitialized) return;
+
                 const audio = new Audio(streamUrl);
                 audio.crossOrigin = "anonymous";
                 audioRef.current = audio;
 
+                // Cria ou resume o AudioContext
                 const context = new (window.AudioContext || window.webkitAudioContext)();
-                const source = context.createMediaElementSource(audio);
-                const analyser = context.createAnalyser();
-                const gainNode = context.createGain();
+                audioContextRef.current = context;
 
-                analyser.fftSize = 256;
-                gainNode.gain.value = 0.8;
+                const source = context.createMediaElementSource(audio);
+                const gainNode = context.createGain();
+                gainNode.gain.value = audioData.volume / 100;
+                gainNodeRef.current = gainNode;
                 
-                source.connect(analyser);
-                analyser.connect(gainNode);
+                // Configuração dos 7 Filtros do EQ (BiquadFilterNode)
+                const filters = EQ_FREQUENCIES.map(freq => {
+                    const filter = context.createBiquadFilter();
+                    filter.type = 'peaking';
+                    filter.frequency.value = freq;
+                    filter.Q.value = 1.4;
+                    filter.gain.value = 0;
+                    return filter;
+                });
+                eqFiltersRef.current = filters;
+
+                const mainAnalyser = context.createAnalyser();
+                mainAnalyser.fftSize = 2048;
+                mainAnalyserRef.current = mainAnalyser;
+
+                const splitter = context.createChannelSplitter(2);
+                
+                // Analisadores adicionais para o VU Meter (Time Domain para L1/R1, Freq para L2/R2)
+                vuAnalyserL1Ref.current = context.createAnalyser();
+                vuAnalyserL1Ref.current.fftSize = 256;
+                vuAnalyserR1Ref.current = context.createAnalyser();
+                vuAnalyserR1Ref.current.fftSize = 256;
+                vuAnalyserL2Ref.current = context.createAnalyser();
+                vuAnalyserL2Ref.current.fftSize = 256;
+                vuAnalyserR2Ref.current = context.createAnalyser();
+                vuAnalyserR2Ref.current.fftSize = 256;
+
+                // ROTEAMENTO: Source -> EQ Filters -> Main Analyser -> Splitter -> Gain Node -> Destination
+                let lastNode = source;
+                filters.forEach(filter => {
+                    lastNode.connect(filter);
+                    lastNode = filter;
+                });
+
+                lastNode.connect(mainAnalyser);
+                mainAnalyser.connect(splitter);
+                splitter.connect(gainNode);
                 gainNode.connect(context.destination);
 
-                mainAnalyserRef.current = analyser;
-                gainNodeRef.current = gainNode;
-            };
+                // Conexão dos analisadores VU
+                splitter.connect(vuAnalyserL1Ref.current, 0);
+                splitter.connect(vuAnalyserR1Ref.current, 1);
+                splitter.connect(vuAnalyserL2Ref.current, 0);
+                splitter.connect(vuAnalyserR2Ref.current, 1);
 
-            const play = () => {
-                initAudio();
-                audioRef.current.play();
-                setIsPlaying(true);
-            };
+                setIsInitialized(true);
+            }, [isInitialized, streamUrl, audioData.volume]);
 
-            const pause = () => {
-                audioRef.current.pause();
-                setIsPlaying(false);
-            };
+            const analyzeData = useCallback(() => {
+                if (!mainAnalyserRef.current || !isPlaying || !audioContextRef.current) return;
+                
+                const frequencyData = new Uint8Array(mainAnalyserRef.current.frequencyBinCount);
+                mainAnalyserRef.current.getByteFrequencyData(frequencyData);
+                
+                // Obter dados para os 4 VU meters
+                const bufferL1 = new Uint8Array(vuAnalyserL1Ref.current.fftSize);
+                vuAnalyserL1Ref.current.getByteTimeDomainData(bufferL1); // Time domain (peak)
+                const bufferR1 = new Uint8Array(vuAnalyserR1Ref.current.fftSize);
+                vuAnalyserR1Ref.current.getByteTimeDomainData(bufferR1); // Time domain (peak)
+                
+                const bufferL2 = new Uint8Array(vuAnalyserL2Ref.current.frequencyBinCount);
+                vuAnalyserL2Ref.current.getByteFrequencyData(bufferL2); // Frequency (RMS approximation)
+                const bufferR2 = new Uint8Array(vuAnalyserR2Ref.current.frequencyBinCount);
+                vuAnalyserR2Ref.current.getByteFrequencyData(bufferR2); // Frequency (RMS approximation)
 
-            useEffect(() => {
-                let animation;
-                const update = () => {
-                    if (isPlaying && mainAnalyserRef.current) {
-                        const data = new Uint8Array(mainAnalyserRef.current.frequencyBinCount);
-                        mainAnalyserRef.current.getByteFrequencyData(data);
-                        
-                        // Simulação simples de VU baseada no volume médio
-                        const avg = data.reduce((a,b) => a+b, 0) / data.length;
-                        
-                        setAudioData(prev => ({ 
-                            ...prev, 
-                            frequencyData: data,
-                            vu: { l1: avg * 0.8, r1: avg * 0.85 }
-                        }));
+                // Função para calcular nível de pico (Time Domain)
+                const getPeakLevel = (data) => {
+                    let max = 0;
+                    for (let i = 0; i < data.length; i++) {
+                        const val = Math.abs(data[i] - 128);
+                        if (val > max) max = val;
                     }
-                    animation = requestAnimationFrame(update);
+                    return (max / 128) * 100;
                 };
-                update();
-                return () => cancelAnimationFrame(animation);
+
+                // Função para calcular nível médio (Frequency Domain)
+                const getFreqLevel = (data) => {
+                    let sum = 0;
+                    for(let i = 0; i < data.length; i++) sum += data[i];
+                    return (sum / (data.length * 255)) * 100;
+                }
+                
+                // Cálculo de Bass Level (0-250Hz)
+                const bassBins = Math.floor((250 / (audioContextRef.current.sampleRate / 2)) * frequencyData.length);
+                const bassSum = frequencyData.slice(0, bassBins).reduce((a, b) => a + b, 0);
+                const bassLevel = (bassSum / (bassBins * 255)) * 100;
+
+                // Cálculo da Frequência Dominante
+                let maxVal = -1, maxIndex = 0;
+                for(let i=0; i < frequencyData.length; i++){
+                    if(frequencyData[i] > maxVal){
+                        maxVal = frequencyData[i];
+                        maxIndex = i;
+                    }
+                }
+                const dominantFrequency = (maxIndex * audioContextRef.current.sampleRate / mainAnalyserRef.current.fftSize);
+
+                setAudioData(prev => ({
+                    ...prev,
+                    frequencyData,
+                    vu: { 
+                        l1: getPeakLevel(bufferL1),
+                        r1: getPeakLevel(bufferR1),
+                        l2: getFreqLevel(bufferL2),
+                        r2: getFreqLevel(bufferR2),
+                    },
+                    bassLevel,
+                    dominantFrequency: Math.min(5000, dominantFrequency), // Limita para o Gauge
+                }));
+
+                animationFrameRef.current = requestAnimationFrame(analyzeData);
             }, [isPlaying]);
 
-            return { isPlaying, audioData, controls: { play, pause } };
+            useEffect(() => {
+                if (isPlaying) {
+                    animationFrameRef.current = requestAnimationFrame(analyzeData);
+                } else {
+                    cancelAnimationFrame(animationFrameRef.current);
+                    // Opcional: manter o último frame por um curto período antes de limpar
+                }
+                return () => cancelAnimationFrame(animationFrameRef.current);
+            }, [isPlaying, analyzeData]);
+
+            // Funções de Controle
+            const play = useCallback(() => {
+                if (!isInitialized) initAudio();
+                // Retoma o contexto de áudio se estiver suspenso (necessário para alguns navegadores)
+                if(audioContextRef.current?.state === 'suspended') audioContextRef.current.resume();
+                audioRef.current?.play().then(() => setIsPlaying(true)).catch(e => console.error("Erro ao tentar tocar áudio:", e));
+            }, [initAudio, isInitialized]);
+
+            const pause = useCallback(() => {
+                audioRef.current?.pause();
+                setIsPlaying(false);
+            }, []);
+
+            const setVolume = useCallback((vol) => {
+                const newVolume = Math.max(0, Math.min(100, vol));
+                setAudioData(prev => ({ ...prev, volume: newVolume }));
+                if (gainNodeRef.current && !audioData.isMuted) {
+                    // Controla o Gain Node (volume real)
+                    gainNodeRef.current.gain.value = newVolume / 100;
+                }
+            }, [audioData.isMuted]);
+
+            const toggleMute = useCallback(() => {
+                const newMutedState = !audioData.isMuted;
+                setAudioData(prev => ({ ...prev, isMuted: newMutedState }));
+                if (gainNodeRef.current) {
+                    // Zera o volume se estiver mudo, ou volta ao volume normal
+                    gainNodeRef.current.gain.value = newMutedState ? 0 : audioData.volume / 100;
+                }
+            }, [audioData.isMuted, audioData.volume]);
+
+            const setEQ = useCallback((gains) => {
+                eqFiltersRef.current.forEach((filter, index) => {
+                    if (gains[index] !== undefined) filter.gain.value = gains[index];
+                });
+            }, []);
+
+            const setEQBand = useCallback((bandIndex, gain) => {
+                if (eqFiltersRef.current[bandIndex]) eqFiltersRef.current[bandIndex].gain.value = gain;
+            }, []);
+
+            return { isInitialized, isPlaying, audioData, controls: { play, pause, setVolume, toggleMute, setEQ, setEQBand } };
         };
 
-        // --- COMPONENTES ---
-        const Visualizer = ({ data }) => (
-            <div className="flex items-end justify-center gap-1 h-32 w-full bg-black/40 rounded p-2 mb-4 border border-white/10">
-                {Array.from(data).slice(0, 40).map((v, i) => (
-                    <div key={i} className="bg-highlight w-full transition-all duration-75" 
-                         style={{ height: `${(v/255)*100}%`, backgroundColor: 'var(--highlight-color)', boxShadow: '0 0 5px var(--highlight-color)' }}></div>
-                ))}
-            </div>
-        );
+        // --- COMPONENTES VISUAIS (Restaurados na íntegra) ---
 
-        const App = () => {
-            const { isPlaying, audioData, controls } = useAudioAnalyzer("https://streaming01.shoutcast.com.br/8082/stream"); // URL Exemplo
-            const [currentTheme, setCurrentTheme] = useState('cosmic-dark');
-
+        const InfoScreen = ({ isPlaying, themeName, eqPresetName, volume }) => {
+            const [dateTime, setDateTime] = useState(new Date());
+            useEffect(() => {
+                const timer = setInterval(() => setDateTime(new Date()), 1000);
+                return () => clearInterval(timer);
+            }, []);
+            const formattedTime = dateTime.toLocaleTimeString('pt-BR', { hour12: false });
+            const formattedDate = dateTime.toLocaleDateString('pt-BR');
             return (
-                <div className={`min-h-screen flex items-center justify-center p-4 ${currentTheme}`}>
-                    <div className="max-w-4xl w-full glass-panel p-8 rounded-3xl shadow-out border-t border-white/20">
-                        <header className="text-center mb-8">
-                            <h1 className="text-3xl font-bold tracking-tighter text-glow mb-2">INTERCONTINENTAL</h1>
-                            <p className="font-mono text-xs opacity-60 uppercase tracking-[0.5em]">Web Radio System v2.0</p>
-                        </header>
+                <div className="bg-screen text-screen font-mono p-4 rounded-lg shadow-glow-screen grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm md:text-base border border-screen-text/50">
+                    <div className="col-span-2 sm:col-span-3 text-center border-b border-screen-text/50 pb-2 mb-2">
+                        <p className="text-xl font-bold uppercase tracking-widest text-glow">{themeName.replace('-', ' ')}</p>
+                    </div>
+                    <div className="flex flex-col items-center justify-center p-2 rounded border border-screen-text/30"><p className="opacity-75">VOLUME</p><p className="text-lg font-bold">{volume}%</p></div>
+                    <div className="flex flex-col items-center justify-center p-2 rounded border border-screen-text/30"><p className="opacity-75">EQ PRESET</p><p className="text-lg font-bold uppercase">{eqPresetName}</p></div>
+                    <div className="col-span-2 sm:col-span-1 flex flex-col items-center justify-center p-2 rounded border border-screen-text/30">
+                        <p className="opacity-75">STATUS</p>
+                        <div className="flex items-center gap-2">
+                            <span className={`w-3 h-3 rounded-full transition-colors ${isPlaying ? 'bg-green-400' : 'bg-red-500'}`} style={{ boxShadow: isPlaying ? '0 0 5px #22c55e' : '0 0 5px #ef4444' }}></span>
+                            <p className={`text-lg font-bold ${isPlaying ? 'text-green-400' : 'text-red-500'}`}>{isPlaying ? "ONLINE" : "OFFLINE"}</p>
+                        </div>
+                    </div>
+                    <div className="col-span-2 sm:col-span-3 text-center border-t border-screen-text/30 pt-2 mt-2 flex justify-between"><span>{formattedDate}</span><span>{formattedTime}</span></div>
+                </div>
+            );
+        };
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {/* LADO ESQUERDO: PLAYER */}
-                            <div className="flex flex-col justify-center">
-                                <Visualizer data={audioData.frequencyData} />
-                                
-                                <div className="bg-screen p-6 rounded-xl shadow-in mb-6 text-center border border-highlight/20">
-                                    <p className="text-highlight font-mono text-xl text-glow mb-1">STATION ONLINE</p>
-                                    <p className="text-xs opacity-50">128KBPS STEREO</p>
-                                </div>
+        const VUBar = memo(({ level, peak }) => {
+            const safeLevel = Math.min(100, Math.max(0, level));
+            const safePeak = Math.min(100, Math.max(0, peak));
+            const isClipped = safeLevel > 90;
+            return (
+                <div className="w-8 h-32 bg-black/50 rounded-sm shadow-in overflow-hidden relative border border-gray-900">
+                    {/* Indicador de Clipping */}
+                    <div className={`absolute top-0 left-0 w-full h-3 transition-colors ${isClipped ? 'bg-red-600 shadow-glow-active' : 'bg-gray-800'}`}></div>
+                    {/* Indicador de Pico (Peak Hold) */}
+                    <div className="absolute top-0 left-0 w-full h-1 bg-red-600/80 transition-transform duration-100 ease-out z-10" style={{ transform: `translateY(${128 * (1 - (safePeak / 100))}px)`, opacity: peak > level && safePeak > 5 ? 1 : 0, boxShadow: '0 0 5px #ef4444' }} />
+                    {/* Barra de Nível */}
+                    <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-green-500 via-yellow-500 to-red-500 transition-[height] duration-75" style={{ height: `${safeLevel}%`, boxShadow: `0 0 10px ${isClipped ? 'var(--highlight-color)' : 'transparent'}` }}></div>
+                </div>
+            );
+        });
 
-                                <div className="flex justify-center gap-6">
-                                    <button onClick={isPlaying ? controls.pause : controls.play} 
-                                            className="control-button w-20 h-20 rounded-full text-2xl shadow-glow">
-                                        <i className={`fas ${isPlaying ? 'fa-pause' : 'fa-play'}`}></i>
-                                    </button>
-                                </div>
-                            </div>
+        const VUMeter = ({ vuData }) => {
+            const [peaks, setPeaks] = useState({ l1: 0, r1: 0, l2: 0, r2: 0 });
+            const peakTimeoutRefs = useRef({});
+            
+            // Lógica de Peak Hold (Picos Retidos)
+            useEffect(() => {
+                const newPeaks = { ...peaks };
+                Object.keys(vuData).forEach(key => {
+                    if (vuData[key] >= newPeaks[key]) {
+                        newPeaks[key] = vuData[key];
+                        if (peakTimeoutRefs.current[key]) clearTimeout(peakTimeoutRefs.current[key]);
+                        peakTimeoutRefs.current[key] = setTimeout(() => {
+                            setPeaks(prev => ({ ...prev, [key]: 0 }));
+                        }, 1000);
+                    }
+                });
+                setPeaks(newPeaks);
+                return () => Object.values(peakTimeoutRefs.current).forEach(clearTimeout);
+            }, [vuData]);
+            
+            return (
+                <div className="mt-4">
+                    <p className="text-center font-mono text-sm mb-2 opacity-80">TRANSMISSION LEVEL</p>
+                    <div className="flex justify-center items-end gap-5 p-4 bg-secondary rounded-lg shadow-in border border-accent/50">
+                        <VUBar level={vuData.l1} peak={peaks.l1} /><VUBar level={vuData.l2} peak={peaks.l2} />
+                        <VUBar level={vuData.r2} peak={peaks.r2} /><VUBar level={vuData.r1} peak={peaks.r1} />
+                    </div>
+                </div>
+            );
+        };
+        
+        const Visualizer = ({ frequencyData, isPlaying }) => {
+            const canvasRef = useRef(null);
+            
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return;
 
-                            {/* LADO DIREITO: CONTROLES */}
-                            <div className="space-y-6">
-                                <div className="bg-black/30 p-4 rounded-lg">
-                                    <p className="text-xs font-bold mb-3 opacity-70 uppercase">Themes</p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {THEMES.map(t => (
-                                            <button key={t} onClick={() => setCurrentTheme(t)} 
-                                                    className={`px-3 py-1 rounded text-[10px] uppercase border ${currentTheme === t ? 'bg-highlight text-black' : 'border-white/20'}`}>
-                                                {t.replace('-', ' ')}
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
+                const { width, height } = canvas;
+                ctx.clearRect(0, 0, width, height);
 
-                                <div className="bg-black/30 p-4 rounded-lg">
-                                    <p className="text-xs font-bold mb-3 opacity-70 uppercase">Volume Control</p>
-                                    <input type="range" className="w-full" />
-                                </div>
+                if (!isPlaying) {
+                    // Efeito "desligado"
+                    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+                    ctx.fillRect(0, 0, width, height);
+                    return;
+                }
+                
+                const numBars = 128;
+                const barWidth = width / numBars;
 
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-screen p-3 rounded border border-white/5">
-                                        <p className="text-[10px] opacity-50">L-CHANNEL</p>
-                                        <div className="h-2 bg-black/50 mt-1 rounded overflow-hidden">
-                                            <div className="h-full bg-highlight transition-all" style={{width: `${audioData.vu.l1}%`}}></div>
-                                        </div>
-                                    </div>
-                                    <div className="bg-screen p-3 rounded border border-white/5">
-                                        <p className="text-[10px] opacity-50">R-CHANNEL</p>
-                                        <div className="h-2 bg-black/50 mt-1 rounded overflow-hidden">
-                                            <div className="h-full bg-highlight transition-all" style={{width: `${audioData.vu.r1}%`}}></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                for (let i = 0; i < numBars; i++) {
+                    const dataIndex = Math.floor(i * (frequencyData.length / numBars));
+                    const value = frequencyData[dataIndex];
+                    const barHeight = (value / 255) * height * 0.9;
+                    
+                    // Cores HSL para efeito arco-íris reativo e GLOW
+                    const hue = (i / numBars) * 180 + 200;
+                    const brightness = 50 + (value / 255) * 30;
+                    ctx.fillStyle = `hsl(${hue}, 100%, ${brightness}%)`;
+                    
+                    // Adiciona brilho sutil
+                    ctx.shadowColor = `hsl(${hue}, 100%, 50%)`;
+                    ctx.shadowBlur = 5;
+
+                    ctx.fillRect(i * barWidth, height - barHeight, barWidth -1, barHeight);
+                }
+                ctx.shadowBlur = 0; // Reseta o shadow após o loop
+            }, [frequencyData, isPlaying]);
+            
+            return (
+                <div className="w-full aspect-[2/1] bg-black rounded-lg shadow-in relative border border-highlight/50">
+                    <canvas ref={canvasRef} width="600" height="300" className="w-full h-full" />
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <i className={`fas fa-wave-square text-8xl transition-all duration-300 ${isPlaying ? 'text-white/20 scale-110 text-glow' : 'text-white/10 scale-100'}`}></i>
+                    </div>
+                </div>
+            );
+        };
+
+        const Gauge = ({ value, max, label, unit }) => {
+            const GAUGE_ANGLE_RANGE = 240;
+            const GAUGE_ANGLE_OFFSET = -120;
+            const percentage = Math.min(1, Math.max(0, value / max));
+            const angle = percentage * GAUGE_ANGLE_RANGE + GAUGE_ANGLE_OFFSET;
+            const ticks = Array.from({ length: 11 }, (_, i) => i * (max/10));
+            
+            return (
+                <div className="flex flex-col items-center justify-center p-4 bg-black/20 rounded-lg shadow-in glass-panel">
+                    <p className="font-mono text-sm text-highlight mb-2 text-glow">{label}</p>
+                    <div className="relative w-full max-w-[250px] aspect-square">
+                        <svg viewBox="0 0 100 100" className="w-full h-full">
+                            {/* Arco de fundo */}
+                            <path d="M 19.7,76.5 A 40,40 0 1 1 80.3,76.5" fill="none" stroke="currentColor" className="text-white/10" strokeWidth="8" strokeLinecap="round" transform="translate(0, -10)" />
+                            {/* Arco de preenchimento (cor) - Brilho */}
+                            <path d="M 19.7,76.5 A 40,40 0 1 1 80.3,76.5" fill="none" stroke="url(#gauge-gradient)" strokeWidth="8" strokeLinecap="round" strokeDasharray="209.44" strokeDashoffset={209.44 * (1 - percentage)} style={{filter: 'drop-shadow(0 0 4px var(--highlight-color))'}} transform="translate(0, -10)" />
+                            
+                            {/* Definição do Gradiente */}
+                            <defs><linearGradient id="gauge-gradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#34d399" /><stop offset="50%" stopColor="#facc15" /><stop offset="100%" stopColor="#ef4444" /></linearGradient></defs>
+                            
+                            {/* Marcações da Escala */}
+                            {ticks.map((tick, i) => {
+                                const tickAngle = i * (GAUGE_ANGLE_RANGE / (ticks.length - 1)) + GAUGE_ANGLE_OFFSET;
+                                return (
+                                    <g key={i} transform={`rotate(${tickAngle} 50 50)`}>
+                                        <line x1="50" y1="12" x2="50" y2="16" stroke="currentColor" className="text-white/50" strokeWidth="1" />
+                                        <text x="50" y="8" textAnchor="middle" alignmentBaseline="middle" fill="currentColor" className="text-[6px] text-white/80" transform={`rotate(${-tickAngle} 50 8)`}>{Math.round(tick)}</text>
+                                    </g>
+                                );
+                            })}
+                            {/* Agulha (Needle) com Brilho */}
+                            <g transform={`rotate(${angle} 50 50)`}>
+                                <polygon points="50,15 52,50 48,50" className="fill-highlight" style={{filter: 'drop-shadow(0 0 5px var(--highlight-color))'}}/>
+                            </g>
+                            {/* Centro da Agulha */}
+                            <circle cx="50" cy="50" r="4" className="fill-gray-700 stroke-gray-900" strokeWidth="1" />
+                        </svg>
+                        {/* Display Digital */}
+                        <div className="absolute bottom-[20%] left-0 right-0 text-center">
+                            <p className="text-3xl font-bold text-white leading-none text-glow">{Math.round(value)}</p>
+                            <p className="text-sm text-white/70">{unit}</p>
                         </div>
                     </div>
                 </div>
             );
         };
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        const VolumeKnob = ({ volume, onVolumeChange, toggleMute, isMuted }) => {
+            const knobRef = useRef(null);
+            const dragStartRef = useRef({ y: 0, volume: 0 });
+            const [isDragging, setIsDragging] = useState(false);
+            const [isChanging, setIsChanging] = useState(false);
+            const changeTimeoutRef = useRef(null);
+            
+            const handleMouseMove = useCallback((e) => {
+                if (!isDragging) return;
+                const deltaY = dragStartRef.current.y - e.clientY;
+                const newVolume = dragStartRef.current.volume + deltaY * 0.75;
+                onVolumeChange(Math.round(Math.max(0, Math.min(100, newVolume))));
+            }, [isDragging, onVolumeChange]);
+            const handleMouseUp = useCallback(() => {
+                setIsDragging(false);
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleMouseUp);
+            }, [handleMouseMove]);
+            const handleMouseDown = useCallback((e) => {
+                e.preventDefault();
+                dragStartRef.current = { y: e.clientY, volume };
+                setIsDragging(true);
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
+            }, [volume, handleMouseMove, handleMouseUp]);
+            
+            useEffect(() => {
+                if (changeTimeoutRef.current) clearTimeout(changeTimeoutRef.current);
+                setIsChanging(true);
+                changeTimeoutRef.current = setTimeout(() => setIsChanging(false), 250);
+                return () => { if (changeTimeoutRef.current) clearTimeout(changeTimeoutRef.current); }
+            }, [volume]);
+
+            const percentage = volume / 100;
+            const angle = percentage * 270 - 135;
+
+            return (
+                <div 
+                    ref={knobRef} 
+                    className="relative w-40 h-40 flex items-center justify-center cursor-pointer select-none"
+                    onMouseDown={handleMouseDown}
+                    onClick={(e) => {
+                        // Impedir clique se estiver arrastando
+                        if (Math.abs(dragStartRef.current.y - e.clientY) < 5) {
+                             // Clique no Knob Central para Mute (Nova Interatividade)
+                            if (e.target.closest('.knob-center')) {
+                                toggleMute();
+                            }
+                        }
+                    }}
+                >
+                    {/* Brilho pulsante ao interagir */}
+                    <div className={`absolute w-full h-full rounded-full transition-all duration-300 pointer-events-none ${isChanging || isDragging ? 'scale-110 opacity-100' : 'scale-100 opacity-0'}`} style={{boxShadow: '0 0 15px var(--highlight-color), inset 0 0 15px var(--highlight-color)'}} />
+                    {/* SVG do Arco do Volume */}
+                    <svg viewBox="0 0 100 100" className="w-full h-full absolute transition-opacity duration-300" style={{opacity: isMuted ? 0.4 : 1}}>
+                        <defs><linearGradient id="volume-gradient" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stopColor="var(--highlight-color)" /><stop offset="100%" stopColor="#FFD700" /></linearGradient></defs>
+                        {/* Arco de fundo */}
+                        <path d="M 19.7,76.5 A 40,40 0 1 1 80.3,76.5" fill="none" stroke="currentColor" className="text-black/30" strokeWidth="12" strokeLinecap="round" />
+                        {/* Arco de preenchimento (com brilho aplicado ao path) */}
+                        <path d="M 19.7,76.5 A 40,40 0 1 1 80.3,76.5" fill="none" stroke="url(#volume-gradient)" strokeWidth="12" strokeLinecap="round" strokeDasharray="209.44" strokeDashoffset={209.44 * (1 - percentage)} style={{filter: 'drop-shadow(0 0 5px var(--highlight-color))'}} />
+                    </svg>
+                    {/* Corpo Central (Display Digital e Mute por Clique) */}
+                    <div className="knob-center absolute w-32 h-32 rounded-full bg-secondary shadow-out flex items-center justify-center transition-all duration-300 hover:scale-[1.02]">
+                        <div className="text-center">
+                            <p className="text-xl font-bold text-highlight transition-all duration-300 text-glow">{isMuted ? 'MUTED' : 'VOLUME'}</p>
+                            <p className={`text-4xl font-extrabold text-glow ${isMuted ? 'text-red-500' : 'text-screen'}`}>{volume}</p>
+                            <p className="text-sm text-text-color">%</p>
+                            <i className={`fas fa-circle-notch absolute top-1/2 left-1/2 -mt-7 -ml-7 text-7xl animate-spin text-white/5 opacity-0 ${isDragging && !isMuted ? 'opacity-50' : ''}`}></i>
+                        </div>
+                        {/* Indicador de Luz Rotativo */}
+                        <div className="absolute top-0 left-0 w-full h-full transform transition-transform duration-100" style={{ transform: `rotate(${angle}deg)` }}>
+                            <div className="absolute top-2 left-1/2 -ml-1 w-2 h-2 rounded-full bg-highlight" style={{ boxShadow: `0 0 10px var(--highlight-color), 0 0 5px white` }} />
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+        
+        const EQControls = ({ setEQBand, setEQ }) => {
+            const [manualGains, setManualGains] = useState(EQ_PRESETS.flat);
+            const [activePreset, setActivePreset] = useState('flat');
+            const [isBoosted, setIsBoosted] = useState(false);
+            const BOOST_GAIN = 7;
+
+            const handleManualChange = useCallback((index, gain) => {
+                const newGains = [...manualGains];
+                newGains[index] = gain;
+                setManualGains(newGains);
+                const finalGain = gain + (isBoosted ? BOOST_GAIN : 0);
+                setEQBand(index, finalGain);
+                setActivePreset('manual');
+            }, [manualGains, isBoosted, setEQBand]);
+
+            const handlePresetChange = useCallback((presetName) => {
+                const baseGains = EQ_PRESETS[presetName];
+                const finalGains = baseGains.map(g => g + (isBoosted ? BOOST_GAIN : 0));
+                
+                setEQ(finalGains);
+                setManualGains(baseGains);
+                setActivePreset(presetName);
+            }, [setEQ, isBoosted]);
+
+            const handleSuperBoost = useCallback(() => {
+                const newBoosted = !isBoosted;
+                
+                // Aplica o ajuste de boost ao preset atual (manual ou nomeado)
+                const currentBaseGains = activePreset === 'manual' ? manualGains : EQ_PRESETS[activePreset];
+                
+                eqFiltersRef.current.forEach((filter, index) => {
+                    const currentBaseGain = currentBaseGains[index];
+                    const newGain = currentBaseGain + (newBoosted ? BOOST_GAIN : 0);
+                    // Usa setValueAtTime para garantir que a mudança seja instantânea
+                    filter.gain.setValueAtTime(newGain, audioContextRef.current.currentTime);
+                });
+                
+                setIsBoosted(newBoosted);
+            }, [isBoosted, manualGains, activePreset]);
+            
+            // Re-aplica o preset/manual quando o boost muda
+            useEffect(() => {
+                // Se o boost mudou, re-aplica as configurações
+                if (activePreset === 'manual') {
+                    const finalGains = manualGains.map(g => g + (isBoosted ? BOOST_GAIN : 0));
+                    setEQ(finalGains);
+                } else {
+                    handlePresetChange(activePreset);
+                }
+            }, [isBoosted]); // eslint-disable-line react-hooks/exhaustive-deps
+            
+            return (
+                <div className="flex flex-col gap-4">
+                    {/* EQ PRESETS E SUPER BOOST */}
+                    <div className="flex flex-wrap justify-center gap-2 p-3 glass-panel rounded-lg shadow-in border-accent/50 border">
+                        {Object.keys(EQ_PRESETS).map((preset) => (
+                            <button
+                                key={preset}
+                                className={`button-theme px-3 py-1 text-xs uppercase transition-all duration-200 ${activePreset === preset ? 'active shadow-glow-active' : ''}`}
+                                onClick={() => handlePresetChange(preset)}
+                            >
+                                {preset}
+                            </button>
+                        ))}
+                        <button
+                            className={`button-theme px-3 py-1 text-xs uppercase transition-all duration-200 ${isBoosted ? 'active shadow-glow-active' : ''}`}
+                            onClick={handleSuperBoost}
+                            style={{ backgroundColor: isBoosted ? 'var(--highlight-color)' : 'var(--secondary-bg-color)', color: isBoosted ? 'var(--bg-color)' : 'var(--highlight-color)', borderColor: isBoosted ? 'var(--highlight-color)' : 'var(--accent-color)' }}
+                        >
+                            ⚡ SUPER BOOST
+                        </button>
+                    </div>
+
+                    {/* MANUAL EQ SLIDERS (7 Bandas) */}
+                    <div className="flex justify-between items-end p-4 bg-secondary rounded-lg shadow-out border-highlight/50 border">
+                        {EQ_FREQUENCIES.map((freq, index) => (
+                            <div key={freq} className="flex flex-col items-center group">
+                                <span className={`font-mono text-xs mb-1 transition-colors ${manualGains[index] > 0 ? 'text-highlight' : 'text-text-color/70'}`}>{manualGains[index]}dB</span>
+                                <input
+                                    type="range"
+                                    min="-15"
+                                    max="15"
+                                    step="1"
+                                    value={manualGains[index]}
+                                    onChange={(e) => handleManualChange(index, parseFloat(e.target.value))}
+                                    className="eq-slider appearance-none bg-gray-700/50 rounded-lg cursor-pointer"
+                                />
+                                <span className="font-mono text-xs mt-2 text-highlight">{freq >= 1000 ? `${freq / 1000}k` : `${freq}`}Hz</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+        
+        const ThemeSelector = ({ currentTheme, changeTheme, themes }) => (
+            <div className="pt-4 border-t border-accent/50">
+                <h3 className="text-xl font-bold text-highlight text-center mb-4 text-glow">26 THEME SELECTOR</h3>
+                <div className="flex flex-wrap justify-center gap-2 max-h-40 overflow-y-auto p-2 bg-secondary rounded-lg shadow-in">
+                    {themes.map((theme) => (
+                        <button
+                            key={theme}
+                            className={`button-theme px-2 py-1 text-xs uppercase transition-all duration-200 ${currentTheme === theme ? 'active shadow-glow-active' : ''}`}
+                            onClick={() => changeTheme(theme)}
+                        >
+                            {theme.replace('-', ' ')}
+                        </button>
+                    ))}
+                </div>
+            </div>
+        );
+
+        // --- COMPONENTE PRINCIPAL (APP) ---
+        const App = () => {
+            const STREAM_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
+            const [currentTheme, setCurrentTheme] = useState(THEMES[1]); 
+            const [eqPreset, setEqPreset] = useState('flat');
+            
+            const { isPlaying, audioData, controls } = useAudioAnalyzer(STREAM_URL);
+
+            // CORREÇÃO do Tema: Função de mudança de estado.
+            const changeTheme = useCallback((themeName) => {
+                setCurrentTheme(themeName);
+            }, []);
+            
+            // CORREÇÃO do Tema: Hook para aplicar a classe do tema no BODY.
+            useEffect(() => {
+                const body = document.body;
+                // Remove qualquer classe de tema anterior
+                THEMES.forEach(t => body.classList.remove(t));
+                // Adiciona a nova classe do tema (ex: 'cosmic-dark')
+                body.classList.add(currentTheme); 
+            }, [currentTheme]);
+
+            // Componente de Botão Universal Aprimorado
+            const ControlButton = ({ icon, label, onClick, isActive, colorClass = 'text-highlight' }) => {
+                return (
+                    <button
+                        className={`control-button p-4 rounded-full text-2xl w-16 h-16 flex items-center justify-center shadow-out ${isActive ? 'active shadow-glow-active' : ''}`}
+                        onClick={onClick}
+                        title={label}
+                    >
+                        <i className={`fas fa-${icon} ${colorClass}`}></i>
+                    </button>
+                );
+            };
+            
+            return (
+                <div className="min-h-screen flex flex-col items-center justify-center p-4">
+                    <div className="w-full max-w-4xl bg-secondary p-6 rounded-3xl shadow-glow-active border border-highlight/70 space-y-6">
+                        <h1 className="text-3xl font-bold text-center text-highlight text-glow uppercase tracking-wider mb-6">Intercontinental Audio System V2.1</h1>
+
+                        {/* LINHA 1: INFO E VISUALIZADORES */}
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* 3 Medidores Analógicos */}
+                            <div className="lg:col-span-1 flex flex-col gap-4">
+                                <Gauge label="BASS BOOST" unit="LEVEL" max={100} value={audioData.bassLevel} />
+                                <Gauge label="DOMINANT FREQ." unit="Hz" max={5000} value={audioData.dominantFrequency} />
+                                <Gauge label="SIGNAL INT." unit="%" max={100} value={(audioData.vu.l1 + audioData.vu.r1) / 2} />
+                            </div>
+
+                            {/* Display de Status, Analisador de Espectro e 4 VU Bars */}
+                            <div className="lg:col-span-2 flex flex-col gap-4">
+                                <InfoScreen isPlaying={isPlaying} themeName={currentTheme} eqPresetName={eqPreset.toUpperCase()} volume={audioData.volume} />
+                                <Visualizer frequencyData={audioData.frequencyData} isPlaying={isPlaying} />
+                                <VUMeter vuData={audioData.vu} />
+                            </div>
+                        </div>
+
+                        {/* LINHA 2: CONTROLES DE MÍDIA E VOLUME */}
+                        <div className="flex items-center justify-between p-4 glass-panel rounded-xl shadow-in border-highlight/30 border">
+                            {/* Botões Play/Pause/Mute */}
+                            <div className="flex gap-4">
+                                <ControlButton 
+                                    icon={isPlaying ? 'pause' : 'play'} 
+                                    label={isPlaying ? 'Pause' : 'Play'} 
+                                    onClick={isPlaying ? controls.pause : controls.play} 
+                                    isActive={isPlaying}
+                                    colorClass={isPlaying ? 'text-red-500' : 'text-green-500'}
+                                />
+                                <ControlButton 
+                                    icon={audioData.isMuted ? 'volume-mute' : 'volume-up'} 
+                                    label='Mute' 
+                                    onClick={controls.toggleMute} 
+                                    isActive={audioData.isMuted}
+                                    colorClass={audioData.isMuted ? 'text-red-500' : 'text-highlight'}
+                                />
+                            </div>
+
+                            {/* Botão de Volume Rotativo (Knob) */}
+                            <VolumeKnob 
+                                volume={audioData.volume} 
+                                onVolumeChange={controls.setVolume} 
+                                toggleMute={controls.toggleMute}
+                                isMuted={audioData.isMuted}
+                            />
+                            
+                            {/* Dummy para alinhamento */}
+                            <div className="w-20 h-20"></div>
+                        </div>
+
+                        {/* LINHA 3: EQUALIZADOR */}
+                        <EQControls setEQBand={controls.setEQBand} setEQ={controls.setEQ} />
+
+                        {/* LINHA 4: SELETOR DE TEMAS */}
+                        <ThemeSelector currentTheme={currentTheme} changeTheme={changeTheme} themes={THEMES} />
+                        
+                        <div className="text-center text-xs opacity-50 pt-4 font-mono">
+                            <p>Powered by Gemini | System Integrity: Nominal</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
     </script>
 </body>
 </html>
