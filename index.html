@@ -1,185 +1,188 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>INTERCONTINENTAL • GOLDEN ENGINE V3</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>INTERCONTINENTAL • GOLDEN ENGINE V3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
-<style>
-:root {
-    --gold-bright: #fff3a0;
-    --gold-main: #ffd700;
-    --gold-deep: #b8860b;
-    --gold-dark: #6b4e00;
-    --neon-blue: #00e5ff;
-    --neon-pink: #ff00ff;
-    --neon-green: #39ff14;
-}
+    <style>
+        :root {
+            --gold-bright: #fff3a0;
+            --gold-main: #ffd700;
+            --gold-deep: #b8860b;
+            --gold-dark: #6b4e00;
+            --neon-blue: #00e5ff;
+            --neon-pink: #ff00ff;
+            --neon-green: #39ff14;
+        }
 
-body {
-    margin: 0;
-    background: radial-gradient(circle at center, #222 0%, #000 100%);
-    font-family: 'Orbitron', sans-serif;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow-x: hidden;
-}
+        body {
+            margin: 0;
+            background: radial-gradient(circle at center, #222 0%, #000 100%);
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 40px 0 80px 0; /* Espaço para a barra de notícias */
+        }
 
-/* Moldura de Ouro Maciço */
-.frame {
-    width: 100%;
-    max-width: 1150px;
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold-main), var(--gold-bright), var(--gold-main), var(--gold-dark));
-    padding: 15px;
-    border-radius: 60px;
-    box-shadow: 0 0 100px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.6);
-    position: relative;
-    border: 2px solid rgba(255,255,255,0.4);
-}
+        /* --- MOLDURA PREMIUM --- */
+        .frame {
+            width: 100%;
+            max-width: 1150px;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold-main), var(--gold-bright), var(--gold-main), var(--gold-dark));
+            padding: 15px;
+            border-radius: 60px;
+            box-shadow: 0 0 100px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.6);
+            position: relative;
+            border: 2px solid rgba(255,255,255,0.4);
+        }
 
-.deck {
-    background: #0a0a0a;
-    border-radius: 50px;
-    padding: 40px;
-    box-shadow: inset 0 0 60px #000;
-    border: 3px solid var(--gold-deep);
-}
+        .deck {
+            background: #0a0a0a;
+            border-radius: 50px;
+            padding: 40px;
+            box-shadow: inset 0 0 60px #000;
+            border: 3px solid var(--gold-deep);
+        }
 
-/* LCD de Cristal com Brilho Dourado */
-.lcd {
-    background: rgba(20, 15, 0, 0.95);
-    color: var(--gold-main);
-    font-family: 'Share Tech Mono';
-    padding: 20px;
-    border-radius: 15px;
-    border: 2px solid var(--gold-main);
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.2), inset 0 0 15px #000;
-    text-shadow: 0 0 8px var(--gold-main);
-}
+        .lcd {
+            background: rgba(20, 15, 0, 0.95);
+            color: var(--gold-main);
+            font-family: 'Share Tech Mono';
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid var(--gold-main);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2), inset 0 0 15px #000;
+            text-shadow: 0 0 8px var(--gold-main);
+        }
 
-/* VU Meters Coloridos */
-.vu-bar {
-    width: 100%;
-    height: 14px;
-    background: #000;
-    border-radius: 20px;
-    overflow: hidden;
-    border: 1px solid var(--gold-dark);
-}
-.vu-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(to right, var(--neon-green), var(--gold-main), #ff0000);
-    box-shadow: 0 0 15px currentColor;
-    transition: width .08s linear;
-}
+        .vu-bar {
+            width: 100%; height: 14px;
+            background: #000; border-radius: 20px;
+            overflow: hidden; border: 1px solid var(--gold-dark);
+        }
+        .vu-fill {
+            height: 100%; width: 0%;
+            background: linear-gradient(to right, var(--neon-green), var(--gold-main), #ff0000);
+            box-shadow: 0 0 15px currentColor;
+            transition: width .08s linear;
+        }
 
-/* Gauges Estilo Luxo */
-.gauge {
-    width: 150px; height: 80px;
-    border: 3px solid var(--gold-main);
-    border-bottom: 0;
-    border-radius: 100px 100px 10px 10px;
-    position: relative;
-    background: #000;
-    box-shadow: inset 0 10px 20px rgba(255,215,0,0.1);
-}
-.needle {
-    position: absolute;
-    bottom: 5px;
-    left: 50%;
-    width: 3px;
-    height: 65px;
-    transform-origin: bottom center;
-    background: #fff;
-    box-shadow: 0 0 10px #fff;
-    transition: transform 0.1s ease-out;
-}
+        .gauge {
+            width: 150px; height: 80px;
+            border: 3px solid var(--gold-main); border-bottom: 0;
+            border-radius: 100px 100px 10px 10px;
+            position: relative; background: #000;
+            box-shadow: inset 0 10px 20px rgba(255,215,0,0.1);
+        }
+        .needle {
+            position: absolute; bottom: 5px; left: 50%;
+            width: 3px; height: 65px; transform-origin: bottom center;
+            background: #fff; box-shadow: 0 0 10px #fff;
+            transition: transform 0.1s ease-out;
+        }
 
-/* Knob de Volume - Estilo Joia */
-.knob {
-    width: 180px; height: 180px;
-    border-radius: 50%;
-    background: conic-gradient(from 0deg, var(--gold-dark), var(--gold-main), var(--gold-dark), var(--gold-main), var(--gold-dark));
-    border: 8px solid #111;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 0 10px rgba(255,255,255,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: ns-resize;
-    position: relative;
-}
-.knob span { font-size: 48px; font-weight: 900; color: #000; text-shadow: 0 1px 0 rgba(255,255,255,0.5); }
-.knob::after {
-    content: "";
-    position: absolute;
-    top: 15px; width: 6px; height: 20px;
-    background: #fff; border-radius: 3px;
-}
+        .knob {
+            width: 180px; height: 180px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--gold-dark), var(--gold-main), var(--gold-dark), var(--gold-main), var(--gold-dark));
+            border: 8px solid #111;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 0 10px rgba(255,255,255,0.5);
+            display: flex; align-items: center; justify-content: center;
+            cursor: ns-resize; position: relative;
+        }
+        .knob span { font-size: 48px; font-weight: 900; color: #000; }
 
-/* Botões Coloridos e Vibrantes */
-.control-btn {
-    background: linear-gradient(180deg, #333, #111);
-    border: 2px solid var(--gold-deep);
-    border-radius: 15px;
-    font-weight: 900;
-    transition: all 0.2s;
-    box-shadow: 0 5px 0 var(--gold-dark);
-}
-.control-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-dark); }
+        .control-btn {
+            background: linear-gradient(180deg, #333, #111);
+            border: 2px solid var(--gold-deep); border-radius: 15px;
+            font-weight: 900; transition: all 0.2s;
+            box-shadow: 0 5px 0 var(--gold-dark);
+        }
+        .control-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-dark); }
+        .btn-start { color: var(--neon-green); border-color: var(--neon-green); }
+        .btn-stop { color: #ff3333; border-color: #ff3333; }
+        .btn-mute { color: var(--neon-blue); border-color: var(--neon-blue); }
 
-.btn-start { color: var(--neon-green); border-color: var(--neon-green); }
-.btn-stop { color: #ff3333; border-color: #ff3333; }
-.btn-mute { color: var(--neon-blue); border-color: var(--neon-blue); }
+        .eq-btn {
+            background: #000; border: 1px solid #444;
+            padding: 12px 4px; border-radius: 8px;
+            font-size: 10px; font-weight: 900; color: #777;
+        }
+        .eq-btn.active { background: var(--gold-main); color: #000; box-shadow: 0 0 20px var(--gold-main); }
 
-/* Equalizador Colorido */
-.eq-btn {
-    background: #000; border: 1px solid #444;
-    padding: 12px 4px; border-radius: 8px;
-    font-size: 10px; font-weight: 900; color: #777;
-    transition: 0.3s;
-}
-.eq-btn.active {
-    background: var(--gold-main);
-    color: #000;
-    box-shadow: 0 0 20px var(--gold-main);
-    border-color: #fff;
-}
+        .nitro-btn { background: linear-gradient(45deg, #ff0000, #ff6600); color: white; border: none; }
+        .boost-active { animation: fire 0.4s infinite alternate; box-shadow: 0 0 40px #ff0000 !important; }
+        @keyframes fire { from { transform: scale(1); } to { transform: scale(1.05); } }
 
-/* NITRO */
-.nitro-btn {
-    background: linear-gradient(45deg, #ff0000, #ff6600);
-    color: white;
-    border: none;
-    text-shadow: 0 0 10px #fff;
-}
-.boost-active {
-    animation: fire 0.4s infinite alternate;
-    box-shadow: 0 0 40px #ff0000 !important;
-}
-@keyframes fire {
-    from { transform: scale(1); filter: brightness(1); }
-    to { transform: scale(1.05); filter: brightness(1.5); }
-}
+        .theme-btn { background: #111; border: 1px solid var(--gold-dark); color: var(--gold-main); border-radius: 8px; }
 
-.theme-btn {
-    background: #111; border: 1px solid var(--gold-dark);
-    color: var(--gold-main); border-radius: 8px;
-    font-size: 11px; padding: 10px;
-}
-</style>
+        /* --- BOTÕES DE LINKS EXTERNOS --- */
+        .link-card {
+            transition: all 0.3s;
+            border-width: 2px;
+            text-transform: uppercase;
+            font-weight: 900;
+            font-size: 11px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 50px;
+            border-radius: 12px;
+        }
+        .link-card:hover { transform: translateY(-3px) scale(1.05); filter: brightness(1.2); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+
+        /* --- BARRA DE NOTÍCIAS MELHORADA --- */
+        .ticker-bar {
+            width: 100%; background: #000; color: #fff;
+            height: 55px; display: flex; align-items: center;
+            font-family: 'Segoe UI', Arial, sans-serif; position: fixed;
+            bottom: 0; left: 0; overflow: hidden;
+            border-top: 3px solid #f00; z-index: 999;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+        }
+        .ticker-label {
+            background: #f00; padding: 0 20px; height: 100%;
+            display: flex; align-items: center; font-weight: 900;
+            font-size: 14px; white-space: nowrap; z-index: 10;
+            box-shadow: 10px 0 20px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+        }
+        .ticker-move {
+            display: flex; white-space: nowrap;
+            animation: moveTicker 80s linear infinite;
+            align-items: center;
+        }
+        .news-text {
+            color: #fff; text-decoration: none; padding: 0 40px; 
+            font-size: 18px; font-weight: 500;
+            text-shadow: 1px 1px 2px #000;
+            display: flex; align-items: center;
+        }
+        .news-text:hover { color: var(--gold-main); }
+        .news-sep { color: #f00; font-weight: bold; margin-right: 15px; }
+
+        @keyframes moveTicker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .ticker-move:hover { animation-play-state: paused; }
+    </style>
 </head>
 
 <body>
+
 <div class="frame" id="frame">
     <div class="deck">
-
         <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
             <div>
                 <h1 class="text-5xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-white to-yellow-600 drop-shadow-lg">
@@ -201,25 +204,23 @@ body {
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-
             <div class="lg:col-span-3 flex flex-col gap-6 order-2 lg:order-1">
                 <div class="bg-black/50 p-4 rounded-3xl border border-yellow-500/20">
-                    <div class="vu-bar mb-2"><div id="vu1" class="vu-fill" style="color:var(--neon-blue)"></div></div>
-                    <div class="vu-bar mb-2"><div id="vu2" class="vu-fill" style="color:var(--neon-pink)"></div></div>
-                    <div class="vu-bar"><div id="vu3" class="vu-fill" style="color:var(--neon-green)"></div></div>
+                    <div class="vu-bar mb-2"><div id="vu1" class="vu-fill" style="background:var(--neon-blue)"></div></div>
+                    <div class="vu-bar mb-2"><div id="vu2" class="vu-fill" style="background:var(--neon-pink)"></div></div>
+                    <div class="vu-bar"><div id="vu3" class="vu-fill" style="background:var(--neon-green)"></div></div>
                 </div>
 
                 <div class="flex flex-wrap lg:flex-col items-center justify-center gap-6">
                     <div class="gauge"><div id="n1" class="needle"></div><p class="absolute bottom-1 w-full text-center text-[10px] text-yellow-500">PRESSURE</p></div>
-                    <div class="gauge"><div id="n2" class="needle" style="background:var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue);"></div><p class="absolute bottom-1 w-full text-center text-[10px] text-yellow-500">RPM</p></div>
-                    <div class="gauge"><div id="n3" class="needle" style="background:var(--neon-pink); box-shadow: 0 0 10px var(--neon-pink);"></div><p class="absolute bottom-1 w-full text-center text-[10px] text-yellow-500">BALANCE</p></div>
+                    <div class="gauge"><div id="n2" class="needle" style="background:var(--neon-blue);"></div><p class="absolute bottom-1 w-full text-center text-[10px] text-yellow-500">RPM</p></div>
+                    <div class="gauge"><div id="n3" class="needle" style="background:var(--neon-pink);"></div><p class="absolute bottom-1 w-full text-center text-[10px] text-yellow-500">BALANCE</p></div>
                 </div>
             </div>
 
             <div class="lg:col-span-6 flex flex-col gap-6 order-1 lg:order-2">
                 <div class="relative bg-black rounded-3xl border-2 border-yellow-500/30 overflow-hidden">
                     <canvas id="engine" height="300" class="w-full"></canvas>
-                    <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/40 to-transparent"></div>
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -251,165 +252,149 @@ body {
                     <div class="grid grid-cols-4 gap-2 max-h-40 overflow-y-auto p-1 custom-scroll">
                         <script>
                             for(let i=1;i<=26;i++){
-                                document.write(`<button class="theme-btn hover:bg-yellow-500 hover:text-black transition-all" onclick="setTheme(${i})">${i}</button>`);
+                                document.write(`<button class="theme-btn hover:bg-yellow-500 hover:text-black transition-all p-2" onclick="setTheme(${i})">${i}</button>`);
                             }
                         </script>
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="mt-12 pt-8 border-t border-yellow-500/20">
+            <p class="text-center text-[10px] tracking-[0.5em] text-yellow-500 mb-6 font-bold uppercase">Station Ecosystem</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="https://intercontinental-web-radio.webnode.page/contato/" target="_blank" class="link-card border-blue-500 text-blue-400 bg-blue-500/10">Contato</a>
+                <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank" class="link-card border-orange-500 text-orange-400 bg-orange-500/10">Tendências</a>
+                <a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank" class="link-card border-red-600 text-red-500 bg-red-600/10">YouTube</a>
+                <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank" class="link-card border-purple-500 text-purple-400 bg-purple-500/10">Dynac X-Play</a>
+                <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank" class="link-card border-green-500 text-green-400 bg-green-500/10">Vox I.A</a>
+                <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank" class="link-card border-pink-500 text-pink-400 bg-pink-500/10">Pandora/Euterpe</a>
+            </div>
         </div>
     </div>
 </div>
 
+<div class="ticker-bar">
+    <div class="ticker-label">INTERCONTINENTAL NOTÍCIAS</div>
+    <div class="ticker-move" id="ticker-box">
+        <span class="news-text">Conectando ao satélite de notícias...</span>
+    </div>
+</div>
+
 <script>
-// Mantendo TODA a funcionalidade original
-const RADIO_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
-const audio = new Audio(RADIO_URL);
-audio.crossOrigin = "anonymous";
+    const RADIO_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
+    const audio = new Audio(RADIO_URL);
+    audio.crossOrigin = "anonymous";
 
-let audioCtx, analyser, source, nitroGain, dataArray;
-let lowFilter, midFilter, highFilter;
-let isNitro = false;
-let currentVol = 80;
+    let audioCtx, analyser, source, nitroGain, dataArray;
+    let lowFilter, midFilter, highFilter;
+    let isNitro = false, currentVol = 80;
 
-async function initAudio() {
-    if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioCtx.createAnalyser();
-        analyser.fftSize = 256;
-        dataArray = new Uint8Array(analyser.frequencyBinCount);
-
-        lowFilter = audioCtx.createBiquadFilter();
-        lowFilter.type = 'lowshelf';
-        lowFilter.frequency.value = 320;
-
-        midFilter = audioCtx.createBiquadFilter();
-        midFilter.type = 'peaking';
-        midFilter.frequency.value = 1000;
-        midFilter.Q.value = 1;
-
-        highFilter = audioCtx.createBiquadFilter();
-        highFilter.type = 'highshelf';
-        highFilter.frequency.value = 3200;
-
-        nitroGain = audioCtx.createGain();
-        nitroGain.gain.value = 1.0;
-
-        source = audioCtx.createMediaElementSource(audio);
-        source.connect(nitroGain);
-        nitroGain.connect(lowFilter);
-        lowFilter.connect(midFilter);
-        midFilter.connect(highFilter);
-        highFilter.connect(analyser);
-        analyser.connect(audioCtx.destination);
+    async function initAudio() {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 256;
+            dataArray = new Uint8Array(analyser.frequencyBinCount);
+            lowFilter = audioCtx.createBiquadFilter(); lowFilter.type = 'lowshelf'; lowFilter.frequency.value = 320;
+            midFilter = audioCtx.createBiquadFilter(); midFilter.type = 'peaking'; midFilter.frequency.value = 1000;
+            highFilter = audioCtx.createBiquadFilter(); highFilter.type = 'highshelf'; highFilter.frequency.value = 3200;
+            nitroGain = audioCtx.createGain(); nitroGain.gain.value = 1.0;
+            source = audioCtx.createMediaElementSource(audio);
+            source.connect(nitroGain); nitroGain.connect(lowFilter); lowFilter.connect(midFilter);
+            midFilter.connect(highFilter); highFilter.connect(analyser); analyser.connect(audioCtx.destination);
+        }
     }
-}
 
-playBtn.onclick = async () => {
-    await initAudio();
-    if (audioCtx.state === 'suspended') await audioCtx.resume();
-    audio.play();
-    statusTxt.innerText = "ENGINE: RUNNING";
-    animate();
-};
+    playBtn.onclick = async () => {
+        await initAudio();
+        if (audioCtx.state === 'suspended') await audioCtx.resume();
+        audio.play();
+        statusTxt.innerText = "ENGINE: RUNNING";
+        animate();
+    };
 
-pauseBtn.onclick = () => {
-    audio.pause();
-    statusTxt.innerText = "ENGINE: STOPPED";
-};
+    pauseBtn.onclick = () => { audio.pause(); statusTxt.innerText = "ENGINE: STOPPED"; };
+    muteBtn.onclick = () => { audio.muted = !audio.muted; muteBtn.classList.toggle("bg-yellow-500", audio.muted); };
 
-muteBtn.onclick = () => {
-    audio.muted = !audio.muted;
-    muteBtn.classList.toggle("bg-yellow-500", audio.muted);
-    muteBtn.classList.toggle("text-black", audio.muted);
-};
+    nitroBtn.onclick = () => {
+        if(!audioCtx) return;
+        isNitro = !isNitro;
+        nitroBtn.classList.toggle("boost-active", isNitro);
+        nitroGain.gain.setTargetAtTime(isNitro ? 2.5 : 1.0, audioCtx.currentTime, 0.1);
+        statusTxt.innerText = isNitro ? "NITRO: ACTIVE" : "ENGINE: RUNNING";
+    };
 
-nitroBtn.onclick = () => {
-    if(!audioCtx) return;
-    isNitro = !isNitro;
-    nitroBtn.classList.toggle("boost-active", isNitro);
-    nitroGain.gain.setTargetAtTime(isNitro ? 2.5 : 1.0, audioCtx.currentTime, 0.1);
-    statusTxt.innerText = isNitro ? "NITRO: ACTIVE" : "ENGINE: RUNNING";
-};
+    function animate() {
+        requestAnimationFrame(animate);
+        if(!analyser) return;
+        analyser.getByteFrequencyData(dataArray);
+        const c = engine.getContext("2d");
+        engine.width = engine.offsetWidth; engine.height = engine.offsetHeight;
+        c.clearRect(0, 0, engine.width, engine.height);
+        const cx = engine.width / 2, cy = engine.height / 2, r = Math.min(cx, cy) - 50;
 
-function animate() {
-    requestAnimationFrame(animate);
-    if(!analyser) return;
-    
-    analyser.getByteFrequencyData(dataArray);
-    const c = engine.getContext("2d");
-    engine.width = engine.offsetWidth;
-    engine.height = engine.offsetHeight;
-    c.clearRect(0, 0, engine.width, engine.height);
+        dataArray.forEach((v, i) => {
+            const angle = (i / dataArray.length) * Math.PI * 2;
+            const hue = (i * 3) + (Date.now() / 50);
+            c.strokeStyle = isNitro ? "#f00" : `hsl(${hue}, 100%, 50%)`;
+            c.lineWidth = 3; c.beginPath();
+            c.moveTo(cx + Math.cos(angle) * (r - 10), cy + Math.sin(angle) * (r - 10));
+            c.lineTo(cx + Math.cos(angle) * (r + (v/255 * 40)), cy + Math.sin(angle) * (r + (v/255 * 40)));
+            c.stroke();
+        });
 
-    const cx = engine.width / 2;
-    const cy = engine.height / 2;
-    const r = Math.min(cx, cy) - 50;
-
-    // Visualizer Multicolorido
-    dataArray.forEach((v, i) => {
-        const angle = (i / dataArray.length) * Math.PI * 2;
-        const amplitude = (v / 255) * (isNitro ? 1.8 : 1.2) * r;
-        
-        // Cor dinâmica baseada na frequência
-        const hue = (i * 3) + (Date.now() / 50);
-        c.strokeStyle = isNitro ? "#ff0000" : `hsl(${hue}, 100%, 50%)`;
-        c.lineWidth = 3;
-        c.lineCap = "round";
-        c.beginPath();
-        c.moveTo(cx + Math.cos(angle) * (r - 10), cy + Math.sin(angle) * (r - 10));
-        c.lineTo(cx + Math.cos(angle) * (r + (v/255 * 40)), cy + Math.sin(angle) * (r + (v/255 * 40)));
-        c.stroke();
-    });
-
-    vu1.style.width = (dataArray[5] / 255 * 100) + "%";
-    vu2.style.width = (dataArray[15] / 255 * 100) + "%";
-    vu3.style.width = (dataArray[40] / 255 * 100) + "%";
-
-    n1.style.transform = `rotate(${(dataArray[10] / 255) * 160 - 80}deg)`;
-    n2.style.transform = `rotate(${(dataArray[30] / 255) * 160 - 80}deg)`;
-    n3.style.transform = `rotate(${(dataArray[60] / 255) * 160 - 80}deg)`;
-}
-
-knobControl.onwheel = (e) => {
-    e.preventDefault();
-    currentVol = e.deltaY < 0 ? Math.min(100, currentVol + 5) : Math.max(0, currentVol - 5);
-    audio.volume = currentVol / 100;
-    volDisplay.innerText = currentVol;
-    knobControl.style.transform = `rotate(${(currentVol * 3.6)}deg)`;
-};
-
-function setMode(m, btn) {
-    if(!audioCtx) return;
-    document.querySelectorAll(".eq-btn").forEach(x => x.classList.remove("active"));
-    btn.classList.add("active");
-    modeTxt.innerText = m + " MODE";
-
-    lowFilter.gain.value = 0;
-    midFilter.gain.value = 0;
-    highFilter.gain.value = 0;
-
-    switch(m) {
-        case 'TURBO': lowFilter.gain.value = 15; highFilter.gain.value = 10; break;
-        case 'ECO': lowFilter.gain.value = -10; highFilter.gain.value = -5; break;
-        case 'SPORT': lowFilter.gain.value = 8; midFilter.gain.value = 2; highFilter.gain.value = 8; break;
-        case 'VOICE': midFilter.gain.value = 12; break;
-        case 'NIGHT': lowFilter.gain.value = 5; highFilter.gain.value = -15; break;
-        case 'CITY': midFilter.gain.value = 5; lowFilter.gain.value = 2; break;
+        vu1.style.width = (dataArray[5] / 255 * 100) + "%";
+        vu2.style.width = (dataArray[15] / 255 * 100) + "%";
+        vu3.style.width = (dataArray[40] / 255 * 100) + "%";
+        n1.style.transform = `rotate(${(dataArray[10] / 255) * 160 - 80}deg)`;
+        n2.style.transform = `rotate(${(dataArray[30] / 255) * 160 - 80}deg)`;
+        n3.style.transform = `rotate(${(dataArray[60] / 255) * 160 - 80}deg)`;
     }
-}
 
-function setTheme(n) {
-    frame.style.filter = `hue-rotate(${n * 14}deg)`;
-}
+    knobControl.onwheel = (e) => {
+        e.preventDefault();
+        currentVol = e.deltaY < 0 ? Math.min(100, currentVol + 5) : Math.max(0, currentVol - 5);
+        audio.volume = currentVol / 100;
+        volDisplay.innerText = currentVol;
+        knobControl.style.transform = `rotate(${(currentVol * 3.6)}deg)`;
+    };
 
-setInterval(() => {
-    const d = new Date();
-    clockDisplay.innerText = d.toLocaleTimeString();
-    dateDisplay.innerText = d.toLocaleDateString();
-}, 1000);
+    function setMode(m, btn) {
+        if(!audioCtx) return;
+        document.querySelectorAll(".eq-btn").forEach(x => x.classList.remove("active"));
+        btn.classList.add("active"); modeTxt.innerText = m + " MODE";
+        lowFilter.gain.value = 0; midFilter.gain.value = 0; highFilter.gain.value = 0;
+        if(m==='TURBO'){ lowFilter.gain.value = 15; highFilter.gain.value = 10; }
+        if(m==='SPORT'){ lowFilter.gain.value = 8; midFilter.gain.value = 2; highFilter.gain.value = 8; }
+    }
 
+    function setTheme(n) { frame.style.filter = `hue-rotate(${n * 14}deg)`; }
+
+    setInterval(() => {
+        const d = new Date();
+        clockDisplay.innerText = d.toLocaleTimeString();
+        dateDisplay.innerText = d.toLocaleDateString();
+    }, 1000);
+
+    async function getNews() {
+        const tickerBox = document.getElementById('ticker-box');
+        const rssUrl = "https://news.google.com/rss?hl=pt-BR&gl=BR&ceid=BR:pt-419";
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            if (data.status === 'ok') {
+                let itemsHtml = "";
+                data.items.forEach(item => {
+                    itemsHtml += `<a href="${item.link}" target="_blank" class="news-text"><span class="news-sep">█</span> ${item.title}</a>`;
+                });
+                tickerBox.innerHTML = itemsHtml + itemsHtml;
+            }
+        } catch (e) { tickerBox.innerHTML = "<span class='news-text'>Erro ao carregar notícias.</span>"; }
+    }
+    getNews();
+    setInterval(getNews, 300000);
 </script>
 </body>
 </html>
