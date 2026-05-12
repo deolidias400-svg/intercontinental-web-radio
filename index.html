@@ -25,11 +25,12 @@
             font-family: 'Orbitron', sans-serif;
             color: #fff;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
-            padding: 40px 0 80px 0; /* Espaço para a barra de notícias */
+            padding: 80px 0 80px 0; /* Espaço para as duas barras */
         }
 
         /* --- MOLDURA PREMIUM --- */
@@ -141,7 +142,14 @@
         }
         .link-card:hover { transform: translateY(-3px) scale(1.05); filter: brightness(1.2); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
 
-        /* --- BARRA DE NOTÍCIAS MELHORADA --- */
+        /* --- SISTEMA DE LETREIROS --- */
+        .ticker-wrapper-top {
+            width: 100%; background: #050505; color: #fff;
+            height: 60px; display: flex; align-items: center;
+            position: fixed; top: 0; left: 0; overflow: hidden;
+            border-bottom: 3px solid var(--gold-main); z-index: 1000;
+        }
+
         .ticker-bar {
             width: 100%; background: #000; color: #fff;
             height: 55px; display: flex; align-items: center;
@@ -150,26 +158,35 @@
             border-top: 3px solid #f00; z-index: 999;
             box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
         }
+
         .ticker-label {
             background: #f00; padding: 0 20px; height: 100%;
             display: flex; align-items: center; font-weight: 900;
             font-size: 14px; white-space: nowrap; z-index: 10;
             box-shadow: 10px 0 20px rgba(0,0,0,0.5);
-            letter-spacing: 1px;
         }
+
+        .label-eco {
+            background: var(--gold-main); color: #000;
+            padding: 0 20px; height: 100%; display: flex; align-items: center;
+            font-weight: 900; font-size: 14px; z-index: 10;
+        }
+
         .ticker-move {
             display: flex; white-space: nowrap;
-            animation: moveTicker 80s linear infinite;
+            animation: moveTicker 90s linear infinite;
             align-items: center;
         }
-        .news-text {
-            color: #fff; text-decoration: none; padding: 0 40px; 
-            font-size: 18px; font-weight: 500;
-            text-shadow: 1px 1px 2px #000;
+
+        .news-text, .eco-text {
+            text-decoration: none; padding: 0 50px; 
+            font-size: 18px; font-weight: 700;
             display: flex; align-items: center;
         }
-        .news-text:hover { color: var(--gold-main); }
-        .news-sep { color: #f00; font-weight: bold; margin-right: 15px; }
+
+        .eco-text { color: var(--gold-bright); }
+        .eco-text span { color: var(--neon-blue); margin-left: 10px; font-weight: 400; font-size: 15px; }
+        .eco-text b { color: #fff; background: #c00; padding: 2px 8px; border-radius: 4px; margin-right: 10px; }
 
         @keyframes moveTicker {
             0% { transform: translateX(0); }
@@ -180,6 +197,21 @@
 </head>
 
 <body>
+
+<!-- BARRA DE PROPAGANDA ECOSYSTEM (TOPO) -->
+<div class="ticker-wrapper-top">
+    <div class="label-eco">STATION ECOSYSTEM</div>
+    <div class="ticker-move">
+        <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank" class="eco-text"><b>DYNAC X-PLAY</b> Portal de jogos e entretenimento interativo <span>CLIQUE PARA CONHECER</span></a>
+        <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank" class="eco-text"><b>VOX I.A</b> Conheça sua nova ajudante virtual inteligente <span>ACESSAR AGORA</span></a>
+        <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank" class="eco-text"><b>PANDORA E EUTERPE</b> Curiosidades musicais e história da rádio <span>EXPLORAR</span></a>
+        <a href="https://intercontinental-web-radio.webnode.page/contato/" target="_blank" class="eco-text"><b>CONTATO</b> Visite o site oficial da Intercontinental <span>FALE CONOSCO</span></a>
+        <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank" class="eco-text"><b>BLOG TENDÊNCIAS</b> As novidades do mundo da música <span>LER MAIS</span></a>
+        <!-- Loop -->
+        <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank" class="eco-text"><b>DYNAC X-PLAY</b> Portal de jogos e entretenimento interativo <span>CLIQUE PARA CONHECER</span></a>
+        <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank" class="eco-text"><b>VOX I.A</b> Conheça sua nova ajudante virtual inteligente <span>ACESSAR AGORA</span></a>
+    </div>
+</div>
 
 <div class="frame" id="frame">
     <div class="deck">
@@ -261,7 +293,7 @@
         </div>
 
         <div class="mt-12 pt-8 border-t border-yellow-500/20">
-            <p class="text-center text-[10px] tracking-[0.5em] text-yellow-500 mb-6 font-bold uppercase">Station Ecosystem</p>
+            <p class="text-center text-[10px] tracking-[0.5em] text-yellow-500 mb-6 font-bold uppercase">Station Ecosystem Quick Links</p>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 <a href="https://intercontinental-web-radio.webnode.page/contato/" target="_blank" class="link-card border-blue-500 text-blue-400 bg-blue-500/10">Contato</a>
                 <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank" class="link-card border-orange-500 text-orange-400 bg-orange-500/10">Tendências</a>
@@ -274,6 +306,7 @@
     </div>
 </div>
 
+<!-- BARRA DE NOTÍCIAS (RODAPÉ) -->
 <div class="ticker-bar">
     <div class="ticker-label">INTERCONTINENTAL NOTÍCIAS</div>
     <div class="ticker-move" id="ticker-box">
@@ -387,7 +420,7 @@
             if (data.status === 'ok') {
                 let itemsHtml = "";
                 data.items.forEach(item => {
-                    itemsHtml += `<a href="${item.link}" target="_blank" class="news-text"><span class="news-sep">█</span> ${item.title}</a>`;
+                    itemsHtml += `<a href="${item.link}" target="_blank" class="news-text" style="color:#fff;"><span style="color:#f00; margin-right:10px;">█</span> ${item.title}</a>`;
                 });
                 tickerBox.innerHTML = itemsHtml + itemsHtml;
             }
