@@ -30,7 +30,7 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
-            padding: 80px 0 80px 0; /* Espaço para as duas barras */
+            padding: 80px 0 80px 0;
         }
 
         /* --- MOLDURA PREMIUM --- */
@@ -193,6 +193,250 @@
             100% { transform: translateX(-50%); }
         }
         .ticker-move:hover { animation-play-state: paused; }
+
+        /* ========================================================= */
+        /* ===================== ROBOZINHA MASCOTE ================== */
+        /* ========================================================= */
+
+        .robo-wrap {
+            position: fixed;
+            right: 18px;
+            bottom: 75px;
+            width: 170px;
+            height: 220px;
+            z-index: 2000;
+            pointer-events: none;
+            filter: drop-shadow(0 0 18px rgba(255,215,0,0.25));
+        }
+
+        .robo-core {
+            position: absolute;
+            inset: 0;
+            transform-origin: bottom center;
+            animation: roboIdle 2.2s ease-in-out infinite;
+        }
+
+        @keyframes roboIdle {
+            0%, 100% { transform: translateY(0px) rotate(-1deg); }
+            50% { transform: translateY(-6px) rotate(1deg); }
+        }
+
+        .robo-head {
+            width: 110px;
+            height: 90px;
+            border-radius: 28px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(255,215,0,0.95), rgba(255,255,255,0.8), rgba(255,215,0,0.8));
+            border: 2px solid rgba(255,255,255,0.4);
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 0 0 20px rgba(255,215,0,0.15);
+        }
+
+        .robo-antenna {
+            position: absolute;
+            top: -30px;
+            width: 6px;
+            height: 32px;
+            background: linear-gradient(#fff, var(--gold-main));
+            border-radius: 10px;
+            transform-origin: bottom center;
+            animation: antennaWiggle 0.8s ease-in-out infinite;
+        }
+
+        .robo-antenna.left { left: 22px; transform: rotate(-12deg); }
+        .robo-antenna.right { right: 22px; transform: rotate(12deg); }
+
+        .robo-antenna::after {
+            content: "";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fff, var(--neon-pink), #9000ff);
+            box-shadow: 0 0 18px rgba(255,0,255,0.8);
+        }
+
+        @keyframes antennaWiggle {
+            0%, 100% { transform: rotate(10deg); }
+            50% { transform: rotate(-10deg); }
+        }
+
+        .robo-face {
+            position: absolute;
+            left: 50%;
+            top: 22px;
+            transform: translateX(-50%);
+            width: 92px;
+            height: 50px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.55);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
+        }
+
+        .robo-eyes {
+            position: absolute;
+            top: 13px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+        }
+
+        .robo-eye {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fff, var(--neon-blue), #0066ff);
+            box-shadow: 0 0 15px rgba(0,229,255,0.9);
+            position: relative;
+            animation: eyeBlink 5s infinite;
+        }
+
+        @keyframes eyeBlink {
+            0%, 96%, 100% { transform: scaleY(1); }
+            97% { transform: scaleY(0.15); }
+            98% { transform: scaleY(1); }
+        }
+
+        .robo-mouth {
+            position: absolute;
+            bottom: 9px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 46px;
+            height: 10px;
+            border-radius: 20px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--gold-main), var(--neon-blue));
+            box-shadow: 0 0 12px rgba(255,215,0,0.6);
+            opacity: 0.85;
+        }
+
+        .robo-body {
+            width: 120px;
+            height: 110px;
+            margin: 10px auto 0 auto;
+            border-radius: 30px;
+            background: linear-gradient(145deg, rgba(30,30,30,0.95), rgba(0,0,0,0.95));
+            border: 2px solid rgba(255,215,0,0.55);
+            position: relative;
+            box-shadow: inset 0 0 25px rgba(255,215,0,0.12), 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .robo-corelight {
+            position: absolute;
+            top: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fff, var(--gold-main), rgba(255,0,255,0.8));
+            box-shadow: 0 0 25px rgba(255,215,0,0.7);
+            animation: pulseCore 1.4s ease-in-out infinite;
+        }
+
+        @keyframes pulseCore {
+            0%, 100% { transform: translateX(-50%) scale(0.92); opacity: 0.8; }
+            50% { transform: translateX(-50%) scale(1.12); opacity: 1; }
+        }
+
+        .robo-arm {
+            position: absolute;
+            top: 30px;
+            width: 38px;
+            height: 90px;
+            background: linear-gradient(180deg, rgba(255,215,0,0.9), rgba(0,0,0,0.9));
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transform-origin: top center;
+        }
+
+        .robo-arm.left { left: -28px; transform: rotate(20deg); }
+        .robo-arm.right { right: -28px; transform: rotate(-20deg); }
+
+        .robo-arm::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 34px;
+            height: 28px;
+            border-radius: 18px;
+            background: radial-gradient(circle at 30% 30%, #fff, var(--neon-blue), #000);
+            box-shadow: 0 0 15px rgba(0,229,255,0.7);
+        }
+
+        .robo-legs {
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 18px;
+        }
+
+        .robo-leg {
+            width: 26px;
+            height: 40px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, rgba(255,215,0,0.85), rgba(0,0,0,0.95));
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .robo-label {
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            font-weight: 900;
+            padding: 3px 10px;
+            border-radius: 999px;
+            background: rgba(0,0,0,0.65);
+            border: 1px solid rgba(255,215,0,0.4);
+            color: var(--gold-main);
+            text-shadow: 0 0 10px rgba(255,215,0,0.8);
+            letter-spacing: 0.15em;
+            white-space: nowrap;
+        }
+
+        .robo-dance .robo-core {
+            animation: roboDance 0.38s ease-in-out infinite alternate;
+        }
+
+        @keyframes roboDance {
+            from { transform: translateY(0px) rotate(-2deg) scale(1.02); }
+            to { transform: translateY(-10px) rotate(2deg) scale(1.06); }
+        }
+
+        .robo-dance .robo-arm.left { animation: armDanceL 0.25s ease-in-out infinite alternate; }
+        .robo-dance .robo-arm.right { animation: armDanceR 0.25s ease-in-out infinite alternate; }
+
+        @keyframes armDanceL {
+            from { transform: rotate(20deg); }
+            to { transform: rotate(55deg); }
+        }
+        @keyframes armDanceR {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(-55deg); }
+        }
+
+        .robo-nitro .robo-corelight {
+            background: radial-gradient(circle at 30% 30%, #fff, #ff0000, #ff6600);
+            box-shadow: 0 0 35px rgba(255,0,0,0.9);
+        }
+
+        .robo-nitro .robo-eye {
+            background: radial-gradient(circle at 30% 30%, #fff, #ff0000, #ff6600);
+            box-shadow: 0 0 18px rgba(255,0,0,0.9);
+        }
+
     </style>
 </head>
 
@@ -207,7 +451,6 @@
         <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank" class="eco-text"><b>PANDORA E EUTERPE</b> Curiosidades musicais e história da rádio <span>EXPLORAR</span></a>
         <a href="https://intercontinental-web-radio.webnode.page/contato/" target="_blank" class="eco-text"><b>CONTATO</b> Visite o site oficial da Intercontinental <span>FALE CONOSCO</span></a>
         <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank" class="eco-text"><b>BLOG TENDÊNCIAS</b> As novidades do mundo da música <span>LER MAIS</span></a>
-        <!-- Loop -->
         <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank" class="eco-text"><b>DYNAC X-PLAY</b> Portal de jogos e entretenimento interativo <span>CLIQUE PARA CONHECER</span></a>
         <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank" class="eco-text"><b>VOX I.A</b> Conheça sua nova ajudante virtual inteligente <span>ACESSAR AGORA</span></a>
     </div>
@@ -306,6 +549,38 @@
     </div>
 </div>
 
+<!-- ROBOZINHA MASCOTE -->
+<div class="robo-wrap" id="roboMascote">
+    <div class="robo-label" id="roboLabel">READY</div>
+
+    <div class="robo-core">
+        <div class="robo-head">
+            <div class="robo-antenna left"></div>
+            <div class="robo-antenna right"></div>
+
+            <div class="robo-face">
+                <div class="robo-eyes">
+                    <div class="robo-eye"></div>
+                    <div class="robo-eye"></div>
+                </div>
+                <div class="robo-mouth" id="roboMouth"></div>
+            </div>
+        </div>
+
+        <div class="robo-body">
+            <div class="robo-arm left"></div>
+            <div class="robo-arm right"></div>
+
+            <div class="robo-corelight"></div>
+
+            <div class="robo-legs">
+                <div class="robo-leg"></div>
+                <div class="robo-leg"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- BARRA DE NOTÍCIAS (RODAPÉ) -->
 <div class="ticker-bar">
     <div class="ticker-label">INTERCONTINENTAL NOTÍCIAS</div>
@@ -323,19 +598,30 @@
     let lowFilter, midFilter, highFilter;
     let isNitro = false, currentVol = 80;
 
+    const roboMascote = document.getElementById("roboMascote");
+    const roboLabel = document.getElementById("roboLabel");
+    const roboMouth = document.getElementById("roboMouth");
+
     async function initAudio() {
         if (!audioCtx) {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             analyser = audioCtx.createAnalyser();
             analyser.fftSize = 256;
             dataArray = new Uint8Array(analyser.frequencyBinCount);
+
             lowFilter = audioCtx.createBiquadFilter(); lowFilter.type = 'lowshelf'; lowFilter.frequency.value = 320;
             midFilter = audioCtx.createBiquadFilter(); midFilter.type = 'peaking'; midFilter.frequency.value = 1000;
             highFilter = audioCtx.createBiquadFilter(); highFilter.type = 'highshelf'; highFilter.frequency.value = 3200;
+
             nitroGain = audioCtx.createGain(); nitroGain.gain.value = 1.0;
+
             source = audioCtx.createMediaElementSource(audio);
-            source.connect(nitroGain); nitroGain.connect(lowFilter); lowFilter.connect(midFilter);
-            midFilter.connect(highFilter); highFilter.connect(analyser); analyser.connect(audioCtx.destination);
+            source.connect(nitroGain);
+            nitroGain.connect(lowFilter);
+            lowFilter.connect(midFilter);
+            midFilter.connect(highFilter);
+            highFilter.connect(analyser);
+            analyser.connect(audioCtx.destination);
         }
     }
 
@@ -344,34 +630,73 @@
         if (audioCtx.state === 'suspended') await audioCtx.resume();
         audio.play();
         statusTxt.innerText = "ENGINE: RUNNING";
+        roboLabel.innerText = "ON AIR";
         animate();
     };
 
-    pauseBtn.onclick = () => { audio.pause(); statusTxt.innerText = "ENGINE: STOPPED"; };
-    muteBtn.onclick = () => { audio.muted = !audio.muted; muteBtn.classList.toggle("bg-yellow-500", audio.muted); };
+    pauseBtn.onclick = () => {
+        audio.pause();
+        statusTxt.innerText = "ENGINE: STOPPED";
+        roboLabel.innerText = "STOPPED";
+        roboMascote.classList.remove("robo-dance");
+    };
+
+    muteBtn.onclick = () => {
+        audio.muted = !audio.muted;
+        muteBtn.classList.toggle("bg-yellow-500", audio.muted);
+        roboLabel.innerText = audio.muted ? "MUTED" : "ON AIR";
+    };
 
     nitroBtn.onclick = () => {
         if(!audioCtx) return;
         isNitro = !isNitro;
+
         nitroBtn.classList.toggle("boost-active", isNitro);
+        roboMascote.classList.toggle("robo-nitro", isNitro);
+
         nitroGain.gain.setTargetAtTime(isNitro ? 2.5 : 1.0, audioCtx.currentTime, 0.1);
+
         statusTxt.innerText = isNitro ? "NITRO: ACTIVE" : "ENGINE: RUNNING";
+        roboLabel.innerText = isNitro ? "NITRO!" : "ON AIR";
     };
 
     function animate() {
         requestAnimationFrame(animate);
         if(!analyser) return;
+
         analyser.getByteFrequencyData(dataArray);
+
         const c = engine.getContext("2d");
-        engine.width = engine.offsetWidth; engine.height = engine.offsetHeight;
+        engine.width = engine.offsetWidth;
+        engine.height = engine.offsetHeight;
+
         c.clearRect(0, 0, engine.width, engine.height);
-        const cx = engine.width / 2, cy = engine.height / 2, r = Math.min(cx, cy) - 50;
+
+        const cx = engine.width / 2;
+        const cy = engine.height / 2;
+        const r = Math.min(cx, cy) - 50;
+
+        let sum = 0;
+        for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+        let avg = sum / dataArray.length;
+
+        if(avg > 65 && !audio.paused && !audio.muted) {
+            roboMascote.classList.add("robo-dance");
+        } else {
+            roboMascote.classList.remove("robo-dance");
+        }
+
+        let mouthScale = Math.min(1.4, 0.6 + (avg / 255) * 1.3);
+        roboMouth.style.transform = `translateX(-50%) scaleX(${mouthScale})`;
 
         dataArray.forEach((v, i) => {
             const angle = (i / dataArray.length) * Math.PI * 2;
             const hue = (i * 3) + (Date.now() / 50);
+
             c.strokeStyle = isNitro ? "#f00" : `hsl(${hue}, 100%, 50%)`;
-            c.lineWidth = 3; c.beginPath();
+            c.lineWidth = 3;
+
+            c.beginPath();
             c.moveTo(cx + Math.cos(angle) * (r - 10), cy + Math.sin(angle) * (r - 10));
             c.lineTo(cx + Math.cos(angle) * (r + (v/255 * 40)), cy + Math.sin(angle) * (r + (v/255 * 40)));
             c.stroke();
@@ -380,6 +705,7 @@
         vu1.style.width = (dataArray[5] / 255 * 100) + "%";
         vu2.style.width = (dataArray[15] / 255 * 100) + "%";
         vu3.style.width = (dataArray[40] / 255 * 100) + "%";
+
         n1.style.transform = `rotate(${(dataArray[10] / 255) * 160 - 80}deg)`;
         n2.style.transform = `rotate(${(dataArray[30] / 255) * 160 - 80}deg)`;
         n3.style.transform = `rotate(${(dataArray[60] / 255) * 160 - 80}deg)`;
@@ -396,13 +722,20 @@
     function setMode(m, btn) {
         if(!audioCtx) return;
         document.querySelectorAll(".eq-btn").forEach(x => x.classList.remove("active"));
-        btn.classList.add("active"); modeTxt.innerText = m + " MODE";
-        lowFilter.gain.value = 0; midFilter.gain.value = 0; highFilter.gain.value = 0;
+        btn.classList.add("active");
+        modeTxt.innerText = m + " MODE";
+
+        lowFilter.gain.value = 0;
+        midFilter.gain.value = 0;
+        highFilter.gain.value = 0;
+
         if(m==='TURBO'){ lowFilter.gain.value = 15; highFilter.gain.value = 10; }
         if(m==='SPORT'){ lowFilter.gain.value = 8; midFilter.gain.value = 2; highFilter.gain.value = 8; }
     }
 
-    function setTheme(n) { frame.style.filter = `hue-rotate(${n * 14}deg)`; }
+    function setTheme(n) {
+        frame.style.filter = `hue-rotate(${n * 14}deg)`;
+    }
 
     setInterval(() => {
         const d = new Date();
@@ -424,8 +757,11 @@
                 });
                 tickerBox.innerHTML = itemsHtml + itemsHtml;
             }
-        } catch (e) { tickerBox.innerHTML = "<span class='news-text'>Erro ao carregar notícias.</span>"; }
+        } catch (e) {
+            tickerBox.innerHTML = "<span class='news-text'>Erro ao carregar notícias.</span>";
+        }
     }
+
     getNews();
     setInterval(getNews, 300000);
 </script>
