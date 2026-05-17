@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>RÁDIO INTERCONTINENTAL • PREMIUM PLAYER V6.1 FIX</title>
+    <title>RÁDIO INTERCONTINENTAL • PREMIUM PLAYER V7.1 FIXED STABLE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -29,9 +29,10 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow-x: hidden;
         }
 
-        /* --- ESTILIZAÇÃO DO PAINEL CIBERNÉTICO --- */
+        /* --- PAINEL ESTABILIZADO (SEM OSCILAÇÃO) --- */
         .cyber-panel {
             background: var(--panel-bg);
             border: 2px solid #2d2a22;
@@ -39,6 +40,8 @@
             border-radius: 16px;
             max-width: 1280px;
             width: 100%;
+            position: relative; 
+            overflow: hidden; /* Garante que o movimento do robô não empurre o layout */
         }
 
         .section-box {
@@ -131,8 +134,21 @@
             background: radial-gradient(circle at center, #151412 0%, #050506 100%);
             border-radius: 12px;
             border: 1px solid #3a3526;
-            overflow: hidden;
+            min-height: 250px;
             position: relative;
+        }
+
+        /* Ajustado com transform para deslizar perfeitamente sem afetar o grid */
+        .robot-absolute-wrapper {
+            position: absolute;
+            bottom: 45px;
+            right: 45px;
+            z-index: 50; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: auto;
+            transition: transform 12s ease-in-out; /* Transição via transform evita repaints e travamentos */
         }
 
         .robot-pod {
@@ -151,6 +167,7 @@
             border: 4px solid #111;
             position: relative; z-index: 10;
             box-shadow: 0 8px 15px rgba(0,0,0,0.4), inset 0 4px 8px rgba(255,255,255,0.6);
+            cursor: pointer;
         }
 
         .robot-ears {
@@ -222,7 +239,7 @@
         .arm.left { transform: rotate(20deg); }
         .arm.right { transform: rotate(-20deg); }
 
-        /* Animações de Dança Ativadas por JS */
+        /* --- ANIMAÇÕES DINÂMICAS DE DANÇA --- */
         .dance-mode .robot-pod { animation: danceBody 0.3s infinite alternate ease-in-out; }
         @keyframes danceBody { from { transform: translateY(0) rotate(-2deg); } to { transform: translateY(-10px) rotate(2deg); } }
         .dance-mode .arm.left { animation: danceArmL 0.3s infinite alternate ease-in-out; }
@@ -235,6 +252,17 @@
         .nitro-mode .robot-eye { background: radial-gradient(circle, #fff, #ff3300, #aa0000); box-shadow: 0 0 14px #ff3300; }
         .nitro-mode .robot-mouth { background: #ff3300; box-shadow: 0 0 10px #ff3300; }
 
+        /* Nova rota usando KEYFRAMES com translate fixo para evitar trepidações na tela */
+        @keyframes strictPatrol {
+            0% { transform: translateX(0); }
+            45% { transform: translateX(-780px); }  /* Vai linearmente até o lado oposto sem empurrar as caixas */
+            60% { transform: translateX(-780px); }  /* Pausa estável na esquerda */
+            100% { transform: translateX(0); }       /* Retorna suavemente */
+        }
+        .patrol-active {
+            animation: strictPatrol 14s ease-in-out forwards;
+        }
+
         /* --- TICKER / LETREIRO --- */
         @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
         .animate-marquee { display: flex; width: 200%; animation: marquee 20s linear infinite; }
@@ -245,6 +273,32 @@
 
 <div class="cyber-panel p-4 grid grid-cols-1 lg:grid-cols-12 gap-4" id="mainPlayer">
     
+    <div id="movingRobot" class="robot-absolute-wrapper">
+        <div class="robot-pod">
+            <div class="robot-ears"><div class="ear"></div><div class="ear"></div></div>
+            <div class="robot-head" onclick="triggerManualPatrol()" title="Clique para forçar patrulha manual sem bugar!">
+                <div class="robot-screen">
+                    <div class="robot-eyes">
+                        <div class="robot-eye"></div>
+                        <div class="robot-eye"></div>
+                    </div>
+                    <div id="robotMouth" class="robot-mouth"></div>
+                </div>
+            </div>
+            <div class="robot-body">
+                <div class="robot-arms">
+                    <div class="arm left"></div>
+                    <div class="arm right"></div>
+                </div>
+                <div class="robot-badge">I-CON</div>
+                <div class="robot-core"></div>
+            </div>
+        </div>
+        <div class="text-center mt-2 bg-black/80 px-2 py-0.5 rounded border border-yellow-600/30 select-none">
+            <div id="robotStatusLabel" class="text-[9px] font-bold text-yellow-500">I-CON: ONLINE</div>
+        </div>
+    </div>
+
     <div class="lg:col-span-3 flex flex-col gap-4">
         
         <div class="section-box p-3">
@@ -313,7 +367,7 @@
         <div class="text-center py-2 border-b border-yellow-900/20">
             <div class="text-xs tracking-[0.5em] text-yellow-600 font-bold uppercase">RÁDIO</div>
             <h1 class="text-4xl font-black tracking-wide gold-glow-text italic">INTERCONTINENTAL</h1>
-            <div class="text-[10px] tracking-[0.3em] text-gray-400 font-bold">WORLDWIDE DIGITAL STATION &bull; PREMIUM PLAYER V6.1</div>
+            <div class="text-[10px] tracking-[0.3em] text-gray-400 font-bold">WORLDWIDE DIGITAL STATION &bull; PREMIUM PLAYER V7.1</div>
         </div>
 
         <div class="section-box p-2 bg-black overflow-hidden flex flex-col h-[240px]">
@@ -326,7 +380,7 @@
                 <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                     <div class="bg-black/80 border border-yellow-600/30 px-4 py-2 rounded-full text-center backdrop-blur-sm">
                         <div class="text-[10px] text-yellow-500 font-bold tracking-widest">GOLDEN ENGINE</div>
-                        <div class="text-[12px] text-white font-black">V6.1 AUDIO</div>
+                        <div class="text-[12px] text-white font-black">V7.1 SECURE</div>
                     </div>
                 </div>
             </div>
@@ -372,7 +426,7 @@
             <div>
                 <div class="section-title">Data e Hora</div>
                 <div id="clock" class="text-xl font-bold lcd-text">00:00:00</div>
-                <div id="date" class="text-[9px] text-gray-500 font-mono">16/05/2026</div>
+                <div id="date" class="text-[9px] text-gray-500 font-mono">17/05/2026</div>
             </div>
             <div class="border-l border-gray-900 pl-2">
                 <div class="section-title">Stream Info</div>
@@ -381,33 +435,19 @@
             </div>
         </div>
 
-        <div class="section-box p-3 icon-container flex flex-col items-center justify-center min-h-[250px]" id="robotComponent">
-            <div class="absolute top-2 left-3 text-[9px] text-gray-400 font-bold tracking-wider">I-CON - ASSISTENTE INTELIGENTE</div>
+        <div class="section-box p-3 icon-container flex flex-col items-center justify-between min-h-[250px]">
+            <div class="text-[9px] text-gray-400 font-bold tracking-wider w-full text-left">I-CON - ASSISTENTE INTELIGENTE</div>
             
-            <div class="robot-pod mt-6">
-                <div class="robot-ears"><div class="ear"></div><div class="ear"></div></div>
-                <div class="robot-head">
-                    <div class="robot-screen">
-                        <div class="robot-eyes">
-                            <div class="robot-eye"></div>
-                            <div class="robot-eye"></div>
-                        </div>
-                        <div id="robotMouth" class="robot-mouth"></div>
-                    </div>
-                </div>
-                <div class="robot-body">
-                    <div class="robot-arms">
-                        <div class="arm left"></div>
-                        <div class="arm right"></div>
-                    </div>
-                    <div class="robot-badge">I-CON</div>
-                    <div class="robot-core"></div>
+            <div class="flex-1 flex items-center justify-center text-center p-4 select-none">
+                <div class="text-[10px] text-gray-600 font-mono border border-dashed border-gray-800 p-3 rounded">
+                    ESTAÇÃO RECARGA<br>
+                    <span class="text-cyan-600 animate-pulse font-bold" id="dockStatus">DISPOSITIVO ACOPLADO</span>
                 </div>
             </div>
 
-            <div class="text-center mt-3 z-10">
-                <div class="text-[11px] font-bold text-yellow-500">OLÁ! 🖐 EU SOU O I-CON</div>
-                <div class="text-[9px] text-gray-500 font-mono mt-1">SISTEMA: ATIVO | INTERAÇÃO: ALTA</div>
+            <div class="text-center w-full border-t border-gray-900 pt-2">
+                <div class="text-[11px] font-bold text-yellow-500">SISTEMA DE PATRULHA AUTOMÁTICA</div>
+                <div class="text-[8px] text-gray-500 font-mono">CICLO: 4 EM 4 MINUTOS</div>
             </div>
         </div>
 
@@ -438,7 +478,6 @@
             <div class="bg-red-700 text-white font-black text-[10px] px-3 h-full flex items-center z-10 shadow-lg">LIVE</div>
             <div class="animate-marquee text-xs font-mono text-gray-300 items-center whitespace-nowrap pl-4">
                 <span>🔥 INTERCONTINENTAL NOTÍCIAS: NOVAS TECNOLOGIAS REVOLUCIONAM A COMUNICAÇÃO GLOBAL MUNDIAL... 🌐 MÚSICA: AS 10 MAIS TOCADAS DA SEMANA NAS RÁDIOS DO MUNDO... 🚀 CONECTANDO VOCÊ AO MELHOR DO PLANETA! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span>🔥 INTERCONTINENTAL NOTÍCIAS: NOVAS TECNOLOGIAS REVOLUCIONAM A COMUNICAÇÃO GLOBAL MUNDIAL... 🌐 MÚSICA: AS 10 MAIS TOCADAS DA SEMANA NAS RÁDIOS DO MUNDO... 🚀 CONECTANDO VOCÊ AO MELHOR DO PLANETA! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </div>
         </div>
     </div>
@@ -446,7 +485,6 @@
 </div>
 
 <script>
-    // URL da rádio
     const STREAM_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
     const audio = new Audio(STREAM_URL);
     audio.crossOrigin = "anonymous";
@@ -455,16 +493,16 @@
     let lowFilter, midFilter, highFilter, nitroGain;
     let isPlaying = false, isNitro = false, vol = 80;
 
-    // Elementos DOM
     const canvas = document.getElementById("spectrogram");
     const ctx = canvas.getContext("2d");
-    const robotComponent = document.getElementById("robotComponent");
+    const movingRobot = document.getElementById("movingRobot");
     const robotMouth = document.getElementById("robotMouth");
+    const robotStatusLabel = document.getElementById("robotStatusLabel");
+    const dockStatus = document.getElementById("dockStatus");
     const volKnob = document.getElementById("volKnob");
     const volTxt = document.getElementById("volTxt");
     const modeTxt = document.getElementById("modeTxt");
 
-    // Inicialização do Áudio com Filtros Ativos de Equalização
     function initAudio() {
         if (!audioCtx) {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -472,7 +510,6 @@
             analyser.fftSize = 256;
             dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-            // Criação dos Nós de Equalização (Filtros Reais)
             lowFilter = audioCtx.createBiquadFilter(); lowFilter.type = 'lowshelf'; lowFilter.frequency.value = 320;
             midFilter = audioCtx.createBiquadFilter(); midFilter.type = 'peaking'; midFilter.frequency.value = 1000; midFilter.Q.value = 1;
             highFilter = audioCtx.createBiquadFilter(); highFilter.type = 'highshelf'; highFilter.frequency.value = 3200;
@@ -482,7 +519,6 @@
 
             source = audioCtx.createMediaElementSource(audio);
             
-            // Conexão em cadeia: Origem -> Nitro/Volume -> Graves -> Médios -> Agudos -> Analisador -> Saída
             source.connect(nitroGain);
             nitroGain.connect(lowFilter);
             lowFilter.connect(midFilter);
@@ -492,20 +528,19 @@
         }
     }
 
-    // Botões de Comando
     document.getElementById("btnPlay").onclick = async () => {
         await initAudio();
         if (audioCtx.state === 'suspended') await audioCtx.resume();
         audio.play();
         isPlaying = true;
-        robotComponent.classList.add("dance-mode");
+        movingRobot.classList.add("dance-mode");
         renderFrames();
     };
 
     document.getElementById("btnStop").onclick = () => {
         audio.pause();
         isPlaying = false;
-        robotComponent.classList.remove("dance-mode");
+        movingRobot.classList.remove("dance-mode");
     };
 
     document.getElementById("btnMute").onclick = () => {
@@ -519,14 +554,12 @@
         isNitro = !isNitro;
         document.getElementById("btnNitro").classList.toggle("bg-orange-600", isNitro);
         document.getElementById("btnNitro").classList.toggle("text-black", isNitro);
-        robotComponent.classList.toggle("nitro-mode", isNitro);
+        movingRobot.classList.toggle("nitro-mode", isNitro);
         
-        // Ativação gradual do Nitro Boost
         nitroGain.gain.setTargetAtTime(isNitro ? 2.5 : (vol / 100), audioCtx.currentTime, 0.1);
         modeTxt.innerText = isNitro ? "Modo: NITRO BOOST" : "Modo: STOCK";
     };
 
-    // Controle de Roda de Volume (Scroll sobre o Knob)
     volKnob.onwheel = (e) => {
         e.preventDefault();
         if(e.deltaY < 0) vol = Math.min(100, vol + 5);
@@ -537,7 +570,6 @@
         if(nitroGain && !isNitro) nitroGain.gain.value = vol / 100;
     };
 
-    // Loop de Animação e Renderização Reativa
     function renderFrames() {
         if(!isPlaying) return;
         requestAnimationFrame(renderFrames);
@@ -552,7 +584,6 @@
         let mid = dataArray[8] || 0;
         let high = dataArray[20] || 0;
 
-        // Atualiza as Barras Verticais de LED
         document.getElementById("vuBass").style.height = (bass / 255 * 100) + "%";
         document.getElementById("vuMid").style.height = (mid / 255 * 100) + "%";
         document.getElementById("vuHigh").style.height = (high / 255 * 100) + "%";
@@ -561,7 +592,6 @@
         document.getElementById("txtMid").innerText = Math.round(mid/255*100) + "%";
         document.getElementById("txtHigh").innerText = Math.round(high/255*100) + "%";
 
-        // Movimentação Real dos Ponteiros Analógicos (Telemetria)
         document.getElementById("needlePres").style.transform = `rotate(${(bass/255 * 180) - 90}deg)`;
         document.getElementById("needleRpm").style.transform = `rotate(${(mid/255 * 180) - 90}deg)`;
         document.getElementById("needleBal").style.transform = `rotate(${(high/255 * 180) - 90}deg)`;
@@ -569,11 +599,9 @@
         document.getElementById("lblPres").innerText = Math.round(bass/255 * 120) + " PSI";
         document.getElementById("lblRpm").innerText = Math.round(mid/255 * 4500);
 
-        // Movimento da boca digital do Robô (Sincronismo Lip-Sync)
         let mouthScale = 0.3 + (mid / 255) * 1.7;
         robotMouth.style.transform = `scaleX(${mouthScale})`;
 
-        // Desenho do Visualizador Central Espectral
         ctx.lineWidth = 3;
         ctx.lineCap = "round";
         let centerX = canvas.width / 2;
@@ -600,7 +628,34 @@
         }
     }
 
-    // LÓGICA DE EQUALIZAÇÃO CORRIGIDA (Altera as frequências de verdade)
+    // Gerenciador do Mecanismo de Patrulha Estabilizado
+    function executeRobotPatrol() {
+        movingRobot.classList.add("patrol-active");
+        robotStatusLabel.innerText = "I-CON: PATRULHANDO";
+        robotStatusLabel.style.color = "var(--neon-blue)";
+        dockStatus.innerText = "SISTEMA FORA DO DECK";
+        dockStatus.style.color = "var(--neon-pink)";
+
+        setTimeout(() => {
+            movingRobot.classList.remove("patrol-active");
+            robotStatusLabel.innerText = "I-CON: ONLINE";
+            robotStatusLabel.style.color = "var(--gold)";
+            dockStatus.innerText = "DISPOSITIVO ACOPLADO";
+            dockStatus.style.color = "var(--neon-green)";
+        }, 14000); 
+    }
+
+    function triggerManualPatrol() {
+        if(!movingRobot.classList.contains("patrol-active")) {
+            executeRobotPatrol();
+        }
+    }
+
+    // Ciclo de 4 minutos automático
+    setInterval(() => {
+        executeRobotPatrol();
+    }, 240000);
+
     function changeEQ(mode, btn) {
         document.querySelectorAll(".eq-btn").forEach(b => {
             b.classList.remove("bg-yellow-500", "text-black", "font-black");
@@ -610,35 +665,17 @@
         btn.classList.add("bg-yellow-500", "text-black", "font-black");
         
         if(modeTxt) modeTxt.innerText = "Modo: " + mode;
-        if (!audioCtx) return; // Se a rádio não foi iniciada ainda, pula a alteração matemática
+        if (!audioCtx) return;
 
-        // Zera ganhos antes de aplicar o novo modo
-        lowFilter.gain.value = 0;
-        midFilter.gain.value = 0;
-        highFilter.gain.value = 0;
+        lowFilter.gain.value = 0; midFilter.gain.value = 0; highFilter.gain.value = 0;
 
         switch(mode) {
-            case 'ECO':
-                lowFilter.gain.value = -5; highFilter.gain.value = -5; // Reduz extremos
-                break;
-            case 'SPORT':
-                lowFilter.gain.value = 6; midFilter.gain.value = -2; highFilter.gain.value = 5; // Formato em V (Sorriso)
-                break;
-            case 'CITY':
-                midFilter.gain.value = 4; // Foco em médios estáveis
-                break;
-            case 'TURBO':
-                lowFilter.gain.value = 14; highFilter.gain.value = 8; // Super graves batendo forte
-                break;
-            case 'VOICE':
-                lowFilter.gain.value = -10; midFilter.gain.value = 12; highFilter.gain.value = 2; // Foco na fala do locutor
-                break;
-            case 'NIGHT':
-                lowFilter.gain.value = 4; highFilter.gain.value = -8; // Abafa os agudos para a noite
-                break;
-            default: // STOCK
-                // Fica tudo em zero (Áudio puro da rádio)
-                break;
+            case 'ECO': lowFilter.gain.value = -5; highFilter.gain.value = -5; break;
+            case 'SPORT': lowFilter.gain.value = 6; midFilter.gain.value = -2; highFilter.gain.value = 5; break;
+            case 'CITY': midFilter.gain.value = 4; break;
+            case 'TURBO': lowFilter.gain.value = 14; highFilter.gain.value = 8; break;
+            case 'VOICE': lowFilter.gain.value = -10; midFilter.gain.value = 12; highFilter.gain.value = 2; break;
+            case 'NIGHT': lowFilter.gain.value = 4; highFilter.gain.value = -8; break;
         }
     }
 
@@ -646,7 +683,6 @@
         document.getElementById("mainPlayer").style.filter = `hue-rotate(${deg}deg)`;
     }
 
-    // Relógio Digital
     setInterval(() => {
         const d = new Date();
         document.getElementById("clock").innerText = d.toLocaleTimeString('pt-BR');
