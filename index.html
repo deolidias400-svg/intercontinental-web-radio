@@ -9,20 +9,123 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
     <style>
+        /* --- SISTEMA DE VARIÁVEIS COMPATÍVEL COM TEMAS --- */
         :root {
+            --bg-body: radial-gradient(circle at center, #121118 0%, #000000 100%);
+            --bg-panel: linear-gradient(145deg, #0a0a0f 0%, #020204 100%);
+            --panel-border: 2px solid #3a3425;
+            --panel-shadow: 0 35px 80px rgba(0,0,0,0.95), inset 0 0 50px rgba(255, 183, 0, 0.04), 0 0 40px rgba(255, 183, 0, 0.05);
+            --border-color: #1f1d24;
+            --box-border-top: 2px solid #5a4e32;
             --gold: #ffb700;
             --gold-glow: rgba(255, 183, 0, 0.4);
-            --panel-bg: #050507;
-            --border-color: #1f1d24;
             --neon-blue: #00f0ff;
             --neon-nitro: #ff4500;
             --neon-green: #39ff14;
-            --carbon-texture: radial-gradient(circle, #15151a 0%, #030305 100%);
+            --text-glow: 0 0 18px rgba(255, 183, 0, 0.4), 0 0 5px rgba(255,183,0,0.6);
+        }
+
+        /* TEMA: DARK FORCE */
+        [data-theme="dark"] {
+            --bg-body: radial-gradient(circle at center, #151515 0%, #050505 100%);
+            --bg-panel: linear-gradient(145deg, #111111 0%, #080808 100%);
+            --panel-border: 2px solid #333333;
+            --panel-shadow: 0 35px 80px rgba(0,0,0,0.95), inset 0 0 50px rgba(255,255,255,0.01);
+            --border-color: #222222;
+            --box-border-top: 2px solid #444444;
+            --gold: #ffffff;
+            --gold-glow: rgba(255, 255, 255, 0.2);
+            --neon-blue: #888888;
+            --text-glow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        /* TEMA: METAL STEEL */
+        [data-theme="metal"] {
+            --bg-body: radial-gradient(circle at center, #2c3e50 0%, #0f171e 100%);
+            --bg-panel: linear-gradient(145deg, #202b36 0%, #11171d 100%);
+            --panel-border: 2px solid #7f8c8d;
+            --panel-shadow: 0 35px 80px rgba(0,0,0,0.95), inset 0 0 30px rgba(127,140,141,0.2);
+            --border-color: #2c3e50;
+            --box-border-top: 2px solid #bdc3c7;
+            --gold: #bdc3c7;
+            --gold-glow: rgba(189, 195, 199, 0.4);
+            --neon-blue: #3498db;
+            --text-glow: 0 0 12px rgba(189, 195, 199, 0.6);
+        }
+
+        /* TEMA: CYBERPUNK */
+        [data-theme="cyberpunk"] {
+            --bg-body: radial-gradient(circle at center, #2b003a 0%, #0a000f 100%);
+            --bg-panel: linear-gradient(145deg, #1f002a 0%, #05000a 100%);
+            --panel-border: 2px solid #ff0055;
+            --panel-shadow: 0 35px 80px rgba(0,0,0,0.95), 0 0 30px rgba(255, 0, 85, 0.3);
+            --border-color: #3d0052;
+            --box-border-top: 2px solid #00ffcc;
+            --gold: #00ffcc;
+            --gold-glow: rgba(0, 255, 210, 0.4);
+            --neon-blue: #ff0055;
+            --text-glow: 0 0 15px rgba(0, 255, 210, 0.8);
+        }
+
+        /* TEMA: CHROME BLUE */
+        [data-theme="chrome"] {
+            --bg-body: radial-gradient(circle at center, #001f3f 0%, #000511 100%);
+            --bg-panel: linear-gradient(145deg, #001124 0%, #00050d 100%);
+            --panel-border: 2px solid #0074d9;
+            --panel-shadow: 0 35px 80px rgba(0,0,0,0.95), 0 0 35px rgba(0, 116, 217, 0.4);
+            --border-color: #001f3f;
+            --box-border-top: 2px solid #7fdbff;
+            --gold: #7fdbff;
+            --gold-glow: rgba(127, 219, 255, 0.4);
+            --neon-blue: #0074d9;
+            --text-glow: 0 0 14px rgba(127, 219, 255, 0.7);
+        }
+
+        /* NOVO TEMA: GREEN RACING */
+        [data-theme="green-racing"] {
+            --bg-body: radial-gradient(circle at center, #062310 0%, #000200 100%);
+            --bg-panel: linear-gradient(145deg, #051d0d 0%, #010703 100%);
+            --panel-border: 2px solid #1abc9c;
+            --panel-shadow: 0 35px 80px rgba(0,0,0,0.95), 0 0 30px rgba(26, 188, 156, 0.25);
+            --border-color: #0a2f16;
+            --box-border-top: 2px solid #2ecc71;
+            --gold: #2ecc71;
+            --gold-glow: rgba(46, 204, 113, 0.4);
+            --neon-blue: #1abc9c;
+            --text-glow: 0 0 14px rgba(46, 204, 113, 0.7);
+        }
+
+        /* NOVO TEMA: VOLCANO MAGMA */
+        [data-theme="volcano"] {
+            --bg-body: radial-gradient(circle at center, #3a0d00 0%, #090200 100%);
+            --bg-panel: linear-gradient(145deg, #260900 0%, #050100 100%);
+            --panel-border: 2px solid #e67e22;
+            --panel-shadow: 0 35px 80px rgba(0,0,0,0.95), 0 0 35px rgba(230, 126, 34, 0.3);
+            --border-color: #3d0f00;
+            --box-border-top: 2px solid #e74c3c;
+            --gold: #e67e22;
+            --gold-glow: rgba(230, 126, 34, 0.4);
+            --neon-blue: #e74c3c;
+            --text-glow: 0 0 14px rgba(230, 126, 34, 0.8);
+        }
+
+        /* NOVO TEMA: PURPLE NEON */
+        [data-theme="purple-neon"] {
+            --bg-body: radial-gradient(circle at center, #230130 0%, #05000a 100%);
+            --bg-panel: linear-gradient(145deg, #180121 0%, #030005 100%);
+            --panel-border: 2px solid #9b59b6;
+            --panel-shadow: 0 35px 80px rgba(0,0,0,0.95), 0 0 30px rgba(155, 89, 182, 0.3);
+            --border-color: #290238;
+            --box-border-top: 2px solid #8e44ad;
+            --gold: #e056fd;
+            --gold-glow: rgba(224, 86, 253, 0.4);
+            --neon-blue: #9b59b6;
+            --text-glow: 0 0 14px rgba(224, 86, 253, 0.8);
         }
 
         body {
             background-color: #010102;
-            background-image: radial-gradient(circle at center, #121118 0%, #000000 100%);
+            background-image: var(--bg-body);
             font-family: 'Orbitron', sans-serif;
             color: #fff;
             min-height: 100vh;
@@ -30,30 +133,48 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            transition: all 0.2s ease;
+            transition: all 0.4s ease;
         }
 
         /* --- PAINEL MOTOR SOUND COCKPIT --- */
         .cyber-panel {
-            background: linear-gradient(145deg, #0a0a0f 0%, #020204 100%);
-            border: 2px solid #3a3425;
-            box-shadow: 0 35px 80px rgba(0,0,0,0.95), 
-                        inset 0 0 50px rgba(255, 183, 0, 0.04),
-                        0 0 40px rgba(255, 183, 0, 0.05);
+            background: var(--bg-panel);
+            border: var(--panel-border);
+            box-shadow: var(--panel-shadow);
             border-radius: 24px;
             max-width: 1350px;
             width: 100%;
             z-index: 10;
             position: relative;
+            transition: all 0.4s ease;
+        }
+
+        /* FAIXA BRASIL GOLD EDITION */
+        .brazil-strip-container {
+            border: 2px solid #5a4e32;
+            background: linear-gradient(135deg, #1c1810 0%, #090805 100%);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.1);
+        }
+        .brazil-strip {
+            height: 12px;
+            width: 100%;
+            background: linear-gradient(to right, 
+                #009c3b 0%, #009c3b 40%, 
+                #ffdf00 40%, #ffdf00 60%, 
+                #002776 60%, #002776 100%
+            );
+            border-radius: 4px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.4), 0 0 10px rgba(255,223,0,0.2);
         }
 
         .section-box {
             background: linear-gradient(180deg, rgba(12, 12, 18, 0.85) 0%, rgba(6, 6, 9, 0.95) 100%);
             border: 1px solid var(--border-color);
-            border-top: 2px solid #5a4e32;
+            border-top: var(--box-border-top);
             border-radius: 14px;
             position: relative;
             box-shadow: inset 0 1px 3px rgba(255,255,255,0.02), 0 6px 15px rgba(0,0,0,0.5);
+            transition: all 0.4s ease;
         }
 
         .section-title {
@@ -76,7 +197,7 @@
 
         .gold-glow-text {
             color: var(--gold);
-            text-shadow: 0 0 18px var(--gold-glow), 0 0 5px rgba(255,183,0,0.6);
+            text-shadow: var(--text-glow);
         }
 
         .vu-bar-container {
@@ -151,7 +272,7 @@
         .icon-container {
             background: radial-gradient(circle at center, #14131a 0%, #020204 100%);
             border-radius: 16px;
-            border: 1px solid #4a3f29;
+            border: 1px solid var(--border-color);
             overflow: hidden;
             position: relative;
             box-shadow: inset 0 0 30px rgba(0,0,0,0.85);
@@ -166,29 +287,27 @@
             50% { transform: translateY(-12px); }
         }
 
-        /* Cabeça mais aerodinâmica */
         .robot-head {
             width: 135px; height: 110px;
-            background: linear-gradient(135deg, #ffb700 0%, #fff3cc 30%, #825d00 100%);
+            background: linear-gradient(135deg, var(--gold) 0%, #fff3cc 30%, #523a00 100%);
             border-radius: 40px 40px 30px 30px;
             border: 4px solid #060608;
             position: relative; z-index: 10;
             box-shadow: 0 12px 24px rgba(0,0,0,0.6), inset 0 4px 8px rgba(255,255,255,0.6);
         }
 
-        /* Antenas Satélite Superiores */
         .robot-antennas {
             position: absolute; width: 100px; top: -16px;
             display: flex; justify-content: space-between;
         }
         .antenna {
-            width: 4px; height: 20px; background: #fff;
+            width: 4px; height: 20px;
             border-radius: 2px; position: relative;
             background: linear-gradient(to top, #333, var(--gold));
         }
         .antenna::after {
             content: ''; position: absolute; top: -4px; left: -3px;
-            width: 100%; height: 10px; width: 10px; border-radius: 50%;
+            width: 10px; height: 10px; border-radius: 50%;
             background: var(--neon-blue); box-shadow: 0 0 8px var(--neon-blue);
         }
 
@@ -226,7 +345,6 @@
             transition: all 0.05s linear;
         }
 
-        /* Corpo Robusto Estilo Bloco de Motor */
         .robot-body {
             width: 125px; height: 125px; margin-top: -22px;
             background: linear-gradient(135deg, #222129 0%, #08080c 100%);
@@ -244,7 +362,6 @@
             box-shadow: 0 0 10px var(--gold-glow);
         }
 
-        /* Core de Energia Estilo Reator a Pistão */
         .robot-core {
             position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
             width: 38px; height: 38px; border-radius: 50%;
@@ -254,7 +371,6 @@
         }
         @keyframes pulseCore { from { transform: translateX(-50%) scale(0.8); opacity: 0.6; } to { transform: translateX(-50%) scale(1.15); opacity: 1; } }
 
-        /* Braços Articulados Duplos */
         .robot-arms {
             position: absolute; width: 175px; top: 22px; left: -25px;
             display: flex; justify-content: space-between; pointer-events: none;
@@ -301,243 +417,257 @@
 </head>
 <body>
 
-<div class="cyber-panel p-6 grid grid-cols-1 lg:grid-cols-12 gap-5" id="mainPlayer">
-    
-    <!-- HEADER INTERNACIONAL DO COCKPIT -->
-    <div class="lg:col-span-12 flex flex-wrap justify-between items-center bg-black/40 p-3 rounded-xl border border-white/5 gap-3">
-        <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_#39ff14]"></span>
-            <span class="text-[10px] font-bold tracking-widest text-gray-400">GLOBAL BROADCASTING HUB:</span>
+<div class="flex flex-col gap-3 max-w-[1350px] w-full">
+
+    <!-- FAIXA BRASIL LUXURY GOLD EDITION (ACIMA DO PLAYER) -->
+    <div class="brazil-strip-container p-2 rounded-xl flex flex-col gap-1.5 px-4 items-center">
+        <div class="flex justify-between w-full text-[9px] font-black tracking-[0.2em] text-amber-500 font-mono">
+            <span>BRAZILIAN COCKPIT HIGH PERFORMANCE</span>
+            <span>INTERCONTINENTAL SPECIAL EDITION</span>
         </div>
-        <!-- Bandeiras representativas da audiência internacional da rádio -->
-        <div class="flex items-center gap-3 text-xs bg-black/50 px-3 py-1 rounded-lg border border-white/5 font-bold font-mono">
-            <span title="United States">🇺🇸 USA</span>
-            <span class="text-white/20">|</span>
-            <span title="Germany">🇩🇪 DEU</span>
-            <span class="text-white/20">|</span>
-            <span title="Netherlands">🇳🇱 NLD</span>
-            <span class="text-white/20">|</span>
-            <span title="Portugal">🇵🇹 PRT</span>
-            <span class="text-white/20">|</span>
-            <span title="Brasil">🇧🇷 BRA</span>
-        </div>
+        <div class="brazil-strip"></div>
     </div>
 
-    <!-- COLUNA ESQUERDA: TELEMETRIA E AUDIO-METERS -->
-    <div class="lg:col-span-3 flex flex-col gap-4">
+    <!-- MAIN COCKPIT PLAYER PANEL -->
+    <div class="cyber-panel p-6 grid grid-cols-1 lg:grid-cols-12 gap-5" id="mainPlayer">
         
-        <div class="section-box p-4">
-            <div class="section-title">Status do Motor</div>
-            <div class="flex items-center gap-3 bg-black/50 p-2 rounded-lg border border-white/5">
-                <div class="w-3.5 h-3.5 rounded-full bg-red-600 animate-pulse shadow-[0_0_14px_#ff0000]" id="liveLed"></div>
-                <div class="font-black text-lg tracking-widest text-red-500 font-mono" id="liveTxt">READY</div>
-                <span class="text-[9px] text-gray-400 font-black ml-auto bg-gray-900 px-2 py-1 rounded border border-white/5" id="engineStatus">STANDBY</span>
+        <!-- HEADER CENTRAL DE TEMAS INTERATIVOS (Substituindo bandeiras antigas) -->
+        <div class="lg:col-span-12 flex flex-wrap justify-between items-center bg-black/40 p-3 rounded-xl border border-white/5 gap-3">
+            <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_#39ff14]"></span>
+                <span class="text-[10px] font-bold tracking-widest text-gray-400">DASHBOARD COCKPIT THEMES:</span>
             </div>
-            <div class="text-[11px] text-gray-400 mt-3 grid grid-cols-2 gap-2 font-mono bg-black/30 p-2 rounded border border-white/5">
-                <div>BUFFERS: <span class="text-green-400 font-bold">100%</span></div>
-                <div>STREAM: <span class="text-cyan-400 font-bold">HQ 320K</span></div>
-            </div>
-        </div>
-
-        <div class="section-box p-4">
-            <div class="section-title">Equalização Gráfica (Frequências)</div>
-            <div class="flex justify-around items-center pt-1 bg-black/40 p-2 rounded-xl border border-white/5">
-                <div class="flex flex-col items-center">
-                    <span class="text-[9px] text-blue-400 font-black mb-1.5 tracking-wider">SUB-BASS</span>
-                    <div class="vu-bar-container"><div id="vuBass" class="vu-bar-fill" style="background: linear-gradient(to top, #0011aa, #00f0ff)"></div></div>
-                    <span id="txtBass" class="text-[11px] font-mono mt-1.5 text-blue-400 font-bold">0%</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <span class="text-[9px] text-orange-500 font-black mb-1.5 tracking-wider">MID-RANGE</span>
-                    <div class="vu-bar-container"><div id="vuMid" class="vu-bar-fill" style="background: linear-gradient(to top, #990000, #ff5500)"></div></div>
-                    <span id="txtMid" class="text-[11px] font-mono mt-1.5 text-orange-500 font-bold">0%</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <span class="text-[9px] text-green-400 font-black mb-1.5 tracking-wider">TREBLE</span>
-                    <div class="vu-bar-container"><div id="vuHigh" class="vu-bar-fill" style="background: linear-gradient(to top, #008800, #39ff14)"></div></div>
-                    <span id="txtHigh" class="text-[11px] font-mono mt-1.5 text-green-400 font-bold">0%</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-box p-4">
-            <div class="section-title">Painel de Telemetria Racing</div>
-            <div class="flex justify-between items-center px-1 bg-black/30 p-2 rounded-xl border border-white/5">
-                <div class="flex flex-col items-center">
-                    <div class="dial-gauge"><div id="needlePres" class="dial-needle"></div></div>
-                    <span class="text-[8px] text-gray-400 font-black mt-2">TURBO PSI</span>
-                    <span id="lblPres" class="text-[11px] font-mono text-cyan-400 font-bold">0.0 bar</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="dial-gauge"><div id="needleRpm" class="dial-needle" style="background:var(--neon-nitro); box-shadow: 0 0 8px var(--neon-nitro);"></div></div>
-                    <span class="text-[8px] text-gray-400 font-black mt-2">SOUND RPM</span>
-                    <span id="lblRpm" class="text-[11px] font-mono text-orange-500 font-bold">0</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="dial-gauge"><div id="needleBal" class="dial-needle" style="background:var(--gold); box-shadow: 0 0 8px var(--gold);"></div></div>
-                    <span class="text-[8px] text-gray-400 font-black mt-2">VELOCITY</span>
-                    <span id="lblBal" class="text-[11px] font-mono text-yellow-500 font-bold">0 KM/H</span>
-                </div>
-            </div>
-            <div class="mt-3 pt-2.5 border-t border-white/5 flex justify-between items-center text-xs">
-                <span class="text-gray-500 font-black text-[9px] tracking-wider">MOTOR PERFORMANCE</span>
-                <span class="text-green-400 font-mono font-bold text-sm" id="perfTxt">100% HP</span>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- COLUNA CENTRAL: DISPLAY PRINCIPAL E CONTROLES DE PISTA -->
-    <div class="lg:col-span-6 flex flex-col gap-4">
-        
-        <!-- DISPLAY DA MARCA DA ESTAÇÃO -->
-        <div class="text-center py-4 border border-yellow-600/10 bg-black/40 rounded-xl p-3 shadow-lg">
-            <div class="text-[10px] tracking-[0.7em] text-yellow-600 font-black uppercase mb-1">RADIO WEB</div>
-            <h1 class="text-4xl sm:text-5xl font-black tracking-tighter gold-glow-text italic">INTERCONTINENTAL</h1>
-            <div class="text-xl font-bold tracking-[0.25em] text-orange-500 font-mono mt-1 italic">MOTOR SOUND</div>
-            <div class="text-[8px] tracking-[0.4em] text-gray-500 font-black mt-2.5">INTERNATIONAL COMMEMORATIVE EDITION &bull; SYSTEM V8.0</div>
-        </div>
-
-        <!-- VISUALIZADOR CENTRAL DE ALTA DEFINIÇÃO -->
-        <div class="section-box p-3 bg-black/95 overflow-hidden flex flex-col h-[250px] border border-white/5 shadow-2xl">
-            <div class="flex justify-between text-[9px] text-gray-400 px-1 uppercase font-black tracking-wider border-b border-white/5 pb-2">
-                <span>Espectrograma de Áudio e Ondas de Impacto</span>
-                <span id="modeTxt" class="text-yellow-500">Mapeamento: CRUISE MODE</span>
-            </div>
-            <div class="flex-1 relative mt-2 rounded-lg overflow-hidden bg-gradient-to-b from-[#030305] to-[#090914]">
-                <canvas id="spectrogram" class="w-full h-full"></canvas>
-                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                    <div class="bg-black/85 border border-yellow-500/20 px-6 py-3 rounded-2xl text-center backdrop-blur-md shadow-2xl">
-                        <div class="text-[8px] text-yellow-500 font-black tracking-[0.25em]">V8 COCKPIT ENGINE</div>
-                        <div class="text-[14px] text-white font-black tracking-widest font-mono">HIGH-SPEED AUDIO</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- DECKS DE CONTROLE DE TRÁFEGO -->
-        <div class="grid grid-cols-12 gap-4 items-center bg-black/70 p-4 rounded-2xl border border-white/5 shadow-xl">
-            <div class="col-span-5 grid grid-cols-2 gap-3">
-                <button id="btnPlay" class="btn-cyber py-4 bg-green-950/20 text-green-400 border-green-800/40 hover:bg-green-900/30 font-black text-xs">IGNITION ▶</button>
-                <button id="btnStop" class="btn-cyber py-4 bg-red-950/20 text-red-400 border-red-900/40 hover:bg-red-900/30 font-black text-xs">ENGINE OFF ■</button>
-            </div>
-            <div class="col-span-3 flex flex-col items-center relative">
-                <div id="volKnob" class="volume-knob flex items-center justify-center">
-                    <div class="w-16 h-16 rounded-full bg-[#050508] border-2 border-[#191922] flex flex-col items-center justify-center shadow-[inset_0_3px_10px_rgba(0,0,0,0.95)]">
-                        <span class="text-[8px] text-gray-500 font-black tracking-wider">SOUND</span>
-                        <span id="volTxt" class="text-base font-black font-mono text-yellow-500">80%</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-span-4 grid grid-cols-2 gap-3">
-                <button id="btnMute" class="btn-cyber py-4 bg-blue-950/20 text-blue-400 border-blue-800/40 hover:bg-blue-900/30 font-black text-xs">SILENCE 🔊</button>
-                <button id="btnNitro" class="btn-cyber py-4 bg-orange-950/30 text-orange-500 border-orange-800/40 hover:bg-orange-900/40 font-black text-xs shadow-[0_0_15px_rgba(235,68,0,0.1)]">STAGE 2 🔥</button>
-            </div>
-        </div>
-
-        <!-- SELEÇÃO DE DIREÇÃO DE EQUALIZAÇÃO -->
-        <div class="section-box p-4">
-            <div class="section-title">Modos de Condução Acústica (Drive Profiles)</div>
-            <div class="grid grid-cols-4 sm:grid-cols-7 gap-2 bg-black/40 p-2 rounded-xl border border-white/5">
-                <button class="eq-btn btn-cyber py-2.5 bg-yellow-500 text-black font-black" onclick="changeEQ('STOCK', this)">CRUISE</button>
-                <button class="eq-btn btn-cyber py-2.5 bg-gray-900/60 text-green-400" onclick="changeEQ('ECO', this)">ECO</button>
-                <button class="eq-btn btn-cyber py-2.5 bg-gray-900/60 text-pink-400" onclick="changeEQ('SPORT', this)">RACING</button>
-                <button class="eq-btn btn-cyber py-2.5 bg-gray-900/60 text-cyan-400" onclick="changeEQ('CITY', this)">URBAN</button>
-                <button class="eq-btn btn-cyber py-2.5 bg-gray-900/60 text-red-400" onclick="changeEQ('TURBO', this)">V8 MAX</button>
-                <button class="eq-btn btn-cyber py-2.5 bg-gray-900/60 text-purple-400" onclick="changeEQ('VOICE', this)">STUDIO</button>
-                <button class="eq-btn btn-cyber py-2.5 bg-gray-900/60 text-indigo-400" onclick="changeEQ('NIGHT', this)">TUNNEL</button>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- COLUNA DIREITA: RELÓGIO, REDE E CO-PILOTO ROBÓTICO I-CON REFINADO -->
-    <div class="lg:col-span-3 flex flex-col gap-4">
-        
-        <div class="section-box p-4 grid grid-cols-2 gap-3 items-center">
-            <div class="bg-black/40 p-2 rounded-lg border border-white/5 h-full flex flex-col justify-center">
-                <div class="section-title !mb-1">Cronômetro</div>
-                <div id="clock" class="text-xl font-black tracking-wide lcd-text">00:00:00</div>
-                <div id="date" class="text-[9px] text-gray-500 font-bold font-mono mt-0.5">00/00/0000</div>
-            </div>
-            <div class="border-l border-white/5 pl-3 bg-black/40 p-2 rounded-lg border border-white/5 h-full flex flex-col justify-center">
-                <div class="section-title !mb-1">Matriz Info</div>
-                <div class="text-[10px] text-gray-400 truncate font-mono">LINE: <span class="text-white font-bold">AUTOMOTIVE</span></div>
-                <div class="text-[10px] text-gray-400 truncate font-mono mt-0.5">PILOT: <span class="text-yellow-500 font-bold">AI MATRIX</span></div>
-            </div>
-        </div>
-
-        <!-- MONITOR DE ABSORÇÃO DE REDE -->
-        <div class="section-box p-3 bg-black/40 h-[90px] flex flex-col">
-            <div class="section-title !mb-1 text-[9px]">Sinal de Conexão Transatlántica</div>
-            <canvas id="netOscilloscope" class="w-full flex-1 bg-black/85 rounded border border-white/5"></canvas>
-        </div>
-
-        <!-- MASCOTE ROBÔ REFINADO INTEGRALMENTE -->
-        <div class="section-box p-4 icon-container flex flex-col items-center justify-center min-h-[280px]" id="robotComponent">
-            <div class="absolute top-2.5 left-3.5 text-[8px] text-gray-400 font-black tracking-wider bg-black/60 px-2.5 py-0.5 rounded border border-white/5">I-CON • FLIGHT ASSISTANT v8.0</div>
             
-            <div class="robot-pod mt-7">
-                <div class="robot-antennas"><div class="antenna"></div><div class="antenna"></div></div>
-                <div class="robot-ears"><div class="ear"></div><div class="ear"></div></div>
-                <div class="robot-head">
-                    <div class="robot-screen">
-                        <div class="robot-eyes">
-                            <div class="robot-eye"></div>
-                            <div class="robot-eye"></div>
+            <!-- Seletores de 8 Temas Globais (5 Antigos + 3 Novos) -->
+            <div class="flex flex-wrap items-center gap-1.5 text-xs bg-black/50 p-1.5 rounded-lg border border-white/5 font-bold font-mono">
+                <button onclick="setGlobalTheme('default')" class="px-2.5 py-1 rounded bg-amber-500 text-black border border-amber-400 hover:brightness-125 transition-all text-[10px]">ORIGINAL</button>
+                <button onclick="setGlobalTheme('dark')" class="px-2.5 py-1 rounded bg-zinc-800 text-white border border-zinc-700 hover:brightness-125 transition-all text-[10px]">DARK FORCE</button>
+                <button onclick="setGlobalTheme('metal')" class="px-2.5 py-1 rounded bg-slate-600 text-slate-100 border border-slate-500 hover:brightness-125 transition-all text-[10px]">METAL STEEL</button>
+                <button onclick="setGlobalTheme('cyberpunk')" class="px-2.5 py-1 rounded bg-purple-900 text-cyan-300 border border-pink-500 hover:brightness-125 transition-all text-[10px]">CYBERPUNK</button>
+                <button onclick="setGlobalTheme('chrome')" class="px-2.5 py-1 rounded bg-blue-950 text-sky-300 border border-blue-600 hover:brightness-125 transition-all text-[10px]">CHROME BLUE</button>
+                <!-- Novos 3 temas solicitados -->
+                <button onclick="setGlobalTheme('green-racing')" class="px-2.5 py-1 rounded bg-emerald-950 text-emerald-300 border border-emerald-500 hover:brightness-125 transition-all text-[10px]">GREEN RACING</button>
+                <button onclick="setGlobalTheme('volcano')" class="px-2.5 py-1 rounded bg-orange-950 text-orange-400 border border-orange-600 hover:brightness-125 transition-all text-[10px]">VOLCANO MAGMA</button>
+                <button onclick="setGlobalTheme('purple-neon')" class="px-2.5 py-1 rounded bg-fuchsia-950 text-fuchsia-300 border border-fuchsia-600 hover:brightness-125 transition-all text-[10px]">PURPLE NEON</button>
+            </div>
+        </div>
+
+        <!-- COLUNA ESQUERDA: TELEMETRIA E AUDIO-METERS -->
+        <div class="lg:col-span-3 flex flex-col gap-4">
+            
+            <div class="section-box p-4">
+                <div class="section-title">Status do Motor</div>
+                <div class="flex items-center gap-3 bg-black/50 p-2 rounded-lg border border-white/5">
+                    <div class="w-3.5 h-3.5 rounded-full bg-red-600 animate-pulse shadow-[0_0_14px_#ff0000]" id="liveLed"></div>
+                    <div class="font-black text-lg tracking-widest text-red-500 font-mono" id="liveTxt">READY</div>
+                    <span class="text-[9px] text-gray-400 font-black ml-auto bg-gray-900 px-2 py-1 rounded border border-white/5" id="engineStatus">STANDBY</span>
+                </div>
+                <div class="text-[11px] text-gray-400 mt-3 grid grid-cols-2 gap-2 font-mono bg-black/30 p-2 rounded border border-white/5">
+                    <div>BUFFERS: <span class="text-green-400 font-bold">100%</span></div>
+                    <div>STREAM: <span class="text-cyan-400 font-bold">HQ 320K</span></div>
+                </div>
+            </div>
+
+            <div class="section-box p-4">
+                <div class="section-title">Equalização Gráfica (Frequências)</div>
+                <div class="flex justify-around items-center pt-1 bg-black/40 p-2 rounded-xl border border-white/5">
+                    <div class="flex flex-col items-center">
+                        <span class="text-[9px] text-blue-400 font-black mb-1.5 tracking-wider">SUB-BASS</span>
+                        <div class="vu-bar-container"><div id="vuBass" class="vu-bar-fill" style="background: linear-gradient(to top, #0011aa, #00f0ff)"></div></div>
+                        <span id="txtBass" class="text-[11px] font-mono mt-1.5 text-blue-400 font-bold">0%</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-[9px] text-orange-500 font-black mb-1.5 tracking-wider">MID-RANGE</span>
+                        <div class="vu-bar-container"><div id="vuMid" class="vu-bar-fill" style="background: linear-gradient(to top, #990000, #ff5500)"></div></div>
+                        <span id="txtMid" class="text-[11px] font-mono mt-1.5 text-orange-500 font-bold">0%</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-[9px] text-green-400 font-black mb-1.5 tracking-wider">TREBLE</span>
+                        <div class="vu-bar-container"><div id="vuHigh" class="vu-bar-fill" style="background: linear-gradient(to top, #008800, #39ff14)"></div></div>
+                        <span id="txtHigh" class="text-[11px] font-mono mt-1.5 text-green-400 font-bold">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-box p-4">
+                <div class="section-title">Painel de Telemetria Racing</div>
+                <div class="flex justify-between items-center px-1 bg-black/30 p-2 rounded-xl border border-white/5">
+                    <div class="flex flex-col items-center">
+                        <div class="dial-gauge"><div id="needlePres" class="dial-needle"></div></div>
+                        <span class="text-[8px] text-gray-400 font-black mt-2">TURBO PSI</span>
+                        <span id="lblPres" class="text-[11px] font-mono text-cyan-400 font-bold">0.0 bar</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="dial-gauge"><div id="needleRpm" class="dial-needle" style="background:var(--neon-nitro); box-shadow: 0 0 8px var(--neon-nitro);"></div></div>
+                        <span class="text-[8px] text-gray-400 font-black mt-2">SOUND RPM</span>
+                        <span id="lblRpm" class="text-[11px] font-mono text-orange-500 font-bold">0</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="dial-gauge"><div id="needleBal" class="dial-needle" style="background:var(--gold); box-shadow: 0 0 8px var(--gold);"></div></div>
+                        <span class="text-[8px] text-gray-400 font-black mt-2">VELOCITY</span>
+                        <span id="lblBal" class="text-[11px] font-mono text-yellow-500 font-bold">0 KM/H</span>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2.5 border-t border-white/5 flex justify-between items-center text-xs">
+                    <span class="text-gray-500 font-black text-[9px] tracking-wider">MOTOR PERFORMANCE</span>
+                    <span class="text-green-400 font-mono font-bold text-sm" id="perfTxt">100% HP</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- COLUNA CENTRAL: DISPLAY PRINCIPAL E CONTROLES DE PISTA -->
+        <div class="lg:col-span-6 flex flex-col gap-4">
+            
+            <!-- DISPLAY DA MARCA DA ESTAÇÃO -->
+            <div class="text-center py-4 border border-white/5 bg-black/40 rounded-xl p-3 shadow-lg">
+                <div class="text-[10px] tracking-[0.7em] text-gray-400 font-black uppercase mb-1">RADIO WEB</div>
+                <h1 class="text-4xl sm:text-5xl font-black tracking-tighter gold-glow-text italic transition-all duration-300">INTERCONTINENTAL</h1>
+                <div class="text-xl font-bold tracking-[0.25em] text-orange-500 font-mono mt-1 italic">MOTOR SOUND</div>
+                <div class="text-[8px] tracking-[0.4em] text-gray-500 font-black mt-2.5">INTERNATIONAL COMMEMORATIVE EDITION &bull; SYSTEM V8.0</div>
+            </div>
+
+            <!-- VISUALIZADOR CENTRAL DE ALTA DEFINIÇÃO -->
+            <div class="section-box p-3 bg-black/95 overflow-hidden flex flex-col h-[250px] border border-white/5 shadow-2xl">
+                <div class="flex justify-between text-[9px] text-gray-400 px-1 uppercase font-black tracking-wider border-b border-white/5 pb-2">
+                    <span>Espectrograma de Áudio e Ondas de Impacto</span>
+                    <span id="modeTxt" class="text-orange-500">Mapeamento: CRUISE MODE</span>
+                </div>
+                <div class="flex-1 relative mt-2 rounded-lg overflow-hidden bg-gradient-to-b from-[#030305] to-[#090914]">
+                    <canvas id="spectrogram" class="w-full h-full"></canvas>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                        <div class="bg-black/85 border border-white/10 px-6 py-3 rounded-2xl text-center backdrop-blur-md shadow-2xl">
+                            <div class="text-[8px] text-orange-500 font-black tracking-[0.25em]">V8 COCKPIT ENGINE</div>
+                            <div class="text-[14px] text-white font-black tracking-widest font-mono">HIGH-SPEED AUDIO</div>
                         </div>
-                        <div id="robotMouth" class="robot-mouth"></div>
                     </div>
-                </div>
-                <div class="robot-body">
-                    <div class="robot-arms">
-                        <div class="arm left"></div>
-                        <div class="arm right"></div>
-                    </div>
-                    <div class="robot-badge">I-CON M.S.</div>
-                    <div class="robot-core"></div>
                 </div>
             </div>
 
-            <div class="text-center mt-4 z-10 bg-black/70 px-4 py-1.5 rounded-xl border border-white/5 shadow-md">
-                <div class="text-[10px] font-black text-yellow-500 tracking-wider" id="robotGreeting">CO-PILOTO: PRONTO</div>
-                <div class="text-[8px] text-gray-500 font-mono font-bold mt-0.5">SATÉLITE CONECTADO HUB GLOBAL</div>
+            <!-- DECKS DE CONTROLE DE TRÁFEGO -->
+            <div class="grid grid-cols-12 gap-4 items-center bg-black/70 p-4 rounded-2xl border border-white/5 shadow-xl">
+                <div class="col-span-5 grid grid-cols-2 gap-3">
+                    <button id="btnPlay" class="btn-cyber py-4 bg-green-950/20 text-green-400 border-green-800/40 hover:bg-green-900/30 font-black text-xs">IGNITION ▶</button>
+                    <button id="btnStop" class="btn-cyber py-4 bg-red-950/20 text-red-400 border-red-900/40 hover:bg-red-900/30 font-black text-xs">ENGINE OFF ■</button>
+                </div>
+                <div class="col-span-3 flex flex-col items-center relative">
+                    <div id="volKnob" class="volume-knob flex items-center justify-center">
+                        <div class="w-16 h-16 rounded-full bg-[#050508] border-2 border-[#191922] flex flex-col items-center justify-center shadow-[inset_0_3px_10px_rgba(0,0,0,0.95)]">
+                            <span class="text-[8px] text-gray-500 font-black tracking-wider">SOUND</span>
+                            <span id="volTxt" class="text-base font-black font-mono text-yellow-500">80%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-4 grid grid-cols-2 gap-3">
+                    <button id="btnMute" class="btn-cyber py-4 bg-blue-950/20 text-blue-400 border-blue-800/40 hover:bg-blue-900/30 font-black text-xs">SILENCE 🔊</button>
+                    <button id="btnNitro" class="btn-cyber py-4 bg-orange-950/30 text-orange-500 border-orange-800/40 hover:bg-orange-900/40 font-black text-xs shadow-[0_0_15px_rgba(235,68,0,0.1)]">STAGE 2 🔥</button>
+                </div>
             </div>
+
+            <!-- SELEÇÃO DE DIREÇÃO DE EQUALIZAÇÃO -->
+            <div class="section-box p-4">
+                <div class="section-title">Modos de Condução Acústica (Drive Profiles)</div>
+                <div class="grid grid-cols-4 sm:grid-cols-7 gap-2 bg-black/40 p-2 rounded-xl border border-white/5">
+                    <button class="eq-btn btn-cyber py-2.5 bg-yellow-500 text-black font-black" onclick="changeEQ('STOCK', this)">CRUISE</button>
+                    <button class="eq-btn btn-cyber py-2.5 bg-gray-900/60 text-green-400" onclick="changeEQ('ECO', this)">ECO</button>
+                    <button class="eq-btn btn-cyber py-2.5 bg-gray-900/60 text-pink-400" onclick="changeEQ('SPORT', this)">RACING</button>
+                    <button class="eq-btn btn-cyber py-2.5 bg-gray-900/60 text-cyan-400" onclick="changeEQ('CITY', this)">URBAN</button>
+                    <button class="eq-btn btn-cyber py-2.5 bg-gray-900/60 text-red-400" onclick="changeEQ('TURBO', this)">V8 MAX</button>
+                    <button class="eq-btn btn-cyber py-2.5 bg-gray-900/60 text-purple-400" onclick="changeEQ('VOICE', this)">STUDIO</button>
+                    <button class="eq-btn btn-cyber py-2.5 bg-gray-900/60 text-indigo-400" onclick="changeEQ('NIGHT', this)">TUNNEL</button>
+                </div>
+            </div>
+
         </div>
 
-        <div class="section-box p-4">
-            <div class="section-title">Colorimetria da Turbina (Dashboard Cores)</div>
-            <div class="grid grid-cols-6 gap-1.5 max-h-16 overflow-y-auto pr-1 custom-scroll bg-black/50 p-2 rounded-lg border border-white/5">
-                <script>
-                    for(let i=1; i<=18; i++) {
-                        document.write(`<button class="text-[9px] bg-black border border-white/10 hover:border-yellow-500 p-1 rounded font-bold text-gray-400 font-mono transition-colors" onclick="changeTheme(${i*20})">${i < 10 ? '0'+i : i}</button>`);
-                    }
-                </script>
+        <!-- COLUNA DIREITA: RELÓGIO, REDE E CO-PILOTO ROBÓTICO I-CON REFINADO -->
+        <div class="lg:col-span-3 flex flex-col gap-4">
+            
+            <div class="section-box p-4 grid grid-cols-2 gap-3 items-center">
+                <div class="bg-black/40 p-2 rounded-lg border border-white/5 h-full flex flex-col justify-center">
+                    <div class="section-title !mb-1">Cronômetro</div>
+                    <div id="clock" class="text-xl font-black tracking-wide lcd-text">00:00:00</div>
+                    <div id="date" class="text-[9px] text-gray-500 font-bold font-mono mt-0.5">00/00/0000</div>
+                </div>
+                <div class="border-l border-white/5 pl-3 bg-black/40 p-2 rounded-lg border border-white/5 h-full flex flex-col justify-center">
+                    <div class="section-title !mb-1">Matriz Info</div>
+                    <div class="text-[10px] text-gray-400 truncate font-mono">LINE: <span class="text-white font-bold">AUTOMOTIVE</span></div>
+                    <div class="text-[10px] text-gray-400 truncate font-mono mt-0.5">PILOT: <span class="text-yellow-500 font-bold">AI MATRIX</span></div>
+                </div>
+            </div>
+
+            <!-- MONITOR DE ABSORÇÃO DE REDE -->
+            <div class="section-box p-3 bg-black/40 h-[90px] flex flex-col">
+                <div class="section-title !mb-1 text-[9px]">Sinal de Conexão Transatlántica</div>
+                <canvas id="netOscilloscope" class="w-full flex-1 bg-black/85 rounded border border-white/5"></canvas>
+            </div>
+
+            <!-- MASCOTE ROBÔ REFINADO INTEGRALMENTE -->
+            <div class="section-box p-4 icon-container flex flex-col items-center justify-center min-h-[280px]" id="robotComponent">
+                <div class="absolute top-2.5 left-3.5 text-[8px] text-gray-400 font-black tracking-wider bg-black/60 px-2.5 py-0.5 rounded border border-white/5">I-CON • FLIGHT ASSISTANT v8.0</div>
+                
+                <div class="robot-pod mt-7">
+                    <div class="robot-antennas"><div class="antenna"></div><div class="antenna"></div></div>
+                    <div class="robot-ears"><div class="ear"></div><div class="ear"></div></div>
+                    <div class="robot-head">
+                        <div class="robot-screen">
+                            <div class="robot-eyes">
+                                <div class="robot-eye"></div>
+                                <div class="robot-eye"></div>
+                            </div>
+                            <div id="robotMouth" class="robot-mouth"></div>
+                        </div>
+                    </div>
+                    <div class="robot-body">
+                        <div class="robot-arms">
+                            <div class="arm left"></div>
+                            <div class="arm right"></div>
+                        </div>
+                        <div class="robot-badge">I-CON M.S.</div>
+                        <div class="robot-core"></div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4 z-10 bg-black/70 px-4 py-1.5 rounded-xl border border-white/5 shadow-md">
+                    <div class="text-[10px] font-black text-yellow-500 tracking-wider" id="robotGreeting">CO-PILOTO: PRONTO</div>
+                    <div class="text-[8px] text-gray-500 font-mono font-bold mt-0.5">SATÉLITE CONECTADO HUB GLOBAL</div>
+                </div>
+            </div>
+
+            <div class="section-box p-4">
+                <div class="section-title">Colorimetria da Turbina (Dashboard Cores)</div>
+                <div class="grid grid-cols-6 gap-1.5 max-h-16 overflow-y-auto pr-1 custom-scroll bg-black/50 p-2 rounded-lg border border-white/5">
+                    <script>
+                        for(let i=1; i<=18; i++) {
+                            document.write(`<button class="text-[9px] bg-black border border-white/10 hover:border-yellow-500 p-1 rounded font-bold text-gray-400 font-mono transition-colors" onclick="changeTheme(${i*20})">${i < 10 ? '0'+i : i}</button>`);
+                        }
+                    </script>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- PAINEL DE LINKS E SINALIZADOR MARQUEE -->
+        <div class="lg:col-span-12 mt-2 pt-3 border-t border-white/5">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 mb-4">
+                <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank" class="btn-cyber py-3 bg-black/80 text-center text-[10px] text-cyan-400 border-cyan-900/30 hover:border-cyan-400 block font-bold">DYNAC-X PLAY</a>
+                <a href="https://intercontinental-web-radio.webnode.page/contato/" target="_blank" class="btn-cyber py-3 bg-black/80 text-center text-[10px] text-blue-400 border-blue-900/30 hover:border-blue-400 block font-bold">CONTATO</a>
+                <a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank" class="btn-cyber py-3 bg-black/80 text-center text-[10px] text-red-400 border-red-900/30 hover:border-red-400 block font-bold">YOUTUBE</a>
+                <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank" class="btn-cyber py-3 bg-black/80 text-center text-[10px] text-yellow-500 border-yellow-900/30 hover:border-yellow-500 block font-bold">TENDÊNCIAS</a>
+                <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank" class="btn-cyber py-3 bg-black/80 text-center text-[10px] text-purple-400 border-purple-900/30 hover:border-purple-400 block font-bold">VOX I.A</a>
+                <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank" class="btn-cyber py-3 bg-black/80 text-center text-[10px] text-pink-400 border-pink-900/30 hover:border-pink-400 block font-bold">PANDORA</a>
+            </div>
+
+            <div class="bg-black/95 border border-white/5 rounded-lg h-10 flex items-center overflow-hidden relative shadow-inner">
+                <div class="bg-gradient-to-r from-orange-600 to-red-600 text-white font-black text-[10px] tracking-wider px-5 h-full flex items-center z-10 shadow-[6px_0_15px_rgba(0,0,0,0.6)]">NOTÍCIAS</div>
+                <div class="animate-marquee text-xs font-mono text-gray-300 items-center whitespace-nowrap pl-4">
+                    <span>🔥 INTERCONTINENTAL MOTOR SOUND: SUCESSO ABSOLUTO NOS ESTADOS UNIDOS, ALEMANHA, HOLANDA E PORTUGAL! O SOM QUE MOVE O PLANETA... 🌐 TECNOLOGIA: ATUALIZAÇÃO PREMIUM COCKPIT ENGINE V8 INSTALADA... 🚀 CONECTANDO COMPOSIÇÕES DE ALTO DESEMPENHO EM TEMPO REAL... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>🔥 INTERCONTINENTAL MOTOR SOUND: SUCESSO ABSOLUTO NOS ESTADOS UNIDOS, ALEMANHA, HOLANDA E PORTUGAL! O SOM QUE MOVE O PLANETA... 🌐 TECNOLOGIA: ATUALIZAÇÃO PREMIUM COCKPIT ENGINE V8 INSTALADA... 🚀 CONECTANDO COMPOSIÇÕES DE ALTO DESEMPENHO EM TEMPO REAL... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                </div>
             </div>
         </div>
 
     </div>
-
-    <!-- PAINEL DE LINKS E SINALIZADOR MARQUEE -->
-    <div class="lg:col-span-12 mt-2 pt-3 border-t border-white/5">
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 mb-4">
-            <a href="https://sites.google.com/view/dynac-x-play-intercontinental/in%C3%ADcio" target="_blank" class="btn-cyber py-3 bg-black/80 text-center text-[10px] text-cyan-400 border-cyan-900/30 hover:border-cyan-400 block font-bold">DYNAC-X PLAY</a>
-            <a href="https://intercontinental-web-radio.webnode.page/contato/" target="_blank" class="btn-cyber py-3 bg-black/80 text-center text-[10px] text-blue-400 border-blue-900/30 hover:border-blue-400 block font-bold">CONTATO</a>
-            <a href="https://www.youtube.com/@RadioWebintercontinental" target="_blank" class="btn-cyber py-3 bg-black/80 text-center text-[10px] text-red-400 border-red-900/30 hover:border-red-400 block font-bold">YOUTUBE</a>
-            <a href="https://deolidias2000.blogspot.com/2025/02/as-tendencias-musicais-que-estao.html" target="_blank" class="btn-cyber py-3 bg-black/80 text-center text-[10px] text-yellow-500 border-yellow-900/30 hover:border-yellow-500 block font-bold">TENDÊNCIAS</a>
-            <a href="https://sites.google.com/view/vox-i-a/in%C3%ADcio" target="_blank" class="btn-cyber py-3 bg-black/80 text-center text-[10px] text-purple-400 border-purple-900/30 hover:border-purple-400 block font-bold">VOX I.A</a>
-            <a href="https://sites.google.com/view/pandora-e-euterpe/in%C3%ADcio" target="_blank" class="btn-cyber py-3 bg-black/80 text-center text-[10px] text-pink-400 border-pink-900/30 hover:border-pink-400 block font-bold">PANDORA</a>
-        </div>
-
-        <div class="bg-black/95 border border-white/5 rounded-lg h-10 flex items-center overflow-hidden relative shadow-inner">
-            <div class="bg-gradient-to-r from-orange-600 to-red-600 text-white font-black text-[10px] tracking-wider px-5 h-full flex items-center z-10 shadow-[6px_0_15px_rgba(0,0,0,0.6)]">NOTÍCIAS</div>
-            <div class="animate-marquee text-xs font-mono text-gray-300 items-center whitespace-nowrap pl-4">
-                <span>🔥 INTERCONTINENTAL MOTOR SOUND: SUCESSO ABSOLUTO NOS ESTADOS UNIDOS, ALEMANHA, HOLANDA E PORTUGAL! O SOM QUE MOVE O PLANETA... 🌐 TECNOLOGIA: ATUALIZAÇÃO PREMIUM COCKPIT ENGINE V8 INSTALADA... 🚀 CONECTANDO COMPOSIÇÕES DE ALTO DESEMPENHO EM TEMPO REAL... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span>🔥 INTERCONTINENTAL MOTOR SOUND: SUCESSO ABSOLUTO NOS ESTADOS UNIDOS, ALEMANHA, HOLANDA E PORTUGAL! O SOM QUE MOVE O PLANETA... 🌐 TECNOLOGIA: ATUALIZAÇÃO PREMIUM COCKPIT ENGINE V8 INSTALADA... 🚀 CONECTANDO COMPOSIÇÕES DE ALTO DESEMPENHO EM TEMPO REAL... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            </div>
-        </div>
-    </div>
-
 </div>
 
 <script>
@@ -565,6 +695,22 @@
     const liveTxt = document.getElementById("liveTxt");
     const engineStatus = document.getElementById("engineStatus");
 
+    // LÓGICA DO SELETOR DE TEMAS GLOBAIS AMPLIADO
+    function setGlobalTheme(themeName) {
+        if (themeName === 'default') {
+            document.documentElement.removeAttribute('data-theme');
+        } else {
+            document.documentElement.setAttribute('data-theme', themeName);
+        }
+        localStorage.setItem('selected-cockpit-theme', themeName);
+    }
+
+    // Carregar tema salvo ao iniciar
+    const savedTheme = localStorage.getItem('selected-cockpit-theme');
+    if (savedTheme) {
+        setGlobalTheme(savedTheme);
+    }
+
     function initAudio() {
         if (!audioCtx) {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -580,220 +726,223 @@
             nitroGain.gain.value = vol / 100;
 
             source = audioCtx.createMediaElementSource(audio);
-            
-            source.connect(nitroGain);
-            nitroGain.connect(lowFilter);
+            source.connect(lowFilter);
             lowFilter.connect(midFilter);
             midFilter.connect(highFilter);
-            highFilter.connect(analyser);
+            highFilter.connect(nitroGain);
+            nitroGain.connect(analyser);
             analyser.connect(audioCtx.destination);
         }
     }
 
-    document.getElementById("btnPlay").onclick = async () => {
-        await initAudio();
-        if (audioCtx.state === 'suspended') await audioCtx.resume();
-        audio.play();
-        isPlaying = true;
-        
-        // Atualiza painéis para ligados
-        liveLed.classList.remove("bg-red-600", "shadow-[0_0_14px_#ff0000]");
-        liveLed.classList.add("bg-green-500", "shadow-[0_0_14px_#39ff14]");
-        liveTxt.innerText = "RUNNING";
-        liveTxt.classList.remove("text-red-500");
-        liveTxt.classList.add("text-green-500");
-        engineStatus.innerText = "V8 ACTIVE";
-        robotGreeting.innerText = "I-CON: PILOTANDO!";
-        
-        robotComponent.classList.add("dance-mode");
-        renderFrames();
-    };
+    // IGNITION / PLAY
+    document.getElementById("btnPlay").addEventListener("click", () => {
+        initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        audio.play().then(() => {
+            isPlaying = true;
+            engineStatus.innerText = "RUNNING";
+            engineStatus.className = "text-[9px] text-green-400 font-black ml-auto bg-gray-900 px-2 py-1 rounded border border-white/5";
+            liveLed.className = "w-3.5 h-3.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_14px_#39ff14]";
+            liveTxt.innerText = "LIVE V8";
+            liveTxt.className = "font-black text-lg tracking-widest text-green-500 font-mono";
+            robotComponent.classList.add("dance-mode");
+            robotGreeting.innerText = "CO-PILOTO: ACELERANDO!";
+            drawVisuals();
+        }).catch(err => console.log("Erro ao iniciar motor:", err));
+    });
 
-    document.getElementById("btnStop").onclick = () => {
+    // ENGINE OFF / STOP
+    document.getElementById("btnStop").addEventListener("click", () => {
         audio.pause();
         isPlaying = false;
-        
-        // Retorna painel para standby
-        liveLed.classList.add("bg-red-600", "shadow-[0_0_14px_#ff0000]");
-        liveLed.classList.remove("bg-green-500", "shadow-[0_0_14px_#39ff14]");
-        liveTxt.innerText = "READY";
-        liveTxt.classList.add("text-red-500");
-        liveTxt.classList.remove("text-green-500");
         engineStatus.innerText = "STANDBY";
-        robotGreeting.innerText = "CO-PILOTO: PRONTO";
-
+        engineStatus.className = "text-[9px] text-gray-400 font-black ml-auto bg-gray-900 px-2 py-1 rounded border border-white/5";
+        liveLed.className = "w-3.5 h-3.5 rounded-full bg-red-600 animate-pulse shadow-[0_0_14px_#ff0000]";
+        liveTxt.innerText = "READY";
+        liveTxt.className = "font-black text-lg tracking-widest text-red-500 font-mono";
         robotComponent.classList.remove("dance-mode");
-    };
+        robotGreeting.innerText = "CO-PILOTO: MOTOR DESLIGADO";
+        resetGauges();
+    });
 
-    document.getElementById("btnMute").onclick = () => {
-        audio.muted = !audio.muted;
-        document.getElementById("btnMute").classList.toggle("bg-blue-600", audio.muted);
-        document.getElementById("btnMute").classList.toggle("text-black", audio.muted);
-    };
+    // SILENCE / MUTE
+    let isMuted = false;
+    document.getElementById("btnMute").addEventListener("click", (e) => {
+        isMuted = !isMuted;
+        audio.muted = isMuted;
+        e.target.innerText = isMuted ? "RESTORE 🔇" : "SILENCE 🔊";
+    });
 
-    document.getElementById("btnNitro").onclick = () => {
-        if(!audioCtx) return;
+    // STAGE 2 / NITRO MODE
+    document.getElementById("btnNitro").addEventListener("click", (e) => {
         isNitro = !isNitro;
-        document.getElementById("btnNitro").classList.toggle("bg-orange-600", isNitro);
-        document.getElementById("btnNitro").classList.toggle("text-black", isNitro);
-        robotComponent.classList.toggle("nitro-mode", isNitro);
-        
-        nitroGain.gain.setTargetAtTime(isNitro ? 2.5 : (vol / 100), audioCtx.currentTime, 0.1);
-        modeTxt.innerText = isNitro ? "Mapeamento: NITRO STAGE 2" : "Mapeamento: CRUISE MODE";
-        engineStatus.innerText = isNitro ? "NITRO BOOST" : "V8 ACTIVE";
-        robotGreeting.innerText = isNitro ? "I-CON: ACELERA!!!" : "I-CON: PILOTANDO!";
-    };
+        if(isNitro) {
+            robotComponent.classList.add("nitro-mode");
+            e.target.className = "btn-cyber py-4 bg-red-600 text-white font-black text-xs shadow-[0_0_25px_#ff4500]";
+            e.target.innerText = "NITRO ON 🔥";
+            if (nitroGain) nitroGain.gain.value = (vol / 100) * 1.4;
+            document.getElementById("perfTxt").innerText = "140% HP";
+            document.getElementById("perfTxt").className = "text-red-500 font-mono font-bold text-sm animate-pulse";
+        } else {
+            robotComponent.classList.remove("nitro-mode");
+            e.target.className = "btn-cyber py-4 bg-orange-950/30 text-orange-500 border-orange-800/40 hover:bg-orange-900/40 font-black text-xs";
+            e.target.innerText = "STAGE 2 🔥";
+            if (nitroGain) nitroGain.gain.value = vol / 100;
+            document.getElementById("perfTxt").innerText = "100% HP";
+            document.getElementById("perfTxt").className = "text-green-400 font-mono font-bold text-sm";
+        }
+    });
 
-    volKnob.onwheel = (e) => {
-        e.preventDefault();
-        if(e.deltaY < 0) vol = Math.min(100, vol + 5);
-        else vol = Math.max(0, vol - 5);
-        
-        volTxt.innerText = vol + "%";
-        volKnob.style.transform = `rotate(${vol * 3.6}deg)`;
-        if(nitroGain && !isNitro) nitroGain.gain.value = vol / 100;
-    };
-
-    // Equalizadores pré-configurados para a simulação de condução
-    function changeEQ(mode, btn) {
-        if(!audioCtx) return;
-        document.querySelectorAll('.eq-btn').forEach(b => {
-            b.classList.remove('bg-yellow-500', 'text-black');
-            b.classList.add('bg-gray-900/60');
+    // EQUALIZADOR INTERATIVO
+    function changeEQ(profile, btn) {
+        document.querySelectorAll(".eq-btn").forEach(b => {
+            b.className = "eq-btn btn-cyber py-2.5 bg-gray-900/60 text-gray-400";
         });
-        btn.classList.remove('bg-gray-900/60');
-        btn.classList.add('bg-yellow-500', 'text-black');
+        btn.className = "eq-btn btn-cyber py-2.5 bg-yellow-500 text-black font-black";
+        modeTxt.innerText = "Mapeamento: " + btn.innerText + " PROFILE";
 
-        switch(mode) {
+        initAudio();
+        switch(profile) {
             case 'STOCK': lowFilter.gain.value = 0; midFilter.gain.value = 0; highFilter.gain.value = 0; break;
-            case 'ECO': lowFilter.gain.value = -3; midFilter.gain.value = 2; highFilter.gain.value = -2; break;
-            case 'SPORT': lowFilter.gain.value = 6; midFilter.gain.value = -1; highFilter.gain.value = 5; break;
+            case 'ECO': lowFilter.gain.value = -3; midFilter.gain.value = 2; highFilter.gain.value = -1; break;
+            case 'SPORT': lowFilter.gain.value = 7; midFilter.gain.value = -2; highFilter.gain.value = 5; break;
             case 'CITY': lowFilter.gain.value = 2; midFilter.gain.value = 4; highFilter.gain.value = 1; break;
-            case 'TURBO': lowFilter.gain.value = 9; midFilter.gain.value = 0; highFilter.gain.value = 7; break;
+            case 'TURBO': lowFilter.gain.value = 10; midFilter.gain.value = 0; highFilter.gain.value = 6; break;
             case 'VOICE': lowFilter.gain.value = -5; midFilter.gain.value = 8; highFilter.gain.value = 2; break;
-            case 'NIGHT': lowFilter.gain.value = 4; midFilter.gain.value = -3; highFilter.gain.value = -2; break;
+            case 'NIGHT': lowFilter.gain.value = 4; midFilter.gain.value = -4; highFilter.gain.value = 8; break;
         }
     }
 
+    // CONTROLE DE VOLUME VIA ARRASTE DO MOUSE (KNOB)
+    let isDragging = false;
+    let startY = 0;
+    volKnob.addEventListener("mousedown", (e) => { isDragging = true; startY = e.clientY; e.preventDefault(); });
+    window.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        let diff = startY - e.clientY;
+        vol = Math.min(Math.max(vol + diff * 0.5, 0), 100);
+        startY = e.clientY;
+        updateVolume();
+    });
+    window.addEventListener("mouseup", () => isDragging = false);
+
+    function updateVolume() {
+        let roundedVol = Math.round(vol);
+        volTxt.innerText = roundedVol + "%";
+        volKnob.style.transform = `rotate(${(vol * 2.7) - 135}deg)`;
+        if(nitroGain && !audio.muted) {
+            nitroGain.gain.value = isNitro ? (roundedVol / 100) * 1.4 : (roundedVol / 100);
+        }
+    }
+    updateVolume();
+
+    // COLORIMETRIA ADICIONAL DA TURBINA
     function changeTheme(hue) {
-        document.documentElement.style.setProperty('--neon-blue', `hsl(${hue}, 100%, 50%)`);
-        document.documentElement.style.setProperty('--gold', `hsl(${(hue+40)%360}, 100%, 50%)`);
+        canvas.style.filter = `hue-rotate(${hue}deg)`;
+        netCanvas.style.filter = `hue-rotate(${hue}deg)`;
     }
 
-    let netX = 0;
-
-    // Relógio Atualizado Continuamente
-    function updateClock() {
-        const now = new Date();
-        document.getElementById("clock").innerText = now.toTimeString().split(' ')[0];
-        document.getElementById("date").innerText = now.toLocaleDateString('pt-BR');
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // LOOP PRINCIPAL DE RENDERIZAÇÃO
-    function renderFrames() {
-        if(!isPlaying) return;
-        requestAnimationFrame(renderFrames);
-
+    // DESENHAR ESPECTOGRAMAS E TELEMETRIA
+    function drawVisuals() {
+        if (!isPlaying) return;
+        requestAnimationFrame(drawVisuals);
         analyser.getByteFrequencyData(dataArray);
 
-        // Ajusta dimensões dinâmicas dos Canvas
+        // Captura de frequências separadas
+        let bass = 0, mid = 0, high = 0;
+        for(let i=0; i<20; i++) bass += dataArray[i];
+        for(let i=20; i<60; i++) mid += dataArray[i];
+        for(let i=60; i<100; i++) high += dataArray[i];
+        
+        bass = Math.round((bass/20)/255*100);
+        mid = Math.round((mid/40)/255*100);
+        high = Math.round((high/40)/255*100);
+
+        document.getElementById("vuBass").style.height = bass + "%";
+        document.getElementById("vuMid").style.height = mid + "%";
+        document.getElementById("vuHigh").style.height = high + "%";
+        
+        document.getElementById("txtBass").innerText = bass + "%";
+        document.getElementById("txtMid").innerText = mid + "%";
+        document.getElementById("txtHigh").innerText = high + "%";
+
+        // Mover ponteiros físicos da telemetria
+        document.getElementById("needlePres").style.transform = `rotate(${(bass * 1.8) - 90}deg)`;
+        document.getElementById("lblPres").innerText = (bass * 0.03).toFixed(1) + " bar";
+
+        let calculatedRpm = Math.round(mid * 85);
+        document.getElementById("needleRpm").style.transform = `rotate(${(mid * 1.8) - 90}deg)`;
+        document.getElementById("lblRpm").innerText = calculatedRpm;
+
+        let calculatedSpeed = Math.round(high * 3.2);
+        document.getElementById("needleBal").style.transform = `rotate(${(high * 1.8) - 90}deg)`;
+        document.getElementById("lblBal").innerText = calculatedSpeed + " KM/H";
+
+        // Boca do Robô respondendo ao som
+        robotMouth.style.height = Math.min(Math.max(bass / 5, 4), 30) + "px";
+        robotMouth.style.borderRadius = bass > 50 ? "50%" : "12px";
+
+        // Renderizar Espectrograma Principal
+        ctx.fillStyle = "rgba(4, 4, 8, 0.2)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        let barWidth = (canvas.width / analyser.frequencyBinCount) * 1.5;
+        let barHeight;
+        let x = 0;
+        for (let i = 0; i < analyser.frequencyBinCount; i++) {
+            barHeight = dataArray[i] * 0.4;
+            let r = barHeight + (25 * (i / analyser.frequencyBinCount));
+            let g = 250 * (i / analyser.frequencyBinCount);
+            let b = 150;
+            ctx.fillStyle = `rgb(${r},${g},${b})`;
+            ctx.fillRect(x, canvas.height - barHeight, barWidth - 1, barHeight);
+            x += barWidth;
+        }
+
+        // Renderizar Osciloscópio Transatlântico da Rádio
+        netCtx.fillStyle = "rgba(2,2,4,0.3)";
+        netCtx.fillRect(0,0,netCanvas.width,netCanvas.height);
+        netCtx.lineWidth = 2;
+        netCtx.strokeStyle = isNitro ? "#ff4500" : "#00f0ff";
+        netCtx.beginPath();
+        let sliceWidth = netCanvas.width / analyser.frequencyBinCount;
+        let nx = 0;
+        for (let i = 0; i < analyser.frequencyBinCount; i++) {
+            let v = dataArray[i] / 128.0;
+            let ny = (v * netCanvas.height) / 2;
+            if (i === 0) netCtx.moveTo(nx, ny); else netCtx.lineTo(nx, ny);
+            nx += sliceWidth;
+        }
+        netCtx.lineTo(netCanvas.width, netCanvas.height / 2);
+        netCtx.stroke();
+    }
+
+    function resetGauges() {
+        document.getElementById("vuBass").style.height = "0%";
+        document.getElementById("vuMid").style.height = "0%";
+        document.getElementById("vuHigh").style.height = "0%";
+        document.getElementById("needlePres").style.transform = "rotate(-90deg)";
+        document.getElementById("needleRpm").style.transform = "rotate(-90deg)";
+        document.getElementById("needleBal").style.transform = "rotate(-90deg)";
+        robotMouth.style.height = "6px";
+    }
+
+    // ATUALIZADOR DE CRONÔMETRO DE VIAGEM E DATA
+    setInterval(() => {
+        const d = new Date();
+        document.getElementById("clock").innerText = d.toTimeString().split(' ')[0];
+        document.getElementById("date").innerText = d.toLocaleDateString('pt-BR');
+    }, 1000);
+
+    // Ajustar tamanho dos canvas de forma responsiva
+    function resizeCanvas() {
         canvas.width = canvas.parentElement.clientWidth;
         canvas.height = canvas.parentElement.clientHeight;
         netCanvas.width = netCanvas.parentElement.clientWidth;
         netCanvas.height = netCanvas.parentElement.clientHeight;
-
-        // Análise de Sub-Bandas para alimentar a telemetria racing
-        let bass = 0, mid = 0, high = 0;
-        const len = dataArray.length;
-        const third = Math.floor(len / 3);
-
-        for(let i=0; i<third; i++) bass += dataArray[i];
-        for(let i=third; i<third*2; i++) mid += dataArray[i];
-        for(let i=third*2; i<len; i++) high += dataArray[i];
-
-        bass = Math.floor(bass / third);
-        mid = Math.floor(mid / third);
-        high = Math.floor(high / (len - third*2));
-
-        // Porcentagens calculadas
-        let pBass = Math.min(100, Math.floor((bass/255)*100));
-        let pMid = Math.min(100, Math.floor((mid/255)*100));
-        let pHigh = Math.min(100, Math.floor((high/255)*100));
-
-        // Atualização gráfica dos medidores de barra
-        document.getElementById("vuBass").style.height = pBass + "%";
-        document.getElementById("vuMid").style.height = pMid + "%";
-        document.getElementById("vuHigh").style.height = pHigh + "%";
-
-        document.getElementById("txtBass").innerText = pBass + "%";
-        document.getElementById("txtMid").innerText = pMid + "%";
-        document.getElementById("txtHigh").innerText = pHigh + "%";
-
-        // Física e Movimentação dos Ponteiros Analógicos (Dials)
-        let rpmCalculado = Math.floor((bass / 255) * 7000) + (isNitro ? 1500 : 800);
-        if(!isPlaying) rpmCalculado = 0;
-        document.getElementById("lblRpm").innerText = rpmCalculado + " RPM";
-        let rotRpm = ((rpmCalculado / 9000) * 180) - 90;
-        document.getElementById("needleRpm").style.transform = `rotate(${rotRpm}deg)`;
-
-        let turboCalculado = ((mid / 255) * 2.2).toFixed(1);
-        document.getElementById("lblPres").innerText = (isNitro ? parseFloat(turboCalculado)+1.0 : turboCalculado) + " bar";
-        let rotPres = ((turboCalculado / 3.5) * 180) - 90;
-        document.getElementById("needlePres").style.transform = `rotate(${rotPres}deg)`;
-
-        let velCalculada = Math.floor((high / 255) * 240) + (isNitro ? 80 : 0);
-        document.getElementById("lblBal").innerText = velCalculada + " KM/H";
-        let rotVel = ((velCalculada / 340) * 180) - 90;
-        document.getElementById("needleBal").style.transform = `rotate(${rotVel}deg)`;
-
-        // Boca do Robô I-CON modulando de acordo com as frequências médias
-        let mouthScale = 0.3 + (mid / 255) * 2.0;
-        robotMouth.style.transform = `scaleX(${mouthScale})`;
-
-        // Renderização do Espectrograma Central Avançado
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        let barWidth = (canvas.width / dataArray.length) * 1.4;
-        let barHeight;
-        let x = 0;
-
-        // Gradiente customizado baseado nas variáveis CSS para a esteira central
-        let mainGlowColor = getComputedStyle(document.documentElement).getPropertyValue('--neon-blue').trim();
-        let secondaryGlowColor = getComputedStyle(document.documentElement).getPropertyValue('--gold').trim();
-
-        for (let i = 0; i < dataArray.length; i++) {
-            barHeight = (dataArray[i] / 255) * canvas.height * 0.85;
-
-            let gradientFill = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight);
-            gradientFill.addColorStop(0, mainGlowColor);
-            gradientFill.addColorStop(0.5, secondaryGlowColor);
-            gradientFill.addColorStop(1, isNitro ? '#ff0000' : 'rgba(255,255,255,0.8)');
-
-            ctx.fillStyle = gradientFill;
-            ctx.shadowBlur = isNitro ? 15 : 6;
-            ctx.shadowColor = mainGlowColor;
-
-            // Desenha barras espelhadas simétricas estilo cockpit moderno
-            ctx.fillRect(x, canvas.height - barHeight, barWidth - 2, barHeight);
-            x += barWidth;
-        }
-
-        // Renderização Simulada do Osciloscópio Transatlántico
-        netCtx.fillStyle = 'rgba(4, 4, 6, 0.15)';
-        netCtx.fillRect(0, 0, netCanvas.width, netCanvas.height);
-        netCtx.beginPath();
-        netCtx.lineWidth = 2;
-        netCtx.strokeStyle = isNitro ? '#ff4500' : '#00f0ff';
-        
-        for (let i = 0; i < netCanvas.width; i++) {
-            let y = (netCanvas.height / 2) + Math.sin(i * 0.05 + netX) * (bass * 0.18);
-            if (i === 0) netCtx.moveTo(i, y);
-            else netCtx.lineTo(i, y);
-        }
-        netCtx.stroke();
-        netX += isNitro ? 0.3 : 0.12;
     }
+    window.addEventListener('resize', resizeCanvas);
+    setTimeout(resizeCanvas, 500);
 </script>
 
 </body>
