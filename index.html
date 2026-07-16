@@ -81,7 +81,7 @@
             --text-glow: 0 0 14px rgba(127, 219, 255, 0.7);
         }
 
-        /* NOVO TEMA: GREEN RACING */
+        /* TEMA: GREEN RACING */
         [data-theme="green-racing"] {
             --bg-body: radial-gradient(circle at center, #062310 0%, #000200 100%);
             --bg-panel: linear-gradient(145deg, #051d0d 0%, #010703 100%);
@@ -95,7 +95,7 @@
             --text-glow: 0 0 14px rgba(46, 204, 113, 0.7);
         }
 
-        /* NOVO TEMA: VOLCANO MAGMA */
+        /* TEMA: VOLCANO MAGMA */
         [data-theme="volcano"] {
             --bg-body: radial-gradient(circle at center, #3a0d00 0%, #090200 100%);
             --bg-panel: linear-gradient(145deg, #260900 0%, #050100 100%);
@@ -109,7 +109,7 @@
             --text-glow: 0 0 14px rgba(230, 126, 34, 0.8);
         }
 
-        /* NOVO TEMA: PURPLE NEON */
+        /* TEMA: PURPLE NEON */
         [data-theme="purple-neon"] {
             --bg-body: radial-gradient(circle at center, #230130 0%, #05000a 100%);
             --bg-panel: linear-gradient(145deg, #180121 0%, #030005 100%);
@@ -409,17 +409,35 @@
         @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
         .animate-marquee { display: flex; width: 200%; animation: marquee 20s linear infinite; }
 
-        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar { width: 4px; height: 4px; }
         .custom-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.4); }
         .custom-scroll::-webkit-scrollbar-thumb { background: #38352c; border-radius: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+        /* --- FILME / CINEMA EXTRA --- */
+        .cinema-iframe-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Aspect Ratio 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 14px;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
+        }
+        .cinema-iframe-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
     </style>
 </head>
 <body>
 
 <div class="flex flex-col gap-3 max-w-[1350px] w-full">
 
-    <!-- FAIXA BRASIL LUXURY GOLD EDITION (ACIMA DO PLAYER) -->
+    <!-- FAIXA BRASIL LUXURY GOLD EDITION -->
     <div class="brazil-strip-container p-2 rounded-xl flex flex-col gap-1.5 px-4 items-center">
         <div class="flex justify-between w-full text-[9px] font-black tracking-[0.2em] text-amber-500 font-mono">
             <span>BRAZILIAN COCKPIT HIGH PERFORMANCE</span>
@@ -431,21 +449,20 @@
     <!-- MAIN COCKPIT PLAYER PANEL -->
     <div class="cyber-panel p-6 grid grid-cols-1 lg:grid-cols-12 gap-5" id="mainPlayer">
         
-        <!-- HEADER CENTRAL DE TEMAS INTERATIVOS (Substituindo bandeiras antigas) -->
+        <!-- HEADER CENTRAL DE TEMAS INTERATIVOS -->
         <div class="lg:col-span-12 flex flex-wrap justify-between items-center bg-black/40 p-3 rounded-xl border border-white/5 gap-3">
             <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_#39ff14]"></span>
                 <span class="text-[10px] font-bold tracking-widest text-gray-400">DASHBOARD COCKPIT THEMES:</span>
             </div>
             
-            <!-- Seletores de 8 Temas Globais (5 Antigos + 3 Novos) -->
+            <!-- Seletores de Temas -->
             <div class="flex flex-wrap items-center gap-1.5 text-xs bg-black/50 p-1.5 rounded-lg border border-white/5 font-bold font-mono">
                 <button onclick="setGlobalTheme('default')" class="px-2.5 py-1 rounded bg-amber-500 text-black border border-amber-400 hover:brightness-125 transition-all text-[10px]">ORIGINAL</button>
                 <button onclick="setGlobalTheme('dark')" class="px-2.5 py-1 rounded bg-zinc-800 text-white border border-zinc-700 hover:brightness-125 transition-all text-[10px]">DARK FORCE</button>
                 <button onclick="setGlobalTheme('metal')" class="px-2.5 py-1 rounded bg-slate-600 text-slate-100 border border-slate-500 hover:brightness-125 transition-all text-[10px]">METAL STEEL</button>
                 <button onclick="setGlobalTheme('cyberpunk')" class="px-2.5 py-1 rounded bg-purple-900 text-cyan-300 border border-pink-500 hover:brightness-125 transition-all text-[10px]">CYBERPUNK</button>
                 <button onclick="setGlobalTheme('chrome')" class="px-2.5 py-1 rounded bg-blue-950 text-sky-300 border border-blue-600 hover:brightness-125 transition-all text-[10px]">CHROME BLUE</button>
-                <!-- Novos 3 temas solicitados -->
                 <button onclick="setGlobalTheme('green-racing')" class="px-2.5 py-1 rounded bg-emerald-950 text-emerald-300 border border-emerald-500 hover:brightness-125 transition-all text-[10px]">GREEN RACING</button>
                 <button onclick="setGlobalTheme('volcano')" class="px-2.5 py-1 rounded bg-orange-950 text-orange-400 border border-orange-600 hover:brightness-125 transition-all text-[10px]">VOLCANO MAGMA</button>
                 <button onclick="setGlobalTheme('purple-neon')" class="px-2.5 py-1 rounded bg-fuchsia-950 text-fuchsia-300 border border-fuchsia-600 hover:brightness-125 transition-all text-[10px]">PURPLE NEON</button>
@@ -560,7 +577,7 @@
                 </div>
                 <div class="col-span-4 grid grid-cols-2 gap-3">
                     <button id="btnMute" class="btn-cyber py-4 bg-blue-950/20 text-blue-400 border-blue-800/40 hover:bg-blue-900/30 font-black text-xs">SILENCE 🔊</button>
-                    <button id="btnNitro" class="btn-cyber py-4 bg-orange-950/30 text-orange-500 border-orange-800/40 hover:bg-orange-900/40 font-black text-xs shadow-[0_0_15px_rgba(235,68,0,0.1)]">STAGE 2 🔥</button>
+                    <button id="btnNitro" class="btn-cyber py-4 bg-orange-950/30 text-orange-500 border-orange-800/40 hover:bg-orange-900/40 font-black text-xs">STAGE 2 🔥</button>
                 </div>
             </div>
 
@@ -598,7 +615,7 @@
 
             <!-- MONITOR DE ABSORÇÃO DE REDE -->
             <div class="section-box p-3 bg-black/40 h-[90px] flex flex-col">
-                <div class="section-title !mb-1 text-[9px]">Sinal de Conexão Transatlántica</div>
+                <div class="section-title !mb-1 text-[9px]">Sinal de Conexão Transatlântica</div>
                 <canvas id="netOscilloscope" class="w-full flex-1 bg-black/85 rounded border border-white/5"></canvas>
             </div>
 
@@ -647,6 +664,67 @@
 
         </div>
 
+        <!-- MÓDULO 4: NOVO TELÃO DE CINEMA INTERATIVO INTEGRADO -->
+        <div class="lg:col-span-12 section-box p-5 border border-white/5 bg-black/45 rounded-2xl shadow-2xl">
+            <div class="flex flex-wrap justify-between items-center border-b border-white/10 pb-3 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <span class="text-2xl">🎬</span>
+                    <div>
+                        <h2 class="text-lg font-black tracking-wider text-amber-500 font-mono">TELÃO INTERCONTINENTAL</h2>
+                        <p class="text-[9px] text-gray-400 tracking-widest uppercase font-bold">Cinema na Rádio • Multicanais Stream</p>
+                    </div>
+                </div>
+                <div>
+                    <button onclick="toggleCinema()" class="btn-cyber py-2 px-5 bg-gradient-to-r from-yellow-600 to-amber-500 text-black font-black text-xs uppercase shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                        🎞️ Modo Cinema Completo
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+                <!-- Seletor de Canais Estilizado -->
+                <div class="xl:col-span-4 flex flex-col gap-2 max-h-[360px] overflow-y-auto pr-2 custom-scroll bg-black/55 p-3 rounded-xl border border-white/5" id="channelButtons">
+                    <div class="text-[9px] text-gray-400 font-bold font-mono tracking-widest mb-1 border-b border-white/5 pb-1 uppercase">Selecione o Canal de Transmissão:</div>
+                    <button onclick="loadFilm('WPwFEzaogdM', this)" class="btn-cyber py-2 px-3 bg-amber-500 text-black font-black text-left text-xs transition-all">🎥 Canal 1 – Planeta Perdido</button>
+                    <button onclick="loadFilm('nr6v8Geo2yU', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🛡️ Canal 2 – Os Guardiões</button>
+                    <button onclick="loadFilm('MhWb5fa1nGM', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🔥 Canal 3 – Motoqueiro Fantasma</button>
+                    <button onclick="loadFilm('vDbcJ_x9EMA', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🤖 Canal 4 – Macaco vs Máquina</button>
+                    <button onclick="loadFilm('02WlSQrVuJ8', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🚓 Canal 5 – RoboCop</button>
+                    <button onclick="loadFilm('DwOzp7DlqsI', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🌌 Canal 6 – O Quinto Elemento</button>
+                    <button onclick="loadFilm('2iI73lSFdVk', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🌋 Canal 7 – Inferno de Dante</button>
+                    <button onclick="loadFilm('ytv4xwbvlX0', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🔫 Canal 8 – Django</button>
+                    <button onclick="loadFilm('F7I4qS9nZiY', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🤠 Canal 9 – Trinity é o Meu Nome</button>
+                    <button onclick="loadFilm('CwSqAfzCU4w', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🥋 Canal 10 – O Grande Dragão Branco</button>
+                    <button onclick="loadFilm('Rf8MXhStZfg', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">💥 Dragon Ball Super Broly</button>
+                    <button onclick="loadFilm('Yp1gDQF6GRQ', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🏛️ Julius Caesar</button>
+                    <button onclick="loadFilm('3Qfil2fapjE', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🧟 A Hora do Terror</button>
+                    <button onclick="loadFilm('mDC-D0XXNFo', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🦸‍♂️ Os Supremos Vingadores</button>
+                    <button onclick="loadFilm('pbL8v0ZdcgQ', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🐉 O Retorno do Dragão</button>
+                    <button onclick="loadFilm('p44rJuFgyE4', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🧛‍♂️ Terra Dominada por Vampiros</button>
+                    <button onclick="loadFilm('6PHiBzRmqYw', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">⚔️ Canal 11 – Filme Novo 1</button>
+                    <button onclick="loadFilm('qxZ0yCI3nUA', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🚀 Canal 12 – Filme Novo 2</button>
+                    <button onclick="loadFilm('USm8wEvEUPE', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🛸 Canal 13 – Filme Novo 3</button>
+                    <button onclick="loadFilm('vGLJDVR5nsQ', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">⚡ Canal 14 – Filme Novo 4</button>
+                    <button onclick="loadFilm('Pz2k2M6AuBQ', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🕵️‍♂️ Canal 15 – Filme Novo 5</button>
+                    <button onclick="loadFilm('iuPkoDN6X7Y', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🏹 Canal 16 – Filme Novo 6</button>
+                    <button onclick="loadFilm('Ew5Y_48TVEs', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">💀 Canal 17 – Filme Novo 7</button>
+                    <button onclick="loadFilm('ZgfxkF5ty4M', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🕸️ Canal 18 – Filme Novo 8</button>
+                    <button onclick="loadFilm('FYtclgRaZME', this)" class="btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all">🦅 Canal 19 – Filme Novo 9</button>
+                </div>
+
+                <!-- Painel de Exibição Responsive 16:9 -->
+                <div class="xl:col-span-8 flex flex-col gap-2" id="iframeContainer">
+                    <div class="cinema-iframe-wrapper">
+                        <iframe id="filmFrame" src="https://www.youtube.com/embed/WPwFEzaogdM?autoplay=0&mute=1&enablejsapi=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                    <div class="flex justify-between items-center text-[10px] text-gray-500 font-mono px-1">
+                        <span>AUDIO STREAM: SYNCHRONIZED</span>
+                        <span>QUALITY: AUTOMATIC HIGH RES</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- PAINEL DE LINKS E SINALIZADOR MARQUEE -->
         <div class="lg:col-span-12 mt-2 pt-3 border-t border-white/5">
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 mb-4">
@@ -671,15 +749,19 @@
 </div>
 
 <script>
+    // URL ALTERNATIVA ESTÁVEL DA TRANSMISSÃO DA RÁDIO
     const STREAM_URL = "https://stream.zeno.fm/wzcgaal0dnltv";
-    const audio = new Audio(STREAM_URL);
+    
+    // Instanciar o áudio global de forma reativa
+    let audio = new Audio();
     audio.crossOrigin = "anonymous";
+    audio.src = STREAM_URL;
 
     let audioCtx, analyser, source, dataArray;
     let lowFilter, midFilter, highFilter, nitroGain;
     let isPlaying = false, isNitro = false, vol = 80;
 
-    // Dom
+    // Elementos DOM
     const canvas = document.getElementById("spectrogram");
     const ctx = canvas.getContext("2d");
     const netCanvas = document.getElementById("netOscilloscope");
@@ -705,12 +787,12 @@
         localStorage.setItem('selected-cockpit-theme', themeName);
     }
 
-    // Carregar tema salvo ao iniciar
     const savedTheme = localStorage.getItem('selected-cockpit-theme');
     if (savedTheme) {
         setGlobalTheme(savedTheme);
     }
 
+    // INICIALIZAÇÃO ROBUSTA DA API DE ÁUDIO WEB
     function initAudio() {
         if (!audioCtx) {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -735,10 +817,72 @@
         }
     }
 
-    // IGNITION / PLAY
+    // CORREÇÃO: CARREGAMENTO DE TODOS OS CANAIS DO TELÃO
+    function loadFilm(videoId, btnElement) {
+        // 1. Pausa e desliga a Rádio para priorizar o áudio do cinema
+        if (isPlaying) {
+            audio.pause();
+            isPlaying = false;
+            engineStatus.innerText = "STANDBY";
+            engineStatus.className = "text-[9px] text-gray-400 font-black ml-auto bg-gray-900 px-2 py-1 rounded border border-white/5";
+            liveLed.className = "w-3.5 h-3.5 rounded-full bg-red-600 animate-pulse shadow-[0_0_14px_#ff0000]";
+            liveTxt.innerText = "READY";
+            liveTxt.className = "font-black text-lg tracking-widest text-red-500 font-mono";
+            robotComponent.classList.remove("dance-mode");
+            robotGreeting.innerText = "CO-PILOTO: MODO CINEMA ATIVO";
+            resetGauges();
+        }
+
+        // 2. Destruir e recriar o iframe de forma limpa para destravar o reprodutor do youtube instantaneamente
+        const container = document.querySelector(".cinema-iframe-wrapper");
+        container.innerHTML = `<iframe id="filmFrame" src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&enablejsapi=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+
+        // 3. Destacar visualmente o botão selecionado e limpar os outros
+        const allButtons = document.querySelectorAll("#channelButtons button");
+        allButtons.forEach(btn => {
+            btn.className = "btn-cyber py-2 px-3 bg-black/40 text-left text-xs text-amber-400 hover:bg-amber-500 hover:text-black transition-all";
+        });
+        if(btnElement) {
+            btnElement.className = "btn-cyber py-2 px-3 bg-amber-500 text-black font-black text-left text-xs transition-all";
+        }
+    }
+
+    // EXIBIR TELA CHEIA (CINEMA) DO VÍDEO DO CANAL ATUAL
+    function toggleCinema() {
+        const frame = document.getElementById("filmFrame");
+        if (frame) {
+            if (frame.requestFullscreen) {
+                frame.requestFullscreen();
+            } else if (frame.webkitRequestFullscreen) {
+                frame.webkitRequestFullscreen();
+            } else if (frame.msRequestFullscreen) {
+                frame.msRequestFullscreen();
+            }
+        }
+    }
+
+    // CORREÇÃO: IGNIÇÃO DO MOTOR DE ÁUDIO DA RÁDIO DE FORMA SEGURA
     document.getElementById("btnPlay").addEventListener("click", () => {
+        // Pausar o vídeo do telão se ele estiver em execução ativa
+        const frame = document.getElementById("filmFrame");
+        if (frame) {
+            const currentSrc = frame.src;
+            if (currentSrc.includes("autoplay=1")) {
+                frame.src = currentSrc.replace("autoplay=1", "autoplay=0").replace("mute=0", "mute=1");
+            }
+        }
+
         initAudio();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
+        
+        // Reconectar o link de streaming para evitar problemas de travamento de buffer
+        if (audio.src === "" || audio.paused) {
+            audio.src = STREAM_URL;
+        }
+
+        if (audioCtx && audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+
         audio.play().then(() => {
             isPlaying = true;
             engineStatus.innerText = "RUNNING";
@@ -749,12 +893,19 @@
             robotComponent.classList.add("dance-mode");
             robotGreeting.innerText = "CO-PILOTO: ACELERANDO!";
             drawVisuals();
-        }).catch(err => console.log("Erro ao iniciar motor:", err));
+        }).catch(err => {
+            console.error("Tentativa de inicialização de som cancelada pelo navegador. Redirecionando...", err);
+            // Fallback imediato de reprodução forçada
+            audio.muted = false;
+            audio.play();
+        });
     });
 
-    // ENGINE OFF / STOP
+    // ENGINE OFF / STOP DA RÁDIO
     document.getElementById("btnStop").addEventListener("click", () => {
         audio.pause();
+        // Reset do source para poupar dados de internet e evitar atraso no buffer
+        audio.src = ""; 
         isPlaying = false;
         engineStatus.innerText = "STANDBY";
         engineStatus.className = "text-[9px] text-gray-400 font-black ml-auto bg-gray-900 px-2 py-1 rounded border border-white/5";
@@ -766,7 +917,7 @@
         resetGauges();
     });
 
-    // SILENCE / MUTE
+    // SILENCE / MUTE DE ÁUDIO
     let isMuted = false;
     document.getElementById("btnMute").addEventListener("click", (e) => {
         isMuted = !isMuted;
@@ -774,7 +925,7 @@
         e.target.innerText = isMuted ? "RESTORE 🔇" : "SILENCE 🔊";
     });
 
-    // STAGE 2 / NITRO MODE
+    // NITRO MODE
     document.getElementById("btnNitro").addEventListener("click", (e) => {
         isNitro = !isNitro;
         if(isNitro) {
@@ -794,7 +945,7 @@
         }
     });
 
-    // EQUALIZADOR INTERATIVO
+    // PERFIS DE EQUALIZAÇÃO
     function changeEQ(profile, btn) {
         document.querySelectorAll(".eq-btn").forEach(b => {
             b.className = "eq-btn btn-cyber py-2.5 bg-gray-900/60 text-gray-400";
@@ -814,18 +965,30 @@
         }
     }
 
-    // CONTROLE DE VOLUME VIA ARRASTE DO MOUSE (KNOB)
+    // MANIPULAÇÃO DO DIAL DO KNOB DE VOLUME
     let isDragging = false;
     let startY = 0;
-    volKnob.addEventListener("mousedown", (e) => { isDragging = true; startY = e.clientY; e.preventDefault(); });
-    window.addEventListener("mousemove", (e) => {
+    
+    function startDrag(clientY) {
+        isDragging = true;
+        startY = clientY;
+    }
+    
+    function moveDrag(clientY) {
         if (!isDragging) return;
-        let diff = startY - e.clientY;
+        let diff = startY - clientY;
         vol = Math.min(Math.max(vol + diff * 0.5, 0), 100);
-        startY = e.clientY;
+        startY = clientY;
         updateVolume();
-    });
+    }
+
+    volKnob.addEventListener("mousedown", (e) => { startDrag(e.clientY); e.preventDefault(); });
+    window.addEventListener("mousemove", (e) => moveDrag(e.clientY));
     window.addEventListener("mouseup", () => isDragging = false);
+
+    volKnob.addEventListener("touchstart", (e) => { startDrag(e.touches[0].clientY); }, {passive: true});
+    window.addEventListener("touchmove", (e) => { moveDrag(e.touches[0].clientY); }, {passive: true});
+    window.addEventListener("touchend", () => isDragging = false);
 
     function updateVolume() {
         let roundedVol = Math.round(vol);
@@ -837,19 +1000,17 @@
     }
     updateVolume();
 
-    // COLORIMETRIA ADICIONAL DA TURBINA
     function changeTheme(hue) {
         canvas.style.filter = `hue-rotate(${hue}deg)`;
         netCanvas.style.filter = `hue-rotate(${hue}deg)`;
     }
 
-    // DESENHAR ESPECTOGRAMAS E TELEMETRIA
+    // RENDERS DINÂMICOS DOS GRÁFICOS
     function drawVisuals() {
         if (!isPlaying) return;
         requestAnimationFrame(drawVisuals);
         analyser.getByteFrequencyData(dataArray);
 
-        // Captura de frequências separadas
         let bass = 0, mid = 0, high = 0;
         for(let i=0; i<20; i++) bass += dataArray[i];
         for(let i=20; i<60; i++) mid += dataArray[i];
@@ -867,7 +1028,6 @@
         document.getElementById("txtMid").innerText = mid + "%";
         document.getElementById("txtHigh").innerText = high + "%";
 
-        // Mover ponteiros físicos da telemetria
         document.getElementById("needlePres").style.transform = `rotate(${(bass * 1.8) - 90}deg)`;
         document.getElementById("lblPres").innerText = (bass * 0.03).toFixed(1) + " bar";
 
@@ -879,11 +1039,9 @@
         document.getElementById("needleBal").style.transform = `rotate(${(high * 1.8) - 90}deg)`;
         document.getElementById("lblBal").innerText = calculatedSpeed + " KM/H";
 
-        // Boca do Robô respondendo ao som
         robotMouth.style.height = Math.min(Math.max(bass / 5, 4), 30) + "px";
         robotMouth.style.borderRadius = bass > 50 ? "50%" : "12px";
 
-        // Renderizar Espectrograma Principal
         ctx.fillStyle = "rgba(4, 4, 8, 0.2)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         let barWidth = (canvas.width / analyser.frequencyBinCount) * 1.5;
@@ -899,7 +1057,6 @@
             x += barWidth;
         }
 
-        // Renderizar Osciloscópio Transatlântico da Rádio
         netCtx.fillStyle = "rgba(2,2,4,0.3)";
         netCtx.fillRect(0,0,netCanvas.width,netCanvas.height);
         netCtx.lineWidth = 2;
@@ -925,6 +1082,9 @@
         document.getElementById("needleRpm").style.transform = "rotate(-90deg)";
         document.getElementById("needleBal").style.transform = "rotate(-90deg)";
         robotMouth.style.height = "6px";
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        netCtx.clearRect(0, 0, netCanvas.width, netCanvas.height);
     }
 
     // ATUALIZADOR DE CRONÔMETRO DE VIAGEM E DATA
@@ -934,12 +1094,13 @@
         document.getElementById("date").innerText = d.toLocaleDateString('pt-BR');
     }, 1000);
 
-    // Ajustar tamanho dos canvas de forma responsiva
     function resizeCanvas() {
-        canvas.width = canvas.parentElement.clientWidth;
-        canvas.height = canvas.parentElement.clientHeight;
-        netCanvas.width = netCanvas.parentElement.clientWidth;
-        netCanvas.height = netCanvas.parentElement.clientHeight;
+        if(canvas.parentElement && netCanvas.parentElement) {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+            netCanvas.width = netCanvas.parentElement.clientWidth;
+            netCanvas.height = netCanvas.parentElement.clientHeight;
+        }
     }
     window.addEventListener('resize', resizeCanvas);
     setTimeout(resizeCanvas, 500);
